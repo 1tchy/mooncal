@@ -1,0 +1,32 @@
+<h1>Mondkalender</h1>
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+	magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+	gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+	elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+	eos
+	et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+	dolor
+	sit amet.</p>
+<div class="container">
+	<h3>Mondphasen</h3>
+	<ul>
+		<li ng-repeat="phase in phases">
+			<input type="checkbox" ng-model="phase.include"/> {{phase.name}}
+		</li>
+	</ul>
+	<h3>Events</h3>
+	<ul>
+		<li ng-repeat="event in events">
+			<input type="checkbox" ng-model="event.include"/> {{event.name}}
+		</li>
+	</ul>
+	<h3>Zeitspanne</h3>
+
+	<p>
+		Anzeige vom
+		<input type="date" ng-model="from"/>
+		bis
+		<input type="date" ng-model="to"/>
+	</p>
+	{{calendar}}
+</div>
