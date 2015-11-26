@@ -1,3 +1,17 @@
+This is your new Play 2.4.4 application
+=====================================
+
+This file will be packaged with your application, when using `play dist`.
+
+
+Bootstraped with <3 using [yoplay!](https://pauldijou.github.com/yoplay)
+
+
+
+
+
+
+
 # mondkalender
 
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)

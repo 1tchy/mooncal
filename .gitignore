@@ -6,3 +6,12 @@
 /.idea/workspace.xml
 /.idea/tasks.xml
 
+logs
+project/project
+project/target
+.history
+/out
+/RUNNING_PID
+*.swp
+*.swo
+/target
