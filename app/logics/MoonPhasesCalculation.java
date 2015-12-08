@@ -2,9 +2,8 @@ package logics;
 
 import com.bradsbrain.simpleastronomy.MoonPhaseFinder;
 import models.Event;
+import models.RequestForm;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -16,18 +15,22 @@ public class MoonPhasesCalculation implements Calculation {
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
 	@Override
-	public Collection<Event> calculate(LocalDate from, LocalDate to, ZoneId at) {
+	public Collection<Event> calculate(RequestForm requestForm) {
 		final Collection<Event> eventCollection = new TreeSet<>();
-		calculate(from, to, at, eventCollection);
+		calculate(requestForm, eventCollection);
 		return eventCollection;
 	}
 
 	@Override
-	public void calculate(LocalDate from, LocalDate to, ZoneId at, Collection<Event> eventCollection) {
-		final ZonedDateTime fromMorning = from.atStartOfDay(at);
-		final ZonedDateTime toNight = to.plusDays(1).atStartOfDay(at);
-		calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON.getName(), eventCollection);
-		calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(), eventCollection);
+	public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
+		final ZonedDateTime fromMorning = requestForm.from.withHour(0).withMinute(0).withSecond(0);
+		final ZonedDateTime toNight = requestForm.to.withHour(23).withMinute(59).withSecond(59);
+		if (requestForm.includePhase("Vollmond")) {
+			calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON.getName(), eventCollection);
+		}
+		if (requestForm.includePhase("Neumond")) {
+			calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(), eventCollection);
+		}
 	}
 
 	private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, String phaseName, Collection<Event> eventCollection) {

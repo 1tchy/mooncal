@@ -1,6 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,10 +26,27 @@ public class RequestForm {
 		return ZonedDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSX"));
 	}
 
+	public boolean includePhase(@NotNull String name) {
+		for (EventRequest phase : phases) {
+			if (name.equals(phase.name)) {
+				return phase.include;
+			}
+		}
+		return false;
+	}
+
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public static class EventRequest {
+		public EventRequest() {
+		}
+
+		public EventRequest(String name, boolean include) {
+			this.name = name;
+			this.include = include;
+		}
+
 		public String name;
-		public String include;
+		public boolean include;
 	}
 
 }

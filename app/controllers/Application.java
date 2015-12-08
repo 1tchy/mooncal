@@ -17,7 +17,7 @@ public class Application extends Controller {
 	public Result query() {
 		JsonNode json = request().body().asJson();
 		final RequestForm requestForm = Json.fromJson(json, RequestForm.class);
-		final Collection<Event> result = new MoonPhasesCalculation().calculate(requestForm.from.toLocalDate(), requestForm.to.toLocalDate(), requestForm.from.getZone());
+		final Collection<Event> result = new MoonPhasesCalculation().calculate(requestForm);
 		return ok(Json.toJson(result));
 	}
 
