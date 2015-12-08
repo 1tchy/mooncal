@@ -27,7 +27,15 @@ public class RequestForm {
 	}
 
 	public boolean includePhase(@NotNull String name) {
-		for (EventRequest phase : phases) {
+		return includeEventRequest(name, phases);
+	}
+
+	public boolean includeEvent(@NotNull String name) {
+		return includeEventRequest(name, events);
+	}
+
+	private static boolean includeEventRequest(@NotNull String name, List<EventRequest> eventRequests) {
+		for (EventRequest phase : eventRequests) {
 			if (name.equals(phase.name)) {
 				return phase.include;
 			}
