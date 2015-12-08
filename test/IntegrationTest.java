@@ -1,28 +1,23 @@
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import play.mvc.*;
-import play.test.*;
-import play.libs.F.*;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
 
-import static org.fluentlenium.core.filter.FilterConstructor.*;
-
+@Ignore
 public class IntegrationTest {
 
-    /**
-     * add your integration test here
-     * in this example we just check if the welcome page is being shown
-     */   
-    @Test
-    public void test() {
-        running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
-            public void invoke(TestBrowser browser) {
-                browser.goTo("http://localhost:3333");
-                assertThat(browser.pageSource()).contains("mondkalender");
-            }
-        });
-    }
-  
+	/**
+	 * add your integration test here
+	 * in this example we just check if the welcome page is being shown
+	 */
+	@Test
+	public void test() {
+		running(testServer(3333, fakeApplication()), HTMLUNIT, browser -> {
+			browser.goTo("http://localhost:3333");
+			assertThat(browser.pageSource(), containsString("mondkalender"));
+		});
+	}
+
 }

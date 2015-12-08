@@ -8,13 +8,13 @@
  * Controller of the mondkalenderApp
  */
 angular.module('mondkalenderApp')
-	.controller('MainCtrl', function ($scope) {
+	.controller('MainCtrl', function ($scope, $http) {
 		$scope.phases = [
 			{name:'Vollmond',include:true},
 			{name:'Neumond',include:true},
 			{name:'Halbmond',include:false},
 			{name:'Viertelmond',include:false},
-			{name:'alle Stufen',include:false}
+			{name:'tägliche Phasen',include:false}
 		];
 		$scope.events = [
 			{name:'Mondaufgang', include:true},
@@ -28,7 +28,21 @@ angular.module('mondkalenderApp')
 		$scope.$watch(function(){
 			return JSON.stringify($scope.phases)+JSON.stringify($scope.events)+$scope.from+$scope.to;
 		}, function(){
-			$scope.calendar=calculateCalendar(true,true,$scope.from,$scope.to);
+			$http({
+			   method: 'POST',
+			   url: '/query',
+			   data: JSON.stringify({phases:$scope.phases, events:$scope.events, from:$scope.from, to:$scope.to}),
+			   headers: {'Content-Type': 'application/json'}
+			}).then(function successCallback(response) {
+				$scope.calendar=JSON.stringify(response.data);
+				// this callback will be called asynchronously
+				// when the response is available
+			  }, function errorCallback(response) {
+				$scope.calendar="kein hoi"+response;
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+			  });
+//			$scope.calendar=calculateCalendar(true,true,$scope.from,$scope.to);
 		});
 		function calculateCalendar(showFullmoon,showNewmoon,from,to) {
 			if(Math.random()>0.01) {

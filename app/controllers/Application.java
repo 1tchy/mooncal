@@ -1,9 +1,15 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import logics.PhasesCalculation3;
+import models.Event;
+import models.RequestForm;
+import play.libs.Json;
+import play.mvc.BodyParser;
+import play.mvc.Controller;
+import play.mvc.Result;
 
-import views.html.*;
+import java.util.Collection;
 
 public class Application extends Controller {
 
@@ -12,9 +18,12 @@ public class Application extends Controller {
 //        return ok(index.render());
     }
 
-    public Result index1(String s) {
-        return ok(s);
-//        return ok(index.render());
-    }
+	@BodyParser.Of(BodyParser.Json.class)
+	public Result query() {
+		JsonNode json = request().body().asJson();
+		final RequestForm requestForm = Json.fromJson(json, RequestForm.class);
+		final Collection<Event> result = new PhasesCalculation3().calculate(requestForm.from.toLocalDate(), requestForm.to.toLocalDate(), requestForm.from.getZone());
+		return ok(Json.toJson(result));
+	}
 
 }

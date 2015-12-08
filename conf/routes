@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Assets.at(path="/public", file="index.html")
+POST	/query						controllers.Application.query()
 GET     /home                       controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
