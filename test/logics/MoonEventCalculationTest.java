@@ -52,4 +52,11 @@ public class MoonEventCalculationTest {
 		assertThat(actual, hasSize(4));
 	}
 
+	@Test
+	public void testFindAMoonLanding() {
+		RequestForm requestForm = prepareRequestForm("Mondlandung", LocalDate.of(1959, 9, 1), LocalDate.of(1959, 9, 30));
+		final Collection<Event> actual = cut.calculate(requestForm);
+		assertThat(actual, hasSize(1));
+	}
+
 }

@@ -13,21 +13,42 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 
 public class MoonEventCalculation implements Calculation {
 
+	public static final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
 	TreeMap<ZonedDateTime, Event> lunarEclipses = new TreeMap<>();
 
+	TreeMap<ZonedDateTime, Event> moonLandings = new TreeMap<>();
+
 	public MoonEventCalculation() {
-		try {
-			final LineReader csvFile = new LineReader(new FileReader(this.getClass().getResource("lunar-eclipses.csv").getFile()));
+		initializeLunarEclipses();
+		initializeMoonLandings();
+	}
+
+	private void initializeLunarEclipses() {
+		initializeByCVS("lunar-eclipses.csv", rows -> {
+			final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
+			lunarEclipses.put(date, new Event(date, getEclipseName(rows[1]), null));
+		});
+	}
+
+	private void initializeMoonLandings() {
+		initializeByCVS("moon-landings.csv", rows -> {
+			final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
+			moonLandings.put(date, new Event(date, rows[1], rows[2]));
+		});
+	}
+
+	private void initializeByCVS(String fileName, Consumer<String[]> lineHandler) {
+		try (final FileReader fileReader = new FileReader(this.getClass().getResource(fileName).getFile())) {
+			final LineReader csvFile = new LineReader(fileReader);
 			csvFile.readLine(); //skip header
 			String line;
 			while ((line = csvFile.readLine()) != null) {
-				final String[] row = line.split("\\t");
-				final ZonedDateTime date = LocalDateTime.parse(row[0], DateTimeFormatter.ofPattern("d.M.u'T'H:m:s")).atZone(ZoneOffset.UTC);
-				String eclipseTypeName = getEclipseName(row[1]);
-				lunarEclipses.put(date, new Event(date, eclipseTypeName, null));
+				final String[] rows = line.split("\\t");
+				lineHandler.accept(rows);
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -55,12 +76,19 @@ public class MoonEventCalculation implements Calculation {
 	@Override
 	public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
 		if (requestForm.includeEvent("Mondfinsternis")) {
-			for (Event lunarEclipseEvent : lunarEclipses.tailMap(requestForm.from).values()) {
-				if (lunarEclipseEvent.getDateTime().isBefore(requestForm.to)) {
-					eventCollection.add(lunarEclipseEvent);
-				} else {
-					break;
-				}
+			findEventsInMap(requestForm, eventCollection, this.lunarEclipses);
+		}
+		if (requestForm.includeEvent("Mondlandung")) {
+			findEventsInMap(requestForm, eventCollection, moonLandings);
+		}
+	}
+
+	private static void findEventsInMap(RequestForm requestForm, Collection<Event> eventCollection, TreeMap<ZonedDateTime, Event> map) {
+		for (Event lunarEclipseEvent : map.tailMap(requestForm.from).values()) {
+			if (lunarEclipseEvent.getDateTime().isBefore(requestForm.to)) {
+				eventCollection.add(lunarEclipseEvent);
+			} else {
+				break;
 			}
 		}
 	}
