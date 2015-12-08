@@ -1,7 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import logics.PhasesCalculation3;
+import logics.MoonPhasesCalculation;
 import models.Event;
 import models.RequestForm;
 import play.libs.Json;
@@ -13,16 +13,11 @@ import java.util.Collection;
 
 public class Application extends Controller {
 
-    public Result index() {
-        return ok("Hallo");
-//        return ok(index.render());
-    }
-
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result query() {
 		JsonNode json = request().body().asJson();
 		final RequestForm requestForm = Json.fromJson(json, RequestForm.class);
-		final Collection<Event> result = new PhasesCalculation3().calculate(requestForm.from.toLocalDate(), requestForm.to.toLocalDate(), requestForm.from.getZone());
+		final Collection<Event> result = new MoonPhasesCalculation().calculate(requestForm.from.toLocalDate(), requestForm.to.toLocalDate(), requestForm.from.getZone());
 		return ok(Json.toJson(result));
 	}
 

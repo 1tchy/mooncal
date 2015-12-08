@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
 
-public class PhasesCalculation3 implements Calculation {
+public class MoonPhasesCalculation implements Calculation {
 
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 

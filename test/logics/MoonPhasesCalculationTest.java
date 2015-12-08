@@ -3,7 +3,6 @@ package logics;
 import models.Event;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -13,9 +12,9 @@ import java.util.Collection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class PhasesCalculation3Test {
+public class MoonPhasesCalculationTest {
 
-	private PhasesCalculation3 cut = new PhasesCalculation3();
+	private MoonPhasesCalculation cut = new MoonPhasesCalculation();
 
 	@Test
 	public void testGetFullmoonWithNoResult() {
