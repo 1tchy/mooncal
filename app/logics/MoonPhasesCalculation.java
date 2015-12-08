@@ -31,6 +31,10 @@ public class MoonPhasesCalculation implements Calculation {
 		if (requestForm.includePhase("Neumond")) {
 			calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(), eventCollection);
 		}
+		if (requestForm.includePhase("Halbmond")) {
+			calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER.getName(), eventCollection);
+			calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER.getName(), eventCollection);
+		}
 	}
 
 	private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, String phaseName, Collection<Event> eventCollection) {
@@ -39,8 +43,8 @@ public class MoonPhasesCalculation implements Calculation {
 			if (moonHappening.isAfter(to)) {
 				break;
 			}
-			eventCollection.add(new Event(moonHappening, phaseName, phaseName + " ist um " + from.format(TIME_FORMATTER)));
-			from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS));
+			eventCollection.add(new Event(moonHappening, phaseName, phaseName + " ist um " + moonHappening.format(TIME_FORMATTER)));
+			from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS)-1);
 		}
 	}
 

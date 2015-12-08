@@ -13,7 +13,6 @@ angular.module('mondkalenderApp')
 			{name:'Vollmond',include:true},
 			{name:'Neumond',include:true},
 			{name:'Halbmond',include:false},
-			{name:'Viertelmond',include:false},
 			{name:'tägliche Phasen',include:false}
 		];
 		$scope.events = [

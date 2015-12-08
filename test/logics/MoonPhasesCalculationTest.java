@@ -60,6 +60,17 @@ public class MoonPhasesCalculationTest {
 		assertThat(actual, contains(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
 	}
 
+	@Test
+	public void testGetHalfMoonResults() {
+		requestForm.phases = new ArrayList<>();
+		requestForm.phases.add(new RequestForm.EventRequest("Halbmond", true));
+		requestForm.to = ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC);
+
+		final Collection<Event> actual = cut.calculate(requestForm);
+
+		assertThat(actual, contains(eventAt(LocalDate.of(2015, 10, 20))));
+	}
+
 	private Matcher<Event> eventAt(final LocalDate expectedDate) {
 		return new FeatureMatcher<Event, LocalDate>(equalTo(expectedDate), "LocalDate", "Date") {
 			@Override
