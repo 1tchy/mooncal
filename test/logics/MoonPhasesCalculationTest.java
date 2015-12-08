@@ -71,6 +71,16 @@ public class MoonPhasesCalculationTest {
 		assertThat(actual, contains(eventAt(LocalDate.of(2015, 10, 20))));
 	}
 
+	@Test
+	public void testDailyEventsProvidedForAllDays() {
+		requestForm.phases = new ArrayList<>();
+		requestForm.phases.add(new RequestForm.EventRequest("tägliche Phasen", true));
+
+		final Collection<Event> actual = cut.calculate(requestForm);
+
+		assertThat(actual, hasSize(42));
+	}
+
 	private Matcher<Event> eventAt(final LocalDate expectedDate) {
 		return new FeatureMatcher<Event, LocalDate>(equalTo(expectedDate), "LocalDate", "Date") {
 			@Override
