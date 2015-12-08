@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Collection;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -32,6 +33,13 @@ public class MoonPhasesCalculationTest {
 	public void testGetMoonWithMoreResult() {
 		final Collection<Event> actual = cut.calculate(LocalDate.of(2015, 10, 20), LocalDate.of(2015, 11, 30), ZoneOffset.UTC);
 		assertThat(actual, containsInAnyOrder(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testGetMoonWithResultsInTemporalOrder() {
+		final Collection<Event> actual = cut.calculate(LocalDate.of(2015, 10, 20), LocalDate.of(2015, 11, 30), ZoneOffset.UTC);
+		assertThat(actual, contains(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
 	}
 
 	private Matcher<Event> eventAt(final LocalDate expectedDate) {
