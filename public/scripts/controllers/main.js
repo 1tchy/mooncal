@@ -33,15 +33,10 @@ angular.module('mondkalenderApp')
 			   data: JSON.stringify({phases:$scope.phases, events:$scope.events, from:$scope.from, to:$scope.to}),
 			   headers: {'Content-Type': 'application/json'}
 			}).then(function successCallback(response) {
-				$scope.calendar=JSON.stringify(response.data);
-				// this callback will be called asynchronously
-				// when the response is available
+				$scope.calendar=response.data;
 			  }, function errorCallback(response) {
-				$scope.calendar="kein hoi"+response;
-				// called asynchronously if an error occurs
-				// or server returns response with an error status.
+				$scope.calendar=response.data;
 			  });
-//			$scope.calendar=calculateCalendar(true,true,$scope.from,$scope.to);
 		});
 		function calculateCalendar(showFullmoon,showNewmoon,from,to) {
 			if(Math.random()>0.01) {

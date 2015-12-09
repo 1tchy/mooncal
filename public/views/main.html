@@ -28,5 +28,12 @@
 		bis
 		<input type="date" ng-model="to"/>
 	</p>
-	{{calendar}}
+
+	<table class="table tableRow table-bordered">
+		<tr ng-repeat="event in calendar" class="col-sm-6">
+			<td>{{event.date}}</td>
+			<td>{{event.title}}</td>
+			<td class="text-muted">{{event.description}}</td>
+		</tr>
+	</table>
 </div>
