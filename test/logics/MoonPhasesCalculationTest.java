@@ -26,8 +26,8 @@ public class MoonPhasesCalculationTest {
         requestForm = new RequestForm();
         requestForm.getPhases().add("Vollmond");
         requestForm.getPhases().add("Neumond");
-        requestForm.setFrom2(ZonedDateTime.of(2015, 10, 20, 12, 0, 0, 0, ZoneOffset.UTC));
-        requestForm.setTo2(ZonedDateTime.of(2015, 11, 30, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setFrom(ZonedDateTime.of(2015, 10, 20, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setTo(ZonedDateTime.of(2015, 11, 30, 12, 0, 0, 0, ZoneOffset.UTC));
     }
 
     private Collection<Event> calculate(RequestForm requestForm) {
@@ -38,14 +38,14 @@ public class MoonPhasesCalculationTest {
 
     @Test
     public void testGetFullmoonWithNoResult() {
-        requestForm.setFrom2(ZonedDateTime.of(2015, 11, 12, 12, 0, 0, 0, ZoneOffset.UTC));
-        requestForm.setTo2(ZonedDateTime.of(2015, 11, 20, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setFrom(ZonedDateTime.of(2015, 11, 12, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setTo(ZonedDateTime.of(2015, 11, 20, 12, 0, 0, 0, ZoneOffset.UTC));
         assertThat(calculate(requestForm), is(empty()));
     }
 
     @Test
     public void testGetFullmoonWithOneResult() {
-        requestForm.setFrom2(ZonedDateTime.of(2015, 11, 20, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setFrom(ZonedDateTime.of(2015, 11, 20, 12, 0, 0, 0, ZoneOffset.UTC));
         final Collection<Event> actual = calculate(requestForm);
         assertThat(actual, contains(eventAt(LocalDate.of(2015, 11, 25))));
     }
@@ -67,7 +67,7 @@ public class MoonPhasesCalculationTest {
     @Test
     public void testGetHalfMoonResults() {
         requestForm.getPhases().add("Halbmond");
-        requestForm.setTo2(ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setTo(ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC));
 
         final Collection<Event> actual = calculate(requestForm);
 

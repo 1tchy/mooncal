@@ -1,14 +1,34 @@
 package models;
 
 import org.jetbrains.annotations.NotNull;
+import play.data.format.Formatters;
 import play.data.validation.Constraints;
 
+import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class RequestForm {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSX");
+
+    static {
+        Formatters.register(ZonedDateTime.class, new Formatters.SimpleFormatter<ZonedDateTime>() {
+            @Override
+            public ZonedDateTime parse(String input, Locale l) throws ParseException {
+                return ZonedDateTime.parse(input, DATE_TIME_FORMATTER);
+            }
+
+            @Override
+            public String print(ZonedDateTime input, Locale l) {
+                return DATE_TIME_FORMATTER.format(input);
+            }
+        });
+    }
+
     private List<String> phases = new ArrayList<>();
     private List<String> events = new ArrayList<>();
     @Constraints.Required
@@ -36,11 +56,7 @@ public class RequestForm {
         return from;
     }
 
-    public void setFrom(String from) {
-        this.from = parseDate(from);
-    }
-
-    public void setFrom2(ZonedDateTime from) {
+    public void setFrom(ZonedDateTime from) {
         this.from = from;
     }
 
@@ -48,16 +64,8 @@ public class RequestForm {
         return to;
     }
 
-    public void setTo(String to) {
-        this.to = parseDate(to);
-    }
-
-    public void setTo2(ZonedDateTime to) {
+    public void setTo(ZonedDateTime to) {
         this.to = to;
-    }
-
-    private ZonedDateTime parseDate(String date) {
-        return ZonedDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSX"));
     }
 
     public boolean includePhase(@NotNull String name) {

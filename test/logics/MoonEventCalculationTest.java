@@ -22,8 +22,8 @@ public class MoonEventCalculationTest {
 	private RequestForm prepareRequestForm(String event, LocalDate from, LocalDate to) {
 		RequestForm requestForm = new RequestForm();
 		requestForm.getEvents().add(event);
-		requestForm.setFrom2(ZonedDateTime.of(from, LocalTime.NOON, ZoneOffset.UTC));
-		requestForm.setTo2(ZonedDateTime.of(to, LocalTime.NOON, ZoneOffset.UTC));
+		requestForm.setFrom(ZonedDateTime.of(from, LocalTime.NOON, ZoneOffset.UTC));
+		requestForm.setTo(ZonedDateTime.of(to, LocalTime.NOON, ZoneOffset.UTC));
 		return requestForm;
 	}
 
