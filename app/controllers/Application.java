@@ -1,36 +1,29 @@
 package controllers;
 
-import logics.MoonEventCalculation;
-import logics.MoonPhasesCalculation;
-import models.Event;
+import logics.TotalCalculation;
 import models.RequestForm;
+import play.data.Form;
 import play.libs.Json;
-import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.TreeSet;
 
 public class Application extends Controller {
 
-	private final MoonPhasesCalculation moonPhasesCalculation;
-	private final MoonEventCalculation moonEventCalculation;
+    private final TotalCalculation calculation;
 
-	@Inject
-	public Application(MoonPhasesCalculation moonPhasesCalculation, MoonEventCalculation moonEventCalculation) {
-		this.moonPhasesCalculation = moonPhasesCalculation;
-		this.moonEventCalculation = moonEventCalculation;
-	}
+    @Inject
+    public Application(TotalCalculation calculation) {
+        this.calculation = calculation;
+    }
 
-	@BodyParser.Of(BodyParser.Json.class)
-	public Result query() {
-		final RequestForm requestForm = Json.fromJson(request().body().asJson(), RequestForm.class);
-		final Collection<Event> resultSet = new TreeSet<>();
-		moonPhasesCalculation.calculate(requestForm, resultSet);
-		moonEventCalculation.calculate(requestForm, resultSet);
-		return ok(Json.toJson(resultSet));
-	}
+    public Result query() {
+        Form<RequestForm> form = Form.form(RequestForm.class).bindFromRequest();
+        if (form.hasErrors()) {
+            return badRequest(form.errorsAsJson());
+        }
+        return ok(Json.toJson(calculation.calculate(form.get())));
+    }
 
 }

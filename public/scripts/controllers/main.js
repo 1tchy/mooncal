@@ -26,14 +26,23 @@ angular.module('mondkalenderApp')
 		$scope.calendar=[];
 		$scope.requestOngoing=false;
 		$scope.error=null;
+		$scope.getEventCategoriesToInclude=function(eventCategory) {
+		    var eventKeysToInclude=[];
+		    for(var i=0;i<eventCategory.length;i++){
+		        if(eventCategory[i].include) {
+		            eventKeysToInclude.push(eventCategory[i].name);
+		        }
+		    }
+		    return eventKeysToInclude;
+		};
 		$scope.$watch(function(){
 			return JSON.stringify($scope.phases)+JSON.stringify($scope.events)+$scope.from+$scope.to;
 		}, function(){
 		    $scope.requestOngoing=true;
 			$http({
-			   method: 'POST',
+			   method: 'GET',
 			   url: '/query',
-			   data: JSON.stringify({phases:$scope.phases, events:$scope.events, from:$scope.from, to:$scope.to}),
+			   params: {'phases[]':$scope.getEventCategoriesToInclude($scope.phases), 'events[]':$scope.getEventCategoriesToInclude($scope.events), from:$scope.from, to:$scope.to},
 			   headers: {'Content-Type': 'application/json'}
 			}).then(function successCallback(response) {
 				$scope.updateCalendar(response.data);

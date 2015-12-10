@@ -1,60 +1,71 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.jetbrains.annotations.NotNull;
+import play.data.validation.Constraints;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestForm {
-	public List<EventRequest> phases;
-	public List<EventRequest> events;
-	public ZonedDateTime from;
-	public ZonedDateTime to;
+    private List<String> phases = new ArrayList<>();
+    private List<String> events = new ArrayList<>();
+    @Constraints.Required
+    private ZonedDateTime from;
+    @Constraints.Required
+    private ZonedDateTime to;
 
-	public void setFrom(String from) {
-		this.from = parseDate(from);
-	}
+    public List<String> getPhases() {
+        return phases;
+    }
 
-	public void setTo(String to) {
-		this.to = parseDate(to);
-	}
+    public void setPhases(List<String> phases) {
+        this.phases = phases;
+    }
 
-	private ZonedDateTime parseDate(String date) {
-		return ZonedDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSX"));
-	}
+    public List<String> getEvents() {
+        return events;
+    }
 
-	public boolean includePhase(@NotNull String name) {
-		return includeEventRequest(name, phases);
-	}
+    public void setEvents(List<String> events) {
+        this.events = events;
+    }
 
-	public boolean includeEvent(@NotNull String name) {
-		return includeEventRequest(name, events);
-	}
+    public ZonedDateTime getFrom() {
+        return from;
+    }
 
-	private static boolean includeEventRequest(@NotNull String name, List<EventRequest> eventRequests) {
-		for (EventRequest phase : eventRequests) {
-			if (name.equals(phase.name)) {
-				return phase.include;
-			}
-		}
-		return false;
-	}
+    public void setFrom(String from) {
+        this.from = parseDate(from);
+    }
 
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public static class EventRequest {
-		public EventRequest() {
-		}
+    public void setFrom2(ZonedDateTime from) {
+        this.from = from;
+    }
 
-		public EventRequest(String name, boolean include) {
-			this.name = name;
-			this.include = include;
-		}
+    public ZonedDateTime getTo() {
+        return to;
+    }
 
-		public String name;
-		public boolean include;
-	}
+    public void setTo(String to) {
+        this.to = parseDate(to);
+    }
+
+    public void setTo2(ZonedDateTime to) {
+        this.to = to;
+    }
+
+    private ZonedDateTime parseDate(String date) {
+        return ZonedDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSX"));
+    }
+
+    public boolean includePhase(@NotNull String name) {
+        return phases.contains(name);
+    }
+
+    public boolean includeEvent(@NotNull String name) {
+        return events.contains(name);
+    }
 
 }
