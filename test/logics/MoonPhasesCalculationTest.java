@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -66,6 +67,7 @@ public class MoonPhasesCalculationTest {
 
     @Test
     public void testGetHalfMoonResults() {
+        requestForm.setPhases(new ArrayList<>());
         requestForm.getPhases().add("Halbmond");
         requestForm.setTo(ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC));
 
@@ -76,6 +78,7 @@ public class MoonPhasesCalculationTest {
 
     @Test
     public void testDailyEventsProvidedForAllDays() {
+        requestForm.setPhases(new ArrayList<>());
         requestForm.getPhases().add("tägliche Phasen");
 
         final Collection<Event> actual = calculate(requestForm);
