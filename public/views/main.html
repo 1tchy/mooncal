@@ -61,11 +61,11 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" ng-if="calendar">
 		<div class="col-md-12">
-			<div class="panel panel-success">
+			<div class="panel panel-success" ng-class="{true: 'panel-warning', false: 'panel-success'}[requestOngoing]">
 				<div class="panel-heading">
-					<h3 class="panel-title">Kalender</h3>
+					<h3 class="panel-title">Kalender <span ng-if="requestOngoing">(neue Daten werden geladen)</span></h3>
 				</div>
 				<table class="table table-bordered">
 					<tr ng-repeat="event in calendar">
@@ -74,6 +74,19 @@
 						<td class="text-muted description">{{event.description}}</td>
 					</tr>
 				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" ng-if="error">
+		<div class="col-md-12">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title">Fehler {{error.status}}: {{error.statusText}}</h3>
+				</div>
+				<div class="panel-body">
+					{{error.data}}
+				</div>
 			</div>
 		</div>
 	</div>

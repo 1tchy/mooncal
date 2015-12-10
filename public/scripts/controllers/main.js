@@ -21,12 +21,15 @@ angular.module('mondkalenderApp')
 			{name:'Mondfinsternis', include:false},
 			{name:'Mondlandung', include:false}
 		];
-		$scope.from = new Date(2015,0,1);
-		$scope.to = new Date(2015,11,31);
+		$scope.from = new Date(new Date().getFullYear(),0,1);
+		$scope.to = new Date(new Date().getFullYear(),11,31);
 		$scope.calendar=[];
+		$scope.requestOngoing=false;
+		$scope.error=null;
 		$scope.$watch(function(){
 			return JSON.stringify($scope.phases)+JSON.stringify($scope.events)+$scope.from+$scope.to;
 		}, function(){
+		    $scope.requestOngoing=true;
 			$http({
 			   method: 'POST',
 			   url: '/query',
@@ -34,20 +37,12 @@ angular.module('mondkalenderApp')
 			   headers: {'Content-Type': 'application/json'}
 			}).then(function successCallback(response) {
 				$scope.calendar=response.data;
+				$scope.error=null;
+				$scope.requestOngoing=false;
 			  }, function errorCallback(response) {
-				$scope.calendar=response.data;
+				$scope.error=response;
+				$scope.calendar=null;
+				$scope.requestOngoing=false;
 			  });
 		});
-		function calculateCalendar(showFullmoon,showNewmoon,from,to) {
-			if(Math.random()>0.01) {
-				return JSON.stringify($scope.phases)+JSON.stringify($scope.events)+$scope.from+$scope.to;
-			}
-			if(Math.random()>0.3) {
-				return ['hoi',$scope.to, Math.random()];
-			} else if(Math.random()>0.5) {
-				return ['hoiiii',$scope.to, Math.random()];
-			} else {
-				return ['hoi???',$scope.to, Math.random(), showFullmoon,showNewmoon,from,to];
-			}
-		}
 	});
