@@ -36,7 +36,7 @@ angular.module('mondkalenderApp')
 			   data: JSON.stringify({phases:$scope.phases, events:$scope.events, from:$scope.from, to:$scope.to}),
 			   headers: {'Content-Type': 'application/json'}
 			}).then(function successCallback(response) {
-				$scope.calendar=response.data;
+				$scope.updateCalendar(response.data);
 				$scope.error=null;
 				$scope.requestOngoing=false;
 			  }, function errorCallback(response) {
@@ -45,4 +45,36 @@ angular.module('mondkalenderApp')
 				$scope.requestOngoing=false;
 			  });
 		});
+		$scope.updateCalendar=function(newCalendar) {
+		    if(!$scope.calendar) {
+		        $scope.calendar=newCalendar;
+		        return;
+		    }
+		    var newBase=0;
+		    for(var o=0;o<$scope.calendar.length;){
+		        var oldElement=$scope.calendar[o];
+		        if($scope.eventsEquals(oldElement, newCalendar[newBase])) {
+		            o++;newBase++; //nothing to do, event already in list
+		        } else {
+		            var oldElementInNewList=false;
+                    for(var n=newBase;n<newCalendar.length;n++){
+                        if($scope.eventsEquals(oldElement,newCalendar[n])) {
+                            oldElementInNewList=true;
+                            break;
+                        }
+                    }
+                    if(oldElementInNewList) {
+                        $scope.calendar.splice(o++,0,newCalendar[newBase++]); //add new event
+                    }else{
+                        $scope.calendar.splice(o,1); //delete old event
+                    }
+		        }
+		    }
+		    while(newBase<newCalendar.length) {
+		        $scope.calendar.push(newCalendar[newBase++]);
+		    }
+		}
+		$scope.eventsEquals=function(event1, event2) {
+		    return event1 && event2 && event1.date==event2.date && event1.title==event2.title;
+		}
 	});
