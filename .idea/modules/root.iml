@@ -1317,14 +1317,12 @@
     <orderEntry type="module-library">
       <library name="SBT: unmanaged-jars">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../lib/SimpleAstronomyLib-0.3.0.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../lib/SimpleAstronomyLib-0.3.0-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/SimpleAstronomyLib-0.2.0-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/SimpleAstronomyLib-0.2.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="classes" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

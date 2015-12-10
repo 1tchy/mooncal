@@ -8,32 +8,73 @@
 	dolor
 	sit amet.</p>
 <div class="container">
-	<h3>Mondphasen</h3>
-	<ul>
-		<li ng-repeat="phase in phases">
-			<input type="checkbox" ng-model="phase.include"/> {{phase.name}}
-		</li>
-	</ul>
-	<h3>Events</h3>
-	<ul>
-		<li ng-repeat="event in events">
-			<input type="checkbox" ng-model="event.include"/> {{event.name}}
-		</li>
-	</ul>
-	<h3>Zeitspanne</h3>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Mondphasen</h3>
+				</div>
+				<div class="panel-body">
+					<div class="checkbox" ng-repeat="phase in phases">
+						<label>
+							<input type="checkbox" ng-model="phase.include"/> {{phase.name}}
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Events</h3>
+				</div>
+				<div class="panel-body">
+					<div class="checkbox" ng-repeat="event in events">
+						<label>
+							<input type="checkbox" ng-model="event.include"/> {{event.name}}
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<p>
-		Anzeige vom
-		<input type="date" ng-model="from"/>
-		bis
-		<input type="date" ng-model="to"/>
-	</p>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Zeitspanne</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-inline">
+						<div class="form-group">
+							Anzeige vom
+							<input type="date" class="form-control" ng-model="from">
+						</div>
+						<div class="form-group">
+							bis
+							<input type="date" class="form-control" ng-model="to">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<table class="table tableRow table-bordered">
-		<tr ng-repeat="event in calendar" class="col-sm-6">
-			<td>{{event.date}}</td>
-			<td>{{event.title}}</td>
-			<td class="text-muted">{{event.description}}</td>
-		</tr>
-	</table>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">Kalender</h3>
+				</div>
+				<table class="table table-bordered">
+					<tr ng-repeat="event in calendar">
+						<td>{{event.date| date:'mediumDate'}}</td>
+						<td>{{event.title}}</td>
+						<td class="text-muted description">{{event.description}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

@@ -82,13 +82,6 @@ body {
   }
 }
 
-tr.col-sm-6 {
-	display: inline-table;
-	border-right: 10px;
-	border-collapse: separate;
-	padding:0 3px 1px 0;
-}
-
-.tableRow {
-	border:0;
+.description {
+    white-space: pre-line;
 }
