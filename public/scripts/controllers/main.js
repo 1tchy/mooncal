@@ -8,18 +8,16 @@
  * Controller of the mondkalenderApp
  */
 angular.module('mondkalenderApp')
-	.controller('MainCtrl', function ($scope, $http) {
+	.controller('MainCtrl', function ($scope, $http, $window) {
 		$scope.phases = [
 			{name:'Vollmond',include:true},
-			{name:'Neumond',include:true},
+			{name:'Neumond',include:false},
 			{name:'Halbmond',include:false},
 			{name:'tägliche Phasen',include:false}
 		];
 		$scope.events = [
-			{name:'Mondaufgang', include:true},
-			{name:'Monduntergang', include:true},
-			{name:'Mondfinsternis', include:false},
-			{name:'Mondlandung', include:false}
+			{name:'Mondfinsternis', include:true},
+			{name:'Mondlandung', include:true}
 		];
 		$scope.from = new Date(new Date().getFullYear(),0,1);
 		$scope.to = new Date(new Date().getFullYear(),11,31);
@@ -41,8 +39,8 @@ angular.module('mondkalenderApp')
 		    $scope.requestOngoing=true;
 			$http({
 			   method: 'GET',
-			   url: '/query',
-			   params: {'phases[]':$scope.getEventCategoriesToInclude($scope.phases), 'events[]':$scope.getEventCategoriesToInclude($scope.events), from:$scope.from, to:$scope.to},
+			   url: '/mondkalender',
+			   params: {'phases[]':$scope.getEventCategoriesToInclude($scope.phases), 'events[]':$scope.getEventCategoriesToInclude($scope.events), from:$scope.from?$scope.from.toISOString():$scope.from, to:$scope.to?$scope.to.toISOString():$scope.to},
 			   headers: {'Content-Type': 'application/json'}
 			}).then(function successCallback(response) {
 				$scope.updateCalendar(response.data);

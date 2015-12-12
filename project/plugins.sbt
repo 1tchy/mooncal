@@ -6,3 +6,6 @@ resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/release
 
 // Use the Play sbt plugin for Play projects
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.4")
+
+//see latest version under: https://github.com/sbt/sbt-less/releases
+addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.6")

@@ -1,0 +1,26 @@
+@import "lib/bootstrap/less/bootstrap.less";
+
+/*** Adapt bootstrap ***/
+@body-bg: black;
+@text-color: white;
+@panel-bg: @gray-dark;
+
+/*** Fonts ***/
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);
+@font-family-sans-serif: 'Quicksand', sans-serif;
+@headings-font-weight: 700;
+
+#mond{
+    position:absolute;
+    left:0;
+    width: 40%;
+    z-index:-1;
+}
+
+.fadeAnimation.ng-enter.ng-enter-active, .fadeAnimation.ng-leave {
+    opacity: 1;
+}
+
+.fadeAnimation.ng-leave.ng-leave-active, .fadeAnimation.ng-enter {
+    opacity: 0;
+}

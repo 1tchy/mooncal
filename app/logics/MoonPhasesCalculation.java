@@ -42,7 +42,7 @@ public class MoonPhasesCalculation implements Calculation {
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            eventCollection.add(new Event(moonHappening, phaseName, phaseName + " ist um " + moonHappening.format(TIME_FORMATTER)));
+            eventCollection.add(new Event(moonHappening, phaseName, phaseName + " um " + moonHappening.format(TIME_FORMATTER)));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
     }
