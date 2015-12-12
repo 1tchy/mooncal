@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Mondkalender</title>
+	<title>@Messages("app.title")</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="stylesheets/main.css">
@@ -17,20 +17,20 @@
 
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
 						data-target="#js-navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
+					<span class="sr-only">@Messages("navigation.toggle")</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
 
-				<a class="navbar-brand" href="#/">mondkalender</a>
+				<a class="navbar-brand" href="#/">@Messages("app.title")</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="js-navbar-collapse">
 
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#/">Home</a></li>
-					<li><a ng-href="#/about">About</a></li>
+					<li class="active"><a href="#/">@Messages("navigation.home")</a></li>
+					<li><a ng-href="#/about">@Messages("navigation.about")</a></li>
 				</ul>
 			</div>
 		</div>
@@ -55,6 +55,7 @@
 <script src="lib/angularjs/angular.js"></script>
 <script src="lib/angularjs/angular-animate.js"></script>
 <script src="lib/angularjs/angular-route.js"></script>
+<script src='lib/angularjs/i18n/angular-locale_@{Messages("app.angularlocale")}.js'></script>
 
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>

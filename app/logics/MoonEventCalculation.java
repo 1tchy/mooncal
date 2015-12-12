@@ -3,6 +3,7 @@ package logics;
 import com.google.common.io.LineReader;
 import models.Event;
 import models.RequestForm;
+import play.i18n.Messages;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -57,9 +58,9 @@ public class MoonEventCalculation implements Calculation {
     private static String getEclipseName(String shortcut) {
         switch (shortcut) {
             case "T":
-                return "Totale Mondfinsternis";
+                return Messages.get("events.lunareclipse.total");
             case "P":
-                return "Partielle Mondfinsternis";
+                return Messages.get("events.lunareclipse.partial");
             default:
                 throw new RuntimeException(shortcut + " is no known eclipse type");
         }
@@ -67,10 +68,10 @@ public class MoonEventCalculation implements Calculation {
 
     @Override
     public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
-        if (requestForm.includeEvent("Mondfinsternis")) {
+        if (requestForm.includeEvent("lunareclipse")) {
             findEventsInMap(requestForm, eventCollection, this.lunarEclipses);
         }
-        if (requestForm.includeEvent("Mondlandung")) {
+        if (requestForm.includeEvent("moonlanding")) {
             findEventsInMap(requestForm, eventCollection, moonLandings);
         }
     }

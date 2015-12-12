@@ -9,18 +9,13 @@
  */
 angular.module('mondkalenderApp')
 	.controller('MainCtrl', function ($scope, $http, $window) {
-		$scope.phases = [
-			{name:'Vollmond',include:true},
-			{name:'Neumond',include:false},
-			{name:'Halbmond',include:false},
-			{name:'tägliche Phasen',include:false}
-		];
-		$scope.events = [
-			{name:'Mondfinsternis', include:true},
-			{name:'Mondlandung', include:true}
-		];
+		$scope.phases = {full:{value:true},'new':{value:false},quarter:{value:false},daily:{value:false}};
+		$scope.events = {lunareclipse:{value:true},moonlanding:{value:true}};
 		$scope.from = new Date(new Date().getFullYear(),0,1);
 		$scope.to = new Date(new Date().getFullYear(),11,31);
+		$scope.paramsAsString=function() {
+		    return "phases[full]="+$scope.phases.full.value+"&phases[new]="+$scope.phases["new"].value+"&phases[quarter]="+$scope.phases.quarter.value+"&phases[daily]="+$scope.phases.daily.value+"&events[lunareclipse]="+$scope.events.lunareclipse.value+"&events[moonlanding]="+$scope.events.moonlanding.value+"&from="+($scope.from?$scope.from.toISOString():$scope.from)+"&to="+($scope.to?$scope.to.toISOString():$scope.to);
+		};
 		$scope.calendar=[];
 		$scope.requestOngoing=false;
 		$scope.error=null;
@@ -34,13 +29,13 @@ angular.module('mondkalenderApp')
 		    return eventKeysToInclude;
 		};
 		$scope.$watch(function(){
-			return JSON.stringify($scope.phases)+JSON.stringify($scope.events)+$scope.from+$scope.to;
+			return $scope.paramsAsString();
 		}, function(){
+		    console.log($scope.paramsAsString());
 		    $scope.requestOngoing=true;
 			$http({
 			   method: 'GET',
-			   url: '/mondkalender',
-			   params: {'phases[]':$scope.getEventCategoriesToInclude($scope.phases), 'events[]':$scope.getEventCategoriesToInclude($scope.events), from:$scope.from?$scope.from.toISOString():$scope.from, to:$scope.to?$scope.to.toISOString():$scope.to},
+			   url: '/mondkalender?'+$scope.paramsAsString(),
 			   headers: {'Content-Type': 'application/json'}
 			}).then(function successCallback(response) {
 				$scope.updateCalendar(response.data);
@@ -85,16 +80,6 @@ angular.module('mondkalenderApp')
 		    return event1 && event2 && event1.date==event2.date && event1.title==event2.title;
 		}
 		$scope.downloadIcal=function() {
-		    var href="/mondkalender.ics?";
-		    var phases=$scope.getEventCategoriesToInclude($scope.phases);
-		    for(var i=0;i<phases.length;i++){
-		        href=href+"phases[]="+phases[i]+"&";
-		    }
-            var events=$scope.getEventCategoriesToInclude($scope.events);
-            for(var i=0;i<events.length;i++) {
-                href=href+"events[]="+events[i]+"&";
-            }
-            href=href+"from="+$scope.from.toISOString()+"&to="+$scope.to.toISOString();
-		    $window.location.href=href;
+		    $window.location.href="/mondkalender.ics?"+$scope.paramsAsString();
 		};
 	});

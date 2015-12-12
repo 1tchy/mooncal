@@ -4,6 +4,7 @@ import com.bradsbrain.simpleastronomy.MoonPhaseFinder;
 import models.Event;
 import models.RequestForm;
 import org.jetbrains.annotations.NotNull;
+import play.i18n.Messages;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -21,17 +22,17 @@ public class MoonPhasesCalculation implements Calculation {
     public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
-        if (requestForm.includePhase("Vollmond")) {
+        if (requestForm.includePhase("full")) {
             calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON.getName(), eventCollection);
         }
-        if (requestForm.includePhase("Neumond")) {
+        if (requestForm.includePhase("new")) {
             calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(), eventCollection);
         }
-        if (requestForm.includePhase("Halbmond")) {
+        if (requestForm.includePhase("quarter")) {
             calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER.getName(), eventCollection);
             calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER.getName(), eventCollection);
         }
-        if (requestForm.includePhase("tägliche Phasen")) {
+        if (requestForm.includePhase("daily")) {
             calculateDailyEvents(requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
         }
     }
@@ -42,7 +43,7 @@ public class MoonPhasesCalculation implements Calculation {
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            eventCollection.add(new Event(moonHappening, phaseName, phaseName + " um " + moonHappening.format(TIME_FORMATTER)));
+            eventCollection.add(new Event(moonHappening, phaseName, Messages.get(phaseName, moonHappening.format(TIME_FORMATTER))));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
     }
@@ -56,14 +57,14 @@ public class MoonPhasesCalculation implements Calculation {
 
     @NotNull
     private Event calculateDailyEvent(LocalDate day, ZoneId at) {
-        final String title = "Mond " + getMoonVisiblePercent(day.atTime(12, 0).atZone(at), new DecimalFormat("0")) + "% sichtbar";
+        final String title = Messages.get("phases.daily.visibility", getMoonVisiblePercent(day.atTime(12, 0).atZone(at), new DecimalFormat("0")));
         final DecimalFormat precise = new DecimalFormat("0.0");
         final String moonVisiblePercentMorning = getMoonVisiblePercent(day.atTime(6, 0).atZone(at), precise);
         final String moonVisiblePercentAtNoon = getMoonVisiblePercent(day.atTime(12, 0).atZone(at), precise);
         final String moonVisiblePercentEvening = getMoonVisiblePercent(day.atTime(18, 0).atZone(at), precise);
-        String description = "Morgens um 6:00 ist der Mond " + moonVisiblePercentMorning + "% sichtbar\n" +
-                "Mittags um 12:00 ist der Mond " + moonVisiblePercentAtNoon + "% sichtbar\n" +
-                "Abends um 18:00 ist der Mond " + moonVisiblePercentEvening + "% sichtbar";
+        String description = Messages.get("phases.daily.visibility.morning6", moonVisiblePercentMorning) + "\n" +
+                Messages.get("phases.daily.visibility.noon12", moonVisiblePercentAtNoon) + "\n" +
+                Messages.get("phases.daily.visibility.evening6", moonVisiblePercentEvening);
         return new Event(day.atTime(12, 0).atZone(at), title, description);
     }
 

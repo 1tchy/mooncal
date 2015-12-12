@@ -7,9 +7,9 @@ import play.data.validation.Constraints;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class RequestForm {
 
@@ -29,27 +29,31 @@ public class RequestForm {
         });
     }
 
-    private List<String> phases = new ArrayList<>();
-    private List<String> events = new ArrayList<>();
+    private Map<String, Boolean> phases = new HashMap<>();
+    private Map<String, Boolean> events = new HashMap<>();
     @Constraints.Required
     private ZonedDateTime from;
     @Constraints.Required
     private ZonedDateTime to;
 
-    public List<String> getPhases() {
+    public Map<String, Boolean> getPhases() {
         return phases;
     }
 
-    public void setPhases(List<String> phases) {
-        this.phases = phases;
+    public void setPhases(Map<String, Boolean> phases) {
+        if (phases != null) {
+            this.phases = phases;
+        }
     }
 
-    public List<String> getEvents() {
+    public Map<String, Boolean> getEvents() {
         return events;
     }
 
-    public void setEvents(List<String> events) {
-        this.events = events;
+    public void setEvents(Map<String, Boolean> events) {
+        if (events != null) {
+            this.events = events;
+        }
     }
 
     public ZonedDateTime getFrom() {
@@ -69,11 +73,11 @@ public class RequestForm {
     }
 
     public boolean includePhase(@NotNull String name) {
-        return phases.contains(name);
+        return phases.get(name) == Boolean.TRUE;
     }
 
     public boolean includeEvent(@NotNull String name) {
-        return events.contains(name);
+        return events.get(name) == Boolean.TRUE;
     }
 
 }

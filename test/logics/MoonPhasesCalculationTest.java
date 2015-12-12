@@ -6,18 +6,18 @@ import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
+import play.test.WithApplication;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MoonPhasesCalculationTest {
+public class MoonPhasesCalculationTest extends WithApplication {
 
     private MoonPhasesCalculation cut = new MoonPhasesCalculation();
     private RequestForm requestForm;
@@ -25,8 +25,8 @@ public class MoonPhasesCalculationTest {
     @Before
     public void setup() {
         requestForm = new RequestForm();
-        requestForm.getPhases().add("Vollmond");
-        requestForm.getPhases().add("Neumond");
+        requestForm.getPhases().put("full", true);
+        requestForm.getPhases().put("new", true);
         requestForm.setFrom(ZonedDateTime.of(2015, 10, 20, 12, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2015, 11, 30, 12, 0, 0, 0, ZoneOffset.UTC));
     }
@@ -67,8 +67,8 @@ public class MoonPhasesCalculationTest {
 
     @Test
     public void testGetHalfMoonResults() {
-        requestForm.setPhases(new ArrayList<>());
-        requestForm.getPhases().add("Halbmond");
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put("quarter", true);
         requestForm.setTo(ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC));
 
         final Collection<Event> actual = calculate(requestForm);
@@ -78,8 +78,8 @@ public class MoonPhasesCalculationTest {
 
     @Test
     public void testDailyEventsProvidedForAllDays() {
-        requestForm.setPhases(new ArrayList<>());
-        requestForm.getPhases().add("tägliche Phasen");
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put("daily", true);
 
         final Collection<Event> actual = calculate(requestForm);
 

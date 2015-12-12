@@ -1,38 +1,38 @@
-<img src="/images/mond.png" alt="Mond" id="mond"/>
-<h1>Mondkalender</h1>
+<img src="/images/mond.png" alt='@Messages("app.moon")' id="mond"/>
+<h1>@Messages("app.title")</h1>
 
-<p>Sind Sie schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die
-	Mondphasen zu erfahren? Dann haben Sie sie jetzt gefunden! In der folgenden App können Sie sich Ihren
-	persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle
-	Ereignisse im Zusammenhang mit dem Mond. Der Monkalender lässt sich unten anzeigen und in Ihren Kalender
-	exportieren.</p>
+<p>@Messages("app.introduction")</p>
 
 <div class="row">
 	<div class="col-md-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Mondphasen</h3>
+				<h3 class="panel-title">@Messages("phases.title")</h3>
 			</div>
 			<div class="panel-body">
-				<div class="checkbox" ng-repeat="phase in phases">
+				@for(phase <- Array("phases.full","phases.new","phases.quarter","phases.daily")) {
+				<div class="checkbox">
 					<label>
-						<input type="checkbox" ng-model="phase.include"/> {{phase.name}}
+						<input type="checkbox" ng-model="@{phase}.value"/> @Messages(phase)
 					</label>
 				</div>
+				}
 			</div>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Events</h3>
+				<h3 class="panel-title">@Messages("events.title")</h3>
 			</div>
 			<div class="panel-body">
-				<div class="checkbox" ng-repeat="event in events">
+				@for(event <- Array("events.lunareclipse","events.moonlanding")) {
+				<div class="checkbox">
 					<label>
-						<input type="checkbox" ng-model="event.include"/> {{event.name}}
+						<input type="checkbox" ng-model="@{event}.value"/> @Messages(event)
 					</label>
 				</div>
+				}
 			</div>
 		</div>
 	</div>
@@ -42,17 +42,13 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Zeitspanne</h3>
+				<h3 class="panel-title">@Messages("time.title")</h3>
 			</div>
 			<div class="panel-body">
 				<form class="form-inline">
 					<div class="form-group">
-						Anzeige vom
-						<input type="date" class="form-control" ng-model="from" required>
-					</div>
-					<div class="form-group">
-						bis
-						<input type="date" class="form-control" ng-model="to" required>
+						@Html(Messages("time.fromTo","<input type='date' class='form-control' ng-model='from' required>",
+						"<input type='date' class='form-control' ng-model='to' required>"))
 					</div>
 				</form>
 			</div>
@@ -64,7 +60,7 @@
 	<div class="col-md-12">
 		<div class="panel" ng-class="{true: 'panel-warning', false: 'panel-default'}[requestOngoing]">
 			<div class="panel-heading">
-				<h3 class="panel-title">Kalender <span ng-if="requestOngoing">(neue Daten werden geladen)</span>
+				<h3 class="panel-title">@Messages("calendar.title")<span ng-if="requestOngoing"> (@Messages("calendar.reloading"))</span>
 				</h3>
 			</div>
 			<table class="table table-bordered">
@@ -95,12 +91,11 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Exportieren</h3>
+				<h3 class="panel-title">@Messages("export.title")</h3>
 			</div>
 			<div class="panel-body">
 				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default" ng-click="downloadIcal()">Für Kalender exportieren
-						(iCalendar)
+					<button type="button" class="btn btn-default" ng-click="downloadIcal()">@Messages("export.ical")
 					</button>
 				</div>
 			</div>
