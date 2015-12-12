@@ -86,4 +86,17 @@ angular.module('mondkalenderApp')
 		$scope.eventsEquals=function(event1, event2) {
 		    return event1 && event2 && event1.date==event2.date && event1.title==event2.title;
 		}
+		$scope.downloadIcal=function() {
+		    var href="/mondkalender.ics?";
+		    var phases=$scope.getEventCategoriesToInclude($scope.phases);
+		    for(var i=0;i<phases.length;i++){
+		        href=href+"phases[]="+phases[i]+"&";
+		    }
+            var events=$scope.getEventCategoriesToInclude($scope.events);
+            for(var i=0;i<events.length;i++) {
+                href=href+"events[]="+events[i]+"&";
+            }
+            href=href+"from="+$scope.from.toISOString()+"&to="+$scope.to.toISOString();
+		    $window.location.href=href;
+		};
 	});

@@ -11,6 +11,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava,
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
+  //see latest version under: http://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
+  "org.mnode.ical4j"          % "ical4j"                   % "1.0.7",
   //see latest version under: https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/org/jetbrains/annotations/
   "org.jetbrains"             % "annotations"              % "7.0.2",
   //see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all

@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Assets.at(path="/public", file="index.html")
 GET 	/query						controllers.Application.query()
+GET 	/query.ics  				controllers.Application.queryAsICalendar()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /target/web/public/main/bower_components/*file	controllers.Assets.at(path="/public/bower_components", file)
