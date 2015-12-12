@@ -1,39 +1,109 @@
-@()(content: Html)
+<img src="/images/mond.png" alt="Mond" id="mond"/>
+<h1>Mondkalender</h1>
 
-@import play.api.Play
-@import play.api.Play.current
+<p>Sind Sie schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die
+	Mondphasen zu erfahren? Dann haben Sie sie jetzt gefunden! In der folgenden App können Sie sich Ihren
+	persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle
+	Ereignisse im Zusammenhang mit dem Mond. Der Monkalender lässt sich unten anzeigen und in Ihren Kalender
+	exportieren.</p>
 
-<!DOCTYPE html>
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Mondphasen</h3>
+			</div>
+			<div class="panel-body">
+				<div class="checkbox" ng-repeat="phase in phases">
+					<label>
+						<input type="checkbox" ng-model="phase.include"/> {{phase.name}}
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Events</h3>
+			</div>
+			<div class="panel-body">
+				<div class="checkbox" ng-repeat="event in events">
+					<label>
+						<input type="checkbox" ng-model="event.include"/> {{event.name}}
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="fragment" content="!" />
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Zeitspanne</h3>
+			</div>
+			<div class="panel-body">
+				<form class="form-inline">
+					<div class="form-group">
+						Anzeige vom
+						<input type="date" class="form-control" ng-model="from" required>
+					</div>
+					<div class="form-group">
+						bis
+						<input type="date" class="form-control" ng-model="to" required>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <title></title>
+<div class="row fadeAnimation" ng-if="calendar">
+	<div class="col-md-12">
+		<div class="panel" ng-class="{true: 'panel-warning', false: 'panel-default'}[requestOngoing]">
+			<div class="panel-heading">
+				<h3 class="panel-title">Kalender <span ng-if="requestOngoing">(neue Daten werden geladen)</span>
+				</h3>
+			</div>
+			<table class="table table-bordered">
+				<tr ng-repeat="event in calendar" class="fadeAnimation">
+					<td>{{event.date| date:'mediumDate'}}</td>
+					<td>{{event.title}}</td>
+					<td class="text-muted description">{{event.description}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
 
-    <link rel="shortcut icon" type="image/png" href="@@routes.Assets.at("/public","images/favicon.png")">
+<div class="row fadeAnimation" ng-if="error">
+	<div class="col-md-12">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h3 class="panel-title">Fehler {{error.status}}: {{error.statusText}}</h3>
+			</div>
+			<div class="panel-body">
+				{{error.data}}
+			</div>
+		</div>
+	</div>
+</div>
 
-    @if(Play.isProd) {
-      <link rel="stylesheet" media="screen" href="@@routes.Assets.at("stylesheets/@@{conf.styleName}-@@{conf.version}.min.css")">
-    } else {
-      <link rel="stylesheet" media="screen" href="@@routes.Assets.at("stylesheets/@@{conf.styleName}.css")">
-    }
-  </head>
-
-  <body>
-    @content
-
-    @if(Play.isProd) {
-      <script type="text/javascript" src="@@routes.Assets.at("javascripts/@@{conf.scriptName}-@@{conf.version}.min.js")"></script>
-    } else {
-      <script type="text/javascript" src="@@routes.Assets.at("javascripts/@@{conf.scriptName}.js")"></script>
-      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular.js")"></script>
-      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-route.js")"></script>
-      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-animate.js")"></script>
-      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-resource.js")"></script>
-    }
-  </body>
-</html>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Exportieren</h3>
+			</div>
+			<div class="panel-body">
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default" ng-click="downloadIcal()">Für Kalender exportieren
+						(iCalendar)
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
