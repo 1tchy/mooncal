@@ -14,7 +14,7 @@
 
     <title></title>
 
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("/public","images/favicon.png")">
+    <link rel="shortcut icon" type="image/png" href="@@routes.Assets.at("/public","images/favicon.png")">
 
     @if(Play.isProd) {
       <link rel="stylesheet" media="screen" href="@@routes.Assets.at("stylesheets/@@{conf.styleName}-@@{conf.version}.min.css")">
@@ -30,10 +30,10 @@
       <script type="text/javascript" src="@@routes.Assets.at("javascripts/@@{conf.scriptName}-@@{conf.version}.min.js")"></script>
     } else {
       <script type="text/javascript" src="@@routes.Assets.at("javascripts/@@{conf.scriptName}.js")"></script>
-      <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular.js")"></script>
-      <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-route.js")"></script>
-      <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-animate.js")"></script>
-      <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-resource.js")"></script>
+      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular.js")"></script>
+      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-route.js")"></script>
+      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-animate.js")"></script>
+      <script type="text/javascript" src="@@routes.Assets.at("/public", "javascripts/vendors/angular-latest/angular-resource.js")"></script>
     }
   </body>
 </html>

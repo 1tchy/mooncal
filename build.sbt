@@ -17,7 +17,8 @@ libraryDependencies ++= Seq(
   "org.jetbrains"             % "annotations"              % "7.0.2",
   // WEBJARS: http://www.webjars.org/
   "org.webjars" % "bootstrap" % "3.3.5",
-  //see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all
+  "org.webjars" % "angularjs" % "1.4.8",
+//see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all
   "org.mockito"               % "mockito-all"              % "1.10.19" % Test,
   //see latest version under: http://mvnrepository.com/artifact/org.fluentlenium/fluentlenium-core
   "junit"                     % "junit"                    % "4.12" % Test,
@@ -41,10 +42,3 @@ javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint:unchecked")
 javacOptions ++= Seq("-Xlint:unchecked")
 javacOptions ++= Seq("-Xlint:deprecation")
 javacOptions ++= Seq("-Xdiags:verbose")
-
-resourceGenerators in Compile <+= Def.task {
-	"bower install" !
-	val files = (resourceManaged in Compile).value / "bower_components"
-	Seq(files)
-}
-
