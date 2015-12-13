@@ -30,7 +30,8 @@ public class MoonEventCalculation implements Calculation {
     private void initializeLunarEclipses() {
         initializeByCVS("lunar-eclipses.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            lunarEclipses.put(date, new Event(date, getEclipseName(rows[1]), null));
+            final String eclipseName = getEclipseName(rows[1]);
+            lunarEclipses.put(date, new Event(date, eclipseName, Messages.get("events.at", eclipseName, date.format(TIME_FORMATTER))));
         });
     }
 

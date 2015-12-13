@@ -14,7 +14,14 @@ angular.module('mondkalenderApp')
 		$scope.from = new Date(new Date().getFullYear(),0,1);
 		$scope.to = new Date(new Date().getFullYear(),11,31);
 		$scope.paramsAsString=function() {
-		    return "phases[full]="+$scope.phases.full.value+"&phases[new]="+$scope.phases["new"].value+"&phases[quarter]="+$scope.phases.quarter.value+"&phases[daily]="+$scope.phases.daily.value+"&events[lunareclipse]="+$scope.events.lunareclipse.value+"&events[moonlanding]="+$scope.events.moonlanding.value+"&from="+($scope.from?$scope.from.toISOString():$scope.from)+"&to="+($scope.to?$scope.to.toISOString():$scope.to);
+		    return "phases[full]="+$scope.phases.full.value
+		        +"&phases[new]="+$scope.phases["new"].value
+		        +"&phases[quarter]="+$scope.phases.quarter.value
+		        +"&phases[daily]="+$scope.phases.daily.value
+		        +"&events[lunareclipse]="+$scope.events.lunareclipse.value
+		        +"&events[moonlanding]="+$scope.events.moonlanding.value
+		        +"&from="+$scope.formatDate($scope.from)
+		        +"&to="+$scope.formatDate($scope.to);
 		};
 		$scope.calendar=[];
 		$scope.requestOngoing=false;
@@ -28,6 +35,22 @@ angular.module('mondkalenderApp')
 		    }
 		    return eventKeysToInclude;
 		};
+		$scope.formatDate=function formatLocalDate(date) {
+		    if(!date) return date;
+            var tzo = -date.getTimezoneOffset();
+            var pad = function(num) {
+                var norm = Math.abs(Math.floor(num));
+                return (norm < 10 ? '0' : '') + norm;
+            };
+            return date.getFullYear()
+                + '-' + pad(date.getMonth()+1)
+                + '-' + pad(date.getDate())
+                + 'T' + pad(date.getHours())
+                + ':' + pad(date.getMinutes())
+                + ':' + pad(date.getSeconds())
+                + (tzo >= 0 ? '+' : '-') + pad(tzo / 60)
+                + ':' + pad(tzo % 60);
+        }
 		$scope.$watch(function(){
 			return $scope.paramsAsString();
 		}, function(){

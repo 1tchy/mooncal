@@ -10,13 +10,10 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.function.Function;
 
 public class MoonPhasesCalculation implements Calculation {
-
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     @Override
     public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
@@ -43,9 +40,14 @@ public class MoonPhasesCalculation implements Calculation {
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            eventCollection.add(new Event(moonHappening, phaseName, Messages.get(phaseName, moonHappening.format(TIME_FORMATTER))));
+            eventCollection.add(new Event(moonHappening, phaseName, Messages.get("phases.at", phaseName, formatTime(moonHappening))));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
+    }
+
+    @NotNull
+    private String formatTime(ZonedDateTime moonHappening) {
+        return moonHappening.format(TIME_FORMATTER);
     }
 
     private void calculateDailyEvents(LocalDate from, LocalDate to, ZoneId at, Collection<Event> eventCollection) {

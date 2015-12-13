@@ -13,13 +13,13 @@ import java.util.Map;
 
 public class RequestForm {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSX");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
     static {
         Formatters.register(ZonedDateTime.class, new Formatters.SimpleFormatter<ZonedDateTime>() {
             @Override
             public ZonedDateTime parse(String input, Locale l) throws ParseException {
-                return ZonedDateTime.parse(input, DATE_TIME_FORMATTER);
+                return ZonedDateTime.parse(input.replaceAll(" ", "+"), DATE_TIME_FORMATTER);
             }
 
             @Override

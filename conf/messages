@@ -25,6 +25,7 @@ events.lunareclipse=Mondfinsternis
 events.lunareclipse.total=Totale Mondfinsternis
 events.lunareclipse.partial=Partielle Mondfinsternis
 events.moonlanding=Mondlandung
+events.at={0} um {1}
 
 time.title=Zeitspanne
 time.fromTo=Anzeige vom {0} bis {1}
