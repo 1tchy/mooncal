@@ -12,13 +12,14 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
-public class MoonEventCalculation implements Calculation {
+public class MoonEventCalculation extends Calculation {
 
     public static final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
-    TreeMap<ZonedDateTime, Event> lunarEclipses = new TreeMap<>();
+    TreeMap<ZonedDateTime, String> lunarEclipses = new TreeMap<>();
 
     TreeMap<ZonedDateTime, Event> moonLandings = new TreeMap<>();
 
@@ -29,9 +30,7 @@ public class MoonEventCalculation implements Calculation {
 
     private void initializeLunarEclipses() {
         initializeByCVS("lunar-eclipses.csv", rows -> {
-            final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            final String eclipseName = getEclipseName(rows[1]);
-            lunarEclipses.put(date, new Event(date, eclipseName, Messages.get("events.at", eclipseName, date.format(TIME_FORMATTER))));
+            lunarEclipses.put(LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC), getEclipseName(rows[1]));
         });
     }
 
@@ -73,14 +72,25 @@ public class MoonEventCalculation implements Calculation {
             findEventsInMap(requestForm, eventCollection, this.lunarEclipses);
         }
         if (requestForm.includeEvent("moonlanding")) {
-            findEventsInMap(requestForm, eventCollection, moonLandings);
+            findEventsInMap2(requestForm, eventCollection, moonLandings);
         }
     }
 
-    private static void findEventsInMap(RequestForm requestForm, Collection<Event> eventCollection, TreeMap<ZonedDateTime, Event> map) {
+    @Deprecated
+    private static void findEventsInMap2(RequestForm requestForm, Collection<Event> eventCollection, TreeMap<ZonedDateTime, Event> map) {
         for (Event lunarEclipseEvent : map.tailMap(requestForm.getFrom()).values()) {
             if (lunarEclipseEvent.getDateTime().isBefore(requestForm.getTo())) {
                 eventCollection.add(lunarEclipseEvent);
+            } else {
+                break;
+            }
+        }
+    }
+
+    private static void findEventsInMap(RequestForm requestForm, Collection<Event> eventCollection, TreeMap<ZonedDateTime, String> map) {
+        for (Map.Entry<ZonedDateTime, String> event : map.tailMap(requestForm.getFrom()).entrySet()) {
+            if (event.getKey().isBefore(requestForm.getTo())) {
+                eventCollection.add(new Event(event.getKey(), event.getValue(), eventAt(event.getValue(), event.getKey(), requestForm.getFrom().getZone())));
             } else {
                 break;
             }

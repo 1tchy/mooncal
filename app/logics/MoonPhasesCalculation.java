@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.function.Function;
 
-public class MoonPhasesCalculation implements Calculation {
+public class MoonPhasesCalculation extends Calculation {
 
     @Override
     public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
@@ -40,14 +40,9 @@ public class MoonPhasesCalculation implements Calculation {
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            eventCollection.add(new Event(moonHappening, phaseName, Messages.get("phases.at", phaseName, formatTime(moonHappening))));
+            eventCollection.add(new Event(moonHappening, phaseName, eventAt(phaseName, moonHappening, from.getZone())));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
-    }
-
-    @NotNull
-    private String formatTime(ZonedDateTime moonHappening) {
-        return moonHappening.format(TIME_FORMATTER);
     }
 
     private void calculateDailyEvents(LocalDate from, LocalDate to, ZoneId at, Collection<Event> eventCollection) {

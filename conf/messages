@@ -18,7 +18,6 @@ phases.daily.visibility=Mond {0}% sichtbar
 phases.daily.visibility.morning6=Morgens um 6:00 ist der Mond {0}% sichtbar
 phases.daily.visibility.noon12=Mittags um 12:00 ist der Mond {0}% sichtbar
 phases.daily.visibility.evening6=Abends um 18:00 ist der Mond {0}% sichtbar
-phases.at={0} um {1}
 
 events.title=Events
 events.lunareclipse=Mondfinsternis

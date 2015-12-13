@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import java.util.Collection;
 import java.util.TreeSet;
 
-public class TotalCalculation implements Calculation {
+public class TotalCalculation extends Calculation {
 
     private final MoonPhasesCalculation moonPhasesCalculation;
     private final MoonEventCalculation moonEventCalculation;
