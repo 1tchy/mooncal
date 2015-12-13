@@ -53,7 +53,6 @@ angular.module('mondkalenderApp')
 		$scope.$watch(function(){
 			return $scope.paramsAsString();
 		}, function(){
-		    console.log($scope.paramsAsString());
 		    $scope.requestOngoing=true;
 			$http({
 			   method: 'GET',

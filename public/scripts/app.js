@@ -28,4 +28,9 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+    .run(function($rootScope, $location) {
+        $rootScope.$on("$routeChangeStart", function() {
+            $rootScope.path=$location.path();
+        })
+    });
