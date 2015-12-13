@@ -28,6 +28,8 @@ events.at={0} um {1}
 
 time.title=Zeitspanne
 time.fromTo=Anzeige vom {0} bis {1}
+time.fromTo.required=Es muss sowohl ein Start als auch Enddatum angageben werden.
+time.fromTo.date=Datum muss in der Form TT-MM-JJJJ angegeben werden.
 
 calendar.title=Kalender
 calendar.reloading=neue Daten werden geladen

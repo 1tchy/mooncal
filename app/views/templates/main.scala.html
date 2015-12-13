@@ -45,15 +45,26 @@
 				<h3 class="panel-title">@Messages("time.title")</h3>
 			</div>
 			<div class="panel-body">
-				<form class="form-inline">
-					<div class="form-group">
-						@Html(Messages("time.fromTo","<input type='date' class='form-control' ng-model='from' required>",
-						"<input type='date' class='form-control' ng-model='to' required>"))
+				<form class="form-inline" name="fromTo">
+					@{Html(Messages("time.fromTo", """
+					<div class="form-group" ng-class="{'has-error':fromTo.from.$error.date||fromTo.from.$error.required}">
+						<input type='date' class='form-control' ng-model='from' name="from" required
+							   ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
 					</div>
-				</form>
+					""", """
+					<div class="form-group" ng-class="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
+						<input type='date' class='form-control' ng-model='to' name="to" required
+							   ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
+					</div>
+					"""))}
+					&nbsp;
+					<span class="text-danger" ng-if="fromTo.from.$error.required||fromTo.to.$error.required">@Messages("time.fromTo.required")</span>
+					<span class="text-danger" ng-if="fromTo.from.$error.date||fromTo.to.$error.date">@Messages("time.fromTo.date")</span>
 			</div>
+			</form>
 		</div>
 	</div>
+</div>
 </div>
 
 <div class="row fadeAnimation" ng-if="calendar">

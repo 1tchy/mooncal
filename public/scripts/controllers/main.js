@@ -53,20 +53,24 @@ angular.module('mondkalenderApp')
 		$scope.$watch(function(){
 			return $scope.paramsAsString();
 		}, function(){
-		    $scope.requestOngoing=true;
-			$http({
-			   method: 'GET',
-			   url: '/mondkalender?'+$scope.paramsAsString(),
-			   headers: {'Content-Type': 'application/json'}
-			}).then(function successCallback(response) {
-				$scope.updateCalendar(response.data);
-				$scope.error=null;
-				$scope.requestOngoing=false;
-			  }, function errorCallback(response) {
-				$scope.error=response;
-				$scope.calendar=null;
-				$scope.requestOngoing=false;
-			  });
+		    if($scope.from && $scope.to) {
+                $scope.requestOngoing=true;
+                $http({
+                    method: 'GET',
+                    url: '/mondkalender?'+$scope.paramsAsString(),
+                    headers: {'Content-Type': 'application/json'}
+                }).then(function successCallback(response) {
+                    $scope.updateCalendar(response.data);
+                    $scope.error=null;
+                    $scope.requestOngoing=false;
+                }, function errorCallback(response) {
+                    $scope.error=response;
+                    $scope.calendar=null;
+                    $scope.requestOngoing=false;
+                });
+            } else {
+                $scope.calendar=null;
+            }
 		});
 		$scope.updateCalendar=function(newCalendar) {
 		    if(!$scope.calendar) {
