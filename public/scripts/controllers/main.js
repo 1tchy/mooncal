@@ -48,8 +48,7 @@ angular.module('mondkalenderApp')
                 + 'T' + pad(date.getHours())
                 + ':' + pad(date.getMinutes())
                 + ':' + pad(date.getSeconds())
-                + (tzo >= 0 ? '+' : '-') + pad(tzo / 60)
-                + ':' + pad(tzo % 60);
+                + $scope.getTimezone();
         }
 		$scope.$watch(function(){
 			return $scope.paramsAsString();
@@ -104,5 +103,79 @@ angular.module('mondkalenderApp')
 		}
 		$scope.downloadIcal=function() {
 		    $window.location.href="/mondkalender.ics?"+$scope.paramsAsString();
-		};
+		}
+		$scope.getTimezone=function() {
+            var jOffset = -1 * new Date(Date.UTC(2015, 6, 30, 0, 0, 0, 0)).getTimezoneOffset();
+            var dOffset = -1 * new Date(Date.UTC(2015, 12, 30, 0, 0, 0, 0)).getTimezoneOffset();
+            if(-120==jOffset && -120==dOffset) return 'America/Noronha';
+            if(-120==jOffset && -180==dOffset) return 'America/Godthab';
+            if(-150==jOffset && -210==dOffset) return 'America/St_Johns';
+            if(-180==jOffset && -120==dOffset) return 'Brazil/East';
+            if(-180==jOffset && -180==dOffset) return 'America/Jujuy';
+            if(-180==jOffset && -240==dOffset) return 'SystemV/AST4ADT';
+            if(-240==jOffset && -180==dOffset) return 'Chile/Continental';
+            if(-240==jOffset && -240==dOffset) return 'SystemV/AST4';
+            if(-240==jOffset && -300==dOffset) return 'SystemV/EST5EDT';
+            if(-300==jOffset && -300==dOffset) return 'SystemV/EST5';
+            if(-300==jOffset && -360==dOffset) return 'SystemV/CST6CDT';
+            if(-360==jOffset && -300==dOffset) return 'Pacific/Easter';
+            if(-360==jOffset && -360==dOffset) return 'SystemV/CST6';
+            if(-360==jOffset && -420==dOffset) return 'SystemV/MST7MDT';
+            if(-420==jOffset && -420==dOffset) return 'SystemV/MST7';
+            if(-420==jOffset && -480==dOffset) return 'SystemV/PST8PDT';
+            if(-480==jOffset && -480==dOffset) return 'SystemV/PST8';
+            if(-480==jOffset && -540==dOffset) return 'SystemV/YST9YDT';
+            if(-540==jOffset && -540==dOffset) return 'SystemV/YST9';
+            if(-540==jOffset && -600==dOffset) return 'US/Aleutian';
+            if(-570==jOffset && -570==dOffset) return 'Pacific/Marquesas';
+            if(-60==jOffset && -60==dOffset) return 'Atlantic/Cape_Verde';
+            if(-600==jOffset && -600==dOffset) return 'SystemV/HST10';
+            if(-660==jOffset && -660==dOffset) return 'US/Samoa';
+            if(-720==jOffset && -720==dOffset) return 'Etc/GMT+12';
+            if(0==jOffset && -60==dOffset) return 'Atlantic/Azores';
+            if(0==jOffset && 0==dOffset) return 'UTC';
+            if(120==jOffset && 0==dOffset) return 'Antarctica/Troll';
+            if(120==jOffset && 120==dOffset) return 'Africa/Kigali';
+            if(120==jOffset && 60==dOffset) return 'CET';
+            if(180==jOffset && 120==dOffset) return 'EET';
+            if(180==jOffset && 180==dOffset) return 'Africa/Juba';
+            if(240==jOffset && 180==dOffset) return 'W-SU';
+            if(240==jOffset && 240==dOffset) return 'Etc/GMT-4';
+            if(270==jOffset && 210==dOffset) return 'Iran';
+            if(270==jOffset && 270==dOffset) return 'Asia/Kabul';
+            if(300==jOffset && 240==dOffset) return 'Asia/Yerevan';
+            if(300==jOffset && 300==dOffset) return 'Etc/GMT-5';
+            if(330==jOffset && 330==dOffset) return 'Asia/Kolkata';
+            if(345==jOffset && 345==dOffset) return 'Asia/Katmandu';
+            if(360==jOffset && 300==dOffset) return 'Asia/Yekaterinburg';
+            if(360==jOffset && 360==dOffset) return 'Etc/GMT-6';
+            if(390==jOffset && 390==dOffset) return 'Indian/Cocos';
+            if(420==jOffset && 360==dOffset) return 'Asia/Omsk';
+            if(420==jOffset && 420==dOffset) return 'Asia/Saigon';
+            if(480==jOffset && 420==dOffset) return 'Asia/Hovd';
+            if(480==jOffset && 480==dOffset) return 'PRC';
+            if(525==jOffset && 525==dOffset) return 'Australia/Eucla';
+            if(540==jOffset && 480==dOffset) return 'Asia/Ulaanbaatar';
+            if(540==jOffset && 540==dOffset) return 'ROK';
+            if(570==jOffset && 570==dOffset) return 'Australia/North';
+            if(570==jOffset && 630==dOffset) return 'Australia/South';
+            if(60==jOffset && 0==dOffset) return 'WET';
+            if(60==jOffset && 120==dOffset) return 'Africa/Windhoek';
+            if(60==jOffset && 60==dOffset) return 'Africa/Lagos';
+            if(600==jOffset && 540==dOffset) return 'Asia/Yakutsk';
+            if(600==jOffset && 600==dOffset) return 'Australia/Brisbane';
+            if(600==jOffset && 660==dOffset) return 'Australia/NSW';
+            if(630==jOffset && 660==dOffset) return 'Australia/LHI';
+            if(660==jOffset && 600==dOffset) return 'Asia/Vladivostok';
+            if(660==jOffset && 660==dOffset) return 'Etc/GMT-11';
+            if(690==jOffset && 690==dOffset) return 'Pacific/Norfolk';
+            if(720==jOffset && 660==dOffset) return 'Asia/Ust-Nera';
+            if(720==jOffset && 720==dOffset) return 'Etc/GMT-12';
+            if(720==jOffset && 780==dOffset) return 'NZ';
+            if(765==jOffset && 825==dOffset) return 'NZ-CHAT';
+            if(780==jOffset && 720==dOffset) return 'Asia/Anadyr';
+            if(780==jOffset && 780==dOffset) return 'Pacific/Enderbury';
+            if(840==jOffset && 840==dOffset) return 'Pacific/Kiritimati';
+            return 'UTC';
+		}
 	});
