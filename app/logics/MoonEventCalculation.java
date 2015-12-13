@@ -1,8 +1,9 @@
 package logics;
 
 import com.google.common.io.LineReader;
-import models.Event;
+import models.EventTemplate;
 import models.RequestForm;
+import models.ZonedEvent;
 import play.i18n.Messages;
 
 import java.io.FileReader;
@@ -12,16 +13,14 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
 public class MoonEventCalculation extends Calculation {
 
-    public static final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
-    TreeMap<ZonedDateTime, String> lunarEclipses = new TreeMap<>();
-
-    TreeMap<ZonedDateTime, Event> moonLandings = new TreeMap<>();
+    private final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
+    private final TreeMap<ZonedDateTime, EventTemplate> lunarEclipses = new TreeMap<>();
+    private final TreeMap<ZonedDateTime, EventTemplate> moonLandings = new TreeMap<>();
 
     public MoonEventCalculation() {
         initializeLunarEclipses();
@@ -30,14 +29,16 @@ public class MoonEventCalculation extends Calculation {
 
     private void initializeLunarEclipses() {
         initializeByCVS("lunar-eclipses.csv", rows -> {
-            lunarEclipses.put(LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC), getEclipseName(rows[1]));
+            final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
+            final String name = getEclipseName(rows[1]);
+            lunarEclipses.put(date, new EventTemplate(date, name, zoneId -> eventAt(date, name, zoneId)));
         });
     }
 
     private void initializeMoonLandings() {
         initializeByCVS("moon-landings.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new Event(date, rows[1], rows[2]));
+            moonLandings.put(date, new EventTemplate(date, rows[1], zoneId -> rows[2]));
         });
     }
 
@@ -67,30 +68,19 @@ public class MoonEventCalculation extends Calculation {
     }
 
     @Override
-    public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
+    public void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection) {
         if (requestForm.includeEvent("lunareclipse")) {
             findEventsInMap(requestForm, eventCollection, this.lunarEclipses);
         }
         if (requestForm.includeEvent("moonlanding")) {
-            findEventsInMap2(requestForm, eventCollection, moonLandings);
+            findEventsInMap(requestForm, eventCollection, moonLandings);
         }
     }
 
-    @Deprecated
-    private static void findEventsInMap2(RequestForm requestForm, Collection<Event> eventCollection, TreeMap<ZonedDateTime, Event> map) {
-        for (Event lunarEclipseEvent : map.tailMap(requestForm.getFrom()).values()) {
-            if (lunarEclipseEvent.getDateTime().isBefore(requestForm.getTo())) {
-                eventCollection.add(lunarEclipseEvent);
-            } else {
-                break;
-            }
-        }
-    }
-
-    private static void findEventsInMap(RequestForm requestForm, Collection<Event> eventCollection, TreeMap<ZonedDateTime, String> map) {
-        for (Map.Entry<ZonedDateTime, String> event : map.tailMap(requestForm.getFrom()).entrySet()) {
-            if (event.getKey().isBefore(requestForm.getTo())) {
-                eventCollection.add(new Event(event.getKey(), event.getValue(), eventAt(event.getValue(), event.getKey(), requestForm.getFrom().getZone())));
+    private static void findEventsInMap(RequestForm requestForm, Collection<ZonedEvent> eventCollection, TreeMap<ZonedDateTime, EventTemplate> map) {
+        for (EventTemplate event : map.tailMap(requestForm.getFrom()).values()) {
+            if (event.getDateTime().isBefore(requestForm.getTo())) {
+                eventCollection.add(new ZonedEvent(event, requestForm.getFrom().getZone()));
             } else {
                 break;
             }

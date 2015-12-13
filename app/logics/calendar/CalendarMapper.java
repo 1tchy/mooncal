@@ -1,6 +1,6 @@
 package logics.calendar;
 
-import models.Event;
+import models.ZonedEvent;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.VEvent;
@@ -23,9 +23,9 @@ public class CalendarMapper {
     private final CalendarOutputter calendarOutputter = new CalendarOutputter();
     private final UidGenerator uidGenerator = new UidGenerator(null, "1");
 
-    public String map(Collection<Event> events) {
+    public String map(Collection<ZonedEvent> events) {
         final Calendar calendar = createCalendar();
-        for (Event event : events) {
+        for (ZonedEvent event : events) {
             addEvent(calendar, event);
         }
         return getICalendarString(calendar);
@@ -40,7 +40,7 @@ public class CalendarMapper {
         return calendar;
     }
 
-    private void addEvent(Calendar calendar, Event event) {
+    private void addEvent(Calendar calendar, ZonedEvent event) {
         final VEvent calEvent = new VEvent(toDate(event.getDateTime()), event.getTitle());
         calEvent.getProperties().add(uidGenerator.generateUid());
         calendar.getComponents().add(calEvent);

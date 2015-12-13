@@ -1,6 +1,6 @@
 package logics;
 
-import models.Event;
+import models.ZonedEvent;
 import models.RequestForm;
 
 import javax.inject.Inject;
@@ -18,14 +18,14 @@ public class TotalCalculation extends Calculation {
         this.moonEventCalculation = moonEventCalculation;
     }
 
-    public Collection<Event> calculate(RequestForm requestForm) {
-        final Collection<Event> eventCollection = new TreeSet<>();
+    public Collection<ZonedEvent> calculate(RequestForm requestForm) {
+        final Collection<ZonedEvent> eventCollection = new TreeSet<>();
         calculate(requestForm, eventCollection);
         return eventCollection;
     }
 
     @Override
-    public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
+    public void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection) {
         moonPhasesCalculation.calculate(requestForm, eventCollection);
         moonEventCalculation.calculate(requestForm, eventCollection);
     }

@@ -1,6 +1,6 @@
 package logics;
 
-import models.Event;
+import models.ZonedEvent;
 import models.RequestForm;
 import play.i18n.Messages;
 
@@ -16,9 +16,9 @@ public abstract class Calculation {
     /**
      * @param eventCollection The collection which will be updated with the newly calculated events
      */
-    public abstract void calculate(RequestForm requestForm, Collection<Event> eventCollection);
+    public abstract void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection);
 
-    protected static String eventAt(String eventName, ZonedDateTime date, ZoneId usersTimezone) {
+    protected static String eventAt(ZonedDateTime date, String eventName, ZoneId usersTimezone) {
         return Messages.get("events.at", eventName, date.withZoneSameInstant(usersTimezone).format(TIME_FORMATTER));
     }
 

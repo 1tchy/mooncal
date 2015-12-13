@@ -1,8 +1,8 @@
 package logics;
 
 import com.bradsbrain.simpleastronomy.MoonPhaseFinder;
-import models.Event;
 import models.RequestForm;
+import models.ZonedEvent;
 import org.jetbrains.annotations.NotNull;
 import play.i18n.Messages;
 
@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class MoonPhasesCalculation extends Calculation {
 
     @Override
-    public void calculate(RequestForm requestForm, Collection<Event> eventCollection) {
+    public void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection) {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
         if (requestForm.includePhase("full")) {
@@ -34,18 +34,18 @@ public class MoonPhasesCalculation extends Calculation {
         }
     }
 
-    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, String phaseName, Collection<Event> eventCollection) {
+    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, String phaseName, Collection<ZonedEvent> eventCollection) {
         while (true) {
             final ZonedDateTime moonHappening = moonCalculation.apply(from);
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            eventCollection.add(new Event(moonHappening, phaseName, eventAt(phaseName, moonHappening, from.getZone())));
+            eventCollection.add(new ZonedEvent(moonHappening, phaseName, eventAt(moonHappening, phaseName, from.getZone()), from.getZone()));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
     }
 
-    private void calculateDailyEvents(LocalDate from, LocalDate to, ZoneId at, Collection<Event> eventCollection) {
+    private void calculateDailyEvents(LocalDate from, LocalDate to, ZoneId at, Collection<ZonedEvent> eventCollection) {
         while (!from.isAfter(to)) {
             eventCollection.add(calculateDailyEvent(from, at));
             from = from.plusDays(1);
@@ -53,7 +53,7 @@ public class MoonPhasesCalculation extends Calculation {
     }
 
     @NotNull
-    private Event calculateDailyEvent(LocalDate day, ZoneId at) {
+    private ZonedEvent calculateDailyEvent(LocalDate day, ZoneId at) {
         final String title = Messages.get("phases.daily.visibility", getMoonVisiblePercent(day.atTime(12, 0).atZone(at), new DecimalFormat("0")));
         final DecimalFormat precise = new DecimalFormat("0.0");
         final String moonVisiblePercentMorning = getMoonVisiblePercent(day.atTime(6, 0).atZone(at), precise);
@@ -62,7 +62,7 @@ public class MoonPhasesCalculation extends Calculation {
         String description = Messages.get("phases.daily.visibility.morning6", moonVisiblePercentMorning) + "\n" +
                 Messages.get("phases.daily.visibility.noon12", moonVisiblePercentAtNoon) + "\n" +
                 Messages.get("phases.daily.visibility.evening6", moonVisiblePercentEvening);
-        return new Event(day.atTime(12, 0).atZone(at), title, description);
+        return new ZonedEvent(day.atTime(12, 0).atZone(at), title, description, at);
     }
 
     private String getMoonVisiblePercent(ZonedDateTime dateTime, DecimalFormat format) {

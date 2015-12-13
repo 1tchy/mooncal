@@ -1,6 +1,6 @@
 package logics.calendar;
 
-import models.Event;
+import models.ZonedEvent;
 import org.junit.Test;
 
 import java.time.ZoneOffset;
@@ -17,8 +17,8 @@ public class CalendarMapperTest {
 
     @Test
     public void testSingleEventCalendar() {
-        Event event = new Event(ZonedDateTime.of(2015, 12, 24, 18, 0, 0, 0, ZoneOffset.UTC), "Christmas", "6pm at christmas in UTC");
-        List<Event> eventList = Collections.singletonList(event);
+        ZonedEvent event = new ZonedEvent(ZonedDateTime.of(2015, 12, 24, 18, 0, 0, 0, ZoneOffset.UTC), "Christmas", "6pm at christmas in UTC", ZoneOffset.UTC);
+        List<ZonedEvent> eventList = Collections.singletonList(event);
         String actual = cut.map(eventList);
         assertThat(actual, startsWith("BEGIN:VCALENDAR\r\nPRODID:-//Mondkalender 1.0//EN\r\nVERSION:2.0\r\nCALSCALE:GREGORIAN\r\nBEGIN:VEVENT\r\nDTSTAMP:"));
         assertThat(actual, containsString("\r\nDTSTART;VALUE=DATE:20151224\r\nSUMMARY:Christmas\r\nUID:"));
