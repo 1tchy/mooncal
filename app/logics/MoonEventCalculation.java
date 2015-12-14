@@ -30,15 +30,14 @@ public class MoonEventCalculation extends Calculation {
     private void initializeLunarEclipses() {
         initializeByCVS("lunar-eclipses.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            final String name = getEclipseName(rows[1]);
-            lunarEclipses.put(date, new EventTemplate(date, name, zoneId -> eventAt(date, name, zoneId)));
+            lunarEclipses.put(date, new EventTemplate(date, zoneId -> getEclipseName(rows[1]), zoneId -> eventAt(date, getEclipseName(rows[1]), zoneId)));
         });
     }
 
     private void initializeMoonLandings() {
         initializeByCVS("moon-landings.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate(date, rows[1], zoneId -> rows[2]));
+            moonLandings.put(date, new EventTemplate(date, zoneId -> rows[1], zoneId -> rows[2]));
         });
     }
 

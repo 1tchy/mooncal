@@ -1,0 +1,50 @@
+app.title=Moon Calendar
+app.introduction= Are you looking for a simple moon calendar? Now you have found it! With this web app you can generate your personal moon calendar not only with moon phases but also with special events about the moon. You can export your personal calendar at the bottom of the page.
+app.angularlocale=en
+app.moon=moon
+
+navigation.home=Home
+navigation.about=About
+navigation.toggle=Navigation toggle on/off
+
+phases.title=Moon Phases
+phases.full=full moon
+phases.new=new moon
+phases.quarter=quarter
+phases.quarter.first=first quarter
+phases.quarter.last=third quarter
+phases.daily=daily moon phases
+phases.daily.visibility=moon {0}% visible
+phases.daily.visibility.morning6=The moon is {0}% visible at 6am
+phases.daily.visibility.noon12=The moon is {0}% visible at noon
+phases.daily.visibility.evening6=The moon is {0}% visible at 6pm
+
+events.title=Events
+events.lunareclipse=lunar eclipse
+events.lunareclipse.total=total lunar eclipse
+events.lunareclipse.partial=partial lunar eclipse
+events.moonlanding=moon landing
+events.at={0} at {1}
+
+time.title=Interval
+time.fromTo=Show from {0} till {1}
+time.fromTo.required=Starting / Ending date required.
+time.fromTo.date=Date format should be DD-MM-YYYY.
+
+calendar.title=Calendar
+calendar.reloading=Data loading
+
+export.title=Export
+export.ical=Export to calendar (iCalendar)
+
+about.title=About this site
+about.introduction=The aim of this project is to provide a simple and neat moon calendar for everyone. The data is calculated and collected from various sources to the best of one''s knowledge and belief.
+about.sources.title=sources
+about.sources.moonimage.title=moon picture
+about.sources.phases.title=moon phases
+about.sources.lunareclipse.title=lunar eclipse
+about.sources.moonlanding.title=moon landing
+about.sources.various=various sources
+about.sources.primary=primarily
+about.support.title=Do you want to support this project?
+about.support.donate=Donate

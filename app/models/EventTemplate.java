@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.function.Function;
 
@@ -14,10 +15,10 @@ public class EventTemplate implements Comparable<ZonedEvent> {
     @Nullable
     protected final Function<ZoneId, String> descriptionTemplate;
     @NotNull
-    protected String title;
+    protected Function<ZoneId, String> titleTemplate;
 
-    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable Function<ZoneId, String> descriptionTemplate) {
-        this.title = title;
+    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull Function<ZoneId, String> titleTemplate, @Nullable Function<ZoneId, String> descriptionTemplate) {
+        this.titleTemplate = titleTemplate;
         this.dateTime = dateTime;
         this.descriptionTemplate = descriptionTemplate;
     }
@@ -29,8 +30,8 @@ public class EventTemplate implements Comparable<ZonedEvent> {
     }
 
     @NotNull
-    public String getTitle() {
-        return title;
+    public String getTitle(ZoneId timezone) {
+        return titleTemplate.apply(timezone);
     }
 
     @Nullable
@@ -45,6 +46,6 @@ public class EventTemplate implements Comparable<ZonedEvent> {
 
     @Override
     public String toString() {
-        return title + "@" + dateTime;
+        return titleTemplate.apply(ZoneOffset.UTC) + "@" + dateTime;
     }
 }

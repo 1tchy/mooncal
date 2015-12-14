@@ -14,7 +14,7 @@ public class ZonedEvent extends EventTemplate {
     private final ZoneId timezone;
 
     public ZonedEvent(@NotNull EventTemplate eventTemplate, @NotNull ZoneId timezone) {
-        this(eventTemplate.dateTime, eventTemplate.title, eventTemplate.descriptionTemplate, timezone);
+        this(eventTemplate.dateTime, eventTemplate.getTitle(timezone), eventTemplate.descriptionTemplate, timezone);
     }
 
     public ZonedEvent(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable String description, @NotNull ZoneId timezone) {
@@ -22,8 +22,12 @@ public class ZonedEvent extends EventTemplate {
     }
 
     private ZonedEvent(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable Function<ZoneId, String> descriptionTemplate, @NotNull ZoneId timezone) {
-        super(dateTime, title, descriptionTemplate);
+        super(dateTime, zoneId -> title, descriptionTemplate);
         this.timezone = timezone;
+    }
+
+    public String getTitle() {
+        return getTitle(timezone);
     }
 
     @JsonProperty("date")
