@@ -36,6 +36,7 @@ calendar.reloading=Gegevens worden geladen
 
 export.title=Export
 export.ical=Naar kalender exporteren (iCalendar)
+export.print=Afdrukken
 
 about.title=Over deze pagina
 about.introduction= Het doel van dit project is een simpel en overzichtelijk maankalender voor iedereen ter beschikking te stellen. De gegevens zijn berekend en verzameld van verschillende bronnen naar beste weten en geweten.

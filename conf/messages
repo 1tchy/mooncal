@@ -36,6 +36,7 @@ calendar.reloading=neue Daten werden geladen
 
 export.title=Exportieren
 export.ical=Für Kalender exportieren (iCalendar)
+export.print=Drucken
 
 about.title=Über diese Seite
 about.introduction=Dieser Mondkalender ist ein privates Projekt mit dem Zweck, einen möglichst einfachen und übersichtlichen Mondkalender der Allgemeinheit zur Verfügung zu stellen. Die Daten wurden nach bestem Wissen und Gewissen berechnet und von verschiedenen Quellen zusammengetragen.

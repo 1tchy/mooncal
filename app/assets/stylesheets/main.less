@@ -32,3 +32,11 @@
 .description {
     white-space: pre-line;
 }
+
+@media print {
+
+#mond, p, .panel-heading, .panel-body {display:none !important;}
+.panel {border:none !important;}
+div {padding:0 !important; margin:0 !important;}
+
+}

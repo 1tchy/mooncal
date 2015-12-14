@@ -36,6 +36,7 @@ calendar.reloading=Data loading
 
 export.title=Export
 export.ical=Export to calendar (iCalendar)
+export.print=Print
 
 about.title=About this site
 about.introduction=The aim of this project is to provide a simple and neat moon calendar for everyone. The data is calculated and collected from various sources to the best of one''s knowledge and belief.
