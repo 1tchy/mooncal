@@ -10,7 +10,7 @@
 angular.module('mondkalenderApp')
 	.controller('MainCtrl', function ($scope, $http, $window) {
 		$scope.phases = {full:{value:true},'new':{value:false},quarter:{value:false},daily:{value:false}};
-		$scope.events = {lunareclipse:{value:true},moonlanding:{value:true}};
+		$scope.events = {lunareclipse:{value:true},solareclipse:{value:true},moonlanding:{value:true}};
 		$scope.from = new Date(new Date().getFullYear(),0,1);
 		$scope.to = new Date(new Date().getFullYear(),11,31);
 		$scope.paramsAsString=function() {
@@ -19,6 +19,7 @@ angular.module('mondkalenderApp')
 		        +"&phases[quarter]="+$scope.phases.quarter.value
 		        +"&phases[daily]="+$scope.phases.daily.value
 		        +"&events[lunareclipse]="+$scope.events.lunareclipse.value
+		        +"&events[solareclipse]="+$scope.events.solareclipse.value
 		        +"&events[moonlanding]="+$scope.events.moonlanding.value
 		        +"&from="+$scope.formatDate($scope.from)
 		        +"&to="+$scope.formatDate($scope.to);

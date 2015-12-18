@@ -1,8 +1,9 @@
 package logics;
 
-import models.ZonedEvent;
 import models.RequestForm;
+import models.ZonedEvent;
 import org.junit.Test;
+import play.test.WithApplication;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-public class MoonEventCalculationTest {
+public class MoonEventCalculationTest extends WithApplication {
 
     private MoonEventCalculation cut = new MoonEventCalculation();
 
@@ -35,7 +36,7 @@ public class MoonEventCalculationTest {
 
     @Test
     public void testFindFirstKnownLunarEclipse() {
-        RequestForm requestForm = prepareRequestForm("Mondfinsternis", LocalDate.of(-2000, 1, 1), LocalDate.of(-1998, 5, 18));
+        RequestForm requestForm = prepareRequestForm("lunareclipse", LocalDate.of(-2000, 1, 1), LocalDate.of(-1998, 5, 18));
         final Collection<ZonedEvent> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
         assertThat(actual.iterator().next().getDateTime(), equalTo(ZonedDateTime.of(-1998, 5, 17, 5, 47, 36, 0, ZoneOffset.UTC)));
@@ -43,7 +44,7 @@ public class MoonEventCalculationTest {
 
     @Test
     public void testFindLastKnownLunarEclipse() {
-        RequestForm requestForm = prepareRequestForm("Mondfinsternis", LocalDate.of(2999, 11, 1), LocalDate.of(5000, 1, 1));
+        RequestForm requestForm = prepareRequestForm("lunareclipse", LocalDate.of(2999, 11, 1), LocalDate.of(5000, 1, 1));
         final Collection<ZonedEvent> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
         assertThat(actual.iterator().next().getDateTime(), equalTo(ZonedDateTime.of(2999, 11, 14, 16, 41, 25, 0, ZoneOffset.UTC)));
@@ -51,14 +52,30 @@ public class MoonEventCalculationTest {
 
     @Test
     public void testFindSeveralLunarEclipse() {
-        RequestForm requestForm = prepareRequestForm("Mondfinsternis", LocalDate.of(2014, 1, 1), LocalDate.of(2015, 12, 31));
+        RequestForm requestForm = prepareRequestForm("lunareclipse", LocalDate.of(2014, 1, 1), LocalDate.of(2015, 12, 31));
         final Collection<ZonedEvent> actual = calculate(requestForm);
         assertThat(actual, hasSize(4));
     }
 
     @Test
+    public void testFindFirstKnownSolarEclipse() {
+        RequestForm requestForm = prepareRequestForm("solareclipse", LocalDate.of(-2000, 1, 1), LocalDate.of(-1999, 10, 10));
+        final Collection<ZonedEvent> actual = calculate(requestForm);
+        assertThat(actual, hasSize(1));
+        assertThat(actual.iterator().next().getDateTime(), equalTo(ZonedDateTime.of(-1999, 6, 12, 3, 14, 51, 0, ZoneOffset.UTC)));
+    }
+
+    @Test
+    public void testFindLastKnownSolarEclipse() {
+        RequestForm requestForm = prepareRequestForm("solareclipse", LocalDate.of(3000, 6, 1), LocalDate.of(5000, 1, 1));
+        final Collection<ZonedEvent> actual = calculate(requestForm);
+        assertThat(actual, hasSize(1));
+        assertThat(actual.iterator().next().getDateTime(), equalTo(ZonedDateTime.of(3000, 10, 19, 16, 10, 16, 0, ZoneOffset.UTC)));
+    }
+
+    @Test
     public void testFindAMoonLanding() {
-        RequestForm requestForm = prepareRequestForm("Mondlandung", LocalDate.of(1959, 9, 1), LocalDate.of(1959, 9, 30));
+        RequestForm requestForm = prepareRequestForm("moonlanding", LocalDate.of(1959, 9, 1), LocalDate.of(1959, 9, 30));
         final Collection<ZonedEvent> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
     }

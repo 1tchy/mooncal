@@ -20,22 +20,31 @@ public class MoonEventCalculation extends Calculation {
 
     private final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
     private final TreeMap<ZonedDateTime, EventTemplate> lunarEclipses = new TreeMap<>();
+    private final TreeMap<ZonedDateTime, EventTemplate> solarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> moonLandings = new TreeMap<>();
 
     public MoonEventCalculation() {
         initializeLunarEclipses();
+        initializeSolarEclipses();
         initializeMoonLandings();
     }
 
     private void initializeLunarEclipses() {
-        initializeByCVS("lunar-eclipses.csv", rows -> {
+        initializeByCVS("lunar-eclipses/lunar-eclipses.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            lunarEclipses.put(date, new EventTemplate(date, zoneId -> getEclipseName(rows[1]), zoneId -> eventAt(date, getEclipseName(rows[1]), zoneId)));
+            lunarEclipses.put(date, new EventTemplate(date, zoneId -> getLunarEclipseName(rows[1]), zoneId -> eventAt(date, getLunarEclipseName(rows[1]), zoneId)));
+        });
+    }
+
+    private void initializeSolarEclipses() {
+        initializeByCVS("solar-eclipses/solar-eclipses.csv", rows -> {
+            final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
+            solarEclipses.put(date, new EventTemplate(date, zoneId -> getSolarEclipseName(rows[1]), zoneId -> eventAt(date, getSolarEclipseName(rows[1]), zoneId)));
         });
     }
 
     private void initializeMoonLandings() {
-        initializeByCVS("moon-landings.csv", rows -> {
+        initializeByCVS("moon-landings/moon-landings.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             moonLandings.put(date, new EventTemplate(date, zoneId -> rows[1], zoneId -> rows[2]));
         });
@@ -55,7 +64,7 @@ public class MoonEventCalculation extends Calculation {
         }
     }
 
-    private static String getEclipseName(String shortcut) {
+    private static String getLunarEclipseName(String shortcut) {
         switch (shortcut) {
             case "T":
                 return Messages.get("events.lunareclipse.total");
@@ -66,10 +75,28 @@ public class MoonEventCalculation extends Calculation {
         }
     }
 
+    private static String getSolarEclipseName(String shortcut) {
+        switch (shortcut) {
+            case "T":
+                return Messages.get("events.solareclipse.total");
+            case "P":
+                return Messages.get("events.solareclipse.partial");
+            case "A":
+                return Messages.get("events.solareclipse.annular");
+            case "H":
+                return Messages.get("events.solareclipse.hybrid");
+            default:
+                throw new RuntimeException(shortcut + " is no known eclipse type");
+        }
+    }
+
     @Override
     public void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection) {
         if (requestForm.includeEvent("lunareclipse")) {
             findEventsInMap(requestForm, eventCollection, this.lunarEclipses);
+        }
+        if (requestForm.includeEvent("solareclipse")) {
+            findEventsInMap(requestForm, eventCollection, this.solarEclipses);
         }
         if (requestForm.includeEvent("moonlanding")) {
             findEventsInMap(requestForm, eventCollection, moonLandings);

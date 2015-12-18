@@ -7,15 +7,11 @@ import play.test.WithApplication;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TranslationTest extends WithApplication {
 
@@ -50,12 +46,48 @@ public class TranslationTest extends WithApplication {
     }
 
     @Test
-    public void allMessagesInAllLanguages() throws IOException {
+    public void noMessageIsJustItsKey() throws IOException {
         for (Lang lang : getAllLangs()) {
             for (String key : getAllKeys()) {
-                assertTrue(key + " in " + lang.code() + " is missing", Messages.isDefined(lang, key));
+                assertNotEquals(key, Messages.get(lang, key));
             }
         }
+    }
+
+    @Test
+    public void allMessagesInAllLanguages() throws IOException {
+        Lang defaultLang = Lang.forCode("de");
+        for (Lang lang : getAllLangs()) {
+            if (!lang.equals(defaultLang)) {
+                for (String key : getAllKeys()) {
+                    assertSpecificTranslation(defaultLang, lang, key);
+                }
+            }
+        }
+    }
+
+    private static void assertSpecificTranslation(Lang defaultLang, Lang lang, String key) {
+        if (isTranslationRequired(lang, key)) {
+            assertNotEquals(key + " for '" + lang.code() + "' and '" + defaultLang.code() + "' are equal but probably shouldn't",
+                    Messages.get(lang, key),
+                    Messages.get(defaultLang, key));
+        }
+    }
+
+    @SuppressWarnings("RedundantIfStatement")
+    private static boolean isTranslationRequired(Lang lang, String key) {
+        Map<String, String> noTranslationRequired = new HashMap<String, String>() {{
+            put("lang.en", ".*");
+            put("lang.de", ".*");
+            put("lang.nl", ".*");
+            put("navigation.home", ".*");
+            put("events.title", "en");
+            put("calendar.title", "nl");
+        }};
+        final String noTranslationsRequiredForLanguage = noTranslationRequired.get(key);
+        if (noTranslationsRequiredForLanguage == null) return true; //translation required
+        if (lang.code().matches(noTranslationsRequiredForLanguage)) return false; //translation NOT required
+        return true; //translation required
     }
 
     @Test
