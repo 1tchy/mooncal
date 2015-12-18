@@ -3,6 +3,7 @@
 # ~~~~
 
 GET     /                               controllers.Application.index()
+GET     /lang/$lang<[a-z]+>             controllers.Application.setLanguage(lang)
 GET     /views/$file<[a-z]+>.html       controllers.Application.read(file)
 GET 	/mondkalender				    controllers.Application.query()
 GET 	/mondkalender.ics   			controllers.Application.queryAsICalendar()

@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   // WEBJARS: http://www.webjars.org/
   "org.webjars" % "bootstrap" % "3.3.5",
   "org.webjars" % "angularjs" % "1.4.8",
+  "org.webjars" % "jquery"    % "2.1.4",
 //see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all
   "org.mockito"               % "mockito-all"              % "1.10.19" % Test,
   //see latest version under: http://mvnrepository.com/artifact/org.fluentlenium/fluentlenium-core

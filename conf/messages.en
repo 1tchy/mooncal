@@ -1,7 +1,13 @@
 app.title=Moon Calendar
 app.introduction= Are you looking for a simple moon calendar? Now you have found it! With this web app you can generate your personal moon calendar not only with moon phases but also with special events about the moon. You can export your personal calendar at the bottom of the page.
-app.angularlocale=en
 app.moon=moon
+app.angularlocale=en
+
+lang.current=en
+lang.de=Deutsch
+lang.en=English
+lang.nl=Nederlands
+lang.change=Change language
 
 navigation.home=Home
 navigation.about=About

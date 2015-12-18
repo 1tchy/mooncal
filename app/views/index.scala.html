@@ -32,6 +32,22 @@
 					<li ng-class="{active:path=='/'}"><a ng-href="#/">@Messages("navigation.home")</a></li>
 					<li ng-class="{active:path=='/about'}"><a ng-href="#/about">@Messages("navigation.about")</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+							@Messages("lang.change")<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							@for(lang <- play.i18n.Lang.availables()) {
+							<li>
+								@if(lang.code()!=Messages("lang.current")) {
+								<a href="@controllers.routes.Application.setLanguage(lang.code())">@Messages("lang."+lang.code())</a>
+								}
+							</li>
+							}
+						</ul>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -52,13 +68,15 @@
        ga('send', 'pageview');
 </script>
 
-<script src="lib/angularjs/angular.js"></script>
-<script src="lib/angularjs/angular-animate.js"></script>
-<script src="lib/angularjs/angular-route.js"></script>
+<script src='lib/angularjs/angular@{if(play.Play.isProd)".min"}.js'></script>
+<script src='lib/angularjs/angular-animate@{if(play.Play.isProd)".min"}.js'></script>
+<script src='lib/angularjs/angular-route@{if(play.Play.isProd)".min"}.js'></script>
 <script src='lib/angularjs/i18n/angular-locale_@{Messages("app.angularlocale")}.js'></script>
+<script src='lib/jquery/jquery@{if(play.Play.isProd)".min"}.js'></script>
+<script src='lib/bootstrap/js/dropdown@{if(play.Play.isProd)".min"}.js'></script>
 
-<script src="scripts/app.js"></script>
-<script src="scripts/controllers/main.js"></script>
-<script src="scripts/controllers/about.js"></script>
+<script src='scripts/app.js'></script>
+<script src='scripts/controllers/main.js'></script>
+<script src='scripts/controllers/about.js'></script>
 </body>
 </html>

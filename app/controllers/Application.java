@@ -31,6 +31,11 @@ public class Application extends Controller {
         return ok(Json.toJson(calculation.calculate(form.get())));
     }
 
+    public Result setLanguage(String lang) {
+        ctx().changeLang(lang);
+        return seeOther(routes.Application.index());
+    }
+
     public Result queryAsICalendar() {
         Form<RequestForm> form = Form.form(RequestForm.class).bindFromRequest();
         if (form.hasErrors()) {
