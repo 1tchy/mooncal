@@ -40,7 +40,8 @@ events.at={0} om {1}
 time.title=Tijdsspanne
 time.fromTo=Toon van {0} tot {1}
 time.fromTo.required=Begin/ Eind datum nodig.
-time.fromTo.date=De datumnotatie moet zijn DD-MM-JJJJ.
+time.fromTo.date=De datumnotatie moet zijn JJJJ-MM-DD.
+time.fromTo.minmax=Datum moet liggen tussen het jaar 1000 en 3000.
 
 calendar.title=Kalender
 calendar.reloading=Gegevens worden geladen

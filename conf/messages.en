@@ -40,7 +40,8 @@ events.at={0} at {1}
 time.title=Interval
 time.fromTo=Show from {0} till {1}
 time.fromTo.required=Starting / Ending date required.
-time.fromTo.date=Date format should be DD-MM-YYYY.
+time.fromTo.date=Date format should be YYYY-MM-DD.
+time.fromTo.minmax=Date should be between the year 1000 and 3000.
 
 calendar.title=Calendar
 calendar.reloading=Data loading
