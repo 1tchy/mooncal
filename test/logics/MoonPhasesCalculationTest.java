@@ -1,7 +1,8 @@
 package logics;
 
-import models.ZonedEvent;
+import models.MoonPhaseType;
 import models.RequestForm;
+import models.ZonedEvent;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Before;
@@ -25,8 +26,8 @@ public class MoonPhasesCalculationTest extends WithApplication {
     @Before
     public void setup() {
         requestForm = new RequestForm();
-        requestForm.getPhases().put("full", true);
-        requestForm.getPhases().put("new", true);
+        requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
+        requestForm.getPhases().put(MoonPhaseType.NEWMOON, true);
         requestForm.setFrom(ZonedDateTime.of(2015, 10, 20, 12, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2015, 11, 30, 12, 0, 0, 0, ZoneOffset.UTC));
     }
@@ -68,7 +69,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     @Test
     public void testGetHalfMoonResults() {
         requestForm.getPhases().clear();
-        requestForm.getPhases().put("quarter", true);
+        requestForm.getPhases().put(MoonPhaseType.QUARTER, true);
         requestForm.setTo(ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC));
 
         final Collection<ZonedEvent> actual = calculate(requestForm);
@@ -79,7 +80,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     @Test
     public void testDailyEventsProvidedForAllDays() {
         requestForm.getPhases().clear();
-        requestForm.getPhases().put("daily", true);
+        requestForm.getPhases().put(MoonPhaseType.DAILY, true);
 
         final Collection<ZonedEvent> actual = calculate(requestForm);
 

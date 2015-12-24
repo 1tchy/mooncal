@@ -62,3 +62,8 @@ about.sources.various=various sources
 about.sources.primary=primarily
 about.support.title=Do you want to support this project?
 about.support.donate=Donate
+
+error.title=Error
+error.invalid=invalid value for {0}
+error.required={0} is required
+error.fromTo.toolargefordaily=When selecting daily phases only {0} years can be displayed.

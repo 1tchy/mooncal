@@ -3,7 +3,10 @@ package controllers;
 import logics.TotalCalculation;
 import logics.calendar.CalendarMapper;
 import models.RequestForm;
+import org.apache.commons.lang3.StringUtils;
 import play.data.Form;
+import play.data.validation.ValidationError;
+import play.i18n.Messages;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -11,6 +14,9 @@ import play.twirl.api.Html;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application extends Controller {
 
@@ -26,9 +32,15 @@ public class Application extends Controller {
     public Result query() {
         Form<RequestForm> form = Form.form(RequestForm.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(form.errorsAsJson());
+            return renderError(form);
         }
         return ok(Json.toJson(calculation.calculate(form.get())));
+    }
+
+    private Result renderError(Form<RequestForm> form) {
+        final Collection<List<ValidationError>> errorList = form.errors().values();
+        Collection<String> errors = errorList.stream().flatMap(Collection::stream).map(error -> Messages.get(error.message(), error.key())).collect(Collectors.toList());
+        return badRequest(StringUtils.join(errors, ", "));
     }
 
     public Result setLanguage(String lang) {

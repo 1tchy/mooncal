@@ -1,6 +1,7 @@
 package logics;
 
 import com.bradsbrain.simpleastronomy.MoonPhaseFinder;
+import models.MoonPhaseType;
 import models.RequestForm;
 import models.ZonedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -19,17 +20,17 @@ public class MoonPhasesCalculation extends Calculation {
     public void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection) {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
-        if (requestForm.includePhase("full")) {
+        if (requestForm.includePhase(MoonPhaseType.FULLMOON)) {
             calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON.getName(), eventCollection);
         }
-        if (requestForm.includePhase("new")) {
+        if (requestForm.includePhase(MoonPhaseType.NEWMOON)) {
             calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(), eventCollection);
         }
-        if (requestForm.includePhase("quarter")) {
+        if (requestForm.includePhase(MoonPhaseType.QUARTER)) {
             calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER.getName(), eventCollection);
             calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER.getName(), eventCollection);
         }
-        if (requestForm.includePhase("daily")) {
+        if (requestForm.includePhase(MoonPhaseType.DAILY)) {
             calculateDailyEvents(requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
         }
     }

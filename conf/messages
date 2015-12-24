@@ -62,3 +62,8 @@ about.sources.various=Verschiedene Quellen
 about.sources.primary=primär
 about.support.title=Wollen Sie dieses Projekt unterstützen?
 about.support.donate=Spenden
+
+error.title=Fehler
+error.invalid=ungültiger Wert für {0}
+error.required=Wert für {0} ist zwingend nötig
+error.fromTo.toolargefordaily=Bei der Angzeige von täglichen Phasen sind maximal {0} möglich.

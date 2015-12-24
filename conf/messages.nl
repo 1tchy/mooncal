@@ -62,3 +62,8 @@ about.sources.various=verschillende bronnen
 about.sources.primary=primair
 about.support.title=Wilt u dit project ondersteunen?
 about.support.donate=Doneren
+
+error.title=Fout
+error.invalid=ongeldige waarde voor {0}
+error.required=Waarde voor {0} is absoluut noodzakelijk
+error.fromTo.toolargefordaily=Maximaal {0} dagelijkse fasen mogelijk.
