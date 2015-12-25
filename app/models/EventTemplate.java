@@ -16,11 +16,14 @@ public class EventTemplate implements Comparable<ZonedEvent> {
     protected final Function<ZoneId, String> descriptionTemplate;
     @NotNull
     protected Function<ZoneId, String> titleTemplate;
+    @NotNull
+    protected final String eventTypeId;
 
-    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull Function<ZoneId, String> titleTemplate, @Nullable Function<ZoneId, String> descriptionTemplate) {
+    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull Function<ZoneId, String> titleTemplate, @Nullable Function<ZoneId, String> descriptionTemplate, @NotNull String eventTypeId) {
         this.titleTemplate = titleTemplate;
         this.dateTime = dateTime;
         this.descriptionTemplate = descriptionTemplate;
+        this.eventTypeId = eventTypeId;
     }
 
     @NotNull
@@ -37,6 +40,11 @@ public class EventTemplate implements Comparable<ZonedEvent> {
     @Nullable
     public String getDescription(ZoneId timezone) {
         return descriptionTemplate == null ? null : descriptionTemplate.apply(timezone);
+    }
+
+    @NotNull
+    public String getEventTypeId() {
+        return eventTypeId;
     }
 
     @Override

@@ -14,15 +14,15 @@ public class ZonedEvent extends EventTemplate {
     private final ZoneId timezone;
 
     public ZonedEvent(@NotNull EventTemplate eventTemplate, @NotNull ZoneId timezone) {
-        this(eventTemplate.dateTime, eventTemplate.getTitle(timezone), eventTemplate.descriptionTemplate, timezone);
+        this(eventTemplate.dateTime, eventTemplate.getTitle(timezone), eventTemplate.descriptionTemplate, timezone, eventTemplate.eventTypeId);
     }
 
-    public ZonedEvent(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable String description, @NotNull ZoneId timezone) {
-        this(dateTime, title, zoneId -> description, timezone);
+    public ZonedEvent(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable String description, @NotNull ZoneId timezone, String eventTypeId) {
+        this(dateTime, title, zoneId -> description, timezone, eventTypeId);
     }
 
-    private ZonedEvent(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable Function<ZoneId, String> descriptionTemplate, @NotNull ZoneId timezone) {
-        super(dateTime, zoneId -> title, descriptionTemplate);
+    private ZonedEvent(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable Function<ZoneId, String> descriptionTemplate, @NotNull ZoneId timezone, String eventTypeId) {
+        super(dateTime, zoneId -> title, descriptionTemplate, eventTypeId);
         this.timezone = timezone;
     }
 

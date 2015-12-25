@@ -2,7 +2,7 @@ import play.PlayImport._
 
 name := "mondkalender"
 
-version := "1.1"
+version := "1.2"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava,
   SbtWeb,

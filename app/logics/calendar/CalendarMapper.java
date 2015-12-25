@@ -4,16 +4,14 @@ import models.ZonedEvent;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.VEvent;
-import net.fortuna.ical4j.model.property.CalScale;
-import net.fortuna.ical4j.model.property.ProdId;
-import net.fortuna.ical4j.model.property.Version;
-import net.fortuna.ical4j.util.UidGenerator;
+import net.fortuna.ical4j.model.property.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
@@ -21,7 +19,6 @@ public class CalendarMapper {
 
     private static final TimeZone UTC_ZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/London");
     private final CalendarOutputter calendarOutputter = new CalendarOutputter();
-    private final UidGenerator uidGenerator = new UidGenerator(null, "1");
 
     public String map(Collection<ZonedEvent> events) {
         final Calendar calendar = createCalendar();
@@ -42,8 +39,20 @@ public class CalendarMapper {
 
     private void addEvent(Calendar calendar, ZonedEvent event) {
         final VEvent calEvent = new VEvent(toDate(event.getDateTime()), event.getTitle());
-        calEvent.getProperties().add(uidGenerator.generateUid());
+        if (event.getDescription() != null) {
+            calEvent.getProperties().add(new Description(event.getDescription()));
+        }
+        calEvent.getProperties().add(calculateUid(event));
         calendar.getComponents().add(calEvent);
+    }
+
+    private Uid calculateUid(ZonedEvent event) {
+        return new Uid("mooncal-" + getStandardDate(event) + "-" + event.getEventTypeId());
+    }
+
+    @NotNull
+    private String getStandardDate(ZonedEvent event) {
+        return event.getDateTime().withZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.BASIC_ISO_DATE);
     }
 
     private String getICalendarString(Calendar calendar) {

@@ -32,21 +32,21 @@ public class MoonEventCalculation extends Calculation {
     private void initializeLunarEclipses() {
         initializeByCVS("lunar-eclipses/lunar-eclipses.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            lunarEclipses.put(date, new EventTemplate(date, zoneId -> getLunarEclipseName(rows[1]), zoneId -> eventAt(date, getLunarEclipseName(rows[1]), zoneId)));
+            lunarEclipses.put(date, new EventTemplate(date, zoneId -> getLunarEclipseName(rows[1]), zoneId -> eventAt(date, getLunarEclipseName(rows[1]), zoneId), "lunar-eclipse"));
         });
     }
 
     private void initializeSolarEclipses() {
         initializeByCVS("solar-eclipses/solar-eclipses.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            solarEclipses.put(date, new EventTemplate(date, zoneId -> getSolarEclipseName(rows[1]), zoneId -> eventAt(date, getSolarEclipseName(rows[1]), zoneId)));
+            solarEclipses.put(date, new EventTemplate(date, zoneId -> getSolarEclipseName(rows[1]), zoneId -> eventAt(date, getSolarEclipseName(rows[1]), zoneId), "solar-eclipse"));
         });
     }
 
     private void initializeMoonLandings() {
         initializeByCVS("moon-landings/moon-landings.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate(date, zoneId -> rows[1], zoneId -> rows[2]));
+            moonLandings.put(date, new EventTemplate(date, zoneId -> rows[1], zoneId -> rows[2], "moon-landing"));
         });
     }
 

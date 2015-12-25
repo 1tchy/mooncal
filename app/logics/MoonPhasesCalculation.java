@@ -21,27 +21,27 @@ public class MoonPhasesCalculation extends Calculation {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
         if (requestForm.includePhase(MoonPhaseType.FULLMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON.getName(), eventCollection);
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON.getName(), eventCollection, "fullmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.NEWMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(), eventCollection);
+            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(), eventCollection, "newmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.QUARTER)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER.getName(), eventCollection);
-            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER.getName(), eventCollection);
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER.getName(), eventCollection, "quarter");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER.getName(), eventCollection, "quarter");
         }
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
             calculateDailyEvents(requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
         }
     }
 
-    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, String phaseName, Collection<ZonedEvent> eventCollection) {
+    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, String phaseName, Collection<ZonedEvent> eventCollection, String eventTypeId) {
         while (true) {
             final ZonedDateTime moonHappening = moonCalculation.apply(from);
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            eventCollection.add(new ZonedEvent(moonHappening, phaseName, eventAt(moonHappening, phaseName, from.getZone()), from.getZone()));
+            eventCollection.add(new ZonedEvent(moonHappening, phaseName, eventAt(moonHappening, phaseName, from.getZone()), from.getZone(), eventTypeId));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
     }
@@ -63,7 +63,7 @@ public class MoonPhasesCalculation extends Calculation {
         String description = Messages.get("phases.daily.visibility.morning6", moonVisiblePercentMorning) + "\n" +
                 Messages.get("phases.daily.visibility.noon12", moonVisiblePercentAtNoon) + "\n" +
                 Messages.get("phases.daily.visibility.evening6", moonVisiblePercentEvening);
-        return new ZonedEvent(day.atTime(12, 0).atZone(at), title, description, at);
+        return new ZonedEvent(day.atTime(12, 0).atZone(at), title, description, at, "daily");
     }
 
     private String getMoonVisiblePercent(ZonedDateTime dateTime, DecimalFormat format) {
