@@ -53,8 +53,12 @@ public class Application extends Controller {
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());
         }
+        final RequestForm requestForm = form.get();
+        if (requestForm.getLang() != null) {
+            ctx().setTransientLang(requestForm.getLang());
+        }
         response().setContentType("text/calendar");
-        return ok(calendarMapper.map(calculation.calculate(form.get())));
+        return ok(calendarMapper.map(calculation.calculate(requestForm)));
     }
 
     public Result index() {

@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import play.data.format.Formatters;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
+import play.i18n.Lang;
+import play.i18n.Messages;
 
 import java.text.ParseException;
 import java.time.*;
@@ -54,6 +56,17 @@ public class RequestForm {
                 return input.toString();
             }
         });
+        Formatters.register(Lang.class, new Formatters.SimpleFormatter<Lang>() {
+            @Override
+            public Lang parse(String input, Locale l) throws ParseException {
+                return Lang.forCode(input);
+            }
+
+            @Override
+            public String print(Lang input, Locale l) {
+                return Messages.get(input, "lang.current");
+            }
+        });
     }
 
     private Map<MoonPhaseType, Boolean> phases = new HashMap<>();
@@ -64,6 +77,7 @@ public class RequestForm {
     private LocalDateTime to;
     @Constraints.Required
     private ZoneId zone;
+    private Lang lang;
 
     public Map<MoonPhaseType, Boolean> getPhases() {
         return phases;
@@ -123,6 +137,14 @@ public class RequestForm {
      */
     public void setAfter(Period after) {
         to = LocalDate.now(ZoneOffset.UTC).plus(after).plusDays(1).atStartOfDay();
+    }
+
+    public Lang getLang() {
+        return lang;
+    }
+
+    public void setLang(Lang lang) {
+        this.lang = lang;
     }
 
     public boolean includePhase(@NotNull MoonPhaseType moonPhaseType) {
