@@ -1,17 +1,7 @@
-/node_modules
-/dist
-/.tmp
-/.sass-cache
-/bower_components
-/.idea/workspace.xml
-/.idea/tasks.xml
+/.idea/
 
 logs
 project/project
 project/target
-.history
-/out
 /RUNNING_PID
-*.swp
-*.swo
 /target

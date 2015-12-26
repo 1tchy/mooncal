@@ -146,7 +146,7 @@
     <orderEntry type="library" scope="TEST" name="SBT: xalan:xalan:2.7.1:jar" level="project" />
     <orderEntry type="library" name="SBT: xerces:xercesImpl:2.11.0:jar" level="project" />
     <orderEntry type="library" name="SBT: xml-apis:xml-apis:1.4.01:jar" level="project" />
-    <orderEntry type="library" name="classes" level="project" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="classes" level="project" />
   </component>
 </module>
