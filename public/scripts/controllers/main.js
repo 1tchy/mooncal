@@ -49,7 +49,7 @@ angular.module('mondkalenderApp')
                 + 'T' + pad(date.getHours())
                 + ':' + pad(date.getMinutes())
                 + ':' + pad(date.getSeconds())
-                + $scope.getTimezone();
+                + $scope.zone;
         }
 		$scope.$watch(function(){
 			return $scope.paramsAsString();
@@ -181,5 +181,6 @@ angular.module('mondkalenderApp')
             if(780==jOffset && 780==dOffset) return 'Pacific/Enderbury';
             if(840==jOffset && 840==dOffset) return 'Pacific/Kiritimati';
             return 'UTC';
-		}
+		};
+		$scope.zone=$scope.getTimezone();
 	});

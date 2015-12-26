@@ -7,7 +7,7 @@ import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
 import java.text.ParseException;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -43,14 +43,27 @@ public class RequestForm {
                 return input.getKey();
             }
         });
+        Formatters.register(Period.class, new Formatters.SimpleFormatter<Period>() {
+            @Override
+            public Period parse(String input, Locale l) throws ParseException {
+                return Period.parse(input);
+            }
+
+            @Override
+            public String print(Period input, Locale l) {
+                return input.toString();
+            }
+        });
     }
 
     private Map<MoonPhaseType, Boolean> phases = new HashMap<>();
     private Map<String, Boolean> events = new HashMap<>();
     @Constraints.Required
-    private ZonedDateTime from;
+    private LocalDateTime from;
     @Constraints.Required
-    private ZonedDateTime to;
+    private LocalDateTime to;
+    @Constraints.Required
+    private ZoneId zone;
 
     public Map<MoonPhaseType, Boolean> getPhases() {
         return phases;
@@ -73,19 +86,43 @@ public class RequestForm {
     }
 
     public ZonedDateTime getFrom() {
-        return from;
+        return from == null ? null : from.atZone(zone);
     }
 
     public void setFrom(ZonedDateTime from) {
-        this.from = from;
+        this.from = from.toLocalDateTime();
+        setZone(from.getZone());
     }
 
     public ZonedDateTime getTo() {
-        return to;
+        return to == null ? null : to.atZone(zone);
     }
 
     public void setTo(ZonedDateTime to) {
-        this.to = to;
+        this.to = to.toLocalDateTime();
+        setZone(to.getZone());
+    }
+
+    public ZoneId getZone() {
+        return zone;
+    }
+
+    public void setZone(ZoneId zone) {
+        this.zone = zone;
+    }
+
+    /**
+     * Sets the "from" to a date before today to form a floating timeframe around today for subscriptions
+     */
+    public void setBefore(Period before) {
+        from = LocalDate.now(ZoneOffset.UTC).minus(before).atStartOfDay();
+    }
+
+    /**
+     * Sets the "to" to a date after today to form a floating timeframe around today for subscriptions
+     */
+    public void setAfter(Period after) {
+        to = LocalDate.now(ZoneOffset.UTC).plus(after).plusDays(1).atStartOfDay();
     }
 
     public boolean includePhase(@NotNull MoonPhaseType moonPhaseType) {
@@ -99,7 +136,7 @@ public class RequestForm {
     @SuppressWarnings("unused") //used by Play
     public List<ValidationError> validate() {
         if (includePhase(MoonPhaseType.DAILY) && from.until(to, ChronoUnit.YEARS) > MAX_YEARS_FOR_DAILY_PHASES) {
-            return Lists.newArrayList(new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.toolargefordaily"));
+            return Lists.newArrayList(new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily"));
         }
         return null;//form is fine
     }

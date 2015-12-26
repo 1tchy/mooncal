@@ -47,7 +47,12 @@ calendar.title=Kalender
 calendar.reloading=neue Daten werden geladen
 
 export.title=Exportieren
-export.ical=Für Kalender exportieren (iCalendar)
+export.ical=In Kalender exportieren
+export.ical.download=iCalendar-Datei herunterladen
+export.ical.subscribe=iCalendar-Feed abonnieren
+export.ical.subscribe.instructions=Kopieren Sie folgenden Link und fügen Sie ihn als Abonnement in Ihrem Kalenderprogramm hinzu
+export.ical.subscribe.explanations=Damit werden in Ihrem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.
+export.ical.subscribe.close=Schliessen
 export.print=Drucken
 
 about.title=Über diese Seite
@@ -66,4 +71,4 @@ about.support.donate=Spenden
 error.title=Fehler
 error.invalid=ungültiger Wert für {0}
 error.required=Wert für {0} ist zwingend nötig
-error.fromTo.toolargefordaily=Bei der Angzeige von täglichen Phasen sind maximal {0} möglich.
+error.fromTo.tolargefordaily=Bei der Angzeige von täglichen Phasen sind maximal {0} möglich.

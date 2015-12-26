@@ -47,7 +47,8 @@
 			<div class="panel-body">
 				<form class="form-inline" name="fromTo">
 					@{Html(Messages("time.fromTo", """
-					<div class="form-group" ng-class="{'has-error':fromTo.from.$error.date||fromTo.from.$error.required}">
+					<div class="form-group"
+						 ng-class="{'has-error':fromTo.from.$error.date||fromTo.from.$error.required}">
 						<input type='date' class='form-control' ng-model='from' name="from" required
 							   ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
 							   min="1000-01-01" max="3000-12-31">
@@ -62,7 +63,8 @@
 					&nbsp;
 					<span class="text-danger" ng-if="fromTo.from.$error.required||fromTo.to.$error.required">@Messages("time.fromTo.required")</span>
 					<span class="text-danger" ng-if="fromTo.from.$error.date||fromTo.to.$error.date">@Messages("time.fromTo.date")</span>
-					<span class="text-danger" ng-if="fromTo.from.$error.min||fromTo.to.$error.min||fromTo.from.$error.max||fromTo.to.$error.max">@Messages("time.fromTo.minmax")</span>
+					<span class="text-danger"
+						  ng-if="fromTo.from.$error.min||fromTo.to.$error.min||fromTo.from.$error.max||fromTo.to.$error.max">@Messages("time.fromTo.minmax")</span>
 			</div>
 			</form>
 		</div>
@@ -108,9 +110,15 @@
 				<h3 class="panel-title">@Messages("export.title")</h3>
 			</div>
 			<div class="panel-body">
-				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default" ng-click="downloadIcal()">@Messages("export.ical")
+				<div class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+							aria-expanded="false">@Messages("export.ical")<span class="caret"></span>
 					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="" ng-click="downloadIcal()">@Messages("export.ical.download")</a></li>
+						<li><a href="" data-toggle="modal" data-target="#myModal">@Messages("export.ical.subscribe")</a>
+						</li>
+					</ul>
 				</div>
 				<div class="btn-group" role="group" aria-label="...">
 					<button type="button" class="btn btn-default" onclick="window.print()">@Messages("export.print")
@@ -120,3 +128,26 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+						aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">@Messages("export.ical.subscribe")</h4>
+			</div>
+			<div class="modal-body">
+				<p>@Messages("export.ical.subscribe.instructions"):</p>
+				<p>
+					<textarea type="text" class="form-control" readonly="readonly" rows="4">@controllers.routes.Application.queryAsICalendar().absoluteURL(request())?phases[full]={{phases.full.value}}&phases[new]={{phases.new.value}}&phases[quarter]={{phases.quarter.value}}&phases[daily]={{phases.daily.value}}&events[lunareclipse]={{events.lunareclipse.value}}&events[solareclipse]={{events.solareclipse.value}}&events[moonlanding]={{events.moonlanding.value}}&before=P6M&after=P2Y&zone={{zone}}</textarea>
+				</p>
+				<p class="text-muted">@Messages("export.ical.subscribe.explanations")</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">@Messages("export.ical.subscribe.close")</button>
+			</div>
+		</div>
+	</div>
+</div>
+<br/>
+<br/>

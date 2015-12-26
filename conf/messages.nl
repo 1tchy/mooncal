@@ -47,7 +47,12 @@ calendar.title=Kalender
 calendar.reloading=Gegevens worden geladen
 
 export.title=Export
-export.ical=Naar kalender exporteren (iCalendar)
+export.ical=Naar kalender exporteren
+export.ical.download=iCalendar downloaden
+export.ical.subscribe=abonneren op iCalendar
+export.ical.subscribe.instructions=Kopieer de onderstaande link en plak het als abonnement in uw kalender applicatie
+export.ical.subscribe.explanations=Met dit link worden alle geselecteerde gebeurtenissen getoond voor het laatste half jaar en voor de volgende twee jaren.
+export.ical.subscribe.close=Sluiten
 export.print=Afdrukken
 
 about.title=Over deze pagina
@@ -66,4 +71,4 @@ about.support.donate=Doneren
 error.title=Fout
 error.invalid=ongeldige waarde voor {0}
 error.required=Waarde voor {0} is absoluut noodzakelijk
-error.fromTo.toolargefordaily=Maximaal {0} dagelijkse fasen mogelijk.
+error.fromTo.tolargefordaily=Maximaal {0} dagelijkse fasen mogelijk.
