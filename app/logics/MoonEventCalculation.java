@@ -2,6 +2,7 @@ package logics;
 
 import com.google.common.io.LineReader;
 import models.EventTemplate;
+import models.EventType;
 import models.RequestForm;
 import models.ZonedEvent;
 import play.i18n.Messages;
@@ -92,13 +93,13 @@ public class MoonEventCalculation extends Calculation {
 
     @Override
     public void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection) {
-        if (requestForm.includeEvent("lunareclipse")) {
+        if (requestForm.includeEvent(EventType.LUNARECLIPSE)) {
             findEventsInMap(requestForm, eventCollection, this.lunarEclipses);
         }
-        if (requestForm.includeEvent("solareclipse")) {
+        if (requestForm.includeEvent(EventType.SOLARECLIPSE)) {
             findEventsInMap(requestForm, eventCollection, this.solarEclipses);
         }
-        if (requestForm.includeEvent("moonlanding")) {
+        if (requestForm.includeEvent(EventType.MOONLANDING)) {
             findEventsInMap(requestForm, eventCollection, moonLandings);
         }
     }

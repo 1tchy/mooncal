@@ -45,6 +45,17 @@ public class RequestForm {
                 return input.getKey();
             }
         });
+        Formatters.register(EventType.class, new Formatters.SimpleFormatter<EventType>() {
+            @Override
+            public EventType parse(String input, Locale l) throws ParseException {
+                return EventType.read(input);
+            }
+
+            @Override
+            public String print(EventType input, Locale l) {
+                return input.getKey();
+            }
+        });
         Formatters.register(Period.class, new Formatters.SimpleFormatter<Period>() {
             @Override
             public Period parse(String input, Locale l) throws ParseException {
@@ -70,7 +81,7 @@ public class RequestForm {
     }
 
     private Map<MoonPhaseType, Boolean> phases = new HashMap<>();
-    private Map<String, Boolean> events = new HashMap<>();
+    private Map<EventType, Boolean> events = new HashMap<>();
     @Constraints.Required
     private LocalDateTime from;
     @Constraints.Required
@@ -89,11 +100,11 @@ public class RequestForm {
         }
     }
 
-    public Map<String, Boolean> getEvents() {
+    public Map<EventType, Boolean> getEvents() {
         return events;
     }
 
-    public void setEvents(Map<String, Boolean> events) {
+    public void setEvents(Map<EventType, Boolean> events) {
         if (events != null) {
             this.events = events;
         }
@@ -151,8 +162,8 @@ public class RequestForm {
         return phases.get(moonPhaseType) == Boolean.TRUE;
     }
 
-    public boolean includeEvent(@NotNull String name) {
-        return events.get(name) == Boolean.TRUE;
+    public boolean includeEvent(@NotNull EventType eventType) {
+        return events.get(eventType) == Boolean.TRUE;
     }
 
     @SuppressWarnings("unused") //used by Play
@@ -161,6 +172,27 @@ public class RequestForm {
             return Lists.newArrayList(new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily"));
         }
         return null;//form is fine
+    }
+
+    public String calculateETag() {
+        int eventsPart = 0;
+        for (MoonPhaseType moonPhaseType : MoonPhaseType.values()) {
+            eventsPart = eventsPart * 2 + (includePhase(moonPhaseType) ? 1 : 0);
+        }
+        for (EventType eventType : EventType.values()) {
+            eventsPart = eventsPart * 2 + (includeEvent(eventType) ? 1 : 0);
+
+        }
+        StringBuilder sb = new StringBuilder("W/");
+        sb.append(eventsPart);
+        sb.append("x");
+        sb.append(from.toEpochSecond(ZoneOffset.UTC) / 3600 / 24);
+        sb.append("x");
+        sb.append(to.toEpochSecond(ZoneOffset.UTC) / 3600 / 24);
+        if (zone != null) {
+            sb.append(zone.getId());
+        }
+        return sb.toString();
     }
 
 }

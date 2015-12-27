@@ -3,7 +3,9 @@ package controllers;
 import logics.TotalCalculation;
 import logics.calendar.CalendarMapper;
 import models.RequestForm;
+import models.ZonedEvent;
 import org.apache.commons.lang3.StringUtils;
+import play.Play;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
@@ -16,6 +18,8 @@ import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Application extends Controller {
@@ -30,11 +34,40 @@ public class Application extends Controller {
     }
 
     public Result query() {
+        return handleQueryRequest(this::renderError, goodForm -> {
+        }, result -> ok(Json.toJson(result)));
+    }
+
+    public Result queryAsICalendar() {
+        return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), goodForm -> {
+            if (goodForm.getLang() != null) {
+                ctx().setTransientLang(goodForm.getLang());
+            }
+        }, result -> {
+            response().setContentType("text/calendar");
+            return ok(calendarMapper.map(result));
+        });
+    }
+
+    private Result handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, Consumer<RequestForm> preCalculation, Function<Collection<ZonedEvent>, Result> resultHandling) {
+        return handleQueryForm(badRequest, requestForm -> {
+            final String calculatedETag = requestForm.calculateETag();
+            if (calculatedETag.equals(request().getHeader(IF_NONE_MATCH)) && Play.isProd()) {
+                return status(NOT_MODIFIED);
+            }
+            preCalculation.accept(requestForm);
+            response().setHeader(ETAG, calculatedETag);
+            return resultHandling.apply(calculation.calculate(requestForm));
+        });
+    }
+
+    private Result handleQueryForm(Function<Form<RequestForm>, Result> badRequest, Function<RequestForm, Result> goodRequest) {
         Form<RequestForm> form = Form.form(RequestForm.class).bindFromRequest();
         if (form.hasErrors()) {
-            return renderError(form);
+            return badRequest.apply(form);
         }
-        return ok(Json.toJson(calculation.calculate(form.get())));
+        RequestForm requestForm = form.get();
+        return goodRequest.apply(requestForm);
     }
 
     private Result renderError(Form<RequestForm> form) {
@@ -46,19 +79,6 @@ public class Application extends Controller {
     public Result setLanguage(String lang) {
         ctx().changeLang(lang);
         return seeOther(routes.Application.index());
-    }
-
-    public Result queryAsICalendar() {
-        Form<RequestForm> form = Form.form(RequestForm.class).bindFromRequest();
-        if (form.hasErrors()) {
-            return badRequest(form.errorsAsJson());
-        }
-        final RequestForm requestForm = form.get();
-        if (requestForm.getLang() != null) {
-            ctx().setTransientLang(requestForm.getLang());
-        }
-        response().setContentType("text/calendar");
-        return ok(calendarMapper.map(calculation.calculate(requestForm)));
     }
 
     public Result index() {
