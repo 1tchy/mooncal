@@ -139,7 +139,7 @@
 			<div class="modal-body">
 				<p>@Messages("export.ical.subscribe.instructions"):</p>
 				<p>
-					<textarea type="text" class="form-control" readonly="readonly" rows="4">@controllers.routes.Application.queryAsICalendar().absoluteURL(request())?phases[full]={{phases.full.value}}&phases[new]={{phases.new.value}}&phases[quarter]={{phases.quarter.value}}&phases[daily]={{phases.daily.value}}&events[lunareclipse]={{events.lunareclipse.value}}&events[solareclipse]={{events.solareclipse.value}}&events[moonlanding]={{events.moonlanding.value}}&before=P6M&after=P2Y&zone={{zone}}&lang=@Messages("lang.current")</textarea>
+					<textarea type="text" class="form-control" readonly="readonly" rows="4">@controllers.routes.Application.queryAsICalendar(new controllers.LangQueryStringBindable(Messages("lang.current"))).absoluteURL(request())&phases[full]={{phases.full.value}}&phases[new]={{phases.new.value}}&phases[quarter]={{phases.quarter.value}}&phases[daily]={{phases.daily.value}}&events[lunareclipse]={{events.lunareclipse.value}}&events[solareclipse]={{events.solareclipse.value}}&events[moonlanding]={{events.moonlanding.value}}&before=P6M&after=P2Y&zone={{zone}}</textarea>
 				</p>
 				<p class="text-muted">@Messages("export.ical.subscribe.explanations")</p>
 			</div>

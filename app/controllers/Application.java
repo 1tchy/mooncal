@@ -20,10 +20,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused") //used by routes
 public class Application extends Controller {
 
     private final TotalCalculation calculation;
@@ -36,32 +37,34 @@ public class Application extends Controller {
     }
 
     public Result query() {
-        return handleQueryRequest(this::renderError, goodForm -> {
-        }, (result, goodForm) -> ok(Json.toJson(result)));
+        return handleQueryRequest(this::renderError, (result, goodForm) -> ok(Json.toJson(result)));
     }
 
-    public Result queryAsICalendar() {
-        return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), goodForm -> {
-            if (goodForm.getLang() != null) {
-                ctx().setTransientLang(goodForm.getLang());
-            }
-        }, (result, goodForm) -> {
+    public Result queryAsICalendar(LangQueryStringBindable lang) {
+        if (lang != null && lang.get() != null) {
+            ctx().setTransientLang(lang.get());
+        }
+        return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
             response().setContentType("text/calendar");
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
             return ok(calendarMapper.map(result, updateFrequency));
         });
     }
 
-    private Result handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, Consumer<RequestForm> preCalculation, BiFunction<Collection<ZonedEvent>, RequestForm, Result> resultHandling) {
-        return handleQueryForm(badRequest, requestForm -> {
-            final String calculatedETag = requestForm.calculateETag();
-            if (calculatedETag.equals(request().getHeader(IF_NONE_MATCH)) && Play.isProd()) {
-                return status(NOT_MODIFIED);
-            }
-            preCalculation.accept(requestForm);
-            response().setHeader(ETAG, calculatedETag);
-            return resultHandling.apply(calculation.calculate(requestForm), requestForm);
-        });
+    private Result handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, BiFunction<Collection<ZonedEvent>, RequestForm, Result> goodRequest) {
+        return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, () -> {
+            //noinspection CodeBlock2Expr
+            return goodRequest.apply(calculation.calculate(requestForm), requestForm);
+        }));
+    }
+
+    private Result handleETag(RequestForm requestForm, Supplier<Result> request) {
+        final String calculatedETag = requestForm.calculateETag();
+        if (calculatedETag.equals(request().getHeader(IF_NONE_MATCH)) && Play.isProd()) {
+            return status(NOT_MODIFIED);
+        }
+        response().setHeader(ETAG, calculatedETag);
+        return request.get();
     }
 
     private Result handleQueryForm(Function<Form<RequestForm>, Result> badRequest, Function<RequestForm, Result> goodRequest) {
