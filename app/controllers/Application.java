@@ -10,6 +10,7 @@ import play.Play;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
+import play.libs.F;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -22,7 +23,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused") //used by routes
@@ -37,11 +37,11 @@ public class Application extends Controller {
         this.calendarMapper = calendarMapper;
     }
 
-    public Result query() {
+    public F.Promise<Result> query() {
         return handleQueryRequest(this::renderError, (result, goodForm) -> ok(Json.toJson(result)));
     }
 
-    public Result queryAsICalendar(LangQueryStringBindable lang) {
+    public F.Promise<Result> queryAsICalendar(LangQueryStringBindable lang) {
         if (lang != null && lang.get() != null) {
             ctx().setTransientLang(lang.get());
         }
@@ -52,28 +52,28 @@ public class Application extends Controller {
         });
     }
 
-    private Result handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, BiFunction<Collection<ZonedEvent>, RequestForm, Result> goodRequest) {
-        return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, () -> {
+    private F.Promise<Result> handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, BiFunction<Collection<ZonedEvent>, RequestForm, Result> goodRequest) {
+        return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, F.Promise.promise(() -> {
             //noinspection CodeBlock2Expr
             return goodRequest.apply(calculation.calculate(requestForm), requestForm);
-        }));
+        })));
     }
 
-    private Result handleETag(RequestForm requestForm, Supplier<Result> request) {
+    private F.Promise<Result> handleETag(RequestForm requestForm, F.Promise<Result> request) {
         final String calculatedETag = requestForm.calculateETag();
         final boolean isNotModified = calculatedETag.equals(request().getHeader(IF_NONE_MATCH));
         Logger.info("Request: " + request().uri() + (isNotModified ? " NOT_MODIFIED" : ""));
         if (isNotModified && Play.isProd()) {
-            return status(NOT_MODIFIED);
+            return F.Promise.pure(status(NOT_MODIFIED));
         }
         response().setHeader(ETAG, calculatedETag);
-        return request.get();
+        return request;
     }
 
-    private Result handleQueryForm(Function<Form<RequestForm>, Result> badRequest, Function<RequestForm, Result> goodRequest) {
+    private F.Promise<Result> handleQueryForm(Function<Form<RequestForm>, Result> badRequest, Function<RequestForm, F.Promise<Result>> goodRequest) {
         Form<RequestForm> form = Form.form(RequestForm.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest.apply(form);
+            return F.Promise.pure(badRequest.apply(form));
         }
         RequestForm requestForm = form.get();
         return goodRequest.apply(requestForm);
