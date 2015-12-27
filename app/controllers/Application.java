@@ -16,8 +16,10 @@ import play.twirl.api.Html;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -35,7 +37,7 @@ public class Application extends Controller {
 
     public Result query() {
         return handleQueryRequest(this::renderError, goodForm -> {
-        }, result -> ok(Json.toJson(result)));
+        }, (result, goodForm) -> ok(Json.toJson(result)));
     }
 
     public Result queryAsICalendar() {
@@ -43,13 +45,14 @@ public class Application extends Controller {
             if (goodForm.getLang() != null) {
                 ctx().setTransientLang(goodForm.getLang());
             }
-        }, result -> {
+        }, (result, goodForm) -> {
             response().setContentType("text/calendar");
-            return ok(calendarMapper.map(result));
+            final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
+            return ok(calendarMapper.map(result, updateFrequency));
         });
     }
 
-    private Result handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, Consumer<RequestForm> preCalculation, Function<Collection<ZonedEvent>, Result> resultHandling) {
+    private Result handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, Consumer<RequestForm> preCalculation, BiFunction<Collection<ZonedEvent>, RequestForm, Result> resultHandling) {
         return handleQueryForm(badRequest, requestForm -> {
             final String calculatedETag = requestForm.calculateETag();
             if (calculatedETag.equals(request().getHeader(IF_NONE_MATCH)) && Play.isProd()) {
@@ -57,7 +60,7 @@ public class Application extends Controller {
             }
             preCalculation.accept(requestForm);
             response().setHeader(ETAG, calculatedETag);
-            return resultHandling.apply(calculation.calculate(requestForm));
+            return resultHandling.apply(calculation.calculate(requestForm), requestForm);
         });
     }
 

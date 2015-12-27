@@ -20,8 +20,13 @@ public class CalendarMapper {
     private static final TimeZone UTC_ZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/London");
     private final CalendarOutputter calendarOutputter = new CalendarOutputter();
 
-    public String map(Collection<ZonedEvent> events) {
-        final Calendar calendar = createCalendar();
+    /**
+     * @param events          to map
+     * @param updateFrequency How often this calendar should be updated (in days)
+     * @return the ical-file
+     */
+    public String map(Collection<ZonedEvent> events, long updateFrequency) {
+        final Calendar calendar = createCalendar(updateFrequency);
         for (ZonedEvent event : events) {
             addEvent(calendar, event);
         }
@@ -29,11 +34,14 @@ public class CalendarMapper {
     }
 
     @NotNull
-    private Calendar createCalendar() {
+    private Calendar createCalendar(long updateFrequency) {
         final Calendar calendar = new Calendar();
         calendar.getProperties().add(new ProdId("-//Mondkalender 1.0//EN"));
         calendar.getProperties().add(Version.VERSION_2_0);
         calendar.getProperties().add(CalScale.GREGORIAN);
+        if (updateFrequency > 0) {
+            calendar.getProperties().add(new XProperty("X-PUBLISHED-TTL", "P" + updateFrequency + "D"));
+        }
         return calendar;
     }
 
