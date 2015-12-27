@@ -5,6 +5,7 @@ import logics.calendar.CalendarMapper;
 import models.RequestForm;
 import models.ZonedEvent;
 import org.apache.commons.lang3.StringUtils;
+import play.Logger;
 import play.Play;
 import play.data.Form;
 import play.data.validation.ValidationError;
@@ -60,7 +61,9 @@ public class Application extends Controller {
 
     private Result handleETag(RequestForm requestForm, Supplier<Result> request) {
         final String calculatedETag = requestForm.calculateETag();
-        if (calculatedETag.equals(request().getHeader(IF_NONE_MATCH)) && Play.isProd()) {
+        final boolean isNotModified = calculatedETag.equals(request().getHeader(IF_NONE_MATCH));
+        Logger.info("Request: " + request().uri() + (isNotModified ? " NOT_MODIFIED" : ""));
+        if (isNotModified && Play.isProd()) {
             return status(NOT_MODIFIED);
         }
         response().setHeader(ETAG, calculatedETag);
