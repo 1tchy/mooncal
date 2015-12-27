@@ -1,4 +1,4 @@
-package logics;
+package logics.calculation;
 
 import play.i18n.Messages;
 

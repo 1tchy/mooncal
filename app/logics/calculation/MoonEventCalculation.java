@@ -1,4 +1,4 @@
-package logics;
+package logics.calculation;
 
 import com.google.common.io.LineReader;
 import models.EventTemplate;

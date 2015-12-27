@@ -1,4 +1,4 @@
-package logics;
+package logics.calculation;
 
 import com.bradsbrain.simpleastronomy.MoonPhaseFinder;
 import models.MoonPhaseType;

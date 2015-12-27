@@ -1,4 +1,4 @@
-package logics;
+package logics.calculation;
 
 import models.EventType;
 import models.RequestForm;

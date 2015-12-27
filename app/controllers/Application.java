@@ -1,6 +1,6 @@
 package controllers;
 
-import logics.TotalCalculation;
+import logics.calculation.TotalCalculation;
 import logics.calendar.CalendarMapper;
 import models.RequestForm;
 import models.ZonedEvent;
