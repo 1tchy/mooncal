@@ -7,6 +7,7 @@ import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
+import play.i18n.MessagesApi;
 import play.test.WithApplication;
 
 import java.time.LocalDate;
@@ -17,10 +18,11 @@ import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
 
 public class MoonPhasesCalculationTest extends WithApplication {
 
-    private MoonPhasesCalculation cut = new MoonPhasesCalculation();
+    private MoonPhasesCalculation cut = new MoonPhasesCalculation(mock(MessagesApi.class));
     private RequestForm requestForm;
 
     @Before
