@@ -1,26 +1,42 @@
-This is your new Play 2.4.4 application
-=====================================
+# [Mooncal.ch](http://mooncal.ch/)
 
-This file will be packaged with your application, when using `play dist`.
-
-
-Bootstraped with <3 using [yoplay!](https://pauldijou.github.com/yoplay)
+Mooncal is a web app for generating personal moon calendars.
+It offers the display of moon phases as well as some special events about the moon.
+The calendar can be exported to personal calendar applications.
 
 
+## Development
+### Dependencies
+Mooncal is built on the following frameworks:
 
+* [Play Framework](https://www.playframework.com/)
+* [AngularJS](https://angularjs.org/)
+* [Bootstrap](http://getbootstrap.com/)
 
+### Prerequisites
+* Java 8 (JDK)
+* [Typesafe Activator](https://www.typesafe.com/activator/download)
 
+### Running
+    cd mooncal
+    activator run
 
+### Testing
+    cd mooncal
+    activator test
 
-# mondkalender
+### Supporting Mooncal
+* Feel free to [make a donation](http://mooncal.ch/#/about)
+* Feel free to develop a new feature/fix a bug/...
+    * Please develop according to [git-flow](https://github.com/nvie/gitflow)
+    * Please write also a test if reasonable
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.14.0.
+## Running
+### Prerequisites
+* Java 8 (JDK)
 
-## Build & development
-
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+### Installation
+* Unzip the zip-file to any folder
+* Start `bin/mondkalender.bat` (Windows) or `bin/mondkalender` (Linux/Mac) within the extraction folder
+    * Detailed configuration can be done like any other [Play Application](https://www.playframework.com/documentation/2.4.x/ProductionConfiguration)
+* Mooncal is now available at [http://localhost:9000](http://localhost:9000/)
