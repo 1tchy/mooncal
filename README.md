@@ -37,6 +37,6 @@ Mooncal is built on the following frameworks:
 
 ### Installation
 * Unzip the zip-file to any folder
-* Start `bin/mondkalender.bat` (Windows) or `bin/mondkalender` (Linux/Mac) within the extraction folder
+* Start `bin/mooncal.bat` (Windows) or `bin/mooncal` (Linux/Mac) within the extraction folder
     * Detailed configuration can be done like any other [Play Application](https://www.playframework.com/documentation/2.4.x/ProductionConfiguration)
 * Mooncal is now available at [http://localhost:9000](http://localhost:9000/)

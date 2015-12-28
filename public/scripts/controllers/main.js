@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name mondkalenderApp.controller:MainCtrl
+ * @name mooncalApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the mondkalenderApp
+ * Controller of the mooncalApp
  */
-angular.module('mondkalenderApp')
+angular.module('mooncalApp')
 	.controller('MainCtrl', function ($scope, $http, $window) {
 		$scope.phases = {full:{value:true},'new':{value:false},quarter:{value:false},daily:{value:false}};
 		$scope.events = {lunareclipse:{value:true},solareclipse:{value:true},moonlanding:{value:true}};
@@ -58,7 +58,7 @@ angular.module('mondkalenderApp')
                 $scope.requestOngoing=true;
                 $http({
                     method: 'GET',
-                    url: '/mondkalender?'+$scope.paramsAsString(),
+                    url: '/mooncal?'+$scope.paramsAsString(),
                     headers: {'Content-Type': 'application/json'}
                 }).then(function successCallback(response) {
                     $scope.updateCalendar(response.data);
@@ -106,7 +106,7 @@ angular.module('mondkalenderApp')
 		    return event1 && event2 && event1.date==event2.date && event1.title==event2.title;
 		}
 		$scope.downloadIcal=function() {
-		    $window.location.href="/mondkalender.ics?"+$scope.paramsAsString();
+		    $window.location.href="/mooncal.ics?"+$scope.paramsAsString();
 		}
 		$scope.getTimezone=function() {
             var jOffset = -1 * new Date(Date.UTC(2015, 6, 30, 0, 0, 0, 0)).getTimezoneOffset();

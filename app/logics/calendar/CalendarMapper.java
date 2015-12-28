@@ -36,7 +36,7 @@ public class CalendarMapper {
     @NotNull
     private Calendar createCalendar(long updateFrequency) {
         final Calendar calendar = new Calendar();
-        calendar.getProperties().add(new ProdId("-//Mondkalender 1.0//EN"));
+        calendar.getProperties().add(new ProdId("-//Mooncal 1.0//EN"));
         calendar.getProperties().add(Version.VERSION_2_0);
         calendar.getProperties().add(CalScale.GREGORIAN);
         if (updateFrequency > 0) {

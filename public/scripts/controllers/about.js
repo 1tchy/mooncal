@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc function
- * @name mondkalenderApp.controller:AboutCtrl
+ * @name mooncalApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the mondkalenderApp
+ * Controller of the mooncalApp
  */
-angular.module('mondkalenderApp')
+angular.module('mooncalApp')
   .controller('AboutCtrl', function () {
   });
