@@ -66,6 +66,7 @@ public class Application extends Controller {
         if (isNotModified && Play.isProd()) {
             return F.Promise.pure(status(NOT_MODIFIED));
         }
+        response().setHeader(CACHE_CONTROL, "max-age=21600"); //=6h
         response().setHeader(ETAG, calculatedETag);
         return request;
     }
