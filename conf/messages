@@ -67,6 +67,7 @@ about.sources.various=Verschiedene Quellen
 about.sources.primary=primär
 about.support.title=Wollen Sie dieses Projekt unterstützen?
 about.support.donate=Spenden
+about.support.develop=Mitentwickeln
 
 error.title=Fehler
 error.invalid=ungültiger Wert für {0}

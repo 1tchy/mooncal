@@ -67,6 +67,7 @@ about.sources.various=verschillende bronnen
 about.sources.primary=primair
 about.support.title=Wilt u dit project ondersteunen?
 about.support.donate=Doneren
+about.support.develop=Meehelpen
 
 error.title=Fout
 error.invalid=ongeldige waarde voor {0}
