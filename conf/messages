@@ -67,8 +67,14 @@ about.sources.various=Verschiedene Quellen
 about.sources.primary=primär
 about.support.title=Wollen Sie dieses Projekt unterstützen?
 about.support.donate=Spenden
+about.support.develop=Mitentwickeln
 
 error.title=Fehler
 error.invalid=ungültiger Wert für {0}
 error.required=Wert für {0} ist zwingend nötig
 error.fromTo.tolargefordaily=Bei der Angzeige von täglichen Phasen sind maximal {0} möglich.
+error.notfound=Seite nicht gefunden
+error.notfound.lead=Sorry, die angeforderte Seite existiert nicht.
+error.notfound.problem=Das Problem könnte sein:
+error.notfound.problem.typo=Tippfehler in der Adresse
+error.notfound.problem.link=nicht mehr aktueller Link

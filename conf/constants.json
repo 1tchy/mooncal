@@ -1,9 +1,0 @@
-{
-  "application": {
-    "version": "0.1",
-    "files": {
-      "style": "app",
-      "script": "app"
-    }
-  }
-}

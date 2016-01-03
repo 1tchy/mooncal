@@ -5,8 +5,8 @@
 GET     /                               controllers.Application.index()
 GET     /lang/$lang<[a-z]+>             controllers.Application.setLanguage(lang)
 GET     /views/$file<[a-z]+>.html       controllers.Application.read(file)
-GET 	/mondkalender				    controllers.Application.query()
-GET 	/mondkalender.ics   			controllers.Application.queryAsICalendar(lang: controllers.LangQueryStringBindable ?= null)
+GET 	/mooncal		                controllers.Application.query()
+GET 	/mooncal.ics                	controllers.Application.queryAsICalendar(lang: controllers.LangQueryStringBindable ?= null)
 
 # Map static resources from the /public folder
 GET     /*file                          controllers.Assets.at(path="/public", file)

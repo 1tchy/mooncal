@@ -67,8 +67,14 @@ about.sources.various=verschillende bronnen
 about.sources.primary=primair
 about.support.title=Wilt u dit project ondersteunen?
 about.support.donate=Doneren
+about.support.develop=Meehelpen
 
 error.title=Fout
 error.invalid=ongeldige waarde voor {0}
 error.required=Waarde voor {0} is absoluut noodzakelijk
 error.fromTo.tolargefordaily=Maximaal {0} dagelijkse fasen mogelijk.
+error.notfound=Pagina niet gevonden
+error.notfound.lead=Sorry, de gevraagde pagina bestaat niet.
+error.notfound.problem=Het probleem zou kunnen zijn:
+error.notfound.problem.typo=een fout getypt adres
+error.notfound.problem.link=een verouderde link

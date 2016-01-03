@@ -100,7 +100,7 @@ public class Application extends Controller {
             final Class<?> template = this.getClass().getClassLoader().loadClass("views.html.templates." + scalaHtmlFile);
             return ok((Html) template.getMethod("render").invoke(template));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
-            return ok(views.html.notFound.render());
+            return notFound(views.html.notFound.render(NOT_FOUND));
         }
     }
 

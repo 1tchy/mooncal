@@ -67,8 +67,14 @@ about.sources.various=various sources
 about.sources.primary=primarily
 about.support.title=Do you want to support this project?
 about.support.donate=Donate
+about.support.develop=Help Develop
 
 error.title=Error
 error.invalid=invalid value for {0}
 error.required={0} is required
 error.fromTo.tolargefordaily=When selecting daily phases only {0} years can be displayed.
+error.notfound=Page not found
+error.notfound.lead=Sorry, but the page you were trying to view does not exist.
+error.notfound.problem=It looks like this was the result of either:
+error.notfound.problem.typo=a mistyped address
+error.notfound.problem.link=an out-of-date link

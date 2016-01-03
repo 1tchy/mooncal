@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name mondkalenderApp
+ * @name mooncalApp
  * @description
- * # mondkalenderApp
+ * # mooncalApp
  *
  * Main module of the application.
  */
 angular
-  .module('mondkalenderApp', [
+  .module('mooncalApp', [
     'ngAnimate',
     'ngRoute'
   ])
