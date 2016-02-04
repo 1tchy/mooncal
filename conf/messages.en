@@ -1,5 +1,5 @@
 app.title=Moon Calendar
-app.introduction= Are you looking for a simple moon calendar? Now you have found it! With this web app you can generate your personal moon calendar not only with moon phases but also with special events about the moon. You can export your personal calendar at the bottom of the page.
+app.introduction=Are you looking for a simple moon calendar? Now you found it! With this web app you can generate your personal moon calendar, not only with moon phases, but also with special events about the moon. You can export your personal calendar at the bottom of the page.
 app.moon=moon
 app.angularlocale=en
 
@@ -38,10 +38,10 @@ events.moonlanding=moon landing
 events.at={0} at {1}
 
 time.title=Interval
-time.fromTo=Show from {0} till {1}
+time.fromTo=Show from {0} until {1}
 time.fromTo.required=Starting / Ending date required.
-time.fromTo.date=Date format should be YYYY-MM-DD.
-time.fromTo.minmax=Date should be between the year 1000 and 3000.
+time.fromTo.date=Date format needs to be YYYY-MM-DD.
+time.fromTo.minmax=Date needs to be between the year 1000 and 3000.
 
 calendar.title=Calendar
 calendar.reloading=Data loading
@@ -51,7 +51,7 @@ export.ical=Export to calendar
 export.ical.download=download iCalendar-file
 export.ical.subscribe=subscribe to iCalendar-feed
 export.ical.subscribe.instructions=Copy the following link and paste it as a subscription link into your calendar application
-export.ical.subscribe.explanations=With this link all selected events will be shown for the last half year and for the following two years.
+export.ical.subscribe.explanations=With this link all selected events will be shown for the previous half year and for the following two years.
 export.ical.subscribe.close=Close
 export.print=Print
 
@@ -64,7 +64,7 @@ about.sources.lunareclipse.title=lunar eclipse
 about.sources.solareclipse.title=solar eclipse
 about.sources.moonlanding.title=moon landing
 about.sources.various=various sources
-about.sources.primary=primarily
+about.sources.mainly=mainly
 about.support.title=Do you want to support this project?
 about.support.donate=Donate
 about.support.develop=Help Develop
