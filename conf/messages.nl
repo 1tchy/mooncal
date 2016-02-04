@@ -1,5 +1,5 @@
 app.title=Maankalender
-app.introduction= Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanfasen te ervaren? Dan bent u hier aan de juiste adres. Met deze app kunt u uw personlijke maankalender samenstellen. Niet alleen met de maanfasen, maar ook met speciale evenementen in verband met de maan. Helemaal onderaan de pagina kunt u uw kalender exporteren.
+app.introduction=Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanfasen te ervaren? Dan bent u hier aan de juiste adres. Met deze app kunt u uw personlijke maankalender samenstellen. Niet alleen met de maanfasen, maar ook met speciale evenementen in verband met de maan. Helemaal onderaan de pagina kunt u uw kalender exporteren.
 app.moon=moon
 app.angularlocale=nl
 
@@ -64,7 +64,7 @@ about.sources.lunareclipse.title=Maansverduistering
 about.sources.solareclipse.title=Zonsverduistering
 about.sources.moonlanding.title=Maanlanding
 about.sources.various=verschillende bronnen
-about.sources.primary=primair
+about.sources.mainly=primair
 about.support.title=Wilt u dit project ondersteunen?
 about.support.donate=Doneren
 about.support.develop=Meehelpen
