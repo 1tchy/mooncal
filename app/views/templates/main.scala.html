@@ -116,12 +116,12 @@
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="" ng-click="downloadIcal()">@Messages("export.ical.download")</a></li>
-						<li><a href="" data-toggle="modal" data-target="#myModal">@Messages("export.ical.subscribe")</a>
+						<li><a href="" data-toggle="modal" data-target="#myModal" ng-click="trackIcalSubscription()">@Messages("export.ical.subscribe")</a>
 						</li>
 					</ul>
 				</div>
 				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default" onclick="window.print()">@Messages("export.print")
+					<button type="button" class="btn btn-default" onclick="window.print()" ng-click="trackPrint()">@Messages("export.print")
 					</button>
 				</div>
 			</div>

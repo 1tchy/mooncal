@@ -32,5 +32,16 @@ angular
     .run(function($rootScope, $location) {
         $rootScope.$on("$routeChangeStart", function() {
             $rootScope.path=$location.path();
+            ga('send', 'pageview', { page: $location.url() });
         })
+        $rootScope.trackLink=function($event) {
+            ga('send', 'event', 'Exit', 'leave', $event.target.href);
+        }
+        $rootScope.trackLanguageChange=function(newLanguage, oldLanguage, $event) {
+            ga('send', 'event', 'Language', 'changeTo'+newLanguage, oldLanguage, {
+                hitCallback: function() {
+                    $location.href=$event.target.href;
+                }
+            });
+        }
     });

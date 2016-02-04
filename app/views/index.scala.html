@@ -42,7 +42,7 @@
 							@for(lang <- play.i18n.Lang.availables()) {
 							<li>
 								@if(lang.code()!=Messages("lang.current")) {
-								<a href="@controllers.routes.Application.setLanguage(lang.code())">@Messages("lang."+lang.code())</a>
+								<a href="@controllers.routes.Application.setLanguage(lang.code())" ng-click='trackLanguageChange(@lang.code(), @Messages("lang.current"), $event)'>@Messages("lang."+lang.code())</a>
 								}
 							</li>
 							}
