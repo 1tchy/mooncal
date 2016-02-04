@@ -2,7 +2,7 @@ import play.PlayImport._
 
 name := "mooncal"
 
-version := "1.5"
+version := "1.6"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava,
   SbtWeb,
