@@ -30,9 +30,12 @@ angular
       });
   })
     .run(function($rootScope, $location) {
+        $rootScope.pageVisits = 0;
         $rootScope.$on("$routeChangeStart", function() {
             $rootScope.path=$location.path();
-            ga('send', 'pageview', { page: $location.url() });
+            if($location.url()!="" && $rootScope.pageVisits++>0) {
+                ga('send', 'pageview', { page: $location.url() });
+            }
         })
         $rootScope.trackLink=function($event) {
             ga('send', 'event', 'Exit', 'leave', $event.target.href);

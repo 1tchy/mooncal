@@ -13,6 +13,7 @@ angular.module('mooncalApp')
 		$scope.events = {lunareclipse:{value:true},solareclipse:{value:true},moonlanding:{value:true}};
 		$scope.from = new Date(new Date().getFullYear(),0,1);
 		$scope.to = new Date(new Date().getFullYear(),11,31);
+		$scope.updateCount = 0;
 		$scope.paramsAsString=function() {
 		    return "phases[full]="+$scope.phases.full.value
 		        +"&phases[new]="+$scope.phases["new"].value
@@ -69,7 +70,9 @@ angular.module('mooncalApp')
                     $scope.calendar=null;
                     $scope.requestOngoing=false;
                 });
-                ga('send', 'event', 'Calendar', 'update', $scope.paramsAsString());
+                if($scope.updateCount++>0) {
+                    ga('send', 'event', 'Calendar', 'update', $scope.paramsAsString());
+                }
             } else {
                 $scope.calendar=null;
             }
