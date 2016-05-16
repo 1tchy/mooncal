@@ -1,5 +1,5 @@
 app.title=Maankalender
-app.introduction=Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanfasen te ervaren? Dan bent u hier aan de juiste adres. Met deze app kunt u uw personlijke maankalender samenstellen. Niet alleen met de maanfasen, maar ook met speciale evenementen in verband met de maan. Helemaal onderaan de pagina kunt u uw kalender als iCalendar (ICS) bestand exporteren.
+app.introduction=Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanstanden te weten? Dan bent u hier aan de juiste adres. Met deze app kunt u uw persoonlijke maankalender vasenstellen. Niet alleen met de maanstanden, maar ook met speciale evenementen in verband met de maan. Helemaal onderaan de pagina kunt u uw kalender als iCalendar (ICS) bestand downloaden.
 app.moon=moon
 app.angularlocale=nl
 
@@ -13,7 +13,7 @@ navigation.home=Home
 navigation.about=Over deze pagina
 navigation.toggle=Navigatie weergeven/verbergen
 
-phases.title=Maanfasen
+phases.title=Maanstanden
 phases.full=Volle maan
 phases.new=Nieuwe maan
 phases.quarter=Halve maan
@@ -37,7 +37,7 @@ events.solareclipse.hybrid=Hybride zonsverduistering
 events.moonlanding=Maanlanding
 events.at={0} om {1}
 
-time.title=Tijdsspanne
+time.title=Datum
 time.fromTo=Toon van {0} tot {1}
 time.fromTo.required=Begin/ Eind datum nodig.
 time.fromTo.date=De datumnotatie moet zijn JJJJ-MM-DD.
@@ -47,7 +47,7 @@ calendar.title=Kalender
 calendar.reloading=Gegevens worden geladen
 
 export.title=Export
-export.ical=Naar kalender exporteren
+export.ical=Naar kalender downloaden
 export.ical.download=iCalendar downloaden
 export.ical.subscribe=abonneren op iCalendar
 export.ical.subscribe.instructions=Kopieer de onderstaande link en plak het als abonnement in uw kalender applicatie
@@ -59,7 +59,7 @@ about.title=Over deze pagina
 about.introduction= Het doel van dit project is een simpel en overzichtelijk maankalender voor iedereen ter beschikking te stellen. De gegevens zijn berekend en verzameld van verschillende bronnen naar beste weten en geweten.
 about.sources.title=Bronnen
 about.sources.moonimage.title=Maanbeeld
-about.sources.phases.title=Maanfasen
+about.sources.phases.title=Maanstanden
 about.sources.lunareclipse.title=Maansverduistering
 about.sources.solareclipse.title=Zonsverduistering
 about.sources.moonlanding.title=Maanlanding
@@ -72,7 +72,7 @@ about.support.develop=Meehelpen
 error.title=Fout
 error.invalid=ongeldige waarde voor {0}
 error.required=Waarde voor {0} is absoluut noodzakelijk
-error.fromTo.tolargefordaily=Maximaal {0} dagelijkse fasen mogelijk.
+error.fromTo.tolargefordaily=Maximaal {0} dagelijkse standen mogelijk.
 error.notfound=Pagina niet gevonden
 error.notfound.lead=Sorry, de gevraagde pagina bestaat niet.
 error.notfound.problem=Het probleem zou kunnen zijn:
