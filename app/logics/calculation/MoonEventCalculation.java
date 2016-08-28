@@ -1,12 +1,14 @@
 package logics.calculation;
 
 import com.google.common.io.LineReader;
+import models.EventInstance;
 import models.EventTemplate;
 import models.EventType;
 import models.RequestForm;
-import models.ZonedEvent;
-import play.i18n.Messages;
+import play.i18n.Lang;
+import play.i18n.MessagesApi;
 
+import javax.inject.Inject;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -24,7 +26,9 @@ public class MoonEventCalculation extends Calculation {
     private final TreeMap<ZonedDateTime, EventTemplate> solarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> moonLandings = new TreeMap<>();
 
-    public MoonEventCalculation() {
+    @Inject
+    public MoonEventCalculation(MessagesApi messagesApi) {
+        super(messagesApi);
         initializeLunarEclipses();
         initializeSolarEclipses();
         initializeMoonLandings();
@@ -33,21 +37,21 @@ public class MoonEventCalculation extends Calculation {
     private void initializeLunarEclipses() {
         initializeByCVS("lunar-eclipses/lunar-eclipses.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            lunarEclipses.put(date, new EventTemplate(date, zoneId -> getLunarEclipseName(rows[1]), zoneId -> eventAt(date, getLunarEclipseName(rows[1]), zoneId), "lunar-eclipse"));
+            lunarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getLunarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getLunarEclipseName(rows[1], lang), zoneId, lang), "lunar-eclipse"));
         });
     }
 
     private void initializeSolarEclipses() {
         initializeByCVS("solar-eclipses/solar-eclipses.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            solarEclipses.put(date, new EventTemplate(date, zoneId -> getSolarEclipseName(rows[1]), zoneId -> eventAt(date, getSolarEclipseName(rows[1]), zoneId), "solar-eclipse"));
+            solarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getSolarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getSolarEclipseName(rows[1], lang), zoneId, lang), "solar-eclipse"));
         });
     }
 
     private void initializeMoonLandings() {
         initializeByCVS("moon-landings/moon-landings.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate(date, zoneId -> rows[1], zoneId -> rows[2], "moon-landing"));
+            moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> rows[1], (zoneId, lang) -> rows[2], "moon-landing"));
         });
     }
 
@@ -65,49 +69,49 @@ public class MoonEventCalculation extends Calculation {
         }
     }
 
-    private static String getLunarEclipseName(String shortcut) {
+    private String getLunarEclipseName(String shortcut, Lang lang) {
         switch (shortcut) {
             case "T":
-                return Messages.get("events.lunareclipse.total");
+                return messagesApi.get(lang, "events.lunareclipse.total");
             case "P":
-                return Messages.get("events.lunareclipse.partial");
+                return messagesApi.get(lang, "events.lunareclipse.partial");
             default:
                 throw new RuntimeException(shortcut + " is no known eclipse type");
         }
     }
 
-    private static String getSolarEclipseName(String shortcut) {
+    private String getSolarEclipseName(String shortcut, Lang lang) {
         switch (shortcut) {
             case "T":
-                return Messages.get("events.solareclipse.total");
+                return messagesApi.get(lang, "events.solareclipse.total");
             case "P":
-                return Messages.get("events.solareclipse.partial");
+                return messagesApi.get(lang, "events.solareclipse.partial");
             case "A":
-                return Messages.get("events.solareclipse.annular");
+                return messagesApi.get(lang, "events.solareclipse.annular");
             case "H":
-                return Messages.get("events.solareclipse.hybrid");
+                return messagesApi.get(lang, "events.solareclipse.hybrid");
             default:
                 throw new RuntimeException(shortcut + " is no known eclipse type");
         }
     }
 
     @Override
-    public void calculate(RequestForm requestForm, Collection<ZonedEvent> eventCollection) {
+    public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection, Lang lang) {
         if (requestForm.includeEvent(EventType.LUNARECLIPSE)) {
-            findEventsInMap(requestForm, eventCollection, this.lunarEclipses);
+            findEventsInMap(requestForm, eventCollection, this.lunarEclipses, lang);
         }
         if (requestForm.includeEvent(EventType.SOLARECLIPSE)) {
-            findEventsInMap(requestForm, eventCollection, this.solarEclipses);
+            findEventsInMap(requestForm, eventCollection, this.solarEclipses, lang);
         }
         if (requestForm.includeEvent(EventType.MOONLANDING)) {
-            findEventsInMap(requestForm, eventCollection, moonLandings);
+            findEventsInMap(requestForm, eventCollection, moonLandings, lang);
         }
     }
 
-    private static void findEventsInMap(RequestForm requestForm, Collection<ZonedEvent> eventCollection, TreeMap<ZonedDateTime, EventTemplate> map) {
+    private static void findEventsInMap(RequestForm requestForm, Collection<EventInstance> eventCollection, TreeMap<ZonedDateTime, EventTemplate> map, Lang lang) {
         for (EventTemplate event : map.tailMap(requestForm.getFrom()).values()) {
             if (event.getDateTime().isBefore(requestForm.getTo())) {
-                eventCollection.add(new ZonedEvent(event, requestForm.getFrom().getZone()));
+                eventCollection.add(new EventInstance(event, requestForm.getFrom().getZone(), lang));
             } else {
                 break;
             }

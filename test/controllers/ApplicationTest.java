@@ -45,8 +45,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     private Seq<JsValue> query(boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
-        final Call query = routes.Application.query();
-        final Result result = paramQuery(query.method(), query.url() + "?", fullPhases, newPhases, quarterQuases, dailyPhases, lunarEclipses, solarEclipses, moonLandings, extraParams);
+        final Result result = paramQuery("GET", routes.Application.query().url() + "?", fullPhases, newPhases, quarterQuases, dailyPhases, lunarEclipses, solarEclipses, moonLandings, extraParams);
         return ((JsArray) Json.parse(contentAsString(result))).value();
     }
 

@@ -1,6 +1,6 @@
 package logics.calendar;
 
-import models.ZonedEvent;
+import models.EventInstance;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.VEvent;
@@ -25,9 +25,9 @@ public class CalendarMapper {
      * @param updateFrequency How often this calendar should be updated (in days)
      * @return the ical-file
      */
-    public String map(Collection<ZonedEvent> events, long updateFrequency) {
+    public String map(Collection<EventInstance> events, long updateFrequency) {
         final Calendar calendar = createCalendar(updateFrequency);
-        for (ZonedEvent event : events) {
+        for (EventInstance event : events) {
             addEvent(calendar, event);
         }
         return getICalendarString(calendar);
@@ -45,7 +45,7 @@ public class CalendarMapper {
         return calendar;
     }
 
-    private void addEvent(Calendar calendar, ZonedEvent event) {
+    private void addEvent(Calendar calendar, EventInstance event) {
         final VEvent calEvent = new VEvent(toDate(event.getDateTime()), event.getTitle());
         if (event.getDescription() != null) {
             calEvent.getProperties().add(new Description(event.getDescription()));
@@ -54,12 +54,12 @@ public class CalendarMapper {
         calendar.getComponents().add(calEvent);
     }
 
-    private Uid calculateUid(ZonedEvent event) {
+    private Uid calculateUid(EventInstance event) {
         return new Uid("mooncal-" + getStandardDate(event) + "-" + event.getEventTypeId());
     }
 
     @NotNull
-    private String getStandardDate(ZonedEvent event) {
+    private String getStandardDate(EventInstance event) {
         return event.getDateTime().withZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.BASIC_ISO_DATE);
     }
 

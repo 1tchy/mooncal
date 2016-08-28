@@ -3,23 +3,24 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import play.i18n.Lang;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
-public class EventTemplate implements Comparable<ZonedEvent> {
+public class EventTemplate implements Comparable<EventInstance> {
     @NotNull
     protected ZonedDateTime dateTime;
     @Nullable
-    protected final Function<ZoneId, String> descriptionTemplate;
+    protected final BiFunction<ZoneId, Lang, String> descriptionTemplate;
     @NotNull
-    protected Function<ZoneId, String> titleTemplate;
+    protected BiFunction<ZoneId, Lang, String> titleTemplate;
     @NotNull
     protected final String eventTypeId;
 
-    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull Function<ZoneId, String> titleTemplate, @Nullable Function<ZoneId, String> descriptionTemplate, @NotNull String eventTypeId) {
+    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull BiFunction<ZoneId, Lang, String> titleTemplate, @Nullable BiFunction<ZoneId, Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
         this.titleTemplate = titleTemplate;
         this.dateTime = dateTime;
         this.descriptionTemplate = descriptionTemplate;
@@ -33,13 +34,13 @@ public class EventTemplate implements Comparable<ZonedEvent> {
     }
 
     @NotNull
-    public String getTitle(ZoneId timezone) {
-        return titleTemplate.apply(timezone);
+    public String getTitle(ZoneId timezone, Lang lang) {
+        return titleTemplate.apply(timezone, lang);
     }
 
     @Nullable
-    public String getDescription(ZoneId timezone) {
-        return descriptionTemplate == null ? null : descriptionTemplate.apply(timezone);
+    public String getDescription(ZoneId timezone, Lang lang) {
+        return descriptionTemplate == null ? null : descriptionTemplate.apply(timezone, lang);
     }
 
     @NotNull
@@ -48,12 +49,12 @@ public class EventTemplate implements Comparable<ZonedEvent> {
     }
 
     @Override
-    public int compareTo(@NotNull ZonedEvent other) {
+    public int compareTo(@NotNull EventInstance other) {
         return this.dateTime.compareTo(other.dateTime);
     }
 
     @Override
     public String toString() {
-        return titleTemplate.apply(ZoneOffset.UTC) + "@" + dateTime;
+        return titleTemplate.apply(ZoneOffset.UTC, Lang.forCode("en")) + "@" + dateTime;
     }
 }

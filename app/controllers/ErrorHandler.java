@@ -1,13 +1,14 @@
 package controllers;
 
-import play.Play;
+import play.Environment;
 import play.http.DefaultHttpErrorHandler;
 import play.http.HttpErrorHandler;
-import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 import static play.mvc.Results.internalServerError;
 import static play.mvc.Results.status;
@@ -15,10 +16,12 @@ import static play.mvc.Results.status;
 public class ErrorHandler implements HttpErrorHandler {
 
     private final DefaultHttpErrorHandler defaultErrorHandler;
+    private final Environment environment;
 
     @Inject
-    public ErrorHandler(DefaultHttpErrorHandler defaultErrorHandler) {
+    public ErrorHandler(DefaultHttpErrorHandler defaultErrorHandler, Environment environment) {
         this.defaultErrorHandler = defaultErrorHandler;
+        this.environment = environment;
     }
 
     /**
@@ -29,8 +32,8 @@ public class ErrorHandler implements HttpErrorHandler {
      * @param message    The error message.
      */
     @Override
-    public F.Promise<Result> onClientError(Http.RequestHeader request, int statusCode, String message) {
-        return F.Promise.pure(status(statusCode, views.html.notFound.render(statusCode)));
+    public CompletionStage<Result> onClientError(Http.RequestHeader request, int statusCode, String message) {
+        return CompletableFuture.completedFuture(status(statusCode, views.html.notFound.render(statusCode)));
     }
 
     /**
@@ -40,7 +43,7 @@ public class ErrorHandler implements HttpErrorHandler {
      * @param exception The server error.
      */
     @Override
-    public F.Promise<Result> onServerError(Http.RequestHeader request, Throwable exception) {
-        return Play.isProd() ? F.Promise.pure(internalServerError("Server Error")) : defaultErrorHandler.onServerError(request, exception);
+    public CompletionStage<Result> onServerError(Http.RequestHeader request, Throwable exception) {
+        return environment.isProd() ? CompletableFuture.completedFuture(internalServerError("Server Error")) : defaultErrorHandler.onServerError(request, exception);
     }
 }

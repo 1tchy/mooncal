@@ -1,4 +1,4 @@
-import play.PlayImport._
+import play.sbt.PlayImport._
 
 name := "mooncal"
 
@@ -8,7 +8,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava,
   SbtWeb,
   SbtTwirl)
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq(
   //see latest version under: http://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
