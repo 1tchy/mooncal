@@ -25,6 +25,11 @@ Mooncal is built on the following frameworks:
     cd mooncal
     activator test
 
+### Debugging
+    cd mooncal
+    activator -jvm-debug 5005 run
+And in your IDE add a remote debugging configuration.
+
 ### Supporting Mooncal
 * Feel free to [make a donation](http://mooncal.ch/#/about)
 * Feel free to develop a new feature/fix a bug/...

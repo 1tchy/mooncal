@@ -49,7 +49,6 @@ angular.module('mooncalApp')
 		};
 		$scope.formatDate=function formatLocalDate(date) {
 		    if(!date) return date;
-            var tzo = -date.getTimezoneOffset();
             var pad = function(num) {
                 var norm = Math.abs(Math.floor(num));
                 return (norm < 10 ? '0' : '') + norm;
@@ -61,7 +60,7 @@ angular.module('mooncalApp')
                 + ':' + pad(date.getMinutes())
                 + ':' + pad(date.getSeconds())
                 + $scope.zone;
-        }
+        };
 		$scope.$watch(function(){
 			return $scope.paramsAsShortString();
 		}, function(){
@@ -115,24 +114,24 @@ angular.module('mooncalApp')
 		    while(newBase<newCalendar.length) {
 		        $scope.calendar.push(newCalendar[newBase++]);
 		    }
-		}
+		};
 		$scope.eventsEquals=function(event1, event2) {
 		    return event1 && event2 && event1.date==event2.date && event1.title==event2.title;
-		}
+		};
 		$scope.downloadIcal=function() {
 		    ga('send', 'event', 'Calendar', 'downloadIcal', $scope.paramsAsShortString());
 		    $window.location.href="/mooncal.ics?"+$scope.paramsAsString();
-		}
+		};
 		$scope.trackLink=function(target) {
 		    ga('send', 'event', 'Exit', 'leave', target);
 		    //$window.location.href=target;
-		}
+		};
 		$scope.trackIcalSubscription=function() {
             ga('send', 'event', 'Calendar', 'subscribeIcal', $scope.paramsAsShortString());
-		}
+		};
 		$scope.trackPrint=function() {
             ga('send', 'event', 'Calendar', 'print', $scope.paramsAsShortString());
-		}
+		};
 		$scope.getTimezone=function() {
             var jOffset = -1 * new Date(Date.UTC(2015, 6, 30, 0, 0, 0, 0)).getTimezoneOffset();
             var dOffset = -1 * new Date(Date.UTC(2015, 12, 30, 0, 0, 0, 0)).getTimezoneOffset();
