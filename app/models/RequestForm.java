@@ -100,7 +100,7 @@ public class RequestForm {
         return null;//form is fine
     }
 
-    public String calculateETag() {
+    public String calculateETag(String language) {
         int eventsPart = 0;
         for (MoonPhaseType moonPhaseType : MoonPhaseType.values()) {
             eventsPart = eventsPart * 2 + (includePhase(moonPhaseType) ? 1 : 0);
@@ -118,6 +118,8 @@ public class RequestForm {
         if (zone != null) {
             sb.append(zone.getId());
         }
+        sb.append("x");
+        sb.append(language);
         return sb.toString();
     }
 

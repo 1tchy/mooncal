@@ -14,8 +14,10 @@ angular.module('mooncalApp')
 		$scope.from = new Date(new Date().getFullYear(),0,1);
 		$scope.to = new Date(new Date().getFullYear(),11,31);
 		$scope.updateCount = 0;
+		$scope.lang = null;
 		$scope.paramsAsString=function() {
-		    return "phases[full]="+$scope.phases.full.value
+			return "lang="+$scope.lang
+		        +"&phases[full]="+$scope.phases.full.value
 		        +"&phases[new]="+$scope.phases["new"].value
 		        +"&phases[quarter]="+$scope.phases.quarter.value
 		        +"&phases[daily]="+$scope.phases.daily.value
@@ -26,7 +28,8 @@ angular.module('mooncalApp')
 		        +"&to="+$scope.formatDate($scope.to);
 		};
 		$scope.paramsAsShortString=function() {
-		    return ($scope.phases.full.value ? "full," : "")
+		    return $scope.lang
+			    + ($scope.phases.full.value ? "full," : "")
 		        + ($scope.phases["new"].value ? "new," : "")
 		        + ($scope.phases.quarter.value ? "quarter," : "")
 		        + ($scope.phases.daily.value ? "daily," : "")

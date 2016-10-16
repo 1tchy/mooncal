@@ -5,6 +5,7 @@ import logics.calendar.CalendarMapper;
 import models.EventInstance;
 import models.RequestForm;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import play.Environment;
 import play.Logger;
 import play.data.Form;
@@ -50,36 +51,37 @@ public class Application extends Controller {
         this.langs = langs;
     }
 
-    public CompletionStage<Result> query() {
-        return handleQueryRequest(this::renderError, (result, goodForm) -> ok(Json.toJson(result)), getLang());
-    }
-
-    private static Lang getLang() {
-        final Http.Context context = Http.Context.current.get();
-        if (context != null) {
-            return context.lang();
-        } else {
-            return new Lang(Lang.defaultLang());
-        }
+    public CompletionStage<Result> query(LangQueryStringBindable queryLang) {
+        return handleQueryRequest(this::renderError, (result, goodForm) -> ok(Json.toJson(result)), getLang(queryLang));
     }
 
     public CompletionStage<Result> queryAsICalendar(LangQueryStringBindable queryLang) {
-        final Lang lang = (queryLang == null) ? getLang() : queryLang.get();
         return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
             return ok(calendarMapper.map(result, updateFrequency)).as("text/calendar");
-        }, lang);
+        }, getLang(queryLang));
     }
 
-    private CompletionStage<Result> handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, BiFunction<Collection<EventInstance>, RequestForm, Result> goodRequest, Lang lang) {
-        return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, CompletableFuture.supplyAsync(() -> {
+    private static Lang getLang(LangQueryStringBindable queryLang) {
+        if (queryLang != null && queryLang.isDefined()) {
+            return queryLang.get();
+        }
+        final Http.Context context = Http.Context.current.get();
+        if (context != null) {
+            return context.lang();
+        }
+        return new Lang(Lang.defaultLang());
+    }
+
+    private CompletionStage<Result> handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, BiFunction<Collection<EventInstance>, RequestForm, Result> goodRequest, @NotNull Lang lang) {
+        return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, lang, CompletableFuture.supplyAsync(() -> {
             //noinspection CodeBlock2Expr
             return goodRequest.apply(calculation.calculate(requestForm, lang), requestForm);
         })));
     }
 
-    private CompletionStage<Result> handleETag(RequestForm requestForm, CompletionStage<Result> request) {
-        final String calculatedETag = requestForm.calculateETag();
+    private CompletionStage<Result> handleETag(RequestForm requestForm, @NotNull Lang lang, CompletionStage<Result> request) {
+        final String calculatedETag = requestForm.calculateETag(messagesApi.get(lang, "lang.current"));
         final boolean isNotModified = calculatedETag.equals(request().getHeader(IF_NONE_MATCH));
         Logger.info("Request: " + request().uri() + (isNotModified ? " NOT_MODIFIED" : ""));
         if (isNotModified && environment.isProd()) {

@@ -69,4 +69,8 @@ public class LangQueryStringBindable implements QueryStringBindable<LangQueryStr
     public Lang get() {
         return lang;
     }
+
+    public boolean isDefined() {
+        return lang != null;
+    }
 }
