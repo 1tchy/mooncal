@@ -1,8 +1,10 @@
 package logics;
 
+import org.junit.Before;
 import org.junit.Test;
 import play.i18n.Lang;
 import play.i18n.Messages;
+import play.i18n.MessagesApi;
 import play.test.WithApplication;
 
 import java.io.File;
@@ -14,6 +16,14 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
 
 public class TranslationTest extends WithApplication {
+
+    private static final Lang defaultLang = Lang.forCode("de");
+    private MessagesApi messagesApi;
+
+    @Before
+    public void setUp() throws Exception {
+        messagesApi = app.injector().instanceOf(MessagesApi.class);
+    }
 
     @Test
     public void testGetAllKeysHelperMethod() throws IOException {
@@ -42,21 +52,20 @@ public class TranslationTest extends WithApplication {
 
 
     private List<Lang> getAllLangs() {
-        return Lang.availables();
+        return Lang.availables(app);
     }
 
     @Test
     public void noMessageIsJustItsKey() throws IOException {
         for (Lang lang : getAllLangs()) {
             for (String key : getAllKeys()) {
-                assertNotEquals(key, Messages.get(lang, key));
+                assertNotEquals(key, messagesApi.get(lang, key));
             }
         }
     }
 
     @Test
     public void allMessagesInAllLanguages() throws IOException {
-        Lang defaultLang = Lang.forCode("de");
         for (Lang lang : getAllLangs()) {
             if (!lang.equals(defaultLang)) {
                 for (String key : getAllKeys()) {
@@ -66,11 +75,11 @@ public class TranslationTest extends WithApplication {
         }
     }
 
-    private static void assertSpecificTranslation(Lang defaultLang, Lang lang, String key) {
+    private void assertSpecificTranslation(Lang defaultLang, Lang lang, String key) {
         if (isTranslationRequired(lang, key)) {
             assertNotEquals(key + " for '" + lang.code() + "' and '" + defaultLang.code() + "' are equal but probably shouldn't",
-                    Messages.get(lang, key),
-                    Messages.get(defaultLang, key));
+                    messagesApi.get(lang, key),
+                    messagesApi.get(defaultLang, key));
         }
     }
 
@@ -93,14 +102,14 @@ public class TranslationTest extends WithApplication {
     @Test
     public void langField_lang_current() {
         for (Lang lang : getAllLangs()) {
-            assertEquals(lang.code(), Messages.get(lang, "lang.current"));
+            assertEquals(lang.code(), messagesApi.get(lang, "lang.current"));
         }
     }
 
     @Test
     public void langField_lang_XX() {
         for (Lang lang : getAllLangs()) {
-            assertTrue("lang." + lang.code() + " is missing", Messages.isDefined("lang." + lang.code()));
+            assertTrue("lang." + lang.code() + " is missing", messagesApi.isDefinedAt(defaultLang, "lang." + lang.code()));
         }
     }
 }

@@ -18,7 +18,7 @@ public class ApplicationTest extends WithApplication {
 
     @Test
     public void testSimpleQueryCall() {
-        final Seq<JsValue> resultList = query(true, false, false, false, true, true, true, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
+        final Seq<JsValue> resultList = query("de", true, false, false, false, true, true, true, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(resultList.size(), 17);
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals(((JsString) firstResult.value().get("title").get()).value(), "Vollmond");
@@ -27,7 +27,7 @@ public class ApplicationTest extends WithApplication {
 
     @Test
     public void testFloatingQuery() {
-        final Seq<JsValue> resultList = query(true, false, false, false, false, false, false, "before=P1M", "after=P11M", "zone=CET");
+        final Seq<JsValue> resultList = query("de", true, false, false, false, false, false, false, "before=P1M", "after=P11M", "zone=CET");
         assertThat(resultList.size(), greaterThanOrEqualTo(12));
         assertThat(resultList.size(), lessThanOrEqualTo(13));
     }
@@ -44,9 +44,8 @@ public class ApplicationTest extends WithApplication {
         return contentAsString(result);
     }
 
-    private Seq<JsValue> query(boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
-        final Call query = routes.Application.query();
-        final Result result = paramQuery(query.method(), query.url() + "?", fullPhases, newPhases, quarterQuases, dailyPhases, lunarEclipses, solarEclipses, moonLandings, extraParams);
+    private Seq<JsValue> query(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
+        final Result result = paramQuery("GET", routes.Application.query(new LangQueryStringBindable(lang)).url() + "&", fullPhases, newPhases, quarterQuases, dailyPhases, lunarEclipses, solarEclipses, moonLandings, extraParams);
         return ((JsArray) Json.parse(contentAsString(result))).value();
     }
 

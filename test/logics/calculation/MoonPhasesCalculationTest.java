@@ -2,13 +2,11 @@ package logics.calculation;
 
 import models.MoonPhaseType;
 import models.RequestForm;
-import models.ZonedEvent;
+import models.EventInstance;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.test.WithApplication;
@@ -47,9 +45,9 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.setTo(ZonedDateTime.of(2015, 11, 30, 12, 0, 0, 0, ZoneOffset.UTC));
     }
 
-    private Collection<ZonedEvent> calculate(RequestForm requestForm) {
-        final Collection<ZonedEvent> eventCollection = new TreeSet<>();
-        cut.calculate(requestForm, eventCollection);
+    private Collection<EventInstance> calculate(RequestForm requestForm) {
+        final Collection<EventInstance> eventCollection = new TreeSet<>();
+        cut.calculate(requestForm, eventCollection, Lang.forCode("de"));
         return eventCollection;
     }
 
@@ -63,21 +61,21 @@ public class MoonPhasesCalculationTest extends WithApplication {
     @Test
     public void testGetFullmoonWithOneResult() {
         requestForm.setFrom(ZonedDateTime.of(2015, 11, 20, 12, 0, 0, 0, ZoneOffset.UTC));
-        final Collection<ZonedEvent> actual = calculate(requestForm);
+        final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, contains(eventAt(LocalDate.of(2015, 11, 25))));
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testGetMoonWithMoreResult() {
-        final Collection<ZonedEvent> actual = calculate(requestForm);
+        final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, containsInAnyOrder(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testGetMoonWithResultsInTemporalOrder() {
-        final Collection<ZonedEvent> actual = calculate(requestForm);
+        final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, contains(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
     }
 
@@ -87,7 +85,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.getPhases().put(MoonPhaseType.QUARTER, true);
         requestForm.setTo(ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC));
 
-        final Collection<ZonedEvent> actual = calculate(requestForm);
+        final Collection<EventInstance> actual = calculate(requestForm);
 
         assertThat(actual, contains(eventAt(LocalDate.of(2015, 10, 20))));
     }
@@ -97,7 +95,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.getPhases().clear();
         requestForm.getPhases().put(MoonPhaseType.DAILY, true);
 
-        final Collection<ZonedEvent> actual = calculate(requestForm);
+        final Collection<EventInstance> actual = calculate(requestForm);
 
         assertThat(actual, hasSize(42));
     }
@@ -109,15 +107,15 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.setFrom(ZonedDateTime.of(2016, 2, 29, 12, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2016, 3, 1, 12, 0, 0, 0, ZoneOffset.UTC));
 
-        final Collection<ZonedEvent> actual = calculate(requestForm);
+        final Collection<EventInstance> actual = calculate(requestForm);
 
-        assertThat(actual.stream().map(ZonedEvent::getTitle).collect(Collectors.toList()), containsInAnyOrder("55", "64"));
+        assertThat(actual.stream().map((zonedEvent) -> zonedEvent.getTitle()).collect(Collectors.toList()), containsInAnyOrder("55", "64"));
     }
 
-    private Matcher<ZonedEvent> eventAt(final LocalDate expectedDate) {
-        return new FeatureMatcher<ZonedEvent, LocalDate>(equalTo(expectedDate), "LocalDate", "Date") {
+    private Matcher<EventInstance> eventAt(final LocalDate expectedDate) {
+        return new FeatureMatcher<EventInstance, LocalDate>(equalTo(expectedDate), "LocalDate", "Date") {
             @Override
-            protected LocalDate featureValueOf(final ZonedEvent actual) {
+            protected LocalDate featureValueOf(final EventInstance actual) {
                 return actual.getDateTime().toLocalDate();
             }
         };

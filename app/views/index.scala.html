@@ -1,3 +1,4 @@
+@(langs: play.i18n.Langs, env: play.Environment)
 <!doctype html>
 <html>
 <head>
@@ -39,7 +40,7 @@
 							@Messages("lang.change")<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">
-							@for(lang <- play.i18n.Lang.availables()) {
+							@for(lang <- langs.availables()) {
 							<li>
 								@if(lang.code()!=Messages("lang.current")) {
 								<a href="@controllers.routes.Application.setLanguage(lang.code())" ng-click='trackLanguageChange(@lang.code(), @Messages("lang.current"), $event)'>@Messages("lang."+lang.code())</a>
@@ -67,11 +68,11 @@
        ga('send', 'pageview');
 </script>
 
-<script src='lib/angularjs/angular@{if(play.Play.isProd)".min"}.js'></script>
-<script src='lib/angularjs/angular-animate@{if(play.Play.isProd)".min"}.js'></script>
-<script src='lib/angularjs/angular-route@{if(play.Play.isProd)".min"}.js'></script>
+<script src='lib/angularjs/angular@{if(env.isProd)".min"}.js'></script>
+<script src='lib/angularjs/angular-animate@{if(env.isProd)".min"}.js'></script>
+<script src='lib/angularjs/angular-route@{if(env.isProd)".min"}.js'></script>
 <script src='lib/angularjs/i18n/angular-locale_@{Messages("app.angularlocale")}.js'></script>
-<script src='lib/jquery/jquery@{if(play.Play.isProd)".min"}.js'></script>
+<script src='lib/jquery/jquery@{if(env.isProd)".min"}.js'></script>
 <script src='lib/bootstrap/js/dropdown.js'></script>
 <script src='lib/bootstrap/js/collapse.js'></script>
 <script src='lib/bootstrap/js/modal.js'></script>

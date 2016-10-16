@@ -2,70 +2,18 @@ package models;
 
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
-import play.data.format.Formatters;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
-import java.text.ParseException;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class RequestForm {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssVV");
     private static final int MAX_YEARS_FOR_DAILY_PHASES = 200;
-
-    static {
-        Formatters.register(ZonedDateTime.class, new Formatters.SimpleFormatter<ZonedDateTime>() {
-            @Override
-            public ZonedDateTime parse(String input, Locale l) throws ParseException {
-                return ZonedDateTime.parse(input.replaceAll(" ", "+"), DATE_TIME_FORMATTER);
-            }
-
-            @Override
-            public String print(ZonedDateTime input, Locale l) {
-                return DATE_TIME_FORMATTER.format(input);
-            }
-        });
-        Formatters.register(MoonPhaseType.class, new Formatters.SimpleFormatter<MoonPhaseType>() {
-            @Override
-            public MoonPhaseType parse(String input, Locale l) throws ParseException {
-                return MoonPhaseType.read(input);
-            }
-
-            @Override
-            public String print(MoonPhaseType input, Locale l) {
-                return input.getKey();
-            }
-        });
-        Formatters.register(EventType.class, new Formatters.SimpleFormatter<EventType>() {
-            @Override
-            public EventType parse(String input, Locale l) throws ParseException {
-                return EventType.read(input);
-            }
-
-            @Override
-            public String print(EventType input, Locale l) {
-                return input.getKey();
-            }
-        });
-        Formatters.register(Period.class, new Formatters.SimpleFormatter<Period>() {
-            @Override
-            public Period parse(String input, Locale l) throws ParseException {
-                return Period.parse(input);
-            }
-
-            @Override
-            public String print(Period input, Locale l) {
-                return input.toString();
-            }
-        });
-    }
 
     private Map<MoonPhaseType, Boolean> phases = new HashMap<>();
     private Map<EventType, Boolean> events = new HashMap<>();
@@ -152,7 +100,7 @@ public class RequestForm {
         return null;//form is fine
     }
 
-    public String calculateETag() {
+    public String calculateETag(String language) {
         int eventsPart = 0;
         for (MoonPhaseType moonPhaseType : MoonPhaseType.values()) {
             eventsPart = eventsPart * 2 + (includePhase(moonPhaseType) ? 1 : 0);
@@ -170,6 +118,8 @@ public class RequestForm {
         if (zone != null) {
             sb.append(zone.getId());
         }
+        sb.append("x");
+        sb.append(language);
         return sb.toString();
     }
 

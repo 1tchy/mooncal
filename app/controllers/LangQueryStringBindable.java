@@ -1,25 +1,30 @@
 package controllers;
 
+import play.api.Play;
 import play.i18n.Lang;
-import play.i18n.Messages;
-import play.libs.F;
+import play.i18n.MessagesApi;
 import play.mvc.QueryStringBindable;
 
 import java.util.Map;
-
-import static play.libs.F.None;
-import static play.libs.F.Option.Some;
-import static play.mvc.Controller.ctx;
+import java.util.Optional;
 
 public class LangQueryStringBindable implements QueryStringBindable<LangQueryStringBindable> {
 
-    Lang lang;
+    private final MessagesApi messagesApi;
+    private Lang lang;
 
+    @SuppressWarnings("unused") //used by Play Framework
     public LangQueryStringBindable() {
+        this(null);
     }
 
     public LangQueryStringBindable(String lang) {
+        this(lang, Play.unsafeApplication().injector().instanceOf(MessagesApi.class));
+    }
+
+    public LangQueryStringBindable(String lang, MessagesApi messagesApi) {
         this.lang = Lang.forCode(lang);
+        this.messagesApi = messagesApi;
     }
 
     /**
@@ -31,13 +36,13 @@ public class LangQueryStringBindable implements QueryStringBindable<LangQueryStr
      * or None if it couldn't.
      */
     @Override
-    public F.Option<LangQueryStringBindable> bind(String key, Map<String, String[]> data) {
+    public Optional<LangQueryStringBindable> bind(String key, Map<String, String[]> data) {
         final String[] param = data.get(key);
         if (param != null && param.length > 0) {
             this.lang = Lang.forCode(param[0]);
-            return Some(this);
+            return Optional.of(this);
         }
-        return new None<>();
+        return Optional.empty();
     }
 
     /**
@@ -48,7 +53,7 @@ public class LangQueryStringBindable implements QueryStringBindable<LangQueryStr
      */
     @Override
     public String unbind(String key) {
-        return key + "=" + Messages.get(lang, "lang.current");
+        return key + "=" + messagesApi.get(lang, "lang.current");
     }
 
     /**
@@ -63,5 +68,9 @@ public class LangQueryStringBindable implements QueryStringBindable<LangQueryStr
 
     public Lang get() {
         return lang;
+    }
+
+    public boolean isDefined() {
+        return lang != null;
     }
 }
