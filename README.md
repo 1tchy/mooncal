@@ -31,7 +31,7 @@ Mooncal is built on the following frameworks:
 And in your IDE add a remote debugging configuration.
 
 ### Supporting Mooncal
-* Feel free to [make a donation](http://mooncal.ch/#/about)
+* Feel free to [make a donation](http://mooncal.ch/#!/about)
 * Feel free to develop a new feature/fix a bug/...
     * Please develop according to [git-flow](https://github.com/nvie/gitflow)
     * Please write also a test if reasonable

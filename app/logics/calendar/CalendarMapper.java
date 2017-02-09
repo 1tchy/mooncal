@@ -68,7 +68,7 @@ public class CalendarMapper {
             final StringWriter stringWriter = new StringWriter();
             calendarOutputter.output(calendar, stringWriter);
             return stringWriter.toString();
-        } catch (IOException | ValidationException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
