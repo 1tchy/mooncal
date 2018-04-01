@@ -1,6 +1,5 @@
 package models;
 
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -8,10 +7,10 @@ import play.data.validation.ValidationError;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class RequestForm {
+@Constraints.Validate
+public class RequestForm implements Constraints.Validatable<ValidationError> {
 
     private static final int MAX_YEARS_FOR_DAILY_PHASES = 200;
 
@@ -93,9 +92,9 @@ public class RequestForm {
     }
 
     @SuppressWarnings("unused") //used by Play
-    public List<ValidationError> validate() {
+    public ValidationError validate() {
         if (includePhase(MoonPhaseType.DAILY) && from.until(to, ChronoUnit.YEARS) > MAX_YEARS_FOR_DAILY_PHASES) {
-            return Lists.newArrayList(new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily"));
+            return new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily");
         }
         return null;//form is fine
     }

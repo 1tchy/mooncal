@@ -54,6 +54,6 @@ public class ApplicationTest extends WithApplication {
         for (String extraParam : extraParams) {
             params += "&" + extraParam;
         }
-        return route(new Http.RequestBuilder().method(method).uri(urlStart + params));
+        return route(app, new Http.RequestBuilder().method(method).uri(urlStart + params));
     }
 }
