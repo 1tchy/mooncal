@@ -18,8 +18,8 @@ libraryDependencies ++= Seq(
   "org.jetbrains"             % "annotations"              % "7.0.2",
   // WEBJARS: http://www.webjars.org/
   "org.webjars" % "bootstrap" % "3.3.7-1",
-  "org.webjars" % "angularjs" % "1.6.1",
-  "org.webjars" % "jquery"    % "3.1.1-1",
+  "org.webjars" % "angularjs" % "1.6.9",
+  "org.webjars" % "jquery"    % "3.3.1-1",
 //see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all
   "org.mockito"               % "mockito-all"              % "1.10.19" % Test,
   //see latest version under: http://mvnrepository.com/artifact/junit/junit
