@@ -4,13 +4,11 @@ import logics.calculation.TotalCalculation;
 import logics.calendar.CalendarMapper;
 import models.EventInstance;
 import models.RequestForm;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import play.Environment;
 import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;
-import play.data.validation.ValidationError;
 import play.i18n.Lang;
 import play.i18n.Langs;
 import play.i18n.MessagesApi;
@@ -24,7 +22,6 @@ import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
@@ -82,7 +79,7 @@ public class Application extends Controller {
 
     private CompletionStage<Result> handleETag(RequestForm requestForm, @NotNull Lang lang, CompletionStage<Result> request) {
         final String calculatedETag = requestForm.calculateETag(messagesApi.get(lang, "lang.current"));
-        final boolean isNotModified = calculatedETag.equals(request().getHeader(IF_NONE_MATCH));
+        final boolean isNotModified = request().header(IF_NONE_MATCH).map(currentETag -> currentETag.equals(calculatedETag)).orElse(false);
         Logger.info("Request: " + request().uri() + (isNotModified ? " NOT_MODIFIED" : ""));
         if (isNotModified && environment.isProd()) {
             return CompletableFuture.completedFuture(status(NOT_MODIFIED));
@@ -102,9 +99,11 @@ public class Application extends Controller {
     }
 
     private Result renderError(Form<RequestForm> form) {
-        final Collection<List<ValidationError>> errorList = form.errors().values();
-        Collection<String> errors = errorList.stream().flatMap(Collection::stream).map(error -> messagesApi.preferred(request()).at(error.message(), error.key())).collect(Collectors.toList());
-        return badRequest(StringUtils.join(errors, ", "));
+        return badRequest(
+                form.allErrors().stream()
+                        .map(error -> messagesApi.preferred(request()).at(error.message(), error.key()))
+                        .collect(Collectors.joining(", "))
+        );
     }
 
     public Result setLanguage(String lang) {

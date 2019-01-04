@@ -2,7 +2,7 @@ import play.sbt.PlayImport._
 
 name := "mooncal"
 
-version := "1.13"
+version := "1.14"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava,
   SbtWeb,
@@ -11,14 +11,15 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava,
 scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq(
+  guice,
   //see latest version under: http://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
-  "org.mnode.ical4j"          % "ical4j"                   % "2.0.0",
+  "org.mnode.ical4j"          % "ical4j"                   % "2.2.1",
   //see latest version under: https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/org/jetbrains/annotations/
   "org.jetbrains"             % "annotations"              % "7.0.2",
   // WEBJARS: http://www.webjars.org/
   "org.webjars" % "bootstrap" % "3.3.7-1",
-  "org.webjars" % "angularjs" % "1.6.1",
-  "org.webjars" % "jquery"    % "3.1.1-1",
+  "org.webjars" % "angularjs" % "1.7.5",
+  "org.webjars" % "jquery"    % "3.3.1-1",
 //see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all
   "org.mockito"               % "mockito-all"              % "1.10.19" % Test,
   //see latest version under: http://mvnrepository.com/artifact/junit/junit
