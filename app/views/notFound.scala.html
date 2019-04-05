@@ -1,10 +1,10 @@
-@(statusCode: Int)
+@(messages: play.i18n.Messages, statusCode: Int)
 
 <!doctype html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>@Messages("error.notfound") :(</title>
+	<title>@messages.at("error.notfound") :(</title>
 	<style>
 		::-moz-selection {
 		background: #b3d4fc;
@@ -138,12 +138,12 @@
 </head>
 <body>
 <div class="container">
-	<h1>@statusCode: @Messages("error.notfound") <span>:(</span></h1>
-	<p>@Messages("error.notfound.lead")</p>
-	<p>@Messages("error.notfound.problem")</p>
+	<h1>@statusCode: @messages.at("error.notfound") <span>:(</span></h1>
+	<p>@messages.at("error.notfound.lead")</p>
+	<p>@messages.at("error.notfound.problem")</p>
 	<ul>
-		<li>@Messages("error.notfound.problem.typo")</li>
-		<li>@Messages("error.notfound.problem.link")</li>
+		<li>@messages.at("error.notfound.problem.typo")</li>
+		<li>@messages.at("error.notfound.problem.link")</li>
 	</ul>
 	<script>var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;</script>
 	<script src="//linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>

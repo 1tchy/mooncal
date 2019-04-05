@@ -39,16 +39,17 @@ public class ApplicationTest extends WithApplication {
     }
 
     private String queryAsICalendar(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
-        final Call query = routes.Application.queryAsICalendar(new LangQueryStringBindable(lang));
+        final Call query = routes.Application.queryAsICalendar(lang);
         final Result result = paramQuery(query.method(), query.url() + "&", fullPhases, newPhases, quarterQuases, dailyPhases, lunarEclipses, solarEclipses, moonLandings, extraParams);
         return contentAsString(result);
     }
 
     private Seq<JsValue> query(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
-        final Result result = paramQuery("GET", routes.Application.query(new LangQueryStringBindable(lang)).url() + "&", fullPhases, newPhases, quarterQuases, dailyPhases, lunarEclipses, solarEclipses, moonLandings, extraParams);
+        final Result result = paramQuery("GET", routes.Application.query(lang).url() + "&", fullPhases, newPhases, quarterQuases, dailyPhases, lunarEclipses, solarEclipses, moonLandings, extraParams);
         return ((JsArray) Json.parse(contentAsString(result))).value();
     }
 
+    @SuppressWarnings("StringConcatenationInLoop") //it's just in the tests
     private Result paramQuery(String method, String urlStart, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
         String params = "phases[full]=" + fullPhases + "&phases[new]=" + newPhases + "&phases[quarter]=" + quarterQuases + "&phases[daily]=" + dailyPhases + "&events[lunareclipse]=" + lunarEclipses + "&events[solareclipse]=" + solarEclipses + "&events[moonlanding]=" + moonLandings;
         for (String extraParam : extraParams) {
