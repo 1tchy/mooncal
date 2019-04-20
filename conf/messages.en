@@ -38,7 +38,8 @@ events.moonlanding=moon landing
 events.at={0} at {1}
 
 time.title=Interval
-time.fromTo=Show from {0} until {1}
+time.fromTo.from=Show from
+time.fromTo.to=until
 time.fromTo.required=Starting / Ending date required.
 time.fromTo.date=Date format needs to be YYYY-MM-DD.
 time.fromTo.minmax=Date needs to be between the year 1000 and 3000.

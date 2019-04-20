@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
   //see latest version under: https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/org/jetbrains/annotations/
   "org.jetbrains"             % "annotations"              % "7.0.2",
   // WEBJARS: http://www.webjars.org/
-  "org.webjars" % "bootstrap" % "3.4.1",
+  "org.webjars" % "bootstrap" % "4.2.1",
   "org.webjars" % "angularjs" % "1.7.7",
   "org.webjars" % "jquery"    % "3.3.1-2",
 //see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all
