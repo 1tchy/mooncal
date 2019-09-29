@@ -38,7 +38,8 @@ events.moonlanding=Mondlandung
 events.at={0} um {1}
 
 time.title=Zeitspanne
-time.fromTo=Anzeige vom {0} bis {1}
+time.fromTo.from=Anzeige vom
+time.fromTo.to=bis
 time.fromTo.required=Es muss sowohl ein Start als auch Enddatum angageben werden.
 time.fromTo.date=Datum muss in der Form JJJJ-MM-TT angegeben werden.
 time.fromTo.minmax=Datum muss zwischen dem Jahr 1000 und 3000 liegen.

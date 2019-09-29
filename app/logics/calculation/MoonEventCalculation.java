@@ -51,7 +51,7 @@ public class MoonEventCalculation extends Calculation {
     private void initializeMoonLandings() {
         initializeByCVS("moon-landings/moon-landings.csv", rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> rows[1], (zoneId, lang) -> rows[2], "moon-landing"));
+            moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + rows[1], (zoneId, lang) -> rows[2], "moon-landing"));
         });
     }
 

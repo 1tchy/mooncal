@@ -3,6 +3,7 @@ package controllers;
 import play.Environment;
 import play.http.DefaultHttpErrorHandler;
 import play.http.HttpErrorHandler;
+import play.i18n.MessagesApi;
 import play.mvc.Http;
 import play.mvc.Result;
 
@@ -17,11 +18,13 @@ public class ErrorHandler implements HttpErrorHandler {
 
     private final DefaultHttpErrorHandler defaultErrorHandler;
     private final Environment environment;
+    private final MessagesApi messagesApi;
 
     @Inject
-    public ErrorHandler(DefaultHttpErrorHandler defaultErrorHandler, Environment environment) {
+    public ErrorHandler(DefaultHttpErrorHandler defaultErrorHandler, Environment environment, MessagesApi messagesApi) {
         this.defaultErrorHandler = defaultErrorHandler;
         this.environment = environment;
+        this.messagesApi = messagesApi;
     }
 
     /**
@@ -33,7 +36,7 @@ public class ErrorHandler implements HttpErrorHandler {
      */
     @Override
     public CompletionStage<Result> onClientError(Http.RequestHeader request, int statusCode, String message) {
-        return CompletableFuture.completedFuture(status(statusCode, views.html.notFound.render(statusCode)));
+        return CompletableFuture.completedFuture(status(statusCode, views.html.notFound.render(messagesApi.preferred(request), statusCode)));
     }
 
     /**

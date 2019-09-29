@@ -1,36 +1,31 @@
-<img src="/images/mond.png" alt='@Messages("app.moon")' id="mond"/>
-<h1 ng-init="lang='@Messages("lang.current")'">@Messages("app.title")</h1>
+@(messages: play.i18n.Messages, request: play.mvc.Http.Request)
+<img src="/images/mond.png" alt='@messages.at("app.moon")' id="mond"/>
+<h1 ng-init="lang='@messages.at("lang.current")'">@messages.at("app.title")</h1>
 
-<p>@Messages("app.introduction")</p>
+<p>@messages.at("app.introduction")</p>
 
 <div class="row">
-	<div class="col-md-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">@Messages("phases.title")</h3>
-			</div>
-			<div class="panel-body">
-				@for(phase <- Array("phases.full","phases.new","phases.quarter","phases.daily")) {
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="@{phase}.value"/> @Messages(phase)
-					</label>
+	<div class="col-lg-6">
+		<div class="card">
+			<h5 class="card-header">@messages.at("phases.title")</h5>
+			<div class="card-body">
+				@for(phase <- Array("phases.full", "phases.new", "phases.quarter", "phases.daily")) {
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" ng-model="@{phase}.value" id="@{phase}-checkbox">
+					<label class="form-check-label" for="@{phase}-checkbox">@messages.at(phase)</label>
 				</div>
 				}
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">@Messages("events.title")</h3>
-			</div>
-			<div class="panel-body">
-				@for(event <- Array("events.lunareclipse","events.solareclipse","events.moonlanding")) {
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="@{event}.value"/> @Messages(event)
-					</label>
+	<div class="col-lg-6">
+		<div class="card">
+			<h5 class="card-header">@messages.at("events.title")</h5>
+			<div class="card-body">
+				@for(event <- Array("events.lunareclipse", "events.solareclipse", "events.moonlanding")) {
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" ng-model="@{event}.value" id="@{event}-checkbox">
+					<label class="form-check-label" for="@{event}-checkbox">@messages.at(event)</label>
 				</div>
 				}
 			</div>
@@ -39,47 +34,39 @@
 </div>
 
 <div class="row">
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">@Messages("time.title")</h3>
-			</div>
-			<div class="panel-body">
+	<div class="col-lg-12">
+		<div class="card">
+			<h5 class="card-header">@messages.at("time.title")</h5>
+			<div class="card-body">
 				<form class="form-inline" name="fromTo">
-					@{Html(Messages("time.fromTo", """
-					<div class="form-group"
-						 ng-class="{'has-error':fromTo.from.$error.date||fromTo.from.$error.required}">
-						<input type='date' class='form-control' ng-model='from' name="from" required
+					<div class="form-group" ng-class="{'has-error':fromTo.from.$error.date||fromTo.from.$error.required}">
+						<label class="my-1 mr-2" for="from">@messages.at("time.fromTo.from")</label>
+						<input type="date" class="form-control" ng-model="from" name="from" id="from" required
 							   ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
 							   min="1000-01-01" max="3000-12-31">
 					</div>
-					""", """
 					<div class="form-group" ng-class="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
-						<input type='date' class='form-control' ng-model='to' name="to" required
+						<label class="my-1 mx-2" for="to">@messages.at("time.fromTo.to")</label>
+						<input type="date" class="form-control" ng-model="to" name="to" id="to" required
 							   ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
 							   min="1000-01-01" max="3000-12-31">
 					</div>
-					"""))}
-					&nbsp;
-					<span class="text-danger" ng-if="fromTo.from.$error.required||fromTo.to.$error.required">@Messages("time.fromTo.required")</span>
-					<span class="text-danger" ng-if="fromTo.from.$error.date||fromTo.to.$error.date">@Messages("time.fromTo.date")</span>
-					<span class="text-danger"
-						  ng-if="fromTo.from.$error.min||fromTo.to.$error.min||fromTo.from.$error.max||fromTo.to.$error.max">@Messages("time.fromTo.minmax")</span>
+					<span class="text-danger ml-2" ng-if="fromTo.from.$error.required||fromTo.to.$error.required">@messages.at("time.fromTo.required")</span>
+					<span class="text-danger ml-2" ng-if="fromTo.from.$error.date||fromTo.to.$error.date">@messages.at("time.fromTo.date")</span>
+					<span class="text-danger ml-2" ng-if="fromTo.from.$error.min||fromTo.to.$error.min||fromTo.from.$error.max||fromTo.to.$error.max">@messages.at("time.fromTo.minmax")</span>
+				</form>
 			</div>
-			</form>
 		</div>
 	</div>
-</div>
 </div>
 
 <div class="row fadeAnimation" ng-if="calendar">
-	<div class="col-md-12">
-		<div class="panel" ng-class="{true: 'panel-warning', false: 'panel-default'}[requestOngoing]">
-			<div class="panel-heading">
-				<h3 class="panel-title">@Messages("calendar.title")<span ng-if="requestOngoing"> (@Messages("calendar.reloading"))</span>
-				</h3>
-			</div>
-			<table class="table table-bordered">
+	<div class="col-lg-12">
+		<div class="card" ng-class="{true: 'card-warning', false: 'card-default'}[requestOngoing]">
+			<h5 class="card-header">@messages.at("calendar.title")
+				<span ng-if="requestOngoing">(@messages.at("calendar.reloading"))</span>
+			</h5>
+			<table class="table table-bordered table-dark mb-0">
 				<tr ng-repeat="event in calendar" class="fadeAnimation">
 					<td>{{event.date| date:'mediumDate'}}</td>
 					<td>{{event.title}}</td>
@@ -91,12 +78,10 @@
 </div>
 
 <div class="row fadeAnimation" ng-if="error">
-	<div class="col-md-12">
-		<div class="panel panel-danger">
-			<div class="panel-heading">
-				<h3 class="panel-title">Fehler {{error.status}}: {{error.statusText}}</h3>
-			</div>
-			<div class="panel-body">
+	<div class="col-lg-12">
+		<div class="card text-white bg-danger">
+			<h5 class="card-header">Fehler {{error.status}}: {{error.statusText}}</h5>
+			<div class="card-body">
 				{{error.data}}
 			</div>
 		</div>
@@ -104,24 +89,21 @@
 </div>
 
 <div class="row">
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">@Messages("export.title")</h3>
-			</div>
-			<div class="panel-body">
-				<div class="btn-group">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-							aria-expanded="false">@Messages("export.ical")<span class="caret"></span>
+	<div class="col-lg-12">
+		<div class="card">
+			<h5 class="card-header">@messages.at("export.title")</h5>
+			<div class="card-body">
+				<div class="btn-group dropdown">
+					<button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">@messages.at("export.ical")
 					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="" ng-click="downloadIcal()">@Messages("export.ical.download")</a></li>
-						<li><a href="" data-toggle="modal" data-target="#myModal" ng-click="trackIcalSubscription()">@Messages("export.ical.subscribe")</a>
-						</li>
-					</ul>
+					<div class="dropdown-menu" role="menu">
+						<a class="dropdown-item" href="#" ng-click="downloadIcal()">@messages.at("export.ical.download")</a>
+						<a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal" ng-click="trackIcalSubscription()">@messages.at("export.ical.subscribe")</a>
+					</div>
 				</div>
 				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default" onclick="window.print()" ng-click="trackPrint()">@Messages("export.print")
+					<button type="button" class="btn btn-light" onclick="window.print()" ng-click="trackPrint()">@messages.at("export.print")
 					</button>
 				</div>
 			</div>
@@ -129,22 +111,23 @@
 	</div>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-						aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">@Messages("export.ical.subscribe")</h4>
+				<h4 class="modal-title" id="myModalLabel">@messages.at("export.ical.subscribe")</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
-				<p>@Messages("export.ical.subscribe.instructions"):</p>
+				<p>@messages.at("export.ical.subscribe.instructions"):</p>
 				<p>
-					<textarea type="text" class="form-control" readonly="readonly" rows="4">@controllers.routes.Application.queryAsICalendar(new controllers.LangQueryStringBindable(Messages("lang.current"))).absoluteURL(request())&phases[full]={{phases.full.value}}&phases[new]={{phases.new.value}}&phases[quarter]={{phases.quarter.value}}&phases[daily]={{phases.daily.value}}&events[lunareclipse]={{events.lunareclipse.value}}&events[solareclipse]={{events.solareclipse.value}}&events[moonlanding]={{events.moonlanding.value}}&before=P6M&after=P2Y&zone={{zone}}</textarea>
+					<textarea type="text" class="form-control" readonly="readonly" rows="4">@controllers.routes.Application.queryAsICalendar(messages.at("lang.current")).absoluteURL(request)&phases[full]={{phases.full.value}}&phases[new]={{phases.new.value}}&phases[quarter]={{phases.quarter.value}}&phases[daily]={{phases.daily.value}}&events[lunareclipse]={{events.lunareclipse.value}}&events[solareclipse]={{events.solareclipse.value}}&events[moonlanding]={{events.moonlanding.value}}&before=P6M&after=P2Y&zone={{zone}}</textarea>
 				</p>
-				<p class="text-muted">@Messages("export.ical.subscribe.explanations")</p>
+				<p class="text-muted">@messages.at("export.ical.subscribe.explanations")</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">@Messages("export.ical.subscribe.close")</button>
+				<button type="button" class="btn btn-light" data-dismiss="modal">@messages.at("export.ical.subscribe.close")</button>
 			</div>
 		</div>
 	</div>
