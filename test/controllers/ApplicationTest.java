@@ -21,7 +21,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("de", true, false, false, false, true, true, true, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "Vollmond");
+        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "🌕 Vollmond");
         assertEquals(((JsString) firstResult.value().get("date").get()).value(), "2015-01-05");
     }
 
@@ -30,7 +30,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, true, false, false, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(12, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "new moon");
+        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "🌑 new moon");
         assertEquals(((JsString) firstResult.value().get("date").get()).value(), "2015-01-20");
     }
 
@@ -39,7 +39,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, false, true, false, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(24, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "third quarter");
+        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "🌗 third quarter");
         assertEquals(((JsString) firstResult.value().get("date").get()).value(), "2015-01-13");
     }
 
@@ -66,7 +66,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, false, false, false, false, false, true, "from=2000-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(7, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "SMART-1 (ESA)");
+        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "🚀 SMART-1 (ESA)");
         assertEquals(((JsString) firstResult.value().get("date").get()).value(), "2006-09-03");
     }
 

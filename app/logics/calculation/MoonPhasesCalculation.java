@@ -28,27 +28,28 @@ public class MoonPhasesCalculation extends Calculation {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
         if (requestForm.includePhase(MoonPhaseType.FULLMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON.getName(messagesApi, lang), eventCollection, lang, "fullmoon");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON, eventCollection, lang, "fullmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.NEWMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON.getName(messagesApi, lang), eventCollection, lang, "newmoon");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON, eventCollection, lang, "newmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.QUARTER)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER.getName(messagesApi, lang), eventCollection, lang, "quarter");
-            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER.getName(messagesApi, lang), eventCollection, lang, "quarter");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER, eventCollection, lang, "quarter");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, lang, "quarter");
         }
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
             calculateDailyEvents(lang, requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
         }
     }
 
-    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, String phaseName, Collection<EventInstance> eventCollection, Lang lang, String eventTypeId) {
+    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, String eventTypeId) {
         while (true) {
             final ZonedDateTime moonHappening = moonCalculation.apply(from);
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            eventCollection.add(new EventInstance(moonHappening, phaseName, eventAt(moonHappening, phaseName, from.getZone(), lang), from.getZone(), lang, eventTypeId));
+            String phaseName = phase.getName(messagesApi, lang);
+            eventCollection.add(new EventInstance(moonHappening, phase.getEmoticon() + " " + phaseName, eventAt(moonHappening, phaseName, from.getZone(), lang), from.getZone(), lang, eventTypeId));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
     }
