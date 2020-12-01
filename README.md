@@ -15,19 +15,19 @@ Mooncal is built on the following frameworks:
 
 ### Prerequisites
 * Java 8 (JDK)
-* [Typesafe Activator](https://www.typesafe.com/activator/download)
+* [sbt](https://www.scala-sbt.org/download.html)
 
 ### Running
     cd mooncal
-    activator run
+    sbt run
 
 ### Testing
     cd mooncal
-    activator test
+    sbt test
 
 ### Debugging
     cd mooncal
-    activator -jvm-debug 5005 run
+    sbt -jvm-debug 5005 run
 And in your IDE add a remote debugging configuration.
 
 ### Supporting Mooncal

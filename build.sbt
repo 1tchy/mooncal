@@ -2,30 +2,30 @@ import play.sbt.PlayImport._
 
 name := "mooncal"
 
-version := "1.16"
+version := "1.17"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava,
   SbtWeb,
   SbtTwirl)
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.13.1"
 
 libraryDependencies ++= Seq(
   guice,
   //see latest version under: http://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
-  "org.mnode.ical4j"          % "ical4j"                   % "2.2.5",
+  "org.mnode.ical4j"          % "ical4j"                   % "2.2.6",
   //see latest version under: https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/org/jetbrains/annotations/
   "org.jetbrains"             % "annotations"              % "7.0.2",
   // WEBJARS: http://www.webjars.org/
   "org.webjars" % "bootstrap" % "4.2.1",
-  "org.webjars" % "angularjs" % "1.7.8",
-  "org.webjars" % "jquery"    % "3.4.1",
+  "org.webjars" % "angularjs" % "1.8.0",
+  "org.webjars" % "jquery"    % "3.5.1",
 //see latest version under: http://mvnrepository.com/artifact/org.mockito/mockito-all
   "org.mockito"               % "mockito-all"              % "1.10.19" % Test,
   //see latest version under: http://mvnrepository.com/artifact/junit/junit
-  "junit"                     % "junit"                    % "4.12" % Test,
+  "junit"                     % "junit"                    % "4.13.1" % Test,
   //see latest versions under: http://mvnrepository.com/artifact/org.hamcrest/hamcrest-library
-  "org.hamcrest" % "hamcrest-library" % "1.3" % Test,
+  "org.hamcrest" % "hamcrest-library" % "2.2" % Test,
   //see latest versions under: http://mvnrepository.com/artifact/org.hamcrest/java-hamcrest
   "org.hamcrest" % "java-hamcrest" % "2.0.0.0" % Test
 )
