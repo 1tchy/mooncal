@@ -53,7 +53,7 @@ public class Application extends Controller {
 
     public CompletionStage<Result> queryAsICalendar(String queryLang, Http.Request request) {
         return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
-            logger.info("Responding iCalender file for query: " + goodForm.getForLog(queryLang));
+            logger.info("Responding iCalender file for query: " + goodForm.getForLog(queryLang) + " to " + request.remoteAddress());
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
             return ok(calendarMapper.map(result, updateFrequency)).as("text/calendar");
         }, queryLang, request);
