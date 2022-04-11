@@ -106,7 +106,6 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         }
         for (EventType eventType : EventType.values()) {
             eventsPart = eventsPart * 2 + (includeEvent(eventType) ? 1 : 0);
-
         }
         StringBuilder sb = new StringBuilder("W/");
         sb.append(eventsPart);
@@ -122,4 +121,30 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         return sb.toString();
     }
 
+    public String getForLog(String language) {
+        StringBuilder sb = new StringBuilder();
+        for (MoonPhaseType moonPhaseType : MoonPhaseType.values()) {
+            if (includePhase(moonPhaseType)) {
+                sb.append(moonPhaseType.getKey());
+                sb.append(" ");
+            }
+        }
+        for (EventType eventType : EventType.values()) {
+            if (includeEvent(eventType)) {
+                sb.append(eventType.getKey());
+                sb.append(" ");
+            }
+        }
+        sb.append(from.atZone(ZoneOffset.UTC).toLocalDate().toString());
+        sb.append(" to ");
+        sb.append(to.atZone(ZoneOffset.UTC).toLocalDate().toString());
+        if (zone != null) {
+            sb.append(" ");
+            sb.append(zone.getId());
+        }
+        sb.append(" (");
+        sb.append(language);
+        sb.append(")");
+        return sb.toString();
+    }
 }

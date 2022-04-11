@@ -36,7 +36,7 @@
 	<logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF"/>
 	<logger name="org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator" level="ERROR"/>
 
-	<root level="WARN">
+	<root level="INFO">
 		<appender-ref ref="ASYNCFILE"/>
 		<appender-ref ref="ASYNCSTDOUT"/>
 	</root>

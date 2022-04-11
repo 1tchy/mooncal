@@ -53,6 +53,7 @@ public class Application extends Controller {
 
     public CompletionStage<Result> queryAsICalendar(String queryLang, Http.Request request) {
         return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
+            logger.info("Responding iCalender file for query: " + goodForm.getForLog(queryLang));
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
             return ok(calendarMapper.map(result, updateFrequency)).as("text/calendar");
         }, queryLang, request);
@@ -76,7 +77,7 @@ public class Application extends Controller {
     private CompletionStage<Result> handleETag(RequestForm requestForm, @NotNull Lang lang, Http.Request request, CompletionStage<Result> requestResult) {
         final String calculatedETag = requestForm.calculateETag(messagesApi.get(lang, "lang.current"));
         final boolean isNotModified = request.header(IF_NONE_MATCH).map(currentETag -> currentETag.equals(calculatedETag)).orElse(false);
-        logger.info("Request: " + request.uri() + (isNotModified ? " NOT_MODIFIED" : ""));
+        logger.debug("Request: " + request.uri() + (isNotModified ? " NOT_MODIFIED" : ""));
         if (isNotModified && environment.isProd()) {
             return CompletableFuture.completedFuture(status(NOT_MODIFIED));
         }
