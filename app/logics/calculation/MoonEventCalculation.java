@@ -16,6 +16,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
@@ -35,28 +36,29 @@ public class MoonEventCalculation extends Calculation {
     }
 
     private void initializeLunarEclipses() {
-        initializeByCVS("lunar-eclipses/lunar-eclipses.csv", rows -> {
+        initializeByCVS(getClass().getResource("lunar-eclipses/lunar-eclipses.csv").getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             lunarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getLunarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getLunarEclipseName(rows[1], lang), zoneId, lang), "lunar-eclipse"));
         });
     }
 
     private void initializeSolarEclipses() {
-        initializeByCVS("solar-eclipses/solar-eclipses.csv", rows -> {
+        initializeByCVS(getClass().getResource("solar-eclipses/solar-eclipses.csv").getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             solarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getSolarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getSolarEclipseName(rows[1], lang), zoneId, lang), "solar-eclipse"));
         });
     }
 
     private void initializeMoonLandings() {
-        initializeByCVS("moon-landings/moon-landings.csv", rows -> {
+        Optional<String> updatedFile = Optional.ofNullable(System.getProperty("updated-moon-landings.csv"));
+        initializeByCVS(updatedFile.orElseGet(() -> getClass().getResource("moon-landings/moon-landings.csv").getFile()), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + rows[1], (zoneId, lang) -> rows[2], "moon-landing"));
         });
     }
 
-    private void initializeByCVS(String fileName, Consumer<String[]> lineHandler) {
-        try (final FileReader fileReader = new FileReader(this.getClass().getResource(fileName).getFile())) {
+    private void initializeByCVS(String file, Consumer<String[]> lineHandler) {
+        try (final FileReader fileReader = new FileReader(file)) {
             final LineReader csvFile = new LineReader(fileReader);
             csvFile.readLine(); //skip header
             String line;
