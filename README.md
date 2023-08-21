@@ -30,6 +30,10 @@ Mooncal is built on the following frameworks:
     sbt -jvm-debug 5005 run
 And in your IDE add a remote debugging configuration.
 
+### Updating moon landings
+* https://en.wikipedia.org/wiki/List_of_missions_to_the_Moon#Missions_by_date
+* https://en.wikipedia.org/wiki/Moon_landing#21st_century_uncrewed_soft_landings_and_attempts
+
 ### Supporting Mooncal
 * Feel free to [make a donation](http://mooncal.ch/#!/about)
 * Feel free to develop a new feature/fix a bug/...
