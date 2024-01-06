@@ -14,7 +14,7 @@ Mooncal is built on the following frameworks:
 * [Bootstrap](http://getbootstrap.com/)
 
 ### Prerequisites
-* Java 8 (JDK)
+* Java 21 (JDK)
 * [sbt](https://www.scala-sbt.org/download.html)
 
 ### Running
@@ -42,7 +42,7 @@ And in your IDE add a remote debugging configuration.
 
 ## Running
 ### Prerequisites
-* Java 8 (JDK)
+* Java 21 (JDK)
 
 ### Installation
 * Unzip the zip-file to any folder

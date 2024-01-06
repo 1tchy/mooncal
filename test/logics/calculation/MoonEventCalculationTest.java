@@ -1,8 +1,8 @@
 package logics.calculation;
 
+import models.EventInstance;
 import models.EventType;
 import models.RequestForm;
-import models.EventInstance;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -22,14 +22,14 @@ import java.util.TreeSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyCollectionOf;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MoonEventCalculationTest extends WithApplication {
 
-    private MoonEventCalculation cut = new MoonEventCalculation(getMessagesApiMock());
+    private final MoonEventCalculation cut = new MoonEventCalculation(getMessagesApiMock());
 
     @NotNull
     private static MessagesApi getMessagesApiMock() {
@@ -38,7 +38,7 @@ public class MoonEventCalculationTest extends WithApplication {
         when(messages.at(message.capture())).then(invocation -> message.getValue());
         MessagesApi messagesApi = mock(MessagesApi.class);
         when(messagesApi.preferred(any(Http.RequestHeader.class))).thenReturn(messages);
-        when(messagesApi.preferred(anyCollectionOf(Lang.class))).thenReturn(messages);
+        when(messagesApi.preferred(anyCollection())).thenReturn(messages);
         return messagesApi;
     }
 

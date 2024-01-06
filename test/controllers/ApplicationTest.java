@@ -8,9 +8,9 @@ import play.mvc.Result;
 import play.test.WithApplication;
 import scala.collection.Seq;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.route;
 

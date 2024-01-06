@@ -1,8 +1,8 @@
 package logics.calculation;
 
+import models.EventInstance;
 import models.MoonPhaseType;
 import models.RequestForm;
-import models.EventInstance;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Before;
@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -65,14 +65,12 @@ public class MoonPhasesCalculationTest extends WithApplication {
         assertThat(actual, contains(eventAt(LocalDate.of(2015, 11, 25))));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testGetMoonWithMoreResult() {
         final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, containsInAnyOrder(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testGetMoonWithResultsInTemporalOrder() {
         final Collection<EventInstance> actual = calculate(requestForm);
@@ -109,7 +107,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
 
         final Collection<EventInstance> actual = calculate(requestForm);
 
-        assertThat(actual.stream().map((zonedEvent) -> zonedEvent.getTitle()).collect(Collectors.toList()), containsInAnyOrder("55", "64"));
+        assertThat(actual.stream().map(EventInstance::getTitle).collect(Collectors.toList()), containsInAnyOrder("55", "64"));
     }
 
     private Matcher<EventInstance> eventAt(final LocalDate expectedDate) {
