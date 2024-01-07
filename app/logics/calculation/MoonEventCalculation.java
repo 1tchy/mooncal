@@ -67,8 +67,19 @@ public class MoonEventCalculation extends Calculation {
         Optional<String> updatedFile = Optional.ofNullable(System.getProperty("updated-moon-landings.csv"));
         initializeByCVS(updatedFile.orElseGet(() -> Objects.requireNonNull(getClass().getResource("moon-landings/moon-landings.csv")).getFile()), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + rows[1], (zoneId, lang) -> rows[2], "moon-landing"));
+            moonLandings.put(date, new EventTemplate(date,
+                    (zoneId, lang) -> "🚀 " + getByLang(rows[1], rows[3], rows[5], lang),
+                    (zoneId, lang) -> getByLang(rows[2], rows[4], rows[6], lang),
+                    "moon-landing"));
         });
+    }
+
+    private String getByLang(String en, String de, String nl, Lang lang) {
+        return switch (lang.language()) {
+            case "de" -> de;
+            case "nl" -> nl;
+            default -> en;
+        };
     }
 
     @VisibleForTesting
