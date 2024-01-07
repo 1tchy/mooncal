@@ -111,7 +111,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     private Matcher<EventInstance> eventAt(final LocalDate expectedDate) {
-        return new FeatureMatcher<EventInstance, LocalDate>(equalTo(expectedDate), "LocalDate", "Date") {
+        return new FeatureMatcher<>(equalTo(expectedDate), "LocalDate", "Date") {
             @Override
             protected LocalDate featureValueOf(final EventInstance actual) {
                 return actual.getDateTime().toLocalDate();

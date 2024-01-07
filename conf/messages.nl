@@ -13,6 +13,8 @@ navigation.home=Home
 navigation.about=Over deze pagina
 navigation.toggle=Navigatie weergeven/verbergen
 
+general.and=en
+
 phases.title=Maanstanden
 phases.full=Volle maan
 phases.new=Nieuwe maan
@@ -66,6 +68,7 @@ about.sources.solareclipse.title=Zonsverduistering
 about.sources.moonlanding.title=Maanlanding
 about.sources.various=verschillende bronnen
 about.sources.mainly=primair
+about.sources.space.devs.reason=voor de laatste landingen
 about.support.title=Wilt u dit project ondersteunen?
 about.support.donate=Doneren
 about.support.develop=Meehelpen
