@@ -84,6 +84,7 @@ about.sources.mainly=primair
 about.sources.space.devs.reason=voor de laatste landingen
 about.support.title=Wilt u dit project ondersteunen?
 about.support.donate=Doneren
+about.support.coffee=Koop een kopje koffie voor mij
 about.support.develop=Meehelpen
 
 error.title=Fout

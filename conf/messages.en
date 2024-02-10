@@ -84,6 +84,7 @@ about.sources.mainly=mainly
 about.sources.space.devs.reason=for the latest landings
 about.support.title=Do you want to support this project?
 about.support.donate=Donate
+about.support.coffee=Buy me a coffee
 about.support.develop=Help Develop
 
 error.title=Error
