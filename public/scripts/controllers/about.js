@@ -10,6 +10,6 @@
 angular.module('mooncalApp')
   .controller('AboutCtrl', function ($scope) {
   		$scope.trackSupport=function(supportType) {
-  		    ga('send', 'event', 'Support', supportType);
+			_paq.push(['trackEvent', 'Support', supportType]);
   		}
   });
