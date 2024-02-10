@@ -17,9 +17,11 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -33,7 +35,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     @Before
     public void setup() {
         final MessagesApi messagesApi = mock(MessagesApi.class);
-        when(messagesApi.get(any(Lang.class), anyString(), any(Object.class))).thenAnswer(invocation -> {
+        when(messagesApi.get(any(Lang.class), anyString(), any(Object[].class))).thenAnswer(invocation -> {
             final Object[] arguments = invocation.getArguments();
             return arguments[arguments.length - 1];
         });
@@ -69,6 +71,16 @@ public class MoonPhasesCalculationTest extends WithApplication {
     public void testGetMoonWithMoreResult() {
         final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, containsInAnyOrder(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
+    }
+
+    @Test
+    public void testGetFullmoonNames() {
+        requestForm = new RequestForm();
+        requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
+        requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setTo(ZonedDateTime.of(2026, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC));
+        Collection<EventInstance> actual = calculate(requestForm);
+        assertEquals(IntStream.of(1, 2, 3, 4, 5, 13, 6, 7, 8, 9, 10, 11, 12).mapToObj(i -> "🌕 phases.full (phases.full." + i + ")").toList(), actual.stream().map(EventInstance::getTitle).toList());
     }
 
     @Test
