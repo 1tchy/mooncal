@@ -40,7 +40,7 @@
 						<li>
 							@if(lang.code()!=messages.at("lang.current")) {
 							<a href="@controllers.routes.Application.setLanguage(lang.code())" class="dropdown-item"
-							   ng-click='trackLanguageChange(@lang.code(), @messages.at("lang.current"), $event)'>
+							   ng-click='trackLanguageChange("@lang.code()", "@messages.at("lang.current")", $event)'>
 								@messages.at("lang."+lang.code())
 							</a>
 							}
@@ -58,12 +58,18 @@
 </main>
 
 <script>
-	!function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-	(A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-	r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-	}(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-82988-8');
-	ga('send', 'pageview');
+		var _paq = window._paq = window._paq || [];
+		/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+		_paq.push(['trackPageView']);
+		_paq.push(['enableLinkTracking']);
+		_paq.push(['enableHeartBeatTimer']);
+		(function() {
+			var u="//mat.laurinmurer.ch/";
+			_paq.push(['setTrackerUrl', u+'matomo.php']);
+			_paq.push(['setSiteId', '2']);
+			var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+			g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+		})();
 </script>
 
 <script src='lib/angularjs/angular@{if(env.isProd)".min"}.js'></script>

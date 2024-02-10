@@ -8,9 +8,9 @@ import play.mvc.Result;
 import play.test.WithApplication;
 import scala.collection.Seq;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.route;
 
@@ -21,7 +21,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("de", true, false, false, false, true, true, true, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "🌕 Vollmond");
+        assertEquals(((JsString) firstResult.value().get("title").get()).value(), "🌕 Vollmond (Hartung)");
         assertEquals(((JsString) firstResult.value().get("date").get()).value(), "2015-01-05");
     }
 

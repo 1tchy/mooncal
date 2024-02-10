@@ -1,14 +1,19 @@
 package logics.calendar;
 
+import logics.calculation.Donation;
 import models.EventInstance;
 import net.fortuna.ical4j.data.CalendarOutputter;
-import net.fortuna.ical4j.model.*;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Date;
+import net.fortuna.ical4j.model.TimeZone;
+import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URI;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,6 +56,7 @@ public class CalendarMapper {
             calEvent.getProperties().add(new Description(event.getDescription()));
         }
         calEvent.getProperties().add(calculateUid(event));
+        calEvent.getProperties().add(new Url(URI.create(Donation.BUY_ME_A_COFFEE_LINK)));
         calendar.getComponents().add(calEvent);
     }
 

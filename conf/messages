@@ -13,8 +13,23 @@ navigation.home=Home
 navigation.about=Über
 navigation.toggle=Navigation anzeigen/ausblenden
 
+general.and=und
+
 phases.title=Mondphasen
 phases.full=Vollmond
+phases.full.1=Hartung
+phases.full.2=Hornung
+phases.full.3=Lenzmond
+phases.full.4=Ostermond
+phases.full.5=Wonnemond
+phases.full.6=Brachmond
+phases.full.7=Heumond
+phases.full.8=Erntemond
+phases.full.9=Herbstmond
+phases.full.10=Weinmond
+phases.full.11=Nebelmond
+phases.full.12=Julmond
+phases.full.13=Blauer Mond
 phases.new=Neumond
 phases.quarter=Halbmond
 phases.quarter.first=Zunehmender Halbmond
@@ -66,8 +81,10 @@ about.sources.solareclipse.title=Sonnenfinsternis
 about.sources.moonlanding.title=Mondlandungen
 about.sources.various=Verschiedene Quellen
 about.sources.mainly=primär
+about.sources.space.devs.reason=für die neusten Landungen
 about.support.title=Wollen Sie dieses Projekt unterstützen?
 about.support.donate=Spenden
+about.support.coffee=Spendier mir einen Kaffee
 about.support.develop=Mitentwickeln
 
 error.title=Fehler

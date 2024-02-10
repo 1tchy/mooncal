@@ -1,27 +1,35 @@
 package logics.calculation;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.LineReader;
 import models.EventInstance;
 import models.EventTemplate;
 import models.EventType;
 import models.RequestForm;
+import org.jetbrains.annotations.TestOnly;
+import play.Logger;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
 import javax.inject.Inject;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.lang.invoke.MethodHandles;
+import java.net.URI;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class MoonEventCalculation extends Calculation {
 
+    private static final Logger.ALogger logger = Logger.of(MethodHandles.lookup().lookupClass());
     private final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
     private final TreeMap<ZonedDateTime, EventTemplate> lunarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> solarEclipses = new TreeMap<>();
@@ -33,17 +41,23 @@ public class MoonEventCalculation extends Calculation {
         initializeLunarEclipses();
         initializeSolarEclipses();
         initializeMoonLandings();
+        //noinspection resource
+        Executors.newSingleThreadScheduledExecutor(runnable -> {
+            Thread thread = new Thread(runnable, MethodHandles.lookup().lookupClass().getSimpleName());
+            thread.setDaemon(true);
+            return thread;
+        }).scheduleAtFixedRate(() -> updateMoonLandings("ll.thespacedevs.com"), 1, 4 * 60, TimeUnit.MINUTES);
     }
 
     private void initializeLunarEclipses() {
-        initializeByCVS(getClass().getResource("lunar-eclipses/lunar-eclipses.csv").getFile(), rows -> {
+        initializeByCVS(Objects.requireNonNull(getClass().getResource("lunar-eclipses/lunar-eclipses.csv")).getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             lunarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getLunarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getLunarEclipseName(rows[1], lang), zoneId, lang), "lunar-eclipse"));
         });
     }
 
     private void initializeSolarEclipses() {
-        initializeByCVS(getClass().getResource("solar-eclipses/solar-eclipses.csv").getFile(), rows -> {
+        initializeByCVS(Objects.requireNonNull(getClass().getResource("solar-eclipses/solar-eclipses.csv")).getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             solarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getSolarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getSolarEclipseName(rows[1], lang), zoneId, lang), "solar-eclipse"));
         });
@@ -51,10 +65,55 @@ public class MoonEventCalculation extends Calculation {
 
     private void initializeMoonLandings() {
         Optional<String> updatedFile = Optional.ofNullable(System.getProperty("updated-moon-landings.csv"));
-        initializeByCVS(updatedFile.orElseGet(() -> getClass().getResource("moon-landings/moon-landings.csv").getFile()), rows -> {
+        initializeByCVS(updatedFile.orElseGet(() -> Objects.requireNonNull(getClass().getResource("moon-landings/moon-landings.csv")).getFile()), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + rows[1], (zoneId, lang) -> rows[2], "moon-landing"));
+            moonLandings.put(date, new EventTemplate(date,
+                    (zoneId, lang) -> "🚀 " + getByLang(rows[1], rows[3], rows[5], lang),
+                    (zoneId, lang) -> getByLang(rows[2], rows[4], rows[6], lang),
+                    "moon-landing"));
         });
+    }
+
+    private String getByLang(String en, String de, String nl, Lang lang) {
+        return switch (lang.language()) {
+            case "de" -> de;
+            case "nl" -> nl;
+            default -> en;
+        };
+    }
+
+    @VisibleForTesting
+    void updateMoonLandings(String baseUrl) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = mapper.readTree(URI.create("https://" + baseUrl + "/2.2.0/event/?type=7").toURL());
+            ArrayNode results = (ArrayNode) jsonNode.get("results");
+            while (!jsonNode.get("next").isNull()) {
+                jsonNode = mapper.readTree(URI.create(jsonNode.get("next").asText()).toURL());
+                results.addAll((ArrayNode) jsonNode.get("results"));
+            }
+            Set<LocalDate> eventDatesAlreadyKnown = moonLandings.keySet().stream().map(d -> d.toOffsetDateTime().withOffsetSameInstant(ZoneOffset.UTC).toLocalDate()).collect(Collectors.toSet());
+            for (JsonNode result : results) {
+                if (result.hasNonNull("date_precision")) {
+                    int precision = result.get("date_precision").get("id").asInt();
+                    if (precision > 2) { // 2 == Hour, see https://ll.thespacedevs.com/2.2.0/config/netprecision/
+                        continue;
+                    }
+                }
+                ZonedDateTime date = OffsetDateTime.parse(result.get("date").asText()).atZoneSameInstant(ZoneOffset.UTC);
+                if (date.getYear() < 2024 || eventDatesAlreadyKnown.contains(date.toLocalDate())) {
+                    continue;
+                }
+                moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + result.get("name").asText(), (zoneId, lang) -> result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " "), "moon-landing"));
+            }
+        } catch (IOException e) {
+            logger.error("Could not update moon landings", e);
+        }
+    }
+
+    @TestOnly
+    void removeLatestMoonLanding() {
+        moonLandings.remove(moonLandings.lastKey());
     }
 
     private void initializeByCVS(String file, Consumer<String[]> lineHandler) {
@@ -72,29 +131,21 @@ public class MoonEventCalculation extends Calculation {
     }
 
     private String getLunarEclipseName(String shortcut, Lang lang) {
-        switch (shortcut) {
-            case "T":
-                return messagesApi.get(lang, "events.lunareclipse.total");
-            case "P":
-                return messagesApi.get(lang, "events.lunareclipse.partial");
-            default:
-                throw new RuntimeException(shortcut + " is no known eclipse type");
-        }
+        return switch (shortcut) {
+            case "T" -> messagesApi.get(lang, "events.lunareclipse.total");
+            case "P" -> messagesApi.get(lang, "events.lunareclipse.partial");
+            default -> throw new RuntimeException(shortcut + " is no known eclipse type");
+        };
     }
 
     private String getSolarEclipseName(String shortcut, Lang lang) {
-        switch (shortcut) {
-            case "T":
-                return messagesApi.get(lang, "events.solareclipse.total");
-            case "P":
-                return messagesApi.get(lang, "events.solareclipse.partial");
-            case "A":
-                return messagesApi.get(lang, "events.solareclipse.annular");
-            case "H":
-                return messagesApi.get(lang, "events.solareclipse.hybrid");
-            default:
-                throw new RuntimeException(shortcut + " is no known eclipse type");
-        }
+        return switch (shortcut) {
+            case "T" -> messagesApi.get(lang, "events.solareclipse.total");
+            case "P" -> messagesApi.get(lang, "events.solareclipse.partial");
+            case "A" -> messagesApi.get(lang, "events.solareclipse.annular");
+            case "H" -> messagesApi.get(lang, "events.solareclipse.hybrid");
+            default -> throw new RuntimeException(shortcut + " is no known eclipse type");
+        };
     }
 
     @Override

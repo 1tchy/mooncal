@@ -13,8 +13,23 @@ navigation.home=Home
 navigation.about=Over deze pagina
 navigation.toggle=Navigatie weergeven/verbergen
 
+general.and=en
+
 phases.title=Maanstanden
 phases.full=Volle maan
+phases.full.1=Wolfmaan
+phases.full.2=Sneeuwmaan
+phases.full.3=Wormmaan
+phases.full.4=Roze maan
+phases.full.5=Bloemenmaan
+phases.full.6=Aardbeienmaan
+phases.full.7=Buckmaan
+phases.full.8=Steurmaan
+phases.full.9=Maïsmaan
+phases.full.10=Jagersmaan
+phases.full.11=Bevermaan
+phases.full.12=Koude maan
+phases.full.13=Blauwe maan
 phases.new=Nieuwe maan
 phases.quarter=Halve maan
 phases.quarter.first=Eerste kwartier
@@ -66,8 +81,10 @@ about.sources.solareclipse.title=Zonsverduistering
 about.sources.moonlanding.title=Maanlanding
 about.sources.various=verschillende bronnen
 about.sources.mainly=primair
+about.sources.space.devs.reason=voor de laatste landingen
 about.support.title=Wilt u dit project ondersteunen?
 about.support.donate=Doneren
+about.support.coffee=Koop een kopje koffie voor mij
 about.support.develop=Meehelpen
 
 error.title=Fout

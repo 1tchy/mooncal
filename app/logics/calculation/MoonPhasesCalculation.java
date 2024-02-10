@@ -48,8 +48,13 @@ public class MoonPhasesCalculation extends Calculation {
             if (moonHappening.isAfter(to)) {
                 break;
             }
-            String phaseName = phase.getName(messagesApi, lang);
-            eventCollection.add(new EventInstance(moonHappening, phase.getEmoticon() + " " + phaseName, eventAt(moonHappening, phaseName, from.getZone(), lang), from.getZone(), lang, eventTypeId));
+            eventCollection.add(new EventInstance(
+                    moonHappening,
+                    phase.getEmoticon() + " " + phase.getTitle(messagesApi, lang, moonHappening),
+                    eventAt(moonHappening, phase.getSimpleName(messagesApi, lang), from.getZone(), lang),
+                    from.getZone(),
+                    lang,
+                    eventTypeId));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
     }
