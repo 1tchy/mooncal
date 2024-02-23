@@ -68,6 +68,7 @@ export.ical.download=iCalendar downloaden
 export.ical.subscribe=abonneren op iCalendar
 export.ical.subscribe.instructions=Kopieer de onderstaande link en plak het als abonnement in uw kalender applicatie
 export.ical.subscribe.explanations=Met dit link worden alle geselecteerde gebeurtenissen getoond voor het laatste half jaar en voor de volgende twee jaren.
+export.ical.subscribe.copy=Kopieer link
 export.ical.subscribe.close=Sluiten
 export.print=Afdrukken
 

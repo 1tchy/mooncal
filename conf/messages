@@ -68,6 +68,7 @@ export.ical.download=iCalendar-Datei herunterladen
 export.ical.subscribe=iCalendar-Feed abonnieren
 export.ical.subscribe.instructions=Kopieren Sie folgenden Link und fügen Sie ihn als Abonnement in Ihrem Kalenderprogramm hinzu
 export.ical.subscribe.explanations=Damit werden in Ihrem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.
+export.ical.subscribe.copy=Link kopieren
 export.ical.subscribe.close=Schliessen
 export.print=Drucken
 

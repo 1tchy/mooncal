@@ -121,7 +121,10 @@ angular.module('mooncalApp')
 		$scope.eventsEquals=function(event1, event2) {
 		    return event1 && event2 && event1.date==event2.date && event1.title==event2.title;
 		};
-		$scope.downloadIcal=function() {
+		$scope.copyIcalLink=function() {
+			navigator.clipboard.writeText(document.getElementById('icalLink').value);
+		};
+		$scope.trackDownloadIcal=function() {
 			_paq.push(['trackEvent', 'Calendar', 'downloadIcal', $scope.paramsAsShortString()]);
 		    $window.location.href="/mooncal.ics?"+$scope.paramsAsString();
 		};

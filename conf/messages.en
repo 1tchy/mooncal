@@ -68,6 +68,7 @@ export.ical.download=download iCalendar-file
 export.ical.subscribe=subscribe to iCalendar-feed
 export.ical.subscribe.instructions=Copy the following link and paste it as a subscription link into your calendar application
 export.ical.subscribe.explanations=With this link all selected events will be shown for the previous half year and for the following two years.
+export.ical.subscribe.copy=Copy link
 export.ical.subscribe.close=Close
 export.print=Print
 
