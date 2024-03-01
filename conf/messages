@@ -1,5 +1,5 @@
 app.title=Mondkalender
-app.introduction=Sind Sie schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die Mondphasen zu erfahren? Dann haben Sie sie jetzt gefunden! In der folgenden App können Sie sich Ihren persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle Ereignisse im Zusammenhang mit dem Mond. Der Mondkalender lässt sich unten anzeigen und als iCalendar (ICS) Datei in Ihren Kalender exportieren.
+app.introduction=Bist du schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die Mondphasen zu erfahren? Dann hast du sie jetzt gefunden! In der folgenden App kannst du dir deinen persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle Ereignisse im Zusammenhang mit dem Mond. Der Mondkalender lässt sich unten anzeigen und als iCalendar (ICS) Datei in deinen Kalender exportieren.
 app.moon=Mond
 app.angularlocale=de
 
@@ -55,7 +55,7 @@ events.at={0} um {1}
 time.title=Zeitspanne
 time.fromTo.from=Anzeige vom
 time.fromTo.to=bis
-time.fromTo.required=Es muss sowohl ein Start als auch Enddatum angageben werden.
+time.fromTo.required=Es muss sowohl ein Start als auch Enddatum angegeben werden.
 time.fromTo.date=Datum muss in der Form JJJJ-MM-TT angegeben werden.
 time.fromTo.minmax=Datum muss zwischen dem Jahr 1000 und 3000 liegen.
 
@@ -66,8 +66,8 @@ export.title=Exportieren
 export.ical=In Kalender exportieren
 export.ical.download=iCalendar-Datei herunterladen
 export.ical.subscribe=iCalendar-Feed abonnieren
-export.ical.subscribe.instructions=Kopieren Sie folgenden Link und fügen Sie ihn als Abonnement in Ihrem Kalenderprogramm hinzu
-export.ical.subscribe.explanations=Damit werden in Ihrem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.
+export.ical.subscribe.instructions=Kopiere folgenden Link und füge ihn als Abonnement in deinem Kalenderprogramm hinzu
+export.ical.subscribe.explanations=Damit werden in deinem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.
 export.ical.subscribe.copy=Link kopieren
 export.ical.subscribe.close=Schliessen
 export.print=Drucken
@@ -83,7 +83,7 @@ about.sources.moonlanding.title=Mondlandungen
 about.sources.various=Verschiedene Quellen
 about.sources.mainly=primär
 about.sources.space.devs.reason=für die neusten Landungen
-about.support.title=Wollen Sie dieses Projekt unterstützen?
+about.support.title=Willst du dieses Projekt unterstützen?
 about.support.donate=Spenden
 about.support.coffee=Spendier mir einen Kaffee
 about.support.develop=Mitentwickeln
