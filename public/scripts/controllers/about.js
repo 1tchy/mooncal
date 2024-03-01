@@ -8,8 +8,8 @@
  * Controller of the mooncalApp
  */
 angular.module('mooncalApp')
-  .controller('AboutCtrl', function ($scope) {
-  		$scope.trackSupport=function(supportType) {
+	.controller('AboutCtrl', function ($scope) {
+		$scope.trackSupport = function (supportType) {
 			_paq.push(['trackEvent', 'Support', supportType]);
-  		}
-  });
+		}
+	});
