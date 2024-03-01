@@ -8,6 +8,7 @@ GET        /views/about.html          controllers.Application.about(request: Req
 GET        /views/main.html           controllers.Application.main(request: Request)
 GET        /mooncal                   controllers.Application.query(lang: String ?= null, request: Request)
 GET        /mooncal.ics               controllers.Application.queryAsICalendar(lang: String ?= null, request: Request)
+GET        /server/status             controllers.Application.status()
 
 # Map static resources from the /public folder
 GET        /*file                     controllers.Assets.at(path="/public", file)
