@@ -33,7 +33,7 @@ angular
 		$rootScope.pageVisits = 0;
 		$rootScope.$on("$routeChangeStart", function () {
 			$rootScope.path = $location.path();
-			if ($location.url() != "" && $rootScope.pageVisits++ > 0) {
+			if ($location.url() !== "" && $rootScope.pageVisits++ > 0) {
 				_paq.push(['setCustomUrl', $location.url()]);
 				_paq.push(['trackPageView']);
 			}
