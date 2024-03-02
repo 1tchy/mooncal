@@ -55,6 +55,7 @@ events.at={0} om {1}
 time.title=Datum
 time.fromTo.from=Toon van
 time.fromTo.to=tot
+time.fromTo.in=in
 time.fromTo.required=Begin/ Eind datum nodig.
 time.fromTo.date=De datumnotatie moet zijn JJJJ-MM-DD.
 time.fromTo.minmax=Datum moet liggen tussen het jaar 1000 en 3000.
@@ -68,6 +69,7 @@ export.ical.download=iCalendar downloaden
 export.ical.subscribe=abonneren op iCalendar
 export.ical.subscribe.instructions=Kopieer de onderstaande link en plak het als abonnement in uw kalender applicatie
 export.ical.subscribe.explanations=Met dit link worden alle geselecteerde gebeurtenissen getoond voor het laatste half jaar en voor de volgende twee jaren.
+export.ical.subscribe.copy=Kopieer link
 export.ical.subscribe.close=Sluiten
 export.print=Afdrukken
 

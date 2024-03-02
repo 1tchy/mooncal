@@ -54,6 +54,12 @@
 					<span class="text-danger ml-2" ng-if="fromTo.from.$error.required||fromTo.to.$error.required">@messages.at("time.fromTo.required")</span>
 					<span class="text-danger ml-2" ng-if="fromTo.from.$error.date||fromTo.to.$error.date">@messages.at("time.fromTo.date")</span>
 					<span class="text-danger ml-2" ng-if="fromTo.from.$error.min||fromTo.to.$error.min||fromTo.from.$error.max||fromTo.to.$error.max">@messages.at("time.fromTo.minmax")</span>
+					<div class="form-group" ng-class="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
+						<label class="my-1 mx-2" for="zone">@messages.at("time.fromTo.in")</label>
+						<select class="form-control" ng-model="zone" name="zone" id="zone">
+							<option ng-repeat="tz in getSupportedTimezones()" ng-value="tz">{{tz}}</option>
+						</select>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -98,8 +104,8 @@
 							aria-expanded="false">@messages.at("export.ical")
 					</button>
 					<div class="dropdown-menu" role="menu">
-						<button class="dropdown-item" href="#" ng-click="downloadIcal()">@messages.at("export.ical.download")</button>
-						<button class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">@messages.at("export.ical.subscribe")</button>
+						<button class="dropdown-item" href="#" ng-click="trackDownloadIcal()">@messages.at("export.ical.download")</button>
+						<button class="dropdown-item" href="#" ng-click="trackIcalSubscription()" data-toggle="modal" data-target="#myModal">@messages.at("export.ical.subscribe")</button>
 					</div>
 				</div>
 				<div class="btn-group" role="group" aria-label="...">
@@ -120,13 +126,14 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>@messages.at("export.ical.subscribe.instructions"):</p>
+				<label for="icalLink">@messages.at("export.ical.subscribe.instructions"):</label>
 				<p>
-					<textarea type="text" class="form-control" readonly="readonly" rows="4">@controllers.routes.Application.queryAsICalendar(messages.at("lang.current")).absoluteURL(true, request.host())&phases[full]={{phases.full.value}}&phases[new]={{phases.new.value}}&phases[quarter]={{phases.quarter.value}}&phases[daily]={{phases.daily.value}}&events[lunareclipse]={{events.lunareclipse.value}}&events[solareclipse]={{events.solareclipse.value}}&events[moonlanding]={{events.moonlanding.value}}&before=P6M&after=P2Y&zone={{zone}}</textarea>
+					<textarea id="icalLink" type="text" class="form-control" readonly="readonly" rows="4">@controllers.routes.Application.queryAsICalendar(messages.at("lang.current")).absoluteURL(true, request.host())&phases[full]={{phases.full.value}}&phases[new]={{phases.new.value}}&phases[quarter]={{phases.quarter.value}}&phases[daily]={{phases.daily.value}}&events[lunareclipse]={{events.lunareclipse.value}}&events[solareclipse]={{events.solareclipse.value}}&events[moonlanding]={{events.moonlanding.value}}&before=P6M&after=P2Y&zone={{zone}}</textarea>
 				</p>
 				<p class="text-muted">@messages.at("export.ical.subscribe.explanations")</p>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-light" ng-click="copyIcalLink()" data-dismiss="modal">📋 @messages.at("export.ical.subscribe.copy")</button>
 				<button type="button" class="btn btn-light" data-dismiss="modal">@messages.at("export.ical.subscribe.close")</button>
 			</div>
 		</div>

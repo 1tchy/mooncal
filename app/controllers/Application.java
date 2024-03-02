@@ -121,4 +121,7 @@ public class Application extends Controller {
         return ok(views.html.templates.main.render(messagesApi.preferred(request), request));
     }
 
+    public Result status() {
+        return ok("up and running");
+    }
 }
