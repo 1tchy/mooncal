@@ -18,7 +18,7 @@ public abstract class Calculation {
         this.messagesApi = messagesApi;
     }
 
-    private static DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("H:mm (z)");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("H:mm");
 
     /**
      * @param eventCollection The collection which will be updated with the newly calculated events

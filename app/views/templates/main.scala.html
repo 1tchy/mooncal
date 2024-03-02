@@ -54,6 +54,12 @@
 					<span class="text-danger ml-2" ng-if="fromTo.from.$error.required||fromTo.to.$error.required">@messages.at("time.fromTo.required")</span>
 					<span class="text-danger ml-2" ng-if="fromTo.from.$error.date||fromTo.to.$error.date">@messages.at("time.fromTo.date")</span>
 					<span class="text-danger ml-2" ng-if="fromTo.from.$error.min||fromTo.to.$error.min||fromTo.from.$error.max||fromTo.to.$error.max">@messages.at("time.fromTo.minmax")</span>
+					<div class="form-group" ng-class="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
+						<label class="my-1 mx-2" for="zone">@messages.at("time.fromTo.in")</label>
+						<select class="form-control" ng-model="zone" name="zone" id="zone">
+							<option ng-repeat="tz in getSupportedTimezones()" ng-value="tz">{{tz}}</option>
+						</select>
+					</div>
 				</form>
 			</div>
 		</div>

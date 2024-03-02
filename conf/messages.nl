@@ -55,6 +55,7 @@ events.at={0} om {1}
 time.title=Datum
 time.fromTo.from=Toon van
 time.fromTo.to=tot
+time.fromTo.in=in
 time.fromTo.required=Begin/ Eind datum nodig.
 time.fromTo.date=De datumnotatie moet zijn JJJJ-MM-DD.
 time.fromTo.minmax=Datum moet liggen tussen het jaar 1000 en 3000.

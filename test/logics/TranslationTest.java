@@ -21,7 +21,7 @@ public class TranslationTest extends WithApplication {
     private MessagesApi messagesApi;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         messagesApi = app.injector().instanceOf(MessagesApi.class);
     }
 
@@ -34,7 +34,7 @@ public class TranslationTest extends WithApplication {
 
     private Set<String> getAllKeys() throws IOException {
         Set<String> keys = new HashSet<>();
-        try (Scanner scanner = new Scanner(new File(Messages.class.getResource("/messages").getFile()))) {
+        try (Scanner scanner = new Scanner(new File(Objects.requireNonNull(Messages.class.getResource("/messages")).getFile()))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 keys.add(line.replaceAll("=.*", ""));
@@ -69,13 +69,13 @@ public class TranslationTest extends WithApplication {
         for (Lang lang : getAllLangs()) {
             if (!lang.equals(defaultLang)) {
                 for (String key : getAllKeys()) {
-                    assertSpecificTranslation(defaultLang, lang, key);
+                    assertSpecificTranslation(lang, key);
                 }
             }
         }
     }
 
-    private void assertSpecificTranslation(Lang defaultLang, Lang lang, String key) {
+    private void assertSpecificTranslation(Lang lang, String key) {
         if (isTranslationRequired(lang, key)) {
             assertNotEquals(key + " for '" + lang.code() + "' and '" + defaultLang.code() + "' are equal but probably shouldn't",
                     messagesApi.get(lang, key),
@@ -85,10 +85,11 @@ public class TranslationTest extends WithApplication {
 
     @SuppressWarnings("RedundantIfStatement")
     private static boolean isTranslationRequired(Lang lang, String key) {
-        Map<String, String> noTranslationRequired = new HashMap<String, String>() {{
+        Map<String, String> noTranslationRequired = new HashMap<>() {{
             put("lang.en", ".*");
             put("lang.de", ".*");
             put("lang.nl", ".*");
+            put("time.fromTo.in", ".*");
             put("navigation.home", ".*");
             put("events.title", "en");
             put("calendar.title", "nl");
