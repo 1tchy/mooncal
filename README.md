@@ -10,11 +10,12 @@ The calendar can be exported to personal calendar applications.
 Mooncal is built on the following frameworks:
 
 * [Play Framework](https://www.playframework.com/)
-* [AngularJS](https://angularjs.org/)
+* [Angular](https://angular.io/)
 * [Bootstrap](http://getbootstrap.com/)
 
 ### Prerequisites
 * Java 21 (JDK)
+* [Node.js](https://nodejs.org/) (version 10 or higher)
 * [sbt](https://www.scala-sbt.org/download.html)
 
 ### Running

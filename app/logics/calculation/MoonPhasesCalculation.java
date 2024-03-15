@@ -24,21 +24,21 @@ public class MoonPhasesCalculation extends Calculation {
     }
 
     @Override
-    public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection, Lang lang) {
+    public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection) {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
         if (requestForm.includePhase(MoonPhaseType.FULLMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON, eventCollection, lang, "fullmoon");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON, eventCollection, requestForm.getLang(), "fullmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.NEWMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON, eventCollection, lang, "newmoon");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON, eventCollection, requestForm.getLang(), "newmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.QUARTER)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER, eventCollection, lang, "quarter");
-            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, lang, "quarter");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER, eventCollection, requestForm.getLang(), "quarter");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, requestForm.getLang(), "quarter");
         }
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
-            calculateDailyEvents(lang, requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
+            calculateDailyEvents(requestForm.getLang(), requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
         }
     }
 

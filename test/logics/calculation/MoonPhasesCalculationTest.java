@@ -49,7 +49,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
 
     private Collection<EventInstance> calculate(RequestForm requestForm) {
         final Collection<EventInstance> eventCollection = new TreeSet<>();
-        cut.calculate(requestForm, eventCollection, Lang.forCode("de"));
+        cut.calculate(requestForm, eventCollection);
         return eventCollection;
     }
 
@@ -79,6 +79,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
         requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2026, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC));
+        requestForm.setLang(Lang.forCode("en"));
         Collection<EventInstance> actual = calculate(requestForm);
         assertEquals(IntStream.of(1, 2, 3, 4, 5, 13, 6, 7, 8, 9, 10, 11, 12).mapToObj(i -> "🌕 phases.full (phases.full." + i + ")").toList(), actual.stream().map(EventInstance::getTitle).toList());
     }
@@ -116,6 +117,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.getPhases().put(MoonPhaseType.DAILY, true);
         requestForm.setFrom(ZonedDateTime.of(2016, 2, 29, 12, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2016, 3, 1, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setLang(Lang.forCode("en"));
 
         final Collection<EventInstance> actual = calculate(requestForm);
 

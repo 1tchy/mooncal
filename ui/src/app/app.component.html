@@ -1,0 +1,51 @@
+<main class="main">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="routeData['home']" (click)="isNavbarCollapsed=true; trackNavigation(routeData['home'])">Mooncal.ch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarNav"
+              aria-expanded="false" [attr.aria-label]="messages.navigation.toggle">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a [routerLink]="routeData['home']" ngClass="{active:routePath===routeData['home']}" class="nav-link"
+               (click)="isNavbarCollapsed=true; trackNavigation(routeData['home'])">{{ messages.navigation.home }}</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="routeData['about']" ngClass="{active:routePath===routeData['about']}" class="nav-link"
+               (click)="isNavbarCollapsed=true; trackNavigation(routeData['about'])">{{ messages.navigation.about }}</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item" ngbDropdown>
+            <a class="nav-link" tabindex="0" ngbDropdownToggle id="languagesDropdown" role="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-translate" viewBox="0 0 16 16">
+                <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
+                <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
+              </svg>
+              {{ messages.lang.change }}
+            </a>
+            <ul ngbDropdownMenu aria-labelledby="languagesDropdown" class="dropdown-menu">
+              <ng-container *ngFor="let langOption of ['de','en','nl']">
+                <li *ngIf="langOption!==messages.lang.current">
+                  <a ngbDropdownItem [routerLink]="routeData[langOption]"
+                     (click)='isNavbarCollapsed=true; trackLanguageChange(langOption, messages.lang.current, $event)'>
+                    {{ messages.lang[langOption] }}
+                  </a>
+                </li>
+              </ng-container>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4 content">
+    <router-outlet/>
+  </main>
+</main>
+

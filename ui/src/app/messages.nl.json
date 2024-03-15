@@ -1,0 +1,117 @@
+{
+  "app": {
+    "title": "Maankalender",
+    "introduction": "Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanstanden te weten? Dan bent u hier aan de juiste adres. Met deze app kunt u uw persoonlijke maankalender vasenstellen. Niet alleen met de maanstanden, maar ook met speciale evenementen in verband met de maan. Helemaal onderaan de pagina kunt u uw kalender als iCalendar (ICS) bestand downloaden.",
+    "moon": "moon"
+  },
+  "lang": {
+    "current": "nl",
+    "de": "Deutsch",
+    "en": "English",
+    "nl": "Nederlands",
+    "change": "Wijzig taal"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "Over deze pagina",
+    "toggle": "Navigatie weergeven/verbergen"
+  },
+  "general": {
+    "and": "en"
+  },
+  "phases": {
+    "title": "Maanstanden",
+    "full": "Volle maan",
+    "new": "Nieuwe maan",
+    "quarter": "Halve maan",
+    "daily": "Dagelijkse gegevens van de maan"
+  },
+  "events": {
+    "title": "Evenementen",
+    "lunareclipse": "Maansverduistering",
+    "solareclipse": "Zonsverduistering",
+    "moonlanding": "Maanlanding"
+  },
+  "time": {
+    "title": "Datum",
+    "fromTo": {
+      "from": "Toon van",
+      "to": "tot",
+      "inTimezone": "in tijdzone",
+      "required": "Begin/ Eind datum nodig.",
+      "date": "De datumnotatie moet zijn JJJJ-MM-DD.",
+      "minmax": "Datum moet liggen tussen het jaar 1000 en 3000."
+    }
+  },
+  "calendar": {
+    "title": "Kalender",
+    "reloading": "Gegevens worden geladen"
+  },
+  "export": {
+    "title": "Export",
+    "ical": {
+      "title": "Naar kalender downloaden",
+      "download": "iCalendar downloaden",
+      "subscribe": {
+        "title": "abonneren op iCalendar",
+        "instructions": "Kopieer de onderstaande link en plak het als abonnement in uw kalender applicatie",
+        "explanations": "Met dit link worden alle geselecteerde gebeurtenissen getoond voor het laatste half jaar en voor de volgende twee jaren.",
+        "copy": "Kopieer link",
+        "close": "Sluiten"
+      }
+    },
+    "print": "Afdrukken"
+  },
+  "about": {
+    "title": "Over deze pagina",
+    "introduction": "Het doel van dit project is een simpel en overzichtelijk maankalender voor iedereen ter beschikking te stellen. De gegevens zijn berekend en verzameld van verschillende bronnen naar beste weten en geweten.",
+    "sources": {
+      "title": "Bronnen",
+      "moonimage": {
+        "title": "Maanbeeld"
+      },
+      "phases": {
+        "title": "Maanstanden"
+      },
+      "lunareclipse": {
+        "title": "Maansverduistering"
+      },
+      "solareclipse": {
+        "title": "Zonsverduistering"
+      },
+      "moonlanding": {
+        "title": "Maanlanding"
+      },
+      "various": "verschillende bronnen",
+      "mainly": "primair",
+      "space": {
+        "devs": {
+          "reason": "voor de laatste landingen"
+        }
+      }
+    },
+    "support": {
+      "title": "Wilt u dit project ondersteunen?",
+      "donate": "Doneren",
+      "coffee": "Koop een kopje koffie voor mij",
+      "develop": "Meehelpen"
+    }
+  },
+  "error": {
+    "title": "Fout",
+    "invalid": "ongeldige waarde voor {0}",
+    "required": "Waarde voor {0} is absoluut noodzakelijk",
+    "fromTo": {
+      "tolargefordaily": "Maximaal {0} dagelijkse standen mogelijk."
+    },
+    "notfound": {
+      "title": "Pagina niet gevonden",
+      "lead": "Sorry, de gevraagde pagina bestaat niet.",
+      "problem": {
+        "title": "Het probleem zou kunnen zijn:",
+        "typo": "een fout getypt adres",
+        "link": "een verouderde link"
+      }
+    }
+  }
+}

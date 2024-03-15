@@ -50,12 +50,13 @@ public class MoonEventCalculationTest extends WithApplication {
         requestForm.getEvents().put(event, true);
         requestForm.setFrom(ZonedDateTime.of(from, LocalTime.NOON, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(to, LocalTime.NOON, ZoneOffset.UTC));
+        requestForm.setLang(Lang.defaultLang());
         return requestForm;
     }
 
     private Collection<EventInstance> calculate(RequestForm requestForm) {
         final Collection<EventInstance> eventCollection = new TreeSet<>();
-        cut.calculate(requestForm, eventCollection, Lang.forCode("de"));
+        cut.calculate(requestForm, eventCollection);
         return eventCollection;
     }
 

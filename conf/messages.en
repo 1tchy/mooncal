@@ -1,21 +1,5 @@
-app.title=Moon Calendar
-app.introduction=Are you looking for a simple moon calendar? Now you found it! With this web app you can generate your personal moon calendar, not only with moon phases, but also with special events about the moon. You can export your personal calendar at the bottom of the page as an iCalendar (ICS) file.
-app.moon=moon
-app.angularlocale=en
-
 lang.current=en
-lang.de=Deutsch
-lang.en=English
-lang.nl=Nederlands
-lang.change=Change language
 
-navigation.home=Home
-navigation.about=About
-navigation.toggle=Navigation toggle on/off
-
-general.and=and
-
-phases.title=Moon Phases
 phases.full=full moon
 phases.full.1=Wolf Moon
 phases.full.2=Snow Moon
@@ -34,65 +18,19 @@ phases.new=new moon
 phases.quarter=quarter
 phases.quarter.first=first quarter
 phases.quarter.last=third quarter
-phases.daily=daily moon phases
 phases.daily.visibility=moon {0}% visible
 phases.daily.visibility.morning6=The moon is {0}% visible at 6am
 phases.daily.visibility.noon12=The moon is {0}% visible at noon
 phases.daily.visibility.evening6=The moon is {0}% visible at 6pm
 
-events.title=Events
-events.lunareclipse=lunar eclipse
 events.lunareclipse.total=total lunar eclipse
 events.lunareclipse.partial=partial lunar eclipse
-events.solareclipse=solar eclipse
 events.solareclipse.total=total solar eclipse
 events.solareclipse.partial=partial solar eclipse
 events.solareclipse.annular=annular solar eclipse
 events.solareclipse.hybrid=hybrid solar eclipse
-events.moonlanding=moon landing
 events.at={0} at {1}
 
-time.title=Interval
-time.fromTo.from=Show from
-time.fromTo.to=until
-time.fromTo.in=in
-time.fromTo.required=Starting / Ending date required.
-time.fromTo.date=Date format needs to be YYYY-MM-DD.
-time.fromTo.minmax=Date needs to be between the year 1000 and 3000.
-
-calendar.title=Calendar
-calendar.reloading=Data loading
-
-export.title=Export
-export.ical=Export to calendar
-export.ical.download=download iCalendar-file
-export.ical.subscribe=subscribe to iCalendar-feed
-export.ical.subscribe.instructions=Copy the following link and paste it as a subscription link into your calendar application
-export.ical.subscribe.explanations=With this link all selected events will be shown for the previous half year and for the following two years.
-export.ical.subscribe.copy=Copy link
-export.ical.subscribe.close=Close
-export.print=Print
-
-about.title=About this site
-about.introduction=The aim of this project is to provide a simple and neat moon calendar for everyone. The data is calculated and collected from various sources to the best of one''s knowledge and belief.
-about.sources.title=sources
-about.sources.moonimage.title=moon picture
-about.sources.phases.title=moon phases
-about.sources.lunareclipse.title=lunar eclipse
-about.sources.solareclipse.title=solar eclipse
-about.sources.moonlanding.title=moon landing
-about.sources.various=various sources
-about.sources.mainly=mainly
-about.sources.space.devs.reason=for the latest landings
-about.support.title=Do you want to support this project?
-about.support.donate=Donate
-about.support.coffee=Buy me a coffee
-about.support.develop=Help Develop
-
-error.title=Error
-error.invalid=invalid value for {0}
-error.required={0} is required
-error.fromTo.tolargefordaily=When selecting daily phases only {0} years can be displayed.
 error.notfound=Page not found
 error.notfound.lead=Sorry, but the page you were trying to view does not exist.
 error.notfound.problem=It looks like this was the result of either:
