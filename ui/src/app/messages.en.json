@@ -1,0 +1,117 @@
+{
+  "app": {
+    "title": "Moon Calendar",
+    "introduction": "Are you looking for a simple moon calendar? Now you found it! With this web app you can generate your personal moon calendar, not only with moon phases, but also with special events about the moon. You can export your personal calendar at the bottom of the page as an iCalendar (ICS) file.",
+    "moon": "moon"
+  },
+  "lang": {
+    "current": "en",
+    "de": "Deutsch",
+    "en": "English",
+    "nl": "Nederlands",
+    "change": "Change language"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "toggle": "Navigation toggle on/off"
+  },
+  "general": {
+    "and": "and"
+  },
+  "phases": {
+    "title": "Moon Phases",
+    "full": "full moon",
+    "new": "new moon",
+    "quarter": "quarter",
+    "daily": "daily moon phases"
+  },
+  "events": {
+    "title": "Events",
+    "lunareclipse": "lunar eclipse",
+    "solareclipse": "solar eclipse",
+    "moonlanding": "moon landing"
+  },
+  "time": {
+    "title": "Interval",
+    "fromTo": {
+      "from": "Show from",
+      "to": "until",
+      "inTimezone": "in timezone",
+      "required": "Starting / Ending date required.",
+      "date": "Date format needs to be YYYY-MM-DD.",
+      "minmax": "Date needs to be between the year 1000 and 3000."
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "reloading": "Data loading"
+  },
+  "export": {
+    "title": "Export",
+    "ical": {
+      "title": "Export to calendar",
+      "download": "download iCalendar-file",
+      "subscribe": {
+        "title": "subscribe to iCalendar-feed",
+        "instructions": "Copy the following link and paste it as a subscription link into your calendar application",
+        "explanations": "With this link all selected events will be shown for the previous half year and for the following two years.",
+        "copy": "Copy link",
+        "close": "Close"
+      }
+    },
+    "print": "Print"
+  },
+  "about": {
+    "title": "About this site",
+    "introduction": "The aim of this project is to provide a simple and neat moon calendar for everyone. The data is calculated and collected from various sources to the best of one''s knowledge and belief.",
+    "sources": {
+      "title": "sources",
+      "moonimage": {
+        "title": "moon picture"
+      },
+      "phases": {
+        "title": "moon phases"
+      },
+      "lunareclipse": {
+        "title": "lunar eclipse"
+      },
+      "solareclipse": {
+        "title": "solar eclipse"
+      },
+      "moonlanding": {
+        "title": "moon landing"
+      },
+      "various": "various sources",
+      "mainly": "mainly",
+      "space": {
+        "devs": {
+          "reason": "for the latest landings"
+        }
+      }
+    },
+    "support": {
+      "title": "Do you want to support this project?",
+      "donate": "Donate",
+      "coffee": "Buy me a coffee",
+      "develop": "Help Develop"
+    }
+  },
+  "error": {
+    "title": "Error",
+    "invalid": "invalid value for {0}",
+    "required": "{0} is required",
+    "fromTo": {
+      "tolargefordaily": "When selecting daily phases only {0} years can be displayed."
+    },
+    "notfound": {
+      "title": "Page not found",
+      "lead": "Sorry, but the page you were trying to view does not exist.",
+      "problem": {
+        "title": "It looks like this was the result of either:",
+        "typo": "a mistyped address",
+        "link": "an out-of-date link"
+      }
+    }
+  }
+}

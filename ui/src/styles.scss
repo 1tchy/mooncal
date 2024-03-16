@@ -1,0 +1,80 @@
+//$body-bg: black;
+//$body-color: white;
+$darkerGrey: hsl(0, 0%, 20%);
+//$darkerGrey: #343a40;
+$brightGrey: hsl(0, 0%, 80%);
+//$card-bg: $darkerGrey;
+$card-cap-color: $darkerGrey;
+$card-cap-bg: rgba(#fff, .9);
+$card-bg: $darkerGrey;
+//$navbar-light-icon-color: $darkerGrey;
+$table-dark-bg: $darkerGrey;
+$modal-content-bg: $darkerGrey;
+
+$card-color: white;
+$body-secondary-color: rgba(192, 192, 192, 0.75);
+
+body {
+  background-color: black !important;
+  color: white !important;
+}
+
+/*** Fonts ***/
+//@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  src: url(images/quicksand.woff2) format('woff2');
+}
+$font-family-sans-serif: 'Quicksand', sans-serif;
+//$font-family-sans-serif: 'Helvetica Neue', Helvetica, 'Trebuchet MS', 'Lucida Grande', Arial, sans-serif;
+$headings-font-weight: 700;
+
+@import "bootstrap/scss/bootstrap.scss";
+
+#mond {
+  position: absolute;
+  left: 0;
+  width: 40%;
+  z-index: -1;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.fadeAnimation.ng-enter.ng-enter-active, .fadeAnimation.ng-leave {
+  opacity: 1;
+}
+
+.fadeAnimation.ng-leave.ng-leave-active, .fadeAnimation.ng-enter {
+  opacity: 0;
+}
+
+.navbar-brand {
+  text-transform: lowercase;
+}
+
+.description {
+  white-space: pre-line;
+}
+
+@media print {
+
+  body {
+    background-color: inherit;
+    color: inherit;
+  }
+
+  #mond, p, .card-header, .card-body {
+    display: none !important;
+  }
+  .card {
+    border: none !important;
+  }
+  div {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+}

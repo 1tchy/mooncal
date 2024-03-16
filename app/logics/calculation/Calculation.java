@@ -23,7 +23,7 @@ public abstract class Calculation {
     /**
      * @param eventCollection The collection which will be updated with the newly calculated events
      */
-    public abstract void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection, Lang lang);
+    public abstract void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection);
 
     protected String eventAt(ZonedDateTime date, String eventName, ZoneId usersTimezone, Lang lang) {
         return messagesApi.get(lang, "events.at", eventName, date.withZoneSameInstant(usersTimezone).format(TIME_FORMATTER));

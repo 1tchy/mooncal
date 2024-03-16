@@ -3,6 +3,7 @@ package models;
 import org.jetbrains.annotations.NotNull;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
+import play.i18n.Lang;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
@@ -22,6 +23,9 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
     private LocalDateTime to;
     @Constraints.Required
     private ZoneId zone;
+    @Constraints.Required
+    private Lang lang;
+    private Long created;
 
     public Map<MoonPhaseType, Boolean> getPhases() {
         return phases;
@@ -69,6 +73,22 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         this.zone = zone;
     }
 
+    public Lang getLang() {
+        return lang;
+    }
+
+    public void setLang(Lang lang) {
+        this.lang = lang;
+    }
+
+    public Long getCreated() {
+        return created;
+    }
+
+    public void setCreated(Long created) {
+        this.created = created;
+    }
+
     /**
      * Sets the "from" to a date before today to form a floating timeframe around today for subscriptions
      */
@@ -99,7 +119,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         return null;//form is fine
     }
 
-    public String calculateETag(String language) {
+    public String calculateETag() {
         int eventsPart = 0;
         for (MoonPhaseType moonPhaseType : MoonPhaseType.values()) {
             eventsPart = eventsPart * 2 + (includePhase(moonPhaseType) ? 1 : 0);
@@ -117,11 +137,11 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
             sb.append(zone.getId());
         }
         sb.append("x");
-        sb.append(language);
+        sb.append(lang.code());
         return sb.toString();
     }
 
-    public String getForLog(String language) {
+    public String getForLog() {
         StringBuilder sb = new StringBuilder();
         for (MoonPhaseType moonPhaseType : MoonPhaseType.values()) {
             if (includePhase(moonPhaseType)) {
@@ -143,8 +163,12 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
             sb.append(zone.getId());
         }
         sb.append(" (");
-        sb.append(language);
+        sb.append(lang.code());
         sb.append(")");
+        if (created != null) {
+            sb.append(" #");
+            sb.append(created);
+        }
         return sb.toString();
     }
 }

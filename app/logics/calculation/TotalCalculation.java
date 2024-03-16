@@ -2,7 +2,6 @@ package logics.calculation;
 
 import models.EventInstance;
 import models.RequestForm;
-import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
 import javax.inject.Inject;
@@ -21,16 +20,16 @@ public class TotalCalculation extends Calculation {
         this.moonEventCalculation = moonEventCalculation;
     }
 
-    public Collection<EventInstance> calculate(RequestForm requestForm, Lang lang) {
+    public Collection<EventInstance> calculate(RequestForm requestForm) {
         final Collection<EventInstance> eventCollection = new TreeSet<>();
-        calculate(requestForm, eventCollection, lang);
+        calculate(requestForm, eventCollection);
         return eventCollection;
     }
 
     @Override
-    public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection, Lang lang) {
-        moonPhasesCalculation.calculate(requestForm, eventCollection, lang);
-        moonEventCalculation.calculate(requestForm, eventCollection, lang);
+    public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection) {
+        moonPhasesCalculation.calculate(requestForm, eventCollection);
+        moonEventCalculation.calculate(requestForm, eventCollection);
     }
 
 }

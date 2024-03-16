@@ -1,0 +1,147 @@
+<img src="/images/mond.png" alt='{{messages.app.moon}}' id="mond"/>
+<h1>{{ messages.app.title }}</h1>
+
+<p>{{ messages.app.introduction }}</p>
+
+<form class="row" #optionsForm="ngForm">
+  <div class="col-lg-6">
+    <div class="card">
+      <h5 class="card-header">{{ messages.phases.title }}</h5>
+      <div class="card-body">
+        <div class="form-check" *ngFor="let phase of ['full', 'new', 'quarter', 'daily']">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
+                 [name]="phase+'-checkbox'">
+          <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <h5 class="card-header">{{ messages.events.title }}</h5>
+      <div class="card-body">
+        <div class="form-check"
+             *ngFor="let event of ['lunareclipse','solareclipse','moonlanding']">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="events[event]" [id]="event+'-checkbox'"
+                 [name]="event+'-checkbox'">
+          <label class="form-check-label" [for]="event+'-checkbox'">{{ messages.events[event] }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <h5 class="card-header">{{ messages.time.title }}</h5>
+      <div class="card-body">
+        <form class="row align-items-center g-3" name="fromTo">
+          <label class="col-auto" for="from">{{ messages.time.fromTo.from }}</label>
+          <div class="col-auto"
+               ngClass="{'has-error':fromTo_from.errors?.['date']||fromTo_from.errors?.['required']}">
+            <input type="date" class="form-control" [(ngModel)]="from" name="from" id="from" #fromTo_from="ngModel"
+                   (change)="from$.next(this.toDate(this.from))"
+                   (blur)="this.fromDebounced=this.toDate(this.from); fetchCalendar()"
+                   required min="1000-01-01" [max]="this.to">
+          </div>
+          <label class="col-auto" for="to">{{ messages.time.fromTo.to }}</label>
+          <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
+            <input type="date" class="form-control" [(ngModel)]="to" name="to" id="to" #fromTo_to="ngModel"
+                   (change)="to$.next(this.toDate(this.to))"
+                   (blur)="this.toDebounced=this.toDate(this.to); fetchCalendar()"
+                   required [min]="this.from" max="3000-12-31">
+          </div>
+          <span class="text-danger ms-2"
+                *ngIf="fromTo_from.errors?.['required']||fromTo_to.errors?.['required']">{{ messages.time.fromTo.required }}</span>
+          <span class="text-danger ms-2"
+                *ngIf="fromTo_from.errors?.['date']||fromTo_to.errors?.['date']">{{ messages.time.fromTo.date }}</span>
+          <span class="text-danger ms-2"
+                *ngIf="fromTo_from.errors?.['min']||fromTo_to.errors?.['min']||fromTo_from.errors?.['max']||fromTo_to.errors?.['max']">{{ messages.time.fromTo.minmax }}</span>
+          <label class="col-auto" for="zone">{{ messages.time.fromTo.inTimezone }}</label>
+          <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
+            <select class="form-control" [(ngModel)]="zone" name="zone" id="zone" (change)="fetchCalendar()">
+              <option *ngFor="let tz of getSupportedTimezones()" [ngValue]="tz">{{ tz }}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row fadeAnimation" *ngIf="calendar.length>0">
+  <div class="col-lg-12">
+    <div class="card" ngClass="{true: 'card-warning', false: 'card-default'}[requestOngoing]">
+      <h5 class="card-header">{{ messages.calendar.title }}
+        <span *ngIf="requestOngoing">({{ messages.calendar.reloading }})</span>
+      </h5>
+      <table class="table table-bordered table-dark mb-0">
+        <tbody>
+        <tr *ngFor="let event of calendar" class="fadeAnimation">
+          <td class="dateFont">{{ this.formatDateForGui(event.date) }}</td>
+          <td>{{ event.title }}</td>
+          <td class="text-muted description">{{ event.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row fadeAnimation" *ngIf="error">
+  <div class="col-lg-12">
+    <div class="card text-white bg-danger">
+      <h5 class="card-header">Fehler {{ error.status }}: {{ error.statusText }}</h5>
+      <div class="card-body">
+        {{ error.error }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <h5 class="card-header">{{ messages.export.title }}</h5>
+      <div class="card-body">
+        <div class="btn-group dropdown me-1" ngbDropdown>
+          <button type="button" class="btn btn-light" ngbDropdownToggle>{{ messages.export.ical.title }}</button>
+          <div class="dropdown-menu" ngbDropdownMenu>
+            <a ngbDropdownItem [href]="getApiUrl(true,true)+'?'+paramsAsString(true)"
+               (click)="trackDownloadIcal()">{{ messages.export.ical.download }}</a>
+            <button ngbDropdownItem href="#" (click)="trackIcalSubscription(); open(subscribeModal)" data-toggle="modal"
+                    data-target="#subscribeModal">{{ messages.export.ical.subscribe.title }}
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-light" onclick="window.print()" (click)="trackPrint()">
+          {{ messages.export.print }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #subscribeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="subscribeModalLabel">{{ messages.export.ical.subscribe.title }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <label for="icalLink">{{ messages.export.ical.subscribe.instructions }}:</label>
+    <p>
+      <!-- @formatter:off -->
+      <textarea id="icalLink" type="text" class="form-control" readonly="readonly" rows="4">{{ getApiUrl(true,true) }}?created={{created}}&{{ paramsAsString(false) }}</textarea></p>
+      <!-- @formatter:on -->
+    <p class="text-muted">{{ messages.export.ical.subscribe.explanations }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="copyIcalLink(); modal.dismiss()" data-dismiss="modal">
+      📋 {{ messages.export.ical.subscribe.copy }}
+    </button>
+    <button type="button" class="btn btn-light" (click)="modal.dismiss()">{{ messages.export.ical.subscribe.close }}
+    </button>
+  </div>
+</ng-template>
+<br/>
+<br/>

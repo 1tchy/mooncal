@@ -3,12 +3,12 @@ package controllers.formatters;
 import models.EventType;
 import models.MoonPhaseType;
 import play.data.format.Formatters;
+import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
-import java.text.ParseException;
 import java.time.Period;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,9 +28,9 @@ public class FormattersProvider implements Provider<Formatters> {
     @Override
     public Formatters get() {
         return new Formatters(messagesApi)
-                .register(ZonedDateTime.class, new Formatters.SimpleFormatter<ZonedDateTime>() {
+                .register(ZonedDateTime.class, new Formatters.SimpleFormatter<>() {
                     @Override
-                    public ZonedDateTime parse(String input, Locale l) throws ParseException {
+                    public ZonedDateTime parse(String input, Locale l) {
                         return ZonedDateTime.parse(input.replaceAll(" ", "+"), DATE_TIME_FORMATTER);
                     }
 
@@ -40,9 +40,9 @@ public class FormattersProvider implements Provider<Formatters> {
                     }
 
                 })
-                .register(MoonPhaseType.class, new Formatters.SimpleFormatter<MoonPhaseType>() {
+                .register(MoonPhaseType.class, new Formatters.SimpleFormatter<>() {
                     @Override
-                    public MoonPhaseType parse(String input, Locale l) throws ParseException {
+                    public MoonPhaseType parse(String input, Locale l) {
                         return MoonPhaseType.read(input);
                     }
 
@@ -51,9 +51,9 @@ public class FormattersProvider implements Provider<Formatters> {
                         return input.getKey();
                     }
                 })
-                .register(EventType.class, new Formatters.SimpleFormatter<EventType>() {
+                .register(EventType.class, new Formatters.SimpleFormatter<>() {
                     @Override
-                    public EventType parse(String input, Locale l) throws ParseException {
+                    public EventType parse(String input, Locale l) {
                         return EventType.read(input);
                     }
 
@@ -61,15 +61,25 @@ public class FormattersProvider implements Provider<Formatters> {
                     public String print(EventType input, Locale l) {
                         return input.getKey();
                     }
-                }).register(Period.class, new Formatters.SimpleFormatter<Period>() {
+                }).register(Period.class, new Formatters.SimpleFormatter<>() {
                     @Override
-                    public Period parse(String input, Locale l) throws ParseException {
+                    public Period parse(String input, Locale l) {
                         return Period.parse(input);
                     }
 
                     @Override
                     public String print(Period input, Locale l) {
                         return input.toString();
+                    }
+                }).register(Lang.class, new Formatters.SimpleFormatter<>() {
+                    @Override
+                    public Lang parse(String input, Locale l) {
+                        return Lang.forCode(input);
+                    }
+
+                    @Override
+                    public String print(Lang input, Locale l) {
+                        return input.code();
                     }
                 });
     }

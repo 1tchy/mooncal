@@ -75,7 +75,7 @@ public class MoonEventCalculation extends Calculation {
     }
 
     private String getByLang(String en, String de, String nl, Lang lang) {
-        return switch (lang.language()) {
+        return switch (lang.code()) {
             case "de" -> de;
             case "nl" -> nl;
             default -> en;
@@ -149,15 +149,15 @@ public class MoonEventCalculation extends Calculation {
     }
 
     @Override
-    public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection, Lang lang) {
+    public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection) {
         if (requestForm.includeEvent(EventType.LUNARECLIPSE)) {
-            findEventsInMap(requestForm, eventCollection, this.lunarEclipses, lang);
+            findEventsInMap(requestForm, eventCollection, this.lunarEclipses, requestForm.getLang());
         }
         if (requestForm.includeEvent(EventType.SOLARECLIPSE)) {
-            findEventsInMap(requestForm, eventCollection, this.solarEclipses, lang);
+            findEventsInMap(requestForm, eventCollection, this.solarEclipses, requestForm.getLang());
         }
         if (requestForm.includeEvent(EventType.MOONLANDING)) {
-            findEventsInMap(requestForm, eventCollection, moonLandings, lang);
+            findEventsInMap(requestForm, eventCollection, moonLandings, requestForm.getLang());
         }
     }
 

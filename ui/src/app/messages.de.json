@@ -1,0 +1,117 @@
+{
+  "app": {
+    "title": "Mondkalender",
+    "introduction": "Bist du schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die Mondphasen zu erfahren? Dann hast du sie jetzt gefunden! In der folgenden App kannst du dir deinen persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle Ereignisse im Zusammenhang mit dem Mond. Der Mondkalender lässt sich unten anzeigen und als iCalendar (ICS) Datei in deinen Kalender exportieren.",
+    "moon": "Mond"
+  },
+  "lang": {
+    "current": "de",
+    "de": "Deutsch",
+    "en": "English",
+    "nl": "Nederlands",
+    "change": "Sprache ändern"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "Über",
+    "toggle": "Navigation anzeigen/ausblenden"
+  },
+  "general": {
+    "and": "und"
+  },
+  "phases": {
+    "title": "Mondphasen",
+    "full": "Vollmond",
+    "new": "Neumond",
+    "quarter": "Halbmond",
+    "daily": "tägliche Phasen"
+  },
+  "events": {
+    "title": "Events",
+    "lunareclipse": "Mondfinsternis",
+    "solareclipse": "Sonnenfinsternis",
+    "moonlanding": "Mondlandung"
+  },
+  "time": {
+    "title": "Zeitspanne",
+    "fromTo": {
+      "from": "Anzeige vom",
+      "to": "bis",
+      "inTimezone": "in Zeitzone",
+      "required": "Es muss sowohl ein Start als auch Enddatum angegeben werden.",
+      "date": "Datum muss in der Form JJJJ-MM-TT angegeben werden.",
+      "minmax": "Datum muss zwischen dem Jahr 1000 und 3000 liegen."
+    }
+  },
+  "calendar": {
+    "title": "Kalender",
+    "reloading": "neue Daten werden geladen"
+  },
+  "export": {
+    "title": "Exportieren",
+    "ical": {
+      "title": "In Kalender exportieren",
+      "download": "iCalendar-Datei herunterladen",
+      "subscribe": {
+        "title": "iCalendar-Feed abonnieren",
+        "instructions": "Kopiere folgenden Link und füge ihn als Abonnement in deinem Kalenderprogramm hinzu",
+        "explanations": "Damit werden in deinem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.",
+        "copy": "Link kopieren",
+        "close": "Schliessen"
+      }
+    },
+    "print": "Drucken"
+  },
+  "about": {
+    "title": "Über diese Seite",
+    "introduction": "Dieser Mondkalender ist ein privates Projekt mit dem Zweck, einen möglichst einfachen und übersichtlichen Mondkalender der Allgemeinheit zur Verfügung zu stellen. Die Daten wurden nach bestem Wissen und Gewissen berechnet und von verschiedenen Quellen zusammengetragen.",
+    "sources": {
+      "title": "Quellen",
+      "moonimage": {
+        "title": "Bild Mond"
+      },
+      "phases": {
+        "title": "Mondphasen"
+      },
+      "lunareclipse": {
+        "title": "Mondfinsternis"
+      },
+      "solareclipse": {
+        "title": "Sonnenfinsternis"
+      },
+      "moonlanding": {
+        "title": "Mondlandungen"
+      },
+      "various": "Verschiedene Quellen",
+      "mainly": "primär",
+      "space": {
+        "devs": {
+          "reason": "für die neusten Landungen"
+        }
+      }
+    },
+    "support": {
+      "title": "Willst du dieses Projekt unterstützen?",
+      "donate": "Spenden",
+      "coffee": "Spendier mir einen Kaffee",
+      "develop": "Mitentwickeln"
+    }
+  },
+  "error": {
+    "title": "Fehler",
+    "invalid": "ungültiger Wert für {0}",
+    "required": "Wert für {0} ist zwingend nötig",
+    "fromTo": {
+      "tolargefordaily": "Bei der Anzeige von täglichen Phasen sind maximal {0} möglich."
+    },
+    "notfound": {
+      "title": "Seite nicht gefunden",
+      "lead": "Sorry, die angeforderte Seite existiert nicht.",
+      "problem": {
+        "title": "Das Problem könnte sein:",
+        "typo": "Tippfehler in der Adresse",
+        "link": "nicht mehr aktueller Link"
+      }
+    }
+  }
+}

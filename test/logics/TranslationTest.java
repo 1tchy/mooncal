@@ -29,7 +29,7 @@ public class TranslationTest extends WithApplication {
     public void testGetAllKeysHelperMethod() throws IOException {
         final Set<String> allKeys = getAllKeys();
         assertThat(allKeys.size(), greaterThan(20));
-        assertTrue(allKeys.contains("events.title"));
+        assertTrue(allKeys.contains("events.lunareclipse.total"));
     }
 
     private Set<String> getAllKeys() throws IOException {
@@ -104,13 +104,6 @@ public class TranslationTest extends WithApplication {
     public void langField_lang_current() {
         for (Lang lang : getAllLangs()) {
             assertEquals(lang.code(), messagesApi.get(lang, "lang.current"));
-        }
-    }
-
-    @Test
-    public void langField_lang_XX() {
-        for (Lang lang : getAllLangs()) {
-            assertTrue("lang." + lang.code() + " is missing", messagesApi.isDefinedAt(defaultLang, "lang." + lang.code()));
         }
     }
 }

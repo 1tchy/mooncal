@@ -38,11 +38,4 @@ angular
 				_paq.push(['trackPageView']);
 			}
 		});
-		$rootScope.trackLanguageChange = function (newLanguage, oldLanguage, $event) {
-			_paq.push(['trackEvent', 'Language', 'changeTo' + newLanguage, oldLanguage], {
-				hitCallback: function () {
-					$location.href = $event.target.href;
-				}
-			});
-		}
 	});
