@@ -27,6 +27,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/robots.txt",
+              "src/sitemap.xml",
               "src/favicon.ico",
               "src/images",
               {
@@ -93,6 +94,7 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/robots.txt",
+              "src/sitemap.xml",
               "src/favicon.ico",
               "src/images",
               {
