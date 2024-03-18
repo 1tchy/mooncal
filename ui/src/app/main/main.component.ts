@@ -114,7 +114,7 @@ export class MainComponent implements AfterViewInit {
       + (this.events["lunareclipse"] ? "lunareclipse," : "")
       + (this.events["solareclipse"] ? "solareclipse," : "")
       + (this.events["moonlanding"] ? "moonlanding," : "")
-      + this.formatDate(this.fromDebounced) + "-" + this.formatDate(this.toDebounced);
+      + this.formatDateOnly(this.fromDebounced) + "-" + this.formatDateOnly(this.toDebounced);
   }
 
   public formatDateForGui(date: any) {
@@ -123,17 +123,25 @@ export class MainComponent implements AfterViewInit {
 
   public formatDate(date: Date) {
     if (!date) return date;
-    const pad = function (num: number) {
-      const norm = Math.abs(Math.floor(num));
-      return (norm < 10 ? '0' : '') + norm;
-    };
     return date.getFullYear()
-      + '-' + pad(date.getMonth() + 1)
-      + '-' + pad(date.getDate())
-      + 'T' + pad(date.getHours())
-      + ':' + pad(date.getMinutes())
-      + ':' + pad(date.getSeconds())
+      + '-' + this.pad(date.getMonth() + 1)
+      + '-' + this.pad(date.getDate())
+      + 'T' + this.pad(date.getHours())
+      + ':' + this.pad(date.getMinutes())
+      + ':' + this.pad(date.getSeconds())
       + this.zone;
+  }
+
+  private formatDateOnly(date: Date) {
+    if (!date) return date;
+    return date.getFullYear()
+      + '-' + this.pad(date.getMonth() + 1)
+      + '-' + this.pad(date.getDate());
+  }
+
+  private pad(num: number) {
+    const norm = Math.abs(Math.floor(num));
+    return (norm < 10 ? '0' : '') + norm;
   }
 
   public fetchCalendar() {
