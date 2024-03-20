@@ -228,6 +228,11 @@ export class MainComponent implements AfterViewInit {
     _paq.push(['trackEvent', 'Calendar', 'print', this.paramsAsShortString()]);
   }
 
+  public trackTimezoneChange() {
+    // @ts-ignore
+    _paq.push(['trackEvent', 'Calendar', 'timezone', this.zone]);
+  }
+
   public getTimezone() {
     return Intl.DateTimeFormat().resolvedOptions().timeZone
   }
