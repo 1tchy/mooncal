@@ -5,3 +5,12 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "develop"
+    # Disable all updates except security updates
+    ignore:
+      # Disable all updates except security updates
+      # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#specifying-dependencies-and-versions-to-ignore
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+          - "version-update:semver-patch"
