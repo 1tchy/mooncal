@@ -2,7 +2,7 @@ import play.sbt.PlayImport._
 
 name := "mooncal"
 
-version := "1.25"
+version := "1.26"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, SbtWeb)
   .settings(watchSources ++= (baseDirectory.value / "ui/src" ** "*").get)

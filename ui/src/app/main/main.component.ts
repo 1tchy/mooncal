@@ -105,9 +105,8 @@ export class MainComponent implements AfterViewInit {
     return options;
   }
 
-  public paramsAsShortString() {
-    return this.messages.lang.current
-      + (this.phases["full"] ? "full," : "")
+  public paramsForTracking() {
+    return (this.phases["full"] ? "full," : "")
       + (this.phases["new"] ? "new," : "")
       + (this.phases["quarter"] ? "quarter," : "")
       + (this.phases["daily"] ? "daily," : "")
@@ -165,7 +164,7 @@ export class MainComponent implements AfterViewInit {
         });
         if (this.updateCount++ > 0) {
           // @ts-ignore
-          _paq.push(['trackEvent', 'Calendar', 'update', this.paramsAsShortString()]);
+          _paq.push(['trackEvent', 'Calendar', 'update', this.paramsForTracking()]);
         }
       }
     } else {
@@ -215,17 +214,17 @@ export class MainComponent implements AfterViewInit {
 
   public trackDownloadIcal() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'downloadIcal', this.paramsAsShortString()]);
+    _paq.push(['trackEvent', 'Calendar', 'downloadIcal', this.paramsForTracking()]);
   }
 
   public trackIcalSubscription() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'subscribeIcal', this.paramsAsShortString()]);
+    _paq.push(['trackEvent', 'Calendar', 'subscribeIcal', this.paramsForTracking()]);
   }
 
   public trackPrint() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'print', this.paramsAsShortString()]);
+    _paq.push(['trackEvent', 'Calendar', 'print', this.paramsForTracking()]);
   }
 
   public trackTimezoneChange() {
