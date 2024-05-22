@@ -5,11 +5,15 @@
 		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch"/>
 		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en"/>
 		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl"/>
+		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es"/>
+		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr"/>
 	</url>
 	<url>
 		<loc>https://mooncal.ch/about</loc>
 		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/about"/>
 		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/about"/>
 		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/about"/>
+		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/about"/>
+		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/about"/>
 	</url>
 </urlset>

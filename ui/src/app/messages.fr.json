@@ -1,0 +1,119 @@
+{
+  "app": {
+    "title": "Calendrier de la Lune",
+    "introduction": "Vous cherchez un calendrier de lune simple? Vous l'avez trouvé! Avec cette application Web, vous pouvez générer votre propre calendrier de lune, pas seulement avec les phases de la lune, mais aussi avec des événements spéciaux concernant la lune. Vous pouvez exporter votre calendrier personnel en bas de la page sous forme de fichier iCalendar (ICS).",
+    "moon": "lune"
+  },
+  "lang": {
+    "current": "fr",
+    "de": "Deutsch",
+    "en": "English",
+    "nl": "Nederlands",
+    "es": "Español",
+    "fr": "Français",
+    "change": "Changer de langue"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "toggle": "Alternance de navigation activée/désactivée"
+  },
+  "general": {
+    "and": "et"
+  },
+  "phases": {
+    "title": "Phases de la Lune",
+    "full": "pleine lune",
+    "new": "nouvelle lune",
+    "quarter": "quartier",
+    "daily": "phases quotidiennes de la lune"
+  },
+  "events": {
+    "title": "Événements",
+    "lunareclipse": "éclipse lunaire",
+    "solareclipse": "éclipse solaire",
+    "moonlanding": "atterrissage sur la lune"
+  },
+  "time": {
+    "title": "Intervalle",
+    "fromTo": {
+      "from": "Afficher à partir de",
+      "to": "jusqu'à",
+      "inTimezone": "dans le fuseau horaire",
+      "required": "La date de début et de fin est requise.",
+      "date": "Le format de date doit être AAAA-MM-JJ.",
+      "minmax": "La date doit être comprise entre l'an 1000 et 3000."
+    }
+  },
+  "calendar": {
+    "title": "Calendrier",
+    "reloading": "Chargement des données"
+  },
+  "export": {
+    "title": "Exporter",
+    "ical": {
+      "title": "Exporter vers le calendrier",
+      "download": "télécharger le fichier iCalendar",
+      "subscribe": {
+        "title": "s'abonner au flux iCalendar",
+        "instructions": "Copiez le lien suivant et collez-le comme lien d'abonnement dans votre application de calendrier",
+        "explanations": "Avec ce lien, tous les événements sélectionnés seront affichés pour la moitié précédente de l'année et pour les deux années suivantes.",
+        "copy": "Copier le lien",
+        "close": "Fermer"
+      }
+    },
+    "print": "Imprimer"
+  },
+  "about": {
+    "title": "À propos de ce site",
+    "introduction": "L'objectif de ce projet est de fournir un calendrier de lune simple et élégant pour tout le monde. Les données sont calculées et recueillies à partir de divers sources selon nos connaissances et convictions.",
+    "sources": {
+      "title": "Sources",
+      "moonimage": {
+        "title": "photo de la lune"
+      },
+      "phases": {
+        "title": "phases de la lune"
+      },
+      "lunareclipse": {
+        "title": "éclipse lunaire"
+      },
+      "solareclipse": {
+        "title": "éclipse solaire"
+      },
+      "moonlanding": {
+        "title": "atterrissage sur la lune"
+      },
+      "various": "diverses sources",
+      "mainly": "principalement",
+      "space": {
+        "devs": {
+          "reason": "pour les derniers atterrissements"
+        }
+      }
+    },
+    "support": {
+      "title": "Souhaitez-vous soutenir ce projet?",
+      "donate": "Donner",
+      "coffee": "M'acheter un café",
+      "develop": "Aider au développement"
+    }
+  },
+  "error": {
+    "title": "Erreur",
+    "invalid": "valeur invalide pour {0}",
+    "required": "{0} est requis",
+    "fromTo": {
+      "tolargefordaily": "Lorsque vous sélectionnez des phases quotidiennes, seules {0} années peuvent être affichées."
+    },
+    "notfound": {
+      "title": "Page non trouvée",
+      "lead": "Désolé, mais la page que vous essayiez de consulter n'existe pas.",
+      "problem": {
+        "title": "Il semble que cela soit le résultat de l'une ou l'autre des raisons suivantes :",
+        "typo": "une adresse mal tapée",
+        "link": "un lien obsolète"
+      }
+    }
+  }
+}

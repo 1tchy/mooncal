@@ -36,7 +36,7 @@ And in your IDE add a remote debugging configuration.
 * https://en.wikipedia.org/wiki/Moon_landing#21st_century_uncrewed_soft_landings_and_attempts
 
 ### Supporting Mooncal
-* Feel free to [make a donation](http://mooncal.ch/#!/about)
+* Feel free to [make a donation](https://mooncal.ch/en/about)
 * Feel free to develop a new feature/fix a bug/...
     * Please develop according to [git-flow](https://github.com/nvie/gitflow)
     * Please write also a test if reasonable
