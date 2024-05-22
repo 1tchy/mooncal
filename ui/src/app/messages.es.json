@@ -1,0 +1,119 @@
+{
+  "app": {
+    "title": "Calendario Lunar",
+    "introduction": "¿Buscas un calendario lunar sencillo? ¡Ahora lo has encontrado Con esta aplicación web puedes generar tu calendario lunar personalizado, no solo con las fases de la luna sino también con eventos especiales sobre la luna. Puedes exportar tu calendario personalizado en la parte inferior de la página como un archivo iCalendar (ICS).",
+    "moon": "luna"
+  },
+  "lang": {
+    "current": "es",
+    "de": "Deutsch",
+    "en": "English",
+    "nl": "Nederlands",
+    "es": "Español",
+    "fr": "Français",
+    "change": "Cambiar idioma"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "toggle": "Alternar navegación activada/desactivada"
+  },
+  "general": {
+    "and": "y"
+  },
+  "phases": {
+    "title": "Fases de la Luna",
+    "full": "luna llena",
+    "new": "luna nueva",
+    "quarter": "cuarto",
+    "daily": "fases diarias de la luna"
+  },
+  "events": {
+    "title": "Eventos",
+    "lunareclipse": "eclips lunar",
+    "solareclipse": "eclips solar",
+    "moonlanding": "desembarco lunar"
+  },
+  "time": {
+    "title": "Intervalo",
+    "fromTo": {
+      "from": "Mostrar desde",
+      "to": "hasta",
+      "inTimezone": "en zona horaria",
+      "required": "Fecha de inicio y fin requerida.",
+      "date": "El formato de fecha debe ser AAAA-MM-DD.",
+      "minmax": "La fecha debe estar entre el año 1000 y 3000."
+    }
+  },
+  "calendar": {
+    "title": "Calendario",
+    "reloading": "Cargando datos"
+  },
+  "export": {
+    "title": "Exportar",
+    "ical": {
+      "title": "Exportar al calendario",
+      "download": "descargar archivo iCalendar",
+      "subscribe": {
+        "title": "suscribirse al feed iCalendar",
+        "instructions": "Copia el siguiente enlace y pégalo como un enlace de suscripción en tu aplicación de calendario",
+        "explanations": "Con este enlace se mostrarán todos los eventos seleccionados para la mitad del año anterior y para los dos años siguientes.",
+        "copy": "Copiar enlace",
+        "close": "Cerrar"
+      }
+    },
+    "print": "Imprimir"
+  },
+  "about": {
+    "title": "Acerca de este sitio",
+    "introduction": "El objetivo de este proyecto es proporcionar un calendario lunar sencillo y limpio para todos. Los datos se calculan y recopilan de diversas fuentes según el mejor conocimiento y creencia posible.",
+    "sources": {
+      "title": "fuentes",
+      "moonimage": {
+        "title": "imagen de la luna"
+      },
+      "phases": {
+        "title": "fases de la luna"
+      },
+      "lunareclipse": {
+        "title": "eclips lunar"
+      },
+      "solareclipse": {
+        "title": "eclips solar"
+      },
+      "moonlanding": {
+        "title": "desembarco lunar"
+      },
+      "various": "varias fuentes",
+      "mainly": "principalmente",
+      "space": {
+        "devs": {
+          "reason": "para los últimos desembarcos"
+        }
+      }
+    },
+    "support": {
+      "title": "¿Quieres apoyar este proyecto?",
+      "donate": "Donar",
+      "coffee": "Comprar café",
+      "develop": "Ayudar a desarrollar"
+    }
+  },
+  "error": {
+    "title": "Error",
+    "invalid": "valor inválido para {0}",
+    "required": "{0} es requerido",
+    "fromTo": {
+      "tolargefordaily": "Al seleccionar fases diarias solo pueden mostrarse {0} años."
+    },
+    "notfound": {
+      "title": "Página no encontrada",
+      "lead": "Lo siento, pero la página que intentabas ver no existe.",
+      "problem": {
+        "title": "Parece que esto fue el resultado de:",
+        "typo": "una dirección mal escrita",
+        "link": "un enlace obsoleto"
+      }
+    }
+  }
+}

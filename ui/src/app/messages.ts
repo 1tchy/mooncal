@@ -25,6 +25,8 @@ export interface Lang {
   de: string
   en: string
   nl: string
+  es: string
+  fr: string
   change: string
 }
 

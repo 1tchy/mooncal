@@ -1,0 +1,38 @@
+lang.current=fr
+
+phases.full=lune pleine
+phases.full.1=Lune des loups
+phases.full.2=Lune de neige
+phases.full.3=Lune des vers
+phases.full.4=Lune rose
+phases.full.5=Lune des fleurs
+phases.full.6=Lune des fraises
+phases.full.7=Lune du cerf
+phases.full.8=Lune de l'esturgeon
+phases.full.9=Lune complète de maïs
+phases.full.10=Lune du chasseur
+phases.full.11=Lune du castor
+phases.full.12=Lune froide
+phases.full.13=Lune bleue
+phases.new=lune nouvelle
+phases.quarter=quartier
+phases.quarter.first=premier quartier
+phases.quarter.last=troisième quartier
+phases.daily.visibility=lune {0}% visible
+phases.daily.visibility.morning6=Lune {0}% visible à 6h du matin
+phases.daily.visibility.noon12=Lune {0}% visible à midi
+phases.daily.visibility.evening6=Lune {0}% visible à 6h du soir
+
+events.lunareclipse.total=éclipse solaire totale
+events.lunareclipse.partial=éclipse solaire partielle
+events.solareclipse.total=éclipse solaire totale
+events.solareclipse.partial=éclipse solaire partielle
+events.solareclipse.annular=éclipse annulaire solaire
+events.solareclipse.hybrid=éclipse hybride solaire
+events.at={0} à {1}
+
+error.notfound=Page non trouvée
+error.notfound.lead=Désolé, mais la page que vous essayiez de consulter n'existe pas.
+error.notfound.problem=Il semble que cela soit dû à :
+error.notfound.problem.typo=adresse mal tapée
+error.notfound.problem.link=lien obsolète
