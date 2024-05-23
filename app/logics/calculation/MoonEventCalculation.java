@@ -68,18 +68,19 @@ public class MoonEventCalculation extends Calculation {
         initializeByCVS(updatedFile.orElseGet(() -> Objects.requireNonNull(getClass().getResource("moon-landings/moon-landings.csv")).getFile()), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             moonLandings.put(date, new EventTemplate(date,
-                    (zoneId, lang) -> "🚀 " + getByLang(rows[1], rows[3], rows[5], rows[7], rows[9], lang),
-                    (zoneId, lang) -> getByLang(rows[2], rows[4], rows[6], rows[8], rows[10], lang),
+                    (zoneId, lang) -> "🚀 " + getByLang(rows[1], rows[3], rows[5], rows[7], rows[9], rows[11], lang),
+                    (zoneId, lang) -> getByLang(rows[2], rows[4], rows[6], rows[8], rows[10], rows[12], lang),
                     "moon-landing"));
         });
     }
 
-    private String getByLang(String en, String de, String nl, String es, String fr, Lang lang) {
+    private String getByLang(String en, String de, String nl, String es, String fr, String ro, Lang lang) {
         return switch (lang.code()) {
             case "de" -> de;
             case "nl" -> nl;
             case "es" -> es;
             case "fr" -> fr;
+            case "ro" -> ro;
             default -> en;
         };
     }

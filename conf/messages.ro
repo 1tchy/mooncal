@@ -1,0 +1,38 @@
+lang.current=ro
+
+phases.full=lună plină
+phases.full.1=Luna Plină a Lupilor
+phases.full.2=Luna Plină a Zăpezii
+phases.full.3=Luna Plină a Râmelor
+phases.full.4=Luna Plină a Rozelor
+phases.full.5=Luna Plină a Florilor
+phases.full.6=Luna Plină a Căpşunilor
+phases.full.7=Luna Plină a Cerbului
+phases.full.8=Luna Plină a Sturionului
+phases.full.9=Luna Plină a Porumbului 
+phases.full.10=Luna Plină a Vânătorului
+phases.full.11=Luna Plină a Castorului
+phases.full.12=Luna Rece
+phases.full.13=Luna Albastră
+phases.new=lună nouă
+phases.quarter=pătrar
+phases.quarter.first=primul pătrar
+phases.quarter.last=ultimul pătrar
+phases.daily.visibility=Luna este vizibilă la {0}%
+phases.daily.visibility.morning6=Luna este vizibilă la {0}% la ora 6 dimineața
+phases.daily.visibility.noon12=Luna este vizibilă la {0}% la amiază
+phases.daily.visibility.evening6=Luna este vizibilă la {0}% la ora 6 seara
+
+events.lunareclipse.total=eclipsă totală lunară
+events.lunareclipse.partial=eclipsă parțială lunară
+events.solareclipse.total=eclipsă solară totală 
+events.solareclipse.partial=eclipsă solară parțială
+events.solareclipse.annular=eclipsă solară circulară
+events.solareclipse.hybrid=eclipsă solară hibridă
+events.at={0} la {1}
+
+error.notfound=Pagina nu a fost găsită
+error.notfound.lead=Îmi pare rău, dar pagina pe care încercați să o vizitați nu există.
+error.notfound.problem=Apare că acest lucru a fost cauzat de:
+error.notfound.problem.typo=o adresă greșită scrisă
+error.notfound.problem.link=un link depășit de dată
