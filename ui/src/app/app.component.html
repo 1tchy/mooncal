@@ -29,7 +29,7 @@
               {{ messages.lang.change }}
             </a>
             <ul ngbDropdownMenu aria-labelledby="languagesDropdown" class="dropdown-menu">
-              <ng-container *ngFor="let langOption of ['de','en','nl','es','fr']">
+              <ng-container *ngFor="let langOption of ['de','en','nl','es','fr','ro']">
                 <li *ngIf="langOption!==messages.lang.current">
                   <a ngbDropdownItem [routerLink]="routeData[langOption]"
                      (click)='isNavbarCollapsed=true; trackLanguageChange(langOption, messages.lang.current, $event)'>

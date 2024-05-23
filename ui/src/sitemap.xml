@@ -7,6 +7,7 @@
 		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl"/>
 		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es"/>
 		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr"/>
+		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro"/>
 	</url>
 	<url>
 		<loc>https://mooncal.ch/about</loc>
@@ -15,5 +16,6 @@
 		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/about"/>
 		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/about"/>
 		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/about"/>
+		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/about"/>
 	</url>
 </urlset>

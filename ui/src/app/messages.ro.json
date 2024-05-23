@@ -1,0 +1,120 @@
+{
+  "app": {
+    "title": "Calendar lunar",
+    "introduction": "Căutați un calendar lunar simplu? Acum l-ați găsit. Cu această aplicație web puteți genera propriul dvs. calendar lunar, nu numai cu fazele lunii, ci și cu evenimente speciale despre lună. Puteți exporta calendarul dvs. personal în partea de jos a paginii ca fișier iCalendar (ICS).",
+    "moon": "lună"
+  },
+  "lang": {
+    "current": "ro",
+    "de": "Deutsch",
+    "en": "English",
+    "nl": "Nederlands",
+    "es": "Español",
+    "fr": "Français",
+    "ro": "Romanian",
+    "change": "Schimbă limba"
+  },
+  "navigation": {
+    "home": "Acasă",
+    "about": "Despre",
+    "toggle": "Alternativă navigației pe/în afara"
+  },
+  "general": {
+    "and": "și"
+  },
+  "phases": {
+    "title": "Faze ale Lunii",
+    "full": "Lună plină",
+    "new": "Lună nouă",
+    "quarter": "pătrar",
+    "daily": "faze zilnice ale lunii"
+  },
+  "events": {
+    "title": "Evenimente",
+    "lunareclipse": "eclipă lunară",
+    "solareclipse": "eclipsă solară",
+    "moonlanding": "coborârea pe lună"
+  },
+  "time": {
+    "title": "Interval",
+    "fromTo": {
+      "from": "Arată din",
+      "to": "până în",
+      "inTimezone": "în fus orar",
+      "required": "Este necesară data de început / sfârșit.",
+      "date": "Formatul datelor trebuie să fie YYYY-MM-DD.",
+      "minmax": "Data trebuie să fie între anii 1000 și 3000."
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "reloading": "Încărcarea datelor"
+  },
+  "export": {
+    "title": "Export",
+    "ical": {
+      "title": "Export la calendar",
+      "download": "descarcă fișierul iCalendar",
+      "subscribe": {
+        "title": "abonează-te la feed-ul iCalendar",
+        "instructions": "Copiază următorul link și folosește-l ca link de abonament în aplicația ta de calendar",
+        "explanations": "Cu acest link, toate evenimentele selectate vor fi arătate pentru jumătatea anterioară a anului și pentru următorii doi ani.",
+        "copy": "Copiază link",
+        "close": "Închide"
+      }
+    },
+    "print": "Imprimă"
+  },
+  "about": {
+    "title": "Despre acest site",
+    "introduction": "Scopul acestui proiect este să ofere un calendar lunar simplu și curat pentru toți. Datele sunt calculate și colectate din varii surse, conform cunoștințelor și celor mai bune intenţii.",
+    "sources": {
+      "title": "surse",
+      "moonimage": {
+        "title": "imagini ale lunii"
+      },
+      "phases": {
+        "title": "faze ale lunii"
+      },
+      "lunareclipse": {
+        "title": "eclipsă de lună"
+      },
+      "solareclipse": {
+        "title": "eclipsă solară"
+      },
+      "moonlanding": {
+        "title": "aselenizare"
+      },
+      "various": "varii surse",
+      "mainly": "în principiu",
+      "space": {
+        "devs": {
+          "reason": "pentru cele mai recente coborâri"
+        }
+      }
+    },
+    "support": {
+      "title": "Vrei să susții acest proiect?",
+      "donate": "Donează",
+      "coffee": "Cumpără-mi o cafea",
+      "develop": "Ajută la dezvoltare"
+    }
+  },
+  "error": {
+    "title": "Eroare",
+    "invalid": "valoare invalidă pentru {0}",
+    "required": "{0} este necesar",
+    "fromTo": {
+      "tolargefordaily": "Atunci când se selectează faze zilnice, doar {0} ani pot fi afișați."
+    },
+    "notfound": {
+      "title": "Pagina nu a fost găsită",
+      "lead": "Îmi pare rău, dar pagina pe care încercați să o accesați nu există.",
+      "problem": {
+        "title": "Se pare că acest lucru a fost rezultatul:",
+        "typo": "unei adrese greșite",
+        "link": "unui link invalid"
+      }
+    }
+  }
+}
