@@ -25,6 +25,9 @@ libraryDependencies ++= Seq(
 
 Assets / unmanagedResourceDirectories += baseDirectory.value / "ui/dist/ui/browser"
 
+Test / unmanagedResourceDirectories += baseDirectory.value / "target/web/public/test"
+Test / managedClasspath += (Assets / packageBin).value
+
 routesGenerator := InjectedRoutesGenerator
 
 resolvers ++= Seq(
