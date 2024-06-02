@@ -54,7 +54,7 @@ public class Application extends Controller {
         return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
             logger.info("Responding iCalender file for query: " + goodForm.getForLog() + " to " + request.remoteAddress());
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
-            return ok(calendarMapper.map(result, updateFrequency)).as("text/calendar");
+            return ok(calendarMapper.map(result, updateFrequency, goodForm.getLang())).as("text/calendar");
         }, request);
     }
 

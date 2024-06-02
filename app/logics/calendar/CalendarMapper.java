@@ -1,6 +1,5 @@
 package logics.calendar;
 
-import logics.calculation.Donation;
 import models.EventInstance;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
@@ -10,6 +9,7 @@ import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.*;
 import org.jetbrains.annotations.NotNull;
+import play.i18n.Lang;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -30,10 +30,10 @@ public class CalendarMapper {
      * @param updateFrequency How often this calendar should be updated (in days)
      * @return the ical-file
      */
-    public String map(Collection<EventInstance> events, long updateFrequency) {
+    public String map(Collection<EventInstance> events, long updateFrequency, Lang language) {
         final Calendar calendar = createCalendar(updateFrequency);
         for (EventInstance event : events) {
-            addEvent(calendar, event);
+            addEvent(calendar, event, language);
         }
         return getICalendarString(calendar);
     }
@@ -50,13 +50,13 @@ public class CalendarMapper {
         return calendar;
     }
 
-    private void addEvent(Calendar calendar, EventInstance event) {
+    private void addEvent(Calendar calendar, EventInstance event, Lang language) {
         final VEvent calEvent = new VEvent(toDate(event.getDateTime()), event.getTitle());
         if (event.getDescription() != null) {
             calEvent.getProperties().add(new Description(event.getDescription()));
         }
         calEvent.getProperties().add(calculateUid(event));
-        calEvent.getProperties().add(new Url(URI.create(Donation.BUY_ME_A_COFFEE_LINK)));
+        calEvent.getProperties().add(new Url(URI.create("https://mooncal.ch/" + ("de".equals(language.code()) ? "buymeacoffee" : (language.code() + "/buymeacoffee")))));
         calendar.getComponents().add(calEvent);
     }
 

@@ -88,7 +88,11 @@ public class IntegrationTest extends WithBrowser {
     }
 
     private void assertIcsEquals(String expected, String actual) {
-        assertEquals(expected.replaceAll("DTSTAMP:.*", "DTSTAMP:ignored"), actual.replaceAll("DTSTAMP:.*", "DTSTAMP:ignored"));
+        assertEquals(expected
+                        .replaceAll("DTSTAMP:.*", "DTSTAMP:ignored"),
+                actual
+                        .replaceAll("\\r", "")
+                        .replaceAll("DTSTAMP:.*", "DTSTAMP:ignored"));
     }
 
     private static String load(String file) throws IOException {

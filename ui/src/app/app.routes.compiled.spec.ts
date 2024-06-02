@@ -72,6 +72,42 @@ export const compiledRoute = [
     data: {messages: 'ro', home: 'ro', about: 'ro/about'}
   },
   {
+    path: 'buymeacoffee',
+    title: 'Über diese Seite',
+    component: 'AboutComponent',
+    data: {messages: 'de', home: '', about: 'about'}
+  },
+  {
+    path: 'en/buymeacoffee',
+    title: 'About this site',
+    component: 'AboutComponent',
+    data: {messages: 'en', home: 'en', about: 'en/about'}
+  },
+  {
+    path: 'nl/buymeacoffee',
+    title: 'Over deze pagina',
+    component: 'AboutComponent',
+    data: {messages: 'nl', home: 'nl', about: 'nl/about'}
+  },
+  {
+    path: 'es/buymeacoffee',
+    title: 'Acerca de este sitio',
+    component: 'AboutComponent',
+    data: {messages: 'es', home: 'es', about: 'es/about'}
+  },
+  {
+    path: 'fr/buymeacoffee',
+    title: 'À propos de ce site',
+    component: 'AboutComponent',
+    data: {messages: 'fr', home: 'fr', about: 'fr/about'}
+  },
+  {
+    path: 'ro/buymeacoffee',
+    title: 'Despre acest site',
+    component: 'AboutComponent',
+    data: {messages: 'ro', home: 'ro', about: 'ro/about'}
+  },
+  {
     path: '**',
     title: undefined,
     component: 'NotFoundComponent',

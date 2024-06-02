@@ -16,6 +16,7 @@ public class SitemapTest {
         List<String> routes = Files.readAllLines(Path.of("ui/src/app/app.routes.compiled.spec.ts")).stream()
                 .filter(line -> line.contains("path:"))
                 .map(line -> line.replaceAll("\\s*path: '(.*)',.*", "$1"))
+                .filter(route -> !route.contains("buymeacoffee"))
                 .filter(route -> !route.equals("**"))
                 .toList();
         List<String> sitemap = Files.readAllLines(Path.of("ui/src/sitemap.xml")).stream()

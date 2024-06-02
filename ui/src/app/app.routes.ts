@@ -14,6 +14,7 @@ function buildAllRoutes() {
   let allRoutes: Routes = [];
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, '', m => m.app.title)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, 'about', m => m.about.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, 'buymeacoffee', m => m.about.title)))
   allRoutes.push({
     path: '**',
     component: NotFoundComponent,

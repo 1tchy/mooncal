@@ -34,19 +34,19 @@ describe('Routes', () => {
     }
   });
   it('all titles are translated', () => {
-    let allTitles = routes.filter(r => r.title).map(r => r.title!);
+    let allTitles = routes.filter(r => !r.path!.endsWith('buymeacoffee')).filter(r => r.title).map(r => r.title!);
     let uniqueTitles = new Set(allTitles);
     expect(uniqueTitles.size).toEqual(allTitles.length);
   });
   it('all components have all languages', () => {
     for (const component of new Set(routes.filter(r => r.path !== '**').map(r => r.component!))) {
       for (const language of getAllLanguages()) {
-        expect(routes.filter(r => r.component === component && getMessages(r).lang.current === language).length).withContext(component + ' in ' + language).toBe(1);
+        expect(routes.filter(r => !r.path!.endsWith('buymeacoffee')).filter(r => r.component === component && getMessages(r).lang.current === language).length).withContext(component + ' in ' + language).toBe(1);
       }
     }
   });
   it('all routes do not accidentally change', () => {
-    const titles = routes.map(r => {
+    const routesFormatted = routes.map(r => {
       return {
         path: r.path,
         title: r.title,
@@ -58,7 +58,7 @@ describe('Routes', () => {
         }
       }
     });
-    expect(titles).toEqual(compiledRoute);
+    expect(routesFormatted).toEqual(compiledRoute);
   });
 
   function getRouteByLang(language: string, urlPostfix: string = ''): Route {
