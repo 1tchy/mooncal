@@ -5,7 +5,7 @@
 
 <form class="row" #optionsForm="ngForm">
   <div class="col-lg-6">
-    <div class="card">
+    <div class="card" id="phases">
       <h5 class="card-header">{{ messages.phases.title }}</h5>
       <div class="card-body">
         <div class="form-check" *ngFor="let phase of ['full', 'new', 'quarter', 'daily']">
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="col-lg-6">
-    <div class="card">
+    <div class="card" id="events">
       <h5 class="card-header">{{ messages.events.title }}</h5>
       <div class="card-body">
         <div class="form-check"
@@ -33,7 +33,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
+    <div class="card" id="interval">
       <h5 class="card-header">{{ messages.time.title }}</h5>
       <div class="card-body">
         <form class="row align-items-center g-3" name="fromTo">
@@ -71,39 +71,9 @@
   </div>
 </div>
 
-<div class="row fadeAnimation" *ngIf="calendar.length>0">
-  <div class="col-lg-12">
-    <div class="card" ngClass="{true: 'card-warning', false: 'card-default'}[requestOngoing]">
-      <h5 class="card-header">{{ messages.calendar.title }}
-        <span *ngIf="requestOngoing">({{ messages.calendar.reloading }})</span>
-      </h5>
-      <table class="table table-bordered table-dark mb-0">
-        <tbody>
-        <tr *ngFor="let event of calendar" class="fadeAnimation">
-          <td class="dateFont">{{ this.formatDateForGui(event.date) }}</td>
-          <td>{{ event.title }}</td>
-          <td class="text-muted description">{{ event.description }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div class="row fadeAnimation" *ngIf="error">
-  <div class="col-lg-12">
-    <div class="card text-white bg-danger">
-      <h5 class="card-header">Fehler {{ error.status }}: {{ error.statusText }}</h5>
-      <div class="card-body">
-        {{ error.error }}
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
+    <div class="card" id="export">
       <h5 class="card-header">{{ messages.export.title }}</h5>
       <div class="card-body">
         <div class="btn-group dropdown me-1" ngbDropdown>
@@ -123,6 +93,33 @@
     </div>
   </div>
 </div>
+
+<div class="row fadeAnimation" id="calendar">
+  <div class="col-lg-12">
+    <div class="card" *ngIf="calendar.length>0" ngClass="{true: 'card-warning', false: 'card-default'}[requestOngoing]">
+      <h5 class="card-header">{{ messages.calendar.title }}
+        <span *ngIf="requestOngoing">({{ messages.calendar.reloading }})</span>
+      </h5>
+      <table class="table table-bordered table-dark mb-0">
+        <tbody>
+        <tr *ngFor="let event of calendar" class="fadeAnimation">
+          <td class="dateFont">{{ this.formatDateForGui(event.date) }}</td>
+          <td>{{ event.title }}</td>
+          <td class="text-muted description">{{ event.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card text-white bg-danger" *ngIf="error">
+      <h5 class="card-header">Fehler {{ error.status }}: {{ error.statusText }}</h5>
+      <div class="card-body">
+        {{ error.error }}
+      </div>
+    </div>
+  </div>
+</div>
+
 <ng-template #subscribeModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="subscribeModalLabel">{{ messages.export.ical.subscribe.title }}</h4>

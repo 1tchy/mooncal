@@ -16,7 +16,7 @@
   },
   "navigation": {
     "home": "Inicio",
-    "about": "Acerca de",
+    "about": "Acerca",
     "toggle": "Alternar navegación activada/desactivada"
   },
   "general": {
@@ -69,7 +69,7 @@
     "title": "Acerca de este sitio",
     "introduction": "El objetivo de este proyecto es proporcionar un calendario lunar sencillo y limpio para todos. Los datos se calculan y recopilan de diversas fuentes según el mejor conocimiento y creencia posible.",
     "sources": {
-      "title": "fuentes",
+      "title": "Fuentes",
       "moonimage": {
         "title": "imagen de la luna"
       },

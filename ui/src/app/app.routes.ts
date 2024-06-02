@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router';
+import {Route, Routes} from '@angular/router';
 import {MainComponent} from "./main/main.component";
 import {AboutComponent} from "./about/about.component";
 import messagesDE from "./messages.de.json";
@@ -8,83 +8,56 @@ import messagesES from "./messages.es.json";
 import messagesFR from "./messages.fr.json";
 import messagesRO from "./messages.ro.json";
 import {NotFoundComponent} from "./not-found/not-found.component";
+import {Messages} from "./messages";
 
-export const routes: Routes = [
-  {
-    path: '',
-    title: 'Mondkalender',
-    component: MainComponent,
-    data: {messages: messagesDE, en: 'en', nl: 'nl', es: 'es', fr: 'fr', ro: 'ro', home: '', about: 'about'}
-  },
-  {
-    path: 'en',
-    title: 'Moon Calendar',
-    component: MainComponent,
-    data: {messages: messagesEN, de: '', nl: 'nl', es: 'es', fr: 'fr', ro: 'ro', home: 'en', about: 'en/about'}
-  },
-  {
-    path: 'nl',
-    title: 'Maankalender',
-    component: MainComponent,
-    data: {messages: messagesNL, de: '', en: 'en', es: 'es', fr: 'fr', ro: 'ro', home: 'nl', about: 'nl/about'}
-  },
-  {
-    path: 'es',
-    title: 'Calendario Lunar',
-    component: MainComponent,
-    data: {messages: messagesES, de: '', en: 'en', nl: 'nl', fr: 'fr', ro: 'ro', home: 'es', about: 'es/about'}
-  },
-  {
-    path: 'fr',
-    title: 'Calendrier de la Lune',
-    component: MainComponent,
-    data: {messages: messagesFR, de: '', en: 'en', nl: 'nl', es: 'es', ro: 'ro', home: 'fr', about: 'fr/about'}
-  },
-  {
-    path: 'ro',
-    title: 'Calendar lunar',
-    component: MainComponent,
-    data: {messages: messagesRO, de: '', en: 'en', nl: 'nl', es: 'es', fr: 'fr', home: 'ro', about: 'ro/about'}
-  },
-  {
-    path: 'about',
-    title: 'Über mooncal.ch',
-    component: AboutComponent,
-    data: {messages: messagesDE, en: 'en/about', nl: 'nl/about', es: 'es/about', fr: 'fr/about', ro: 'ro/about', home: '', about: 'about'}
-  },
-  {
-    path: 'en/about',
-    title: 'About mooncal.ch',
-    component: AboutComponent,
-    data: {messages: messagesEN, de: 'about', nl: 'nl/about', es: 'es/about', fr: 'fr/about', ro: 'ro/about', home: 'en', about: 'en/about'}
-  },
-  {
-    path: 'nl/about',
-    title: 'Over mooncal.ch',
-    component: AboutComponent,
-    data: {messages: messagesNL, de: 'about', en: 'en/about', es: 'es/about', fr: 'fr/about', ro: 'ro/about', home: 'nl', about: 'nl/about'}
-  },
-  {
-    path: 'es/about',
-    title: 'Acerca de mooncal.ch',
-    component: AboutComponent,
-    data: {messages: messagesES, de: 'about', en: 'en/about', nl: 'nl/about', fr: 'fr/about', ro: 'ro/about', home: 'es', about: 'es/about'}
-  },
-  {
-    path: 'fr/about',
-    title: 'À propos mooncal.ch',
-    component: AboutComponent,
-    data: {messages: messagesFR, de: 'about', en: 'en/about', nl: 'nl/about', es: 'es/about', ro: 'ro/about', home: 'fr', about: 'fr/about'}
-  },
-  {
-    path: 'ro/about',
-    title: 'Despre mooncal.ch',
-    component: AboutComponent,
-    data: {messages: messagesRO, de: 'about', en: 'en/about', nl: 'nl/about', es: 'es/about', fr: 'fr/about', home: 'ro', about: 'ro/about'}
-  },
-  {
+function buildAllRoutes() {
+  let allRoutes: Routes = [];
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, '', m => m.app.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, 'about', m => m.about.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, 'buymeacoffee', m => m.about.title)))
+  allRoutes.push({
     path: '**',
     component: NotFoundComponent,
-    data: {messages: messagesDE, en: 'en', nl: 'nl', es: 'es', fr: 'fr', ro: 'ro', home: '', about: 'about'}
+    data: {messages: messagesDE, de: '', en: 'en', nl: 'nl', es: 'es', fr: 'fr', ro: 'ro', home: '', about: 'about'}
+  })
+  return allRoutes;
+}
+
+function buildRoute(messages: Messages, component: any, page: string = '', titleFunction: (messages: Messages) => string): Route {
+  let language = messages.lang.current;
+  let data: { [key: string]: any } = {
+    messages: messages,
+    home: buildPath(language, ''),
+    about: buildPath(language, 'about')
+  };
+  for (const otherLanguage of getAllLanguages()) {
+    data[otherLanguage] = buildPath(otherLanguage, page);
   }
-];
+  return {
+    path: data[language],
+    title: titleFunction(messages),
+    component: component,
+    data: data
+  };
+}
+
+function buildPath(language: string, page: string): string {
+  if (language === 'de') {
+    return page;
+  } else if (page === '') {
+    return language;
+  } else {
+    return language + '/' + page;
+  }
+}
+
+function getAllLanguagesMessages(): Messages[] {
+  return [messagesDE, messagesEN, messagesNL, messagesES, messagesFR, messagesRO];
+}
+
+function getAllLanguages(): string[] {
+  return getAllLanguagesMessages().map(messages => messages.lang.current);
+}
+
+export const routes: Routes = buildAllRoutes();
+export {getAllLanguages as getAllLanguages};
