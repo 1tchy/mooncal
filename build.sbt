@@ -12,9 +12,9 @@ scalaVersion := "2.13.12"
 libraryDependencies ++= Seq(
 	guice,
 	//see latest version under: https://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
-	"org.mnode.ical4j" % "ical4j" % "2.2.7",
-	//see latest version under: https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/org/jetbrains/annotations/
-	"org.jetbrains" % "annotations" % "7.0.2",
+	"org.mnode.ical4j" % "ical4j" % "3.2.18",
+	//see latest version under: https://mvnrepository.com/artifact/org.jetbrains/annotations
+	"org.jetbrains" % "annotations" % "24.1.0",
 	//see latest version under: https://mvnrepository.com/artifact/org.mockito/mockito-core
 	"org.mockito" % "mockito-core" % "5.12.0" % Test,
 	//see latest version under: https://mvnrepository.com/artifact/junit/junit
@@ -29,11 +29,6 @@ Test / unmanagedResourceDirectories += baseDirectory.value / "target/web/public/
 Test / managedClasspath += (Assets / packageBin).value
 
 routesGenerator := InjectedRoutesGenerator
-
-resolvers ++= Seq(
-	// IDEA Nullable Annotations
-	"idea nullable" at "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
-)
 
 // display deprecated or poorly formed Java
 javacOptions ++= Seq("-Xlint:unchecked")
