@@ -71,6 +71,29 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card" id="export">
+      <h5 class="card-header">{{ messages.export.title }}</h5>
+      <div class="card-body">
+        <div class="btn-group dropdown me-1" ngbDropdown>
+          <button type="button" class="btn btn-light" ngbDropdownToggle>{{ messages.export.ical.title }}</button>
+          <div class="dropdown-menu" ngbDropdownMenu>
+            <a ngbDropdownItem [href]="getApiUrl(true,true)+'?'+paramsAsString(true)"
+               (click)="trackDownloadIcal()">{{ messages.export.ical.download }}</a>
+            <button ngbDropdownItem href="#" (click)="trackIcalSubscription(); open(subscribeModal)" data-toggle="modal"
+                    data-target="#subscribeModal">{{ messages.export.ical.subscribe.title }}
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-light" onclick="window.print()" (click)="trackPrint()">
+          {{ messages.export.print }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row fadeAnimation" id="calendar">
   <div class="col-lg-12">
     <div class="card" *ngIf="calendar.length>0" ngClass="{true: 'card-warning', false: 'card-default'}[requestOngoing]">
@@ -97,28 +120,6 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-lg-12">
-    <div class="card" id="export">
-      <h5 class="card-header">{{ messages.export.title }}</h5>
-      <div class="card-body">
-        <div class="btn-group dropdown me-1" ngbDropdown>
-          <button type="button" class="btn btn-light" ngbDropdownToggle>{{ messages.export.ical.title }}</button>
-          <div class="dropdown-menu" ngbDropdownMenu>
-            <a ngbDropdownItem [href]="getApiUrl(true,true)+'?'+paramsAsString(true)"
-               (click)="trackDownloadIcal()">{{ messages.export.ical.download }}</a>
-            <button ngbDropdownItem href="#" (click)="trackIcalSubscription(); open(subscribeModal)" data-toggle="modal"
-                    data-target="#subscribeModal">{{ messages.export.ical.subscribe.title }}
-            </button>
-          </div>
-        </div>
-        <button type="button" class="btn btn-light" onclick="window.print()" (click)="trackPrint()">
-          {{ messages.export.print }}
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 <ng-template #subscribeModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="subscribeModalLabel">{{ messages.export.ical.subscribe.title }}</h4>
