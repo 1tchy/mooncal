@@ -13,7 +13,7 @@ public class SitemapTest {
 
     @Test
     public void sitemap() throws IOException {
-        List<String> routes = Files.readAllLines(Path.of("ui/src/app/app.routes.ts")).stream()
+        List<String> routes = Files.readAllLines(Path.of("ui/src/app/app.routes.compiled.spec.ts")).stream()
                 .filter(line -> line.contains("path:"))
                 .map(line -> line.replaceAll("\\s*path: '(.*)',.*", "$1"))
                 .filter(route -> !route.equals("**"))
