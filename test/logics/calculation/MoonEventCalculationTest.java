@@ -112,6 +112,8 @@ public class MoonEventCalculationTest extends WithApplication {
         //Arrange
         RequestForm requestForm = prepareRequestForm(EventType.MOONLANDING, LocalDate.of(1950, 1, 1), LocalDate.of(2029, 12, 31));
         cut.removeLatestMoonLanding();
+        cut.removeLatestMoonLanding();
+        cut.removeLatestMoonLanding();
         //Act
         Collection<EventInstance> actual1 = calculate(requestForm);
         cut.updateMoonLandings("lldev.thespacedevs.com");
