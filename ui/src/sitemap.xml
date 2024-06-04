@@ -3,19 +3,19 @@
 	<url>
 		<loc>https://mooncal.ch</loc>
 		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch"/>
-		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en"/>
-		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl"/>
-		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es"/>
-		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr"/>
-		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/calendar"/>
+		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/maankalender"/>
+		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/calendario-lunar"/>
+		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/calendrier-lune"/>
+		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/calendar-lunar"/>
 	</url>
 	<url>
 		<loc>https://mooncal.ch/about</loc>
-		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/about"/>
+		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/ueber"/>
 		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/about"/>
-		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/about"/>
-		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/about"/>
-		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/about"/>
-		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/about"/>
+		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/over"/>
+		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/acerca"/>
+		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/a-propos"/>
+		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/despre"/>
 	</url>
 </urlset>

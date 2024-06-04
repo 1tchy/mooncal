@@ -17,7 +17,12 @@
   "navigation": {
     "home": "Inicio",
     "about": "Acerca",
-    "toggle": "Alternar navegación activada/desactivada"
+    "toggle": "Alternar navegación activada/desactivada",
+    "paths": {
+      "home": "es/calendario-lunar",
+      "about": "es/acerca",
+      "buymeacoffee": "es/buymeacoffee"
+    }
   },
   "general": {
     "and": "y"

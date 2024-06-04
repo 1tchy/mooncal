@@ -34,6 +34,13 @@ export interface Navigation {
   home: string
   about: string
   toggle: string
+  paths: Paths
+}
+
+export interface Paths {
+  home: string
+  about: string
+  buymeacoffee: string
 }
 
 export interface General {

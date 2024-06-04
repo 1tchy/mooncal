@@ -17,7 +17,12 @@
   "navigation": {
     "home": "Home",
     "about": "Über",
-    "toggle": "Navigation anzeigen/ausblenden"
+    "toggle": "Navigation anzeigen/ausblenden",
+    "paths": {
+      "home": "",
+      "about": "ueber",
+      "buymeacoffee": "buymeacoffee"
+    }
   },
   "general": {
     "and": "und"

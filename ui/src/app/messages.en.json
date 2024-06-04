@@ -17,7 +17,12 @@
   "navigation": {
     "home": "Home",
     "about": "About",
-    "toggle": "Navigation toggle on/off"
+    "toggle": "Navigation toggle on/off",
+    "paths": {
+      "home": "en/calendar",
+      "about": "en/about",
+      "buymeacoffee": "en/buymeacoffee"
+    }
   },
   "general": {
     "and": "and"

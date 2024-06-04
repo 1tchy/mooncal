@@ -17,7 +17,12 @@
   "navigation": {
     "home": "Accueil",
     "about": "À propos",
-    "toggle": "Alternance de navigation activée/désactivée"
+    "toggle": "Alternance de navigation activée/désactivée",
+    "paths": {
+      "home": "fr/calendrier-lune",
+      "about": "fr/a-propos",
+      "buymeacoffee": "fr/buymeacoffee"
+    }
   },
   "general": {
     "and": "et"
