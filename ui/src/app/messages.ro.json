@@ -103,6 +103,13 @@
       "donate": "Donează",
       "coffee": "Cumpără-mi o cafea",
       "develop": "Ajută la dezvoltare"
+    },
+    "improveTranslation": {
+      "title": "Aveți o sugestie pentru o traducere mai bună?",
+      "currentText": "Textul actual",
+      "betterTextSuggestion": "Propunere de text nou",
+      "submit": "Trimite",
+      "thanksForFeedback": "Mulțumesc pentru feedback-ul dvs."
     }
   },
   "error": {

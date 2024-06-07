@@ -103,6 +103,13 @@
       "donate": "Donar",
       "coffee": "Comprar café",
       "develop": "Ayudar a desarrollar"
+    },
+    "improveTranslation": {
+      "title": "¿Tienes una sugerencia para una mejor traducción?",
+      "currentText": "Texto actual",
+      "betterTextSuggestion": "Nueva propuesta de texto",
+      "submit": "Enviar",
+      "thanksForFeedback": "Gracias por tu retroalimentación."
     }
   },
   "error": {

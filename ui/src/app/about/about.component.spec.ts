@@ -3,6 +3,7 @@ import {AboutComponent} from './about.component';
 import messages from "../messages.en.json";
 import {of} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
@@ -18,6 +19,9 @@ describe('AboutComponent', () => {
           snapshot: route,
           data: of(route.data)
         }
+      }, {
+        provide: HttpClient,
+        useValue: {}
       }]
     }).compileComponents();
 

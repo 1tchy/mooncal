@@ -103,6 +103,13 @@
       "donate": "Doneren",
       "coffee": "Koop een kopje koffie voor mij",
       "develop": "Meehelpen"
+    },
+    "improveTranslation": {
+      "title": "Heb je een suggestie voor een betere vertaling?",
+      "currentText": "Huidige tekst",
+      "betterTextSuggestion": "Nieuw tekstvoorstel",
+      "submit": "Indienen",
+      "thanksForFeedback": "Bedankt voor uw feedback."
     }
   },
   "error": {
