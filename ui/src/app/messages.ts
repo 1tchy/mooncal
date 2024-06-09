@@ -34,6 +34,13 @@ export interface Navigation {
   home: string
   about: string
   toggle: string
+  paths: Paths
+}
+
+export interface Paths {
+  home: string
+  about: string
+  buymeacoffee: string
 }
 
 export interface General {
@@ -103,6 +110,7 @@ export interface About {
   introduction: string
   sources: Sources
   support: Support
+  improveTranslation: ImproveTranslation
 }
 
 export interface Sources {
@@ -150,6 +158,14 @@ export interface Support {
   donate: string
   coffee: string
   develop: string
+}
+
+export interface ImproveTranslation {
+  title: string
+  currentText: string
+  betterTextSuggestion: string
+  submit: string
+  thanksForFeedback: string
 }
 
 export interface Error {

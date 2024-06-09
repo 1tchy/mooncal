@@ -12,26 +12,36 @@ import {Messages} from "./messages";
 
 function buildAllRoutes() {
   let allRoutes: Routes = [];
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, '', m => m.app.title)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, 'about', m => m.about.title)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, 'buymeacoffee', m => m.about.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.home, m => m.app.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, m => m.about.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.buymeacoffee, m => m.about.title)))
+  allRoutes.push({path: 'about', redirectTo: messagesDE.navigation.paths.about, pathMatch: 'full'})
+  allRoutes.push({path: 'en', redirectTo: messagesEN.navigation.paths.home, pathMatch: 'full'})
+  allRoutes.push({path: 'es', redirectTo: messagesES.navigation.paths.home, pathMatch: 'full'})
+  allRoutes.push({path: 'es/about', redirectTo: messagesES.navigation.paths.about, pathMatch: 'full'})
+  allRoutes.push({path: 'fr', redirectTo: messagesFR.navigation.paths.home, pathMatch: 'full'})
+  allRoutes.push({path: 'fr/about', redirectTo: messagesFR.navigation.paths.about, pathMatch: 'full'})
+  allRoutes.push({path: 'nl', redirectTo: messagesNL.navigation.paths.home, pathMatch: 'full'})
+  allRoutes.push({path: 'nl/about', redirectTo: messagesNL.navigation.paths.about, pathMatch: 'full'})
+  allRoutes.push({path: 'ro', redirectTo: messagesRO.navigation.paths.home, pathMatch: 'full'})
+  allRoutes.push({path: 'ro/about', redirectTo: messagesRO.navigation.paths.about, pathMatch: 'full'})
   allRoutes.push({
     path: '**',
     component: NotFoundComponent,
-    data: {messages: messagesDE, de: '', en: 'en', nl: 'nl', es: 'es', fr: 'fr', ro: 'ro', home: '', about: 'about'}
+    data: allRoutes[0].data
   })
   return allRoutes;
 }
 
-function buildRoute(messages: Messages, component: any, page: string = '', titleFunction: (messages: Messages) => string): Route {
+function buildRoute(messages: Messages, component: any, pathFunction: (messages: Messages) => string, titleFunction: (messages: Messages) => string): Route {
   let language = messages.lang.current;
   let data: { [key: string]: any } = {
     messages: messages,
-    home: buildPath(language, ''),
-    about: buildPath(language, 'about')
+    home: messages.navigation.paths.home,
+    about: messages.navigation.paths.about
   };
-  for (const otherLanguage of getAllLanguages()) {
-    data[otherLanguage] = buildPath(otherLanguage, page);
+  for (const otherLanguagesMessage of getAllLanguagesMessages()) {
+    data[otherLanguagesMessage.lang.current] = pathFunction(otherLanguagesMessage)
   }
   return {
     path: data[language],
@@ -39,16 +49,6 @@ function buildRoute(messages: Messages, component: any, page: string = '', title
     component: component,
     data: data
   };
-}
-
-function buildPath(language: string, page: string): string {
-  if (language === 'de') {
-    return page;
-  } else if (page === '') {
-    return language;
-  } else {
-    return language + '/' + page;
-  }
 }
 
 function getAllLanguagesMessages(): Messages[] {

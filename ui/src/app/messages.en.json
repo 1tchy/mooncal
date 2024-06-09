@@ -17,7 +17,12 @@
   "navigation": {
     "home": "Home",
     "about": "About",
-    "toggle": "Navigation toggle on/off"
+    "toggle": "Navigation toggle on/off",
+    "paths": {
+      "home": "en/calendar",
+      "about": "en/about",
+      "buymeacoffee": "en/buymeacoffee"
+    }
   },
   "general": {
     "and": "and"
@@ -98,6 +103,13 @@
       "donate": "Donate",
       "coffee": "Buy me a coffee",
       "develop": "Help Develop"
+    },
+    "improveTranslation": {
+      "title": "Do you have a suggestion for a better translation?",
+      "currentText": "Current text",
+      "betterTextSuggestion": "New text proposal",
+      "submit": "Submit",
+      "thanksForFeedback": "Thank you for your feedback."
     }
   },
   "error": {

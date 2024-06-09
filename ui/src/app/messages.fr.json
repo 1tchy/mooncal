@@ -17,7 +17,12 @@
   "navigation": {
     "home": "Accueil",
     "about": "À propos",
-    "toggle": "Alternance de navigation activée/désactivée"
+    "toggle": "Alternance de navigation activée/désactivée",
+    "paths": {
+      "home": "fr/calendrier-lune",
+      "about": "fr/a-propos",
+      "buymeacoffee": "fr/buymeacoffee"
+    }
   },
   "general": {
     "and": "et"
@@ -98,6 +103,13 @@
       "donate": "Donner",
       "coffee": "M'acheter un café",
       "develop": "Aider au développement"
+    },
+    "improveTranslation": {
+      "title": "Avez-vous une suggestion pour une meilleure traduction?",
+      "currentText": "Texte actuel",
+      "betterTextSuggestion": "Nouvelle proposition de texte",
+      "submit": "Soumettre",
+      "thanksForFeedback": "Merci pour vos retours."
     }
   },
   "error": {

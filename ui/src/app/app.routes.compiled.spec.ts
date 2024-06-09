@@ -3,114 +3,154 @@ export const compiledRoute = [
     path: '',
     title: 'Mondkalender',
     component: 'MainComponent',
-    data: {messages: 'de', home: '', about: 'about'}
+    data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
-    path: 'en',
+    path: 'en/calendar',
     title: 'Moon Calendar',
     component: 'MainComponent',
-    data: {messages: 'en', home: 'en', about: 'en/about'}
+    data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
-    path: 'nl',
+    path: 'nl/maankalender',
     title: 'Maankalender',
     component: 'MainComponent',
-    data: {messages: 'nl', home: 'nl', about: 'nl/about'}
+    data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
-    path: 'es',
+    path: 'es/calendario-lunar',
     title: 'Calendario Lunar',
     component: 'MainComponent',
-    data: {messages: 'es', home: 'es', about: 'es/about'}
+    data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
-    path: 'fr',
+    path: 'fr/calendrier-lune',
     title: 'Calendrier de la Lune',
     component: 'MainComponent',
-    data: {messages: 'fr', home: 'fr', about: 'fr/about'}
+    data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
-    path: 'ro',
+    path: 'ro/calendar-lunar',
     title: 'Calendar lunar',
     component: 'MainComponent',
-    data: {messages: 'ro', home: 'ro', about: 'ro/about'}
+    data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
-    path: 'about',
+    path: 'ueber',
     title: 'Über diese Seite',
     component: 'AboutComponent',
-    data: {messages: 'de', home: '', about: 'about'}
+    data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/about',
     title: 'About this site',
     component: 'AboutComponent',
-    data: {messages: 'en', home: 'en', about: 'en/about'}
+    data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
-    path: 'nl/about',
+    path: 'nl/over',
     title: 'Over deze pagina',
     component: 'AboutComponent',
-    data: {messages: 'nl', home: 'nl', about: 'nl/about'}
+    data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
-    path: 'es/about',
+    path: 'es/acerca',
     title: 'Acerca de este sitio',
     component: 'AboutComponent',
-    data: {messages: 'es', home: 'es', about: 'es/about'}
+    data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
-    path: 'fr/about',
+    path: 'fr/a-propos',
     title: 'À propos de ce site',
     component: 'AboutComponent',
-    data: {messages: 'fr', home: 'fr', about: 'fr/about'}
+    data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
-    path: 'ro/about',
+    path: 'ro/despre',
     title: 'Despre acest site',
     component: 'AboutComponent',
-    data: {messages: 'ro', home: 'ro', about: 'ro/about'}
+    data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
     path: 'buymeacoffee',
     title: 'Über diese Seite',
     component: 'AboutComponent',
-    data: {messages: 'de', home: '', about: 'about'}
+    data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/buymeacoffee',
     title: 'About this site',
     component: 'AboutComponent',
-    data: {messages: 'en', home: 'en', about: 'en/about'}
+    data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
     path: 'nl/buymeacoffee',
     title: 'Over deze pagina',
     component: 'AboutComponent',
-    data: {messages: 'nl', home: 'nl', about: 'nl/about'}
+    data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
     path: 'es/buymeacoffee',
     title: 'Acerca de este sitio',
     component: 'AboutComponent',
-    data: {messages: 'es', home: 'es', about: 'es/about'}
+    data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
     path: 'fr/buymeacoffee',
     title: 'À propos de ce site',
     component: 'AboutComponent',
-    data: {messages: 'fr', home: 'fr', about: 'fr/about'}
+    data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
     path: 'ro/buymeacoffee',
     title: 'Despre acest site',
     component: 'AboutComponent',
-    data: {messages: 'ro', home: 'ro', about: 'ro/about'}
+    data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
+  },
+  {
+    redirectFrom: 'about',
+    redirectTo: 'ueber'
+  },
+  {
+    redirectFrom: 'en',
+    redirectTo: 'en/calendar'
+  },
+  {
+    redirectFrom: 'es',
+    redirectTo: 'es/calendario-lunar'
+  },
+  {
+    redirectFrom: 'es/about',
+    redirectTo: 'es/acerca'
+  },
+  {
+    redirectFrom: 'fr',
+    redirectTo: 'fr/calendrier-lune'
+  },
+  {
+    redirectFrom: 'fr/about',
+    redirectTo: 'fr/a-propos'
+  },
+  {
+    redirectFrom: 'nl',
+    redirectTo: 'nl/maankalender'
+  },
+  {
+    redirectFrom: 'nl/about',
+    redirectTo: 'nl/over'
+  },
+  {
+    redirectFrom: 'ro',
+    redirectTo: 'ro/calendar-lunar'
+  },
+  {
+    redirectFrom: 'ro/about',
+    redirectTo: 'ro/despre'
   },
   {
     path: '**',
     title: undefined,
     component: 'NotFoundComponent',
-    data: {messages: 'de', home: '', about: 'about'}
+    data: {messages: 'de', home: '', about: 'ueber'}
   },
 ]

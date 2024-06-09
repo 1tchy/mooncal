@@ -15,23 +15,29 @@ describe('Routes', () => {
     expect(getRoute('**').data).toEqual(getRoute('').data);
   });
   it('all pages link to their main and about page', () => {
-    for (const route of routes) {
-      let language = getMessages(route).lang.current;
-      expect(route.data!['home']).withContext(language).toEqual(getRouteByLang(language).path);
-      expect(route.data!['about']).withContext(language).toEqual(getRouteByLang(language, 'about').path);
+    for (const route of routesWithoutRedirect()) {
+      let messages = getMessages(route);
+      expect(route.data!['home']).withContext(messages.lang.current).toEqual(messages.navigation.paths.home);
+      expect(route.data!['about']).withContext(messages.lang.current).toEqual(messages.navigation.paths.about);
     }
   });
   it('all pages link to all other languages', () => {
-    for (const route of routes) {
+    for (const route of routesWithoutRedirect().filter(r => r.path !== '**')) {
       let language = getMessages(route).lang.current;
-      let page = route.path!.replace(language, '').replace('/', '').replace('**', '');
       for (const otherLanguage of getAllLanguages()) {
         if (otherLanguage === language) {
           continue;
         }
-        expect(route.data![otherLanguage]).withContext(otherLanguage + ' in ' + language).toEqual(getRouteByLang(otherLanguage, page).path);
+        let pathOfOtherLanguage = route.data?.[otherLanguage];
+        expect(pathOfOtherLanguage).withContext(otherLanguage + ' in ' + language).toBeDefined();
+        expect(getRoute(pathOfOtherLanguage).component?.name).withContext(pathOfOtherLanguage).toEqual(route.component?.name);
       }
     }
+  });
+  it('all paths are unique', () => {
+    let allPaths = routes.map(r => r.path!);
+    let uniquePaths = new Set(allPaths);
+    expect(uniquePaths.size).toEqual(allPaths.length);
   });
   it('all titles are translated', () => {
     let allTitles = routes.filter(r => !r.path!.endsWith('buymeacoffee')).filter(r => r.title).map(r => r.title!);
@@ -39,22 +45,28 @@ describe('Routes', () => {
     expect(uniqueTitles.size).toEqual(allTitles.length);
   });
   it('all components have all languages', () => {
-    for (const component of new Set(routes.filter(r => r.path !== '**').map(r => r.component!))) {
+    for (const component of new Set(routesWithoutRedirect().filter(r => r.path !== '**').map(r => r.component!))) {
       for (const language of getAllLanguages()) {
-        expect(routes.filter(r => !r.path!.endsWith('buymeacoffee')).filter(r => r.component === component && getMessages(r).lang.current === language).length).withContext(component + ' in ' + language).toBe(1);
+        expect(routesWithoutRedirect().filter(r => !r.path!.endsWith('buymeacoffee')).filter(r => r.component === component && getMessages(r).lang.current === language).length).withContext(component + ' in ' + language).toBe(1);
       }
     }
   });
   it('all routes do not accidentally change', () => {
     const routesFormatted = routes.map(r => {
+      if (r.redirectTo) {
+        return {
+          redirectFrom: r.path,
+          redirectTo: r.redirectTo
+        };
+      }
       return {
         path: r.path,
         title: r.title,
-        component: r.component!.name,
+        component: r.component?.name,
         data: {
-          messages: r.data!['messages'].lang.current,
-          home: r.data!['home'],
-          about: r.data!['about'],
+          messages: r.data?.['messages'].lang.current,
+          home: r.data?.['home'],
+          about: r.data?.['about'],
         }
       }
     });
@@ -71,6 +83,10 @@ describe('Routes', () => {
       url = language + '/' + urlPostfix;
     }
     return getRoute(url);
+  }
+
+  function routesWithoutRedirect(): Route[] {
+    return routes.filter(r => !r.redirectTo);
   }
 
   function getMessages(route: Route): Messages {

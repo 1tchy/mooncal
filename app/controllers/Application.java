@@ -2,6 +2,7 @@ package controllers;
 
 import logics.calculation.TotalCalculation;
 import logics.calendar.CalendarMapper;
+import models.BetterTranslationForm;
 import models.EventInstance;
 import models.RequestForm;
 import play.Environment;
@@ -17,8 +18,13 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
@@ -51,6 +57,9 @@ public class Application extends Controller {
     }
 
     public CompletionStage<Result> queryAsICalendar(Http.Request request) {
+        if (request.queryString("created").isEmpty() && request.queryString("before").isPresent()) {
+            return CompletableFuture.completedFuture(permanentRedirect(request.uri().replaceFirst("\\?", "?created=" + ((long) (Math.random() * 100000000) + 400000000) + "&")));
+        }
         return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
             logger.info("Responding iCalender file for query: " + goodForm.getForLog() + " to " + request.remoteAddress());
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
@@ -93,6 +102,20 @@ public class Application extends Controller {
                         .map(error -> messagesApi.preferred(request).at(error.message(), error.key()))
                         .collect(Collectors.joining(", "))
         );
+    }
+
+    public Result suggestBetterTranslation(Http.Request request) {
+        formFactory.form(BetterTranslationForm.class).bindFromRequest(request).value().ifPresent(requestForm -> {
+            String file = Optional.ofNullable(System.getProperty("translation-improvements.txt")).orElse("translation-improvements.txt");
+            synchronized (this) {
+                try {
+                    Files.writeString(Paths.get(file), requestForm.getLanguage() + ": \"" + requestForm.getOldText() + "\" should better be \"" + requestForm.getBetterText() + "\"\n", StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                    logger.error("Could not write to " + file, e);
+                }
+            }
+        });
+        return noContent();
     }
 
     public Result status() {
