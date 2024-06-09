@@ -79,7 +79,7 @@ BEGIN:VEVENT
 DTSTAMP:ignored
 DTSTART;VALUE=DATE:20240903
 SUMMARY:🌑 Neumond
-DESCRIPTION:Neumond um 4:05
+DESCRIPTION:Neumond um 4:06
 UID:mooncal-20240903Z-newmoon
 URL:https://mooncal.ch/buymeacoffee
 END:VEVENT
@@ -223,7 +223,7 @@ BEGIN:VEVENT
 DTSTAMP:ignored
 DTSTART;VALUE=DATE:20260217
 SUMMARY:🌑 Neumond
-DESCRIPTION:Neumond um 13:17
+DESCRIPTION:Neumond um 13:18
 UID:mooncal-20260217Z-newmoon
 URL:https://mooncal.ch/buymeacoffee
 END:VEVENT
