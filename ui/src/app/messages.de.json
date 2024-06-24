@@ -62,7 +62,63 @@
       "download": "iCalendar-Datei herunterladen",
       "subscribe": {
         "title": "iCalendar-Feed abonnieren",
-        "instructions": "Kopiere folgenden Link und füge ihn als Abonnement in deinem Kalenderprogramm hinzu",
+        "instructions": {
+          "lead": "Wähle dein Kalenderprogramm aus, um dafür eine Kurzanleitung zu sehen",
+          "iOS": {
+            "name": "iOS",
+            "steps": [
+              "Öffne die \"Einstellungen\" App",
+              "Drücke auf \"Kalender\", dann \"Accounts\", \"Account hinzufügen\", \"Andere\", \"Kalenderabo hinzufügen\"",
+              "Füge den untenstehenden Link ein",
+              "Drücke auf \"Weiter\"",
+              "Gib ihm eine Beschreibung wie \"Mooncal\"",
+              "Drücke auf \"Sichern\""
+            ]
+          },
+          "macOS": {
+            "name": "macOS Kalender",
+            "steps": [
+              "Öffne die \"Kalender\" App",
+              "Klicke auf \"Datei\" und dann \"Neues Kalender Abonnement...\"",
+              "Füge den untenstehenden Link ein",
+              "Klicke auf \"Abonnieren\"",
+              "Gib ihm einen Namen wie \"Mooncal\"",
+              "Klicke auf \"OK\""
+            ]
+          },
+          "googleGoto": "Gehe zum",
+          "googleCalendar": {
+            "name": "Google Kalender",
+            "steps": [
+              "Drücke auf das \"+\" nach \"Weitere Kalender\", dann auf \"Per URL\"",
+              "Füge den untenstehenden Link ein",
+              "Drücke auf \"Kalender hinzufügen\""
+            ]
+          },
+          "androidName": "Android",
+          "androidPrefix": "Android zeigt Kalendereinträge aus dem Google Kalender an, du kannst also der",
+          "androidLink": "Anleitung für den Google Kalender",
+          "androidPostfix": " folgen.",
+          "thunderbird": {
+            "name": "Thunderbird",
+            "steps": [
+              "Klicke auf \"Datei\", dann \"Neu\" und \"Kalender...\"",
+              "Klicke auf \"Im Netzwerk\" und \"Nächste\"",
+              "Füge den untenstehenden Link ein unter \"Adresse\" und wähle \"Diese Adresse verlangt keine Zugangsdaten\" an",
+              "Klicke auf \"Kalender suchen\" und danach auf \"Abonnieren\""
+            ]
+          },
+          "outlook": {
+            "name": "Outlook",
+            "steps": [
+              "Klicke auf \"Kalender hinzufügen\"",
+              "Wähle \"Aus dem Internet abonnieren\" aus",
+              "Füge den untenstehenden Link ein und einen Kalendernamen wie \"Mooncal\"",
+              "Klicke auf \"Importieren\""
+            ]
+          },
+          "enjoyInstruction": "Geniesse deine neuen Kalendereinträge"
+        },
         "explanations": "Damit werden in deinem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.",
         "copy": "Link kopieren",
         "close": "Schliessen"

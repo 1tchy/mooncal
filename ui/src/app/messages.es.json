@@ -62,7 +62,64 @@
       "download": "descargar archivo iCalendar",
       "subscribe": {
         "title": "suscribirse al feed iCalendar",
-        "instructions": "Copia el siguiente enlace y pégalo como un enlace de suscripción en tu aplicación de calendario",
+        "instructions": {
+          "lead": "Elige tu programa de calendario para ver una guía rápida",
+          "iOS": {
+            "name": "iOS",
+            "steps": [
+              "Abre la aplicación \"Configuración\"",
+              "Presiona en \"Calendario\", luego \"Cuentas\", \"Agregar cuenta\", \"Otro\", \"Agregar suscripción de calendario\"",
+              "Ingresa el siguiente enlace",
+              "Presiona en \"Continuar\"",
+              "Dale un nombre como \"Mooncal\"",
+              "Presiona en \"Guardar\""
+            ]
+          },
+          "macOS": {
+            "name": "Calendario macOS",
+            "steps": [
+              "Abre la aplicación \"Calendario\"",
+              "Haz clic en \"Archivo\" y luego \"Nueva suscripción de calendario...\"",
+              "Pega el enlace debajo",
+              "Haz clic en \"Suscribirse\"",
+              "Dale un nombre como \"Mooncal\"",
+              "Haz clic en \"Aceptar\"",
+              "Disfruta tus nuevas entradas de calendario"
+            ]
+          },
+          "googleGoto": "Ve a",
+          "googleCalendar": {
+            "name": "Google Calendario",
+            "steps": [
+              "Presiona el signo \"+\" después de \"Más calendarios\", luego en \"Por URL\"",
+              "Ingresa el enlace debajo",
+              "Presiona en \"Agregar calendario\""
+            ]
+          },
+          "androidName": "Android",
+          "androidPrefix": "Android muestra las entradas del calendario desde Google Calendario, por lo que puedes seguir la",
+          "androidLink": "instrucciones para Google Calendario",
+          "androidPostfix": ".",
+          "thunderbird": {
+            "name": "Thunderbird",
+            "steps": [
+              "Haz clic en \"Archivo\", luego \"Nuevo\" y \"Calendario...\"",
+              "Haz clic en \"En red\" y luego \"Siguiente\"",
+              "Ingresa el enlace debajo en \"Dirección\" y selecciona \"Esta dirección no requiere credenciales de acceso\"",
+              "Presiona en \"Buscar calendario\" y luego en \"Suscribirse\""
+            ]
+          },
+          "outlook": {
+            "name": "Outlook",
+            "steps": [
+              "Haz clic en \"Agregar calendario\"",
+              "Selecciona \"Suscribirse desde internet\"",
+              "Ingresa el enlace debajo y un nombre de calendario como \"Mooncal\"",
+              "Haz clic en \"Importar\""
+            ]
+          },
+          "enjoyInstruction": "Disfruta tus nuevas entradas de calendario"
+        },
         "explanations": "Con este enlace se mostrarán todos los eventos seleccionados para la mitad del año anterior y para los dos años siguientes.",
         "copy": "Copiar enlace",
         "close": "Cerrar"

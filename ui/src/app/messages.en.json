@@ -59,10 +59,66 @@
     "title": "Export",
     "ical": {
       "title": "Export to calendar",
-      "download": "download iCalendar-file",
+      "download": "Download iCalendar File",
       "subscribe": {
-        "title": "subscribe to iCalendar-feed",
-        "instructions": "Copy the following link and paste it as a subscription link into your calendar application",
+        "title": "Subscribe to iCalendar Feed",
+        "instructions": {
+          "lead": "Choose your calendar program to see a short guide",
+          "iOS": {
+            "name": "iOS",
+            "steps": [
+              "Open the \"Settings\" app",
+              "Tap on \"Calendar\", then \"Accounts\", \"Add Account\", \"Other\", \"Add Calendar subscription\"",
+              "Enter the link below",
+              "Tap on \"Next\"",
+              "Give it a description like \"Mooncal\"",
+              "Tap on \"Save\""
+            ]
+          },
+          "macOS": {
+            "name": "macOS Calendar",
+            "steps": [
+              "Open \"Calendar\" App",
+              "Click \"File\" then \"New Calendar Subscription...\"",
+              "Paste the link below",
+              "Click \"Subscribe\"",
+              "Give it a name like \"Mooncal\"",
+              "Click \"OK\""
+            ]
+          },
+          "googleGoto": "Go to",
+          "googleCalendar": {
+            "name": "Google Calendar",
+            "steps": [
+              "Tap on the \"+\" after \"More calendars\", then on \"From URL\"",
+              "Enter the link below",
+              "Tap on \"Add calendar\""
+            ]
+          },
+          "androidName": "Android",
+          "androidPrefix": "Android shows calendar entries from the Google Calendar, so you can follow the",
+          "androidLink": "instructions for the Google Calendar",
+          "androidPostfix": ".",
+          "thunderbird": {
+            "name": "Thunderbird",
+            "steps": [
+              "Click \"File\", then \"New\" and \"Calendar...\"",
+              "Click on \"Network\" and \"Next\"",
+              "Enter the link below under \"Address\" and select \"This address does not require login details\"",
+              "Tap on \"Search calendar\" and then on \"Subscribe\""
+            ]
+          },
+          "outlook": {
+            "name": "Outlook",
+            "steps": [
+              "Click on \"Add calendar\"",
+              "Select \"Subscribe from the internet\"",
+              "Enter the link below and a calendar name like \"Mooncal\"",
+              "Click on \"Import\""
+            ]
+          },
+          "enjoyInstruction": "Enjoy your new calendar entries"
+        },
         "explanations": "With this link all selected events will be shown for the previous half year and for the following two years.",
         "copy": "Copy link",
         "close": "Close"

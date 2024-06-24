@@ -62,7 +62,64 @@
       "download": "télécharger le fichier iCalendar",
       "subscribe": {
         "title": "s'abonner au flux iCalendar",
-        "instructions": "Copiez le lien suivant et collez-le comme lien d'abonnement dans votre application de calendrier",
+        "instructions": {
+          "lead": "Choisissez votre programme de calendrier pour voir une brève instruction",
+          "iOS": {
+            "name": "iOS",
+            "steps": [
+              "Ouvrez l'application \"Paramètres\"",
+              "Appuyez sur \"Calendrier\", puis \"Comptes\", \"Ajouter un compte\", \"Autre\", \"Ajouter un abonnement de calendrier\"",
+              "Insérez le lien ci-dessous",
+              "Appuyez sur \"Suivant\"",
+              "Donnez-lui un nom comme \"Mooncal\"",
+              "Appuyez sur \"Enregistrer\""
+            ]
+          },
+          "macOS": {
+            "name": "Calendrier macOS",
+            "steps": [
+              "Ouvrez l'application \"Calendrier\"",
+              "Cliquez sur \"Fichier\" puis \"Nouveau souscription au calendrier...\"",
+              "Collez le lien ci-dessous",
+              "Cliquez sur \"S'abonner\"",
+              "Donnez-lui un nom comme \"Mooncal\"",
+              "Cliquez sur \"OK\"",
+              "Profitez de vos nouvelles entrées de calendrier"
+            ]
+          },
+          "googleGoto": "Allez à",
+          "googleCalendar": {
+            "name": "Google Calendrier",
+            "steps": [
+              "Appuyez sur le signe \"+\" après \"Plus d'autres calendriers\", puis sur \"Par URL\"",
+              "Insérez le lien ci-dessous",
+              "Appuyez sur \"Ajouter ce calendrier\""
+            ]
+          },
+          "androidName": "Android",
+          "androidPrefix": "Android affiche les entrées de calendrier du Google Calendrier, vous pouvez donc suivre",
+          "androidLink": "l'instructions pour le Google Calendrier",
+          "androidPostfix": ".",
+          "thunderbird": {
+            "name": "Thunderbird",
+            "steps": [
+              "Cliquez sur \"Fichier\", puis \"Nouveau\" et \"Calendrier...\"",
+              "Cliquez sur \"Sur le réseau\" et \"Suivant\"",
+              "Insérez le lien ci-dessous dans \"Adresse\" et choisissez \"Cette adresse ne demande pas de données d'accès\"",
+              "Appuyez sur \"Rechercher des calendriers\" puis sur \"S'abonner\""
+            ]
+          },
+          "outlook": {
+            "name": "Outlook",
+            "steps": [
+              "Cliquez sur \"Ajouter un calendrier\"",
+              "Choisissez \"S'abonner depuis Internet\"",
+              "Insérez le lien ci-dessous et donnez-lui un nom de calendrier comme \"Mooncal\"",
+              "Cliquez sur \"Importer\""
+            ]
+          },
+          "enjoyInstruction": "Profitez de vos nouveaux entrées de calendrier"
+        },
         "explanations": "Avec ce lien, tous les événements sélectionnés seront affichés pour la moitié précédente de l'année et pour les deux années suivantes.",
         "copy": "Copier le lien",
         "close": "Fermer"
