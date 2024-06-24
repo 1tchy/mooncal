@@ -58,7 +58,7 @@
   </div>
   <div class="col-auto">
     <button (click)="suggestBetterTranslation()" class="btn btn-primary"
-            [disabled]="suggestBetterTranslationInProgress">
+            [disabled]="suggestBetterTranslationInProgress || oldText==='' || betterText===''">
       {{ messages.about.improveTranslation.submit }}
     </button>
   </div>
