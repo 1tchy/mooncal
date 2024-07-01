@@ -67,7 +67,7 @@
           "iOS": {
             "name": "iOS",
             "steps": [
-              "Open the \"Settings\" app",
+              "Open the app \"Settings\"",
               "Tap on \"Calendar\", then \"Accounts\", \"Add Account\", \"Other\", \"Add Calendar subscription\"",
               "Enter the link below",
               "Tap on \"Next\"",
@@ -78,7 +78,7 @@
           "macOS": {
             "name": "macOS Calendar",
             "steps": [
-              "Open \"Calendar\" App",
+              "Open the App \"Calendar\"",
               "Click \"File\" then \"New Calendar Subscription...\"",
               "Paste the link below",
               "Click \"Subscribe\"",

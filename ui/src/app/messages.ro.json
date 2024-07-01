@@ -63,7 +63,7 @@
       "subscribe": {
         "title": "abonează-te la feed-ul iCalendar",
         "instructions": {
-          "lead": "Alege programul tău de calendar pentru a vedea o scurtă instrucțiune",
+          "lead": "Selectați programul calendaristic pentru a vedea un ghid rapid pentru acesta",
           "iOS": {
             "name": "iOS",
             "steps": [
@@ -71,7 +71,7 @@
               "Apasă pe \"Calendar\", apoi \"Conturi\", \"Adaugă cont\", \"Alte\", \"Adaugă abonament calendaristic\"",
               "Înlocuiește link-ul de mai jos",
               "Apasă pe \"Continuă\"",
-              "Dă-i un nume ca \"Mooncal\"",
+              "Dă-i un nume precum \"Mooncal\"",
               "Apasă pe \"Salvează\""
             ]
           },
@@ -80,18 +80,17 @@
             "steps": [
               "Deschide aplicația \"Calendar\"",
               "Clic pe \"Fișier\" apoi \"Nou abonament calendaristic...\"",
-              "Colește link-ul de mai jos",
+              "Înlocuiește link-ul de mai jos",
               "Clic pe \"Abonare\"",
-              "Dă-i un nume ca \"Mooncal\"",
-              "Clic pe \"OK\"",
-              "Se bucură de intrările tale noi în calendar"
+              "Dă-i un nume precum \"Mooncal\"",
+              "Clic pe \"Salveaza\""
             ]
           },
-          "googleGoto": "Merge la",
+          "googleGoto": "Mergi la",
           "googleCalendar": {
             "name": "Google Calendar",
             "steps": [
-              "Apasă pe \"+\" după \"Alți calendarii\", apoi pe \"Prin URL\"",
+              "Apasă pe \"+\" după \"Alte calendare\", apoi pe \"Prin URL\"",
               "Înlocuiește link-ul de mai jos",
               "Apasă pe \"Adaugă calendar\""
             ]
@@ -105,7 +104,7 @@
             "steps": [
               "Clic pe \"Fișier\", apoi \"Nou\" și \"Calendar...",
               "Clic pe \"Pe rețea\" și apoi \"Următorul\"",
-              "Înlocuiește link-ul de mai jos sub \"Adresă\" și selectează \"Această adresă nu cere date de autentificare\"",
+              "Înlocuiește link-ul de mai jos sub \"Adresă\" și selectează \"Această adresă nu necesită date de autentificare\"",
               "Apasă pe \"Caută calendar\" și apoi pe \"Abonare\""
             ]
           },
@@ -114,11 +113,11 @@
             "steps": [
               "Clic pe \"Adaugă calendar\"",
               "Selectează \"Abonare din internet\"",
-              "Înlocuiește link-ul de mai jos cu un nume de calendar ca \"Mooncal\"",
+              "Înlocuiește link-ul de mai jos cu un nume de calendar precum \"Mooncal\"",
               "Clic pe \"Importă\""
             ]
           },
-          "enjoyInstruction": "Se bucură de intrările tale noi în calendar"
+          "enjoyInstruction": "Felicitari! Calendarul tău tocmai a primit noi înregistrări"
         },
         "explanations": "Cu acest link, toate evenimentele selectate vor fi arătate pentru jumătatea anterioară a anului și pentru următorii doi ani.",
         "copy": "Copiază link",

@@ -67,7 +67,7 @@
           "iOS": {
             "name": "iOS",
             "steps": [
-              "Öffne die \"Einstellungen\" App",
+              "Öffne die App \"Einstellungen\"",
               "Drücke auf \"Kalender\", dann \"Accounts\", \"Account hinzufügen\", \"Andere\", \"Kalenderabo hinzufügen\"",
               "Füge den untenstehenden Link ein",
               "Drücke auf \"Weiter\"",
@@ -78,7 +78,7 @@
           "macOS": {
             "name": "macOS Kalender",
             "steps": [
-              "Öffne die \"Kalender\" App",
+              "Öffne die App \"Kalender\"",
               "Klicke auf \"Datei\" und dann \"Neues Kalender Abonnement...\"",
               "Füge den untenstehenden Link ein",
               "Klicke auf \"Abonnieren\"",

@@ -67,7 +67,7 @@
           "iOS": {
             "name": "iOS",
             "steps": [
-              "Open de \"Instellingen\" app",
+              "Open de app \"Instellingen\"",
               "Druk op \"Kalender\", vervolgens \"Rekeningen\", \"Rekening toevoegen\", \"Anders\", \"Kalenderabonnement toevoegen\"",
               "Voeg de onderstaande link toe",
               "Druk op \"Doorgaan\"",
@@ -78,13 +78,12 @@
           "macOS": {
             "name": "macOS Kalender",
             "steps": [
-              "Open \"Kalender\" app",
+              "Open de app \"Kalender\"",
               "Klik op \"Bestand\" en vervolgens \"Nieuw kalendersubscribtie...\"",
               "Plak de link hieronder",
               "Klik op \"Abonneren\"",
               "Geef het een naam zoals \"Maankalender\"",
-              "Klik op \"OK\"",
-              "Geniet van je nieuwe kalenderinformatie"
+              "Klik op \"OK\""
             ]
           },
           "googleGoto": "Ga naar",
