@@ -81,7 +81,8 @@
           <div class="dropdown-menu" ngbDropdownMenu>
             <a ngbDropdownItem [href]="getApiUrl(true,true)+'?'+paramsAsString(true)"
                (click)="trackDownloadIcal()">{{ messages.export.ical.download }}</a>
-            <button ngbDropdownItem href="#" (click)="trackIcalSubscription(); open(subscribeModal)" data-toggle="modal"
+            <button ngbDropdownItem href="#" (click)="trackIcalSubscription(); subscribeOpen(subscribeModal)"
+                    data-toggle="modal"
                     data-target="#subscribeModal">{{ messages.export.ical.subscribe.title }}
             </button>
           </div>
@@ -126,12 +127,73 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <label for="icalLink">{{ messages.export.ical.subscribe.instructions }}:</label>
-    <p>
-      <!-- @formatter:off -->
-      <textarea id="icalLink" type="text" class="form-control" readonly="readonly" rows="4">{{ getApiUrl(true,true) }}?created={{created}}&{{ paramsAsString(false) }}</textarea></p>
-      <!-- @formatter:on -->
-    <p class="text-muted">{{ messages.export.ical.subscribe.explanations }}</p>
+    <p>{{ messages.export.ical.subscribe.instructions.lead }}:</p>
+    <ul ngbNav #calAppInfo="ngbNav" class="nav-tabs" [destroyOnHide]="false"
+        [(activeId)]="activeSubscriptionDescriptionOS">
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_IOS">
+        <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.iOS.name }}</button>
+        <ng-template ngbNavContent>
+          <ol>
+            <li *ngFor="let step of messages.export.ical.subscribe.instructions.iOS.steps">{{ step }}</li>
+            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+          </ol>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_MAC">
+        <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.macOS.name }}</button>
+        <ng-template ngbNavContent>
+          <ol>
+            <li *ngFor="let step of messages.export.ical.subscribe.instructions.macOS.steps">{{ step }}</li>
+            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+          </ol>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_GOOGLE">
+        <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.googleCalendar.name }}</button>
+        <ng-template ngbNavContent>
+          <ol>
+            <li>{{ messages.export.ical.subscribe.instructions.googleGoto }} <a href="https://calendar.google.com/"
+                                                                                target="_blank">{{ messages.export.ical.subscribe.instructions.googleCalendar.name }}</a>
+            </li>
+            <li *ngFor="let step of messages.export.ical.subscribe.instructions.googleCalendar.steps">{{ step }}</li>
+            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+          </ol>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_ANDROID">
+        <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.androidName }}</button>
+        <ng-template ngbNavContent>
+          <p>
+            {{ messages.export.ical.subscribe.instructions.androidPrefix }}
+            <a href="#"
+               (click)="this.activeSubscriptionDescriptionOS=this.SUBSCRIPTION_DESCRIPTION_GOOGLE;false">{{ messages.export.ical.subscribe.instructions.androidLink }}</a>{{ messages.export.ical.subscribe.instructions.androidPostfix }}
+          </p>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_THUNDERBIRD">
+        <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.thunderbird.name }}</button>
+        <ng-template ngbNavContent>
+          <ol>
+            <li *ngFor="let step of messages.export.ical.subscribe.instructions.thunderbird.steps">{{ step }}</li>
+            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+          </ol>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_OUTLOOK">
+        <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.outlook.name }}</button>
+        <ng-template ngbNavContent>
+          <ol>
+            <li *ngFor="let step of messages.export.ical.subscribe.instructions.outlook.steps">{{ step }}</li>
+            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+          </ol>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="calAppInfo" class="mt-2"></div>
+    <!-- @formatter:off -->
+    <textarea id="icalLink" type="text" class="form-control mb-3" readonly="readonly" rows="4">{{ getApiUrl(true,true) }}?created={{created}}&{{ paramsAsString(false) }}</textarea>
+    <!-- @formatter:on -->
+    <p class="text-muted mb-0">{{ messages.export.ical.subscribe.explanations }}</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="copyIcalLink(); modal.dismiss()" data-dismiss="modal">

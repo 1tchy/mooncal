@@ -93,14 +93,21 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
      * Sets the "from" to a date before today to form a floating timeframe around today for subscriptions
      */
     public void setBefore(Period before) {
-        from = LocalDate.now(ZoneOffset.UTC).minus(before).atStartOfDay();
+        from = getToday().minus(before).atStartOfDay();
     }
 
     /**
      * Sets the "to" to a date after today to form a floating timeframe around today for subscriptions
      */
     public void setAfter(Period after) {
-        to = LocalDate.now(ZoneOffset.UTC).plus(after).plusDays(1).atStartOfDay();
+        to = getToday().plus(after).plusDays(1).atStartOfDay();
+    }
+
+    private static LocalDate getToday() {
+        if (System.getProperty("today") != null) {
+            return LocalDate.parse(System.getProperty("today"));
+        }
+        return LocalDate.now(ZoneOffset.UTC);
     }
 
     public boolean includePhase(@NotNull MoonPhaseType moonPhaseType) {

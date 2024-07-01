@@ -99,10 +99,30 @@ export interface Ical {
 
 export interface Subscribe {
   title: string
-  instructions: string
+  instructions: SubscribeInstructions
   explanations: string
   copy: string
   close: string
+}
+
+export interface SubscribeInstructions {
+  lead: string
+  iOS: AppSubscribeInstructions
+  macOS: AppSubscribeInstructions
+  googleGoto: string
+  googleCalendar: AppSubscribeInstructions
+  androidName: string
+  androidPrefix: string
+  androidLink: string
+  androidPostfix: string
+  thunderbird: AppSubscribeInstructions
+  outlook: AppSubscribeInstructions
+  enjoyInstruction: string
+}
+
+export interface AppSubscribeInstructions {
+  name: string
+  steps: string[]
 }
 
 export interface About {

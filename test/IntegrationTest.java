@@ -29,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 public class IntegrationTest extends WithBrowser {
     @Override
     protected TestBrowser provideBrowser(int port) {
+        System.setProperty("today", "2024-06-09");
 //        return Helpers.testBrowser(new ChromeDriver(new ChromeOptions()
 //                .addArguments("--lang=de-CH")
 //                .addArguments("-headless")

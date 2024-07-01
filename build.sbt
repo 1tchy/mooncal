@@ -2,12 +2,14 @@ import play.sbt.PlayImport.*
 
 name := "mooncal"
 
-version := "1.31"
+version := "1.32"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, SbtWeb)
 	.settings(watchSources ++= (baseDirectory.value / "ui/src" ** "*").get)
 
 scalaVersion := "2.13.12"
+
+resolvers += "jitpack" at "https://jitpack.io"
 
 libraryDependencies ++= Seq(
 	guice,
@@ -15,6 +17,8 @@ libraryDependencies ++= Seq(
 	"org.mnode.ical4j" % "ical4j" % "3.2.18",
 	//see latest version under: https://mvnrepository.com/artifact/org.jetbrains/annotations
 	"org.jetbrains" % "annotations" % "24.1.0",
+	//see latest version under: https://jitpack.io/#SimpleAstronomy/simple-astronomy-lib or https://github.com/SimpleAstronomy/simple-astronomy-lib
+	"com.github.SimpleAstronomy" % "simple-astronomy-lib" % "97bb30668a",
 	//see latest version under: https://mvnrepository.com/artifact/org.mockito/mockito-core
 	"org.mockito" % "mockito-core" % "5.12.0" % Test,
 	//see latest version under: https://mvnrepository.com/artifact/junit/junit

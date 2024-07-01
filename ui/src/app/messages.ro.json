@@ -62,7 +62,63 @@
       "download": "descarcă fișierul iCalendar",
       "subscribe": {
         "title": "abonează-te la feed-ul iCalendar",
-        "instructions": "Copiază următorul link și folosește-l ca link de abonament în aplicația ta de calendar",
+        "instructions": {
+          "lead": "Selectați programul calendaristic pentru a vedea un ghid rapid pentru acesta",
+          "iOS": {
+            "name": "iOS",
+            "steps": [
+              "Deschide aplicația \"Setări\"",
+              "Apasă pe \"Calendar\", apoi \"Conturi\", \"Adaugă cont\", \"Alte\", \"Adaugă abonament calendaristic\"",
+              "Înlocuiește link-ul de mai jos",
+              "Apasă pe \"Continuă\"",
+              "Dă-i un nume precum \"Mooncal\"",
+              "Apasă pe \"Salvează\""
+            ]
+          },
+          "macOS": {
+            "name": "Calendar macOS",
+            "steps": [
+              "Deschide aplicația \"Calendar\"",
+              "Clic pe \"Fișier\" apoi \"Nou abonament calendaristic...\"",
+              "Înlocuiește link-ul de mai jos",
+              "Clic pe \"Abonare\"",
+              "Dă-i un nume precum \"Mooncal\"",
+              "Clic pe \"Salveaza\""
+            ]
+          },
+          "googleGoto": "Mergi la",
+          "googleCalendar": {
+            "name": "Google Calendar",
+            "steps": [
+              "Apasă pe \"+\" după \"Alte calendare\", apoi pe \"Prin URL\"",
+              "Înlocuiește link-ul de mai jos",
+              "Apasă pe \"Adaugă calendar\""
+            ]
+          },
+          "androidName": "Android",
+          "androidPrefix": "Android afișează intrările calendarului din Google Calendar, deci poți urma",
+          "androidLink": "instrucțiuni pentru Google Calendar",
+          "androidPostfix": ".",
+          "thunderbird": {
+            "name": "Thunderbird",
+            "steps": [
+              "Clic pe \"Fișier\", apoi \"Nou\" și \"Calendar...",
+              "Clic pe \"Pe rețea\" și apoi \"Următorul\"",
+              "Înlocuiește link-ul de mai jos sub \"Adresă\" și selectează \"Această adresă nu necesită date de autentificare\"",
+              "Apasă pe \"Caută calendar\" și apoi pe \"Abonare\""
+            ]
+          },
+          "outlook": {
+            "name": "Outlook",
+            "steps": [
+              "Clic pe \"Adaugă calendar\"",
+              "Selectează \"Abonare din internet\"",
+              "Înlocuiește link-ul de mai jos cu un nume de calendar precum \"Mooncal\"",
+              "Clic pe \"Importă\""
+            ]
+          },
+          "enjoyInstruction": "Felicitari! Calendarul tău tocmai a primit noi înregistrări"
+        },
         "explanations": "Cu acest link, toate evenimentele selectate vor fi arătate pentru jumătatea anterioară a anului și pentru următorii doi ani.",
         "copy": "Copiază link",
         "close": "Închide"

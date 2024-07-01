@@ -62,7 +62,63 @@
       "download": "iCalendar downloaden",
       "subscribe": {
         "title": "abonneren op iCalendar",
-        "instructions": "Kopieer de onderstaande link en plak het als abonnement in uw kalender applicatie",
+        "instructions": {
+          "lead": "Kies je kalenderprogramma om een korte handleiding te zien",
+          "iOS": {
+            "name": "iOS",
+            "steps": [
+              "Open de app \"Instellingen\"",
+              "Druk op \"Kalender\", vervolgens \"Rekeningen\", \"Rekening toevoegen\", \"Anders\", \"Kalenderabonnement toevoegen\"",
+              "Voeg de onderstaande link toe",
+              "Druk op \"Doorgaan\"",
+              "Geef het een beschrijving zoals \"Maankalender\"",
+              "Druk op \"Opslaan\""
+            ]
+          },
+          "macOS": {
+            "name": "macOS Kalender",
+            "steps": [
+              "Open de app \"Kalender\"",
+              "Klik op \"Bestand\" en vervolgens \"Nieuw kalendersubscribtie...\"",
+              "Plak de link hieronder",
+              "Klik op \"Abonneren\"",
+              "Geef het een naam zoals \"Maankalender\"",
+              "Klik op \"OK\""
+            ]
+          },
+          "googleGoto": "Ga naar",
+          "googleCalendar": {
+            "name": "Google Kalender",
+            "steps": [
+              "Druk op het \"+\" naast \"Meer kalenders\", vervolgens op \"Via URL\"",
+              "Voeg de onderstaande link toe",
+              "Druk op \"Kalender toevoegen\""
+            ]
+          },
+          "androidName": "Android",
+          "androidPrefix": "Android toont kalenderinformatie uit de Google Kalender, dus volg de",
+          "androidLink": "handleiding voor de Google Kalender",
+          "androidPostfix": ".",
+          "thunderbird": {
+            "name": "Thunderbird",
+            "steps": [
+              "Klik op \"Bestand\", vervolgens \"Nieuw\" en \"Kalender...\"",
+              "Klik op \"Op internet\" en vervolgens \"Volgende\"",
+              "Voeg de onderstaande link toe onder \"Adres\" en selecteer \"Deze adres vereist geen aanmeldgegevens\"",
+              "Druk op \"Zoeken naar kalender\" en daarna op \"Abonneren\""
+            ]
+          },
+          "outlook": {
+            "name": "Outlook",
+            "steps": [
+              "Klik op \"Kalender toevoegen\"",
+              "Kies \"Vanuit het internet abonneren\"",
+              "Voeg de onderstaande link toe en een kalendernaam zoals \"Maankalender\"",
+              "Klik op \"Importeren\""
+            ]
+          },
+          "enjoyInstruction": "Geniet van je nieuwe kalenderinformatie"
+        },
         "explanations": "Met dit link worden alle geselecteerde gebeurtenissen getoond voor het laatste half jaar en voor de volgende twee jaren.",
         "copy": "Kopieer link",
         "close": "Sluiten"
