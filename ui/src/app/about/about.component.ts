@@ -36,11 +36,19 @@ export class AboutComponent implements AfterViewInit {
 
   private redirectOnBuymeacoffeeSite() {
     let url = this.route.snapshot.url;
-    if (url && "buymeacoffee" === url[url.length - 1].path && !this.canGoForward()) {
-      window.setTimeout(() => {
-        window.location.href = document.getElementById("buymeacoffee")!.getAttribute("href")!;
-      }, 1);
+    if (!(url && "buymeacoffee" === url[url.length - 1].path)) {
+      return;
     }
+    if (document.cookie.indexOf('redirectedToBuymeacoffee') >= 0) {
+      return;
+    }
+    if (this.canGoForward()) {
+      return;
+    }
+    window.setTimeout(() => {
+      document.cookie = "redirectedToBuymeacoffee=true;max-age=30";
+      window.location.href = document.getElementById("buymeacoffee")!.getAttribute("href")!;
+    }, 1);
   }
 
   private canGoForward(): boolean {
