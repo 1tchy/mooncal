@@ -3,7 +3,7 @@ import {Messages} from '../messages';
 import {Event} from "./event";
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {
   NgbDropdownModule,
@@ -15,6 +15,7 @@ import {
   NgbNavOutlet
 } from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient} from "@angular/common/http";
+import {getAllLanguages} from "../app.routes";
 
 type options = { [key: string]: boolean }
 
@@ -69,7 +70,7 @@ export class MainComponent implements AfterViewInit {
   readonly SUBSCRIPTION_DESCRIPTION_MAX = this.SUBSCRIPTION_DESCRIPTION_OUTLOOK;
   activeSubscriptionDescriptionOS = this.SUBSCRIPTION_DESCRIPTION_IOS;
 
-  constructor(route: ActivatedRoute, private httpClient: HttpClient) {
+  constructor(route: ActivatedRoute, private router: Router, private httpClient: HttpClient) {
     this.messages = route.snapshot.data['messages']
     route.data.subscribe(data => {
       this.messages = data['messages']
@@ -83,6 +84,32 @@ export class MainComponent implements AfterViewInit {
       this.fetchCalendar();
     })
     this.activeSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS()
+    this.redirectIfUserNotUnderstands(navigator.languages, router);
+  }
+
+  private redirectIfUserNotUnderstands(usersLanguages: ReadonlyArray<string>, router: Router) {
+    if (this.messages.lang.current !== 'de') {
+      return;
+    }
+    if (document.cookie.indexOf('redirectedFromGerman') >= 0) {
+      return;
+    }
+    if (usersLanguages.find(value => value.startsWith('de')) !== undefined) {
+      return;
+    }
+    for (const userLanguage of usersLanguages) {
+      for (const supportedLanguage of getAllLanguages()) {
+        if (supportedLanguage === this.messages.lang.current) {
+          continue;
+        }
+        if (userLanguage.startsWith(supportedLanguage)) {
+          document.cookie = "redirectedFromGerman=true;max-age=3600";
+          // noinspection JSIgnoredPromiseFromCall
+          router.navigate(['/' + supportedLanguage]);
+          return;
+        }
+      }
+    }
   }
 
   ngAfterViewInit() {
