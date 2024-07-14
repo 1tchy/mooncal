@@ -49,4 +49,5 @@ And in your IDE add a remote debugging configuration.
 * Unzip the zip-file to any folder
 * Start `bin/mooncal.bat` (Windows) or `bin/mooncal` (Linux/Mac) within the extraction folder
     * Detailed configuration can be done like any other [Play Application](https://www.playframework.com/documentation/2.4.x/ProductionConfiguration)
+* Provide a Google Translate Script Deployment Key in the environment variable `googleTranslateScriptDeploymentId` (see keys/googleTranslateScriptDeploymentId.md)
 * Mooncal is now available at [http://localhost:9000](http://localhost:9000/)

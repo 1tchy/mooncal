@@ -31,6 +31,7 @@ public class MoonEventCalculation extends Calculation {
 
     private static final Logger.ALogger logger = Logger.of(MethodHandles.lookup().lookupClass());
     private final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
+    private final Translator translator = new Translator();
     private final TreeMap<ZonedDateTime, EventTemplate> lunarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> solarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> moonLandings = new TreeMap<>();
@@ -107,7 +108,14 @@ public class MoonEventCalculation extends Calculation {
                 if (date.getYear() < 2024 || eventDatesAlreadyKnown.contains(date.toLocalDate())) {
                     continue;
                 }
-                moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + result.get("name").asText(), (zoneId, lang) -> result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " "), "moon-landing"));
+                String name = result.get("name").asText();
+                String descriptionEN = result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " ");
+                String descriptionDE = translator.translate("en", "de", descriptionEN);
+                String descriptionNL = translator.translate("en", "nl", descriptionEN);
+                String descriptionES = translator.translate("en", "es", descriptionEN);
+                String descriptionFR = translator.translate("en", "fr", descriptionEN);
+                String descriptionRO = translator.translate("en", "ro", descriptionEN);
+                moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + name, (zoneId, lang) -> getByLang(descriptionEN, descriptionDE, descriptionNL, descriptionES, descriptionFR, descriptionRO, lang), "moon-landing"));
             }
         } catch (IOException e) {
             logger.error("Could not update moon landings", e);
