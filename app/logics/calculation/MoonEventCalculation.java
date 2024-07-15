@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.LineReader;
-import models.EventInstance;
-import models.EventTemplate;
-import models.EventType;
-import models.RequestForm;
+import models.*;
 import org.jetbrains.annotations.TestOnly;
 import play.Logger;
 import play.i18n.Lang;
@@ -111,12 +108,7 @@ public class MoonEventCalculation extends Calculation {
                 }
                 String name = result.get("name").asText();
                 String descriptionEN = result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " ");
-                String descriptionDE = translator.translate("en", "de", descriptionEN);
-                String descriptionNL = translator.translate("en", "nl", descriptionEN);
-                String descriptionES = translator.translate("en", "es", descriptionEN);
-                String descriptionFR = translator.translate("en", "fr", descriptionEN);
-                String descriptionRO = translator.translate("en", "ro", descriptionEN);
-                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, lang -> "🚀 " + name, lang -> getByLang(descriptionEN, descriptionDE, descriptionNL, descriptionES, descriptionFR, descriptionRO).apply(lang), "moon-landing"));
+                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, lang -> "🚀 " + name, TranslatedString.translate(descriptionEN, translator)::getByLang, "moon-landing"));
             }
         } catch (IOException e) {
             logger.error("Could not update moon landings", e);
