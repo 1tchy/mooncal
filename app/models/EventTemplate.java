@@ -1,6 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import play.i18n.Lang;
@@ -10,7 +9,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.function.BiFunction;
 
-public class EventTemplate implements Comparable<EventInstance> {
+public class EventTemplate {
     @NotNull
     protected ZonedDateTime dateTime;
     @Nullable
@@ -28,7 +27,6 @@ public class EventTemplate implements Comparable<EventInstance> {
     }
 
     @NotNull
-    @JsonIgnore
     public ZonedDateTime getDateTime() {
         return dateTime;
     }
@@ -46,11 +44,6 @@ public class EventTemplate implements Comparable<EventInstance> {
     @NotNull
     public String getEventTypeId() {
         return eventTypeId;
-    }
-
-    @Override
-    public int compareTo(@NotNull EventInstance other) {
-        return this.dateTime.compareTo(other.dateTime);
     }
 
     @Override
