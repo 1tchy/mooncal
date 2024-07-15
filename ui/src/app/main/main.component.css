@@ -1,3 +1,6 @@
 .dateFont {
   font-feature-settings: 'tnum';
 }
+button.btn-close {
+  border: 1px solid var(--bs-modal-header-border-color)
+}

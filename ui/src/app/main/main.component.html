@@ -76,17 +76,10 @@
     <div class="card" id="export">
       <h5 class="card-header">{{ messages.export.title }}</h5>
       <div class="card-body">
-        <div class="btn-group dropdown me-1" ngbDropdown>
-          <button type="button" class="btn btn-light" ngbDropdownToggle>{{ messages.export.ical.title }}</button>
-          <div class="dropdown-menu" ngbDropdownMenu>
-            <a ngbDropdownItem [href]="getApiUrl(true,true)+'?'+paramsAsString(true)"
-               (click)="trackDownloadIcal()">{{ messages.export.ical.download }}</a>
-            <button ngbDropdownItem href="#" (click)="trackIcalSubscription(); subscribeOpen(subscribeModal)"
-                    data-toggle="modal"
-                    data-target="#subscribeModal">{{ messages.export.ical.subscribe.title }}
-            </button>
-          </div>
-        </div>
+        <button class="btn btn-light me-1" (click)="trackIcalSubscription(); subscribeOpen(subscribeModal)"
+                data-toggle="modal" data-target="#subscribeModal">
+          {{ messages.export.addToCalendar }}
+        </button>
         <button type="button" class="btn btn-light" onclick="window.print()" (click)="trackPrint()">
           {{ messages.export.print }}
         </button>
@@ -196,12 +189,11 @@
     <p class="text-muted mb-0">{{ messages.export.ical.subscribe.explanations }}</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="copyIcalLink(); modal.dismiss()" data-dismiss="modal">
+    <button type="button" class="btn btn-primary" (click)="copyIcalLink(); modal.dismiss()" data-dismiss="modal">
       📋 {{ messages.export.ical.subscribe.copy }}
     </button>
-    <button type="button" class="btn btn-light" (click)="modal.dismiss()">{{ messages.export.ical.subscribe.close }}
-    </button>
+    <a class="btn btn-light" [href]="getApiUrl(true,true)+'?'+paramsAsString(true)"
+       (click)="trackDownloadIcal()">{{ messages.export.ical.download }}</a>
   </div>
 </ng-template>
-<br/>
 <br/>
