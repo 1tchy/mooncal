@@ -36,6 +36,8 @@ public class IntegrationTest extends WithBrowser {
 //        ), port);
         return Helpers.testBrowser(new FirefoxDriver(new FirefoxOptions()
                 .addArguments("-headless")
+                .addArguments("-width=1920")
+                .addArguments("-height=1080")
         ), port);
     }
 
