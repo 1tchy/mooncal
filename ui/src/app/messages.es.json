@@ -57,9 +57,9 @@
   },
   "export": {
     "title": "Exportar",
+    "addToCalendar": "Añadir al calendario",
     "ical": {
-      "title": "Exportar al calendario",
-      "download": "descargar archivo iCalendar",
+      "download": "descargar archivo",
       "subscribe": {
         "title": "suscribirse al feed iCalendar",
         "instructions": {

@@ -1,0 +1,971 @@
+[
+  {
+    "date": "13.9.1959T21:2:24",
+    "title": {
+      "en": "Lunik 2 (USSR)",
+      "de": "Lunik 2 (UdSSR)",
+      "nl": "Lunik 2 (USSR)",
+      "es": "Lunik 2 (URSS)",
+      "fr": "Lunik 2 (URSS)",
+      "ro": "Lunik 2 (URSS)"
+    },
+    "description": {
+      "en": "Intentional hard impact.",
+      "de": "Absichtlicher harter Aufprall.",
+      "nl": "Opzettelijke harde inslag.",
+      "es": "Impacto duro intencional.",
+      "fr": "Impacte intentionnellement dur.",
+      "ro": "Impact dur intenționat."
+    }
+  },
+  {
+    "date": "26.4.1962T12:49:53",
+    "title": {
+      "en": "Ranger 4 (USA)",
+      "de": "Ranger 4 (USA)",
+      "nl": "Ranger 4 (VS)",
+      "es": "Ranger 4 (EE.UU.)",
+      "fr": "Ranger 4 (États-Unis)",
+      "ro": "Ranger 4 (SUA)"
+    },
+    "description": {
+      "en": "Intentional hard impact; hit lunar far side due to failure of navigation system.",
+      "de": "Absichtlicher harter Aufprall; traf die Mondrückseite aufgrund eines Fehlers im Navigationssystem.",
+      "nl": "Opzettelijke harde inslag; raakte de verre maanzijde door falen van navigatiesysteem.",
+      "es": "Impacto duro intencional; golpeó el lado lejano de la luna debido al fallo del sistema de navegación.",
+      "fr": "Impacte intentionnellement dur ; toucha le côté lointain de la lune en raison d'un échec du système de navigation.",
+      "ro": "Impact dur intenționat; a lovit partea îndepărtată a lunii din cauza unui eșec la sistemul de navigație."
+    }
+  },
+  {
+    "date": "2.2.1964T9:24:32",
+    "title": {
+      "en": "Ranger 6 (USA)",
+      "de": "Ranger 6 (USA)",
+      "nl": "Ranger 6 (VS)",
+      "es": "Ranger 6 (EE.UU.)",
+      "fr": "Ranger 6 (États-Unis)",
+      "ro": "Ranger 6 (SUA)"
+    },
+    "description": {
+      "en": "Intentional hard impact.",
+      "de": "Absichtlicher harter Aufprall.",
+      "nl": "Opzettelijke harde inslag.",
+      "es": "Impacto duro intencional.",
+      "fr": "Impacte intentionnellement dur.",
+      "ro": "Impact dur intenționat."
+    }
+  },
+  {
+    "date": "31.7.1964T13:25:48",
+    "title": {
+      "en": "Ranger 7 (USA)",
+      "de": "Ranger 7 (USA)",
+      "nl": "Ranger 7 (VS)",
+      "es": "Ranger 7 (EE.UU.)",
+      "fr": "Ranger 7 (États-Unis)",
+      "ro": "Ranger 7 (SUA)"
+    },
+    "description": {
+      "en": "Intentional hard impact.",
+      "de": "Absichtlicher harter Aufprall.",
+      "nl": "Opzettelijke harde inslag.",
+      "es": "Impacto duro intencional.",
+      "fr": "Impacte intentionnellement dur.",
+      "ro": "Impact dur intenționat."
+    }
+  },
+  {
+    "date": "20.2.1965T9:57:36",
+    "title": {
+      "en": "Ranger 8 (USA)",
+      "de": "Ranger 8 (USA)",
+      "nl": "Ranger 8 (VS)",
+      "es": "Ranger 8 (EE.UU.)",
+      "fr": "Ranger 8 (États-Unis)",
+      "ro": "Ranger 8 (SUA)"
+    },
+    "description": {
+      "en": "Intentional hard impact.",
+      "de": "Absichtlicher harter Aufprall.",
+      "nl": "Opzettelijke harde inslag.",
+      "es": "Impacto duro intencional.",
+      "fr": "Impacte intentionnellement dur.",
+      "ro": "Impact dur intenționat."
+    }
+  },
+  {
+    "date": "24.3.1965T14:8:19",
+    "title": {
+      "en": "Ranger 9 (USA)",
+      "de": "Ranger 9 (USA)",
+      "nl": "Ranger 9 (VS)",
+      "es": "Ranger 9 (EE.UU.)",
+      "fr": "Ranger 9 (États-Unis)",
+      "ro": "Ranger 9 (SUA)"
+    },
+    "description": {
+      "en": "Intentional hard impact.",
+      "de": "Absichtlicher harter Aufprall.",
+      "nl": "Opzettelijke harde inslag.",
+      "es": "Impacto duro intencional.",
+      "fr": "Impacte intentionnellement dur.",
+      "ro": "Impact dur intenționat."
+    }
+  },
+  {
+    "date": "12.5.1965T19:10:0",
+    "title": {
+      "en": "Luna 5 (USSR)",
+      "de": "Luna 5 (UdSSR)",
+      "nl": "Loena 5 (USSR)",
+      "es": "Luna 5 (URSS)",
+      "fr": "Luna 5 (URSS)",
+      "ro": "Luna 5 (URSS)"
+    },
+    "description": {
+      "en": "Unsuccessful attempt at soft landing; crashed into Moon.",
+      "de": "Fehlgeschlagener Versuch einer sanften Landung; Absturz auf den Mond.",
+      "nl": "Mislukte poging tot zachte landing; neergestort op de maan.",
+      "es": "Intento fallido de aterrizaje suave; chocó con la Luna.",
+      "fr": "Essai infructueux deatterrissage doux ; s'écrasa sur la lune.",
+      "ro": "Efortul nereușit de aterizare ușoară; s-a prăbușit pe Lună."
+    }
+  },
+  {
+    "date": "7.10.1965T22:8:0",
+    "title": {
+      "en": "Luna 7 (USSR)",
+      "de": "Luna 7 (UdSSR)",
+      "nl": "Loena 7 (USSR)",
+      "es": "Luna 7 (URSS)",
+      "fr": "Luna 7 (URSS)",
+      "ro": "Luna 7 (URSS)"
+    },
+    "description": {
+      "en": "Unsuccessful attempt at soft landing; crashed into Moon.",
+      "de": "Fehlgeschlagener Versuch einer sanften Landung; Absturz auf den Mond.",
+      "nl": "Mislukte poging tot zachte landing; neergestort op de maan.",
+      "es": "Intento fallido de aterrizaje suave; chocó con la Luna.",
+      "fr": "Essai infructueux deatterrissage doux ; s'écrasa sur la lune.",
+      "ro": "Efortul nereușit de aterizare ușoară; s-a prăbușit pe Lună."
+    }
+  },
+  {
+    "date": "6.12.1965T21:51:30",
+    "title": {
+      "en": "Luna 8 (USSR)",
+      "de": "Luna 8 (UdSSR)",
+      "nl": "Loena 8 (USSR)",
+      "es": "Luna 8 (URSS)",
+      "fr": "Luna 8 (URSS)",
+      "ro": "Luna 8 (URSS)"
+    },
+    "description": {
+      "en": "Unsuccessful attempt at soft landing; crashed into Moon.",
+      "de": "Fehlgeschlagener Versuch einer sanften Landung; Absturz auf den Mond.",
+      "nl": "Mislukte poging tot zachte landing; neergestort op de maan.",
+      "es": "Intento fallido de aterrizaje suave; chocó con la Luna.",
+      "fr": "Essai infructueux deatterrissage doux ; s'écrasa sur la lune.",
+      "ro": "Efortul nereușit de aterizare ușoară; s-a prăbușit pe Lună."
+    }
+  },
+  {
+    "date": "3.2.1966T18:45:30",
+    "title": {
+      "en": "Luna 9 (USSR)",
+      "de": "Luna 9 (UdSSR)",
+      "nl": "Loena 9 (USSR)",
+      "es": "Luna 9 (URSS)",
+      "fr": "Luna 9 (URSS)",
+      "ro": "Luna 9 (URSS)"
+    },
+    "description": {
+      "en": "First successful soft landing; first pictures from the surface.",
+      "de": "Erste erfolgreiche sanfte Landung; erste Bilder von der Oberfläche.",
+      "nl": "Eerste succesvolle zachte landing; eerste foto's van het oppervlak.",
+      "es": "Primer aterrizaje suave exitoso; primeras imágenes desde la superficie.",
+      "fr": "Premier atterrissage doux réussi ; premières photos de la surface.",
+      "ro": "Prima aterizare ușoară reușită; primele imagini de la suprafață."
+    }
+  },
+  {
+    "date": "2.6.1966T6:17:36",
+    "title": {
+      "en": "Surveyor 1 (USA)",
+      "de": "Surveyor 1 (USA)",
+      "nl": "Surveyor 1 (VS)",
+      "es": "Surveyor 1 (EE.UU.)",
+      "fr": "Surveyor 1 (États-Unis)",
+      "ro": "Surveyor 1 (SUA)"
+    },
+    "description": {
+      "en": "Soft landing.",
+      "de": "Weiche Landung.",
+      "nl": "Zachte landing.",
+      "es": "Aterrizaje suave.",
+      "fr": "Atterrissage doux.",
+      "ro": "Aterizare ușoară."
+    }
+  },
+  {
+    "date": "23.9.1966T3:18:0",
+    "title": {
+      "en": "Surveyor 2 (USA)",
+      "de": "Surveyor 2 (USA)",
+      "nl": "Surveyor 2 (VS)",
+      "es": "Surveyor 2 (EE.UU.)",
+      "fr": "Surveyor 2 (États-Unis)",
+      "ro": "Surveyor 2 (SUA)"
+    },
+    "description": {
+      "en": "Unsuccessful attempt at soft landing; crashed into Moon.",
+      "de": "Fehlgeschlagener Versuch einer sanften Landung; Absturz auf den Mond.",
+      "nl": "Mislukte poging tot zachte landing; neergestort op de maan.",
+      "es": "Intento fallido de aterrizaje suave; chocó con la Luna.",
+      "fr": "Essai infructueux deatterrissage doux ; s'écrasa sur la lune.",
+      "ro": "Efortul nereușit de aterizare ușoară; s-a prăbușit pe Lună."
+    }
+  },
+  {
+    "date": "29.10.1966T0:0:0",
+    "title": {
+      "en": "Lunar Orbiter 1 (USA)",
+      "de": "Lunar Orbiter 1 (USA)",
+      "nl": "Lunar Orbiter 1 (VS)",
+      "es": "Lunar Orbiter 1 (EE.UU.)",
+      "fr": "Lunar Orbiter 1 (États-Unis)",
+      "ro": "Lunar Orbiter 1 (SUA)"
+    },
+    "description": {
+      "en": "Lunar orbiter, intentionally crashed at end of mission.",
+      "de": "Mondorbiter, am Ende der Mission absichtlich abgestürzt.",
+      "nl": "Maan-orbiter, opzettelijk neergestort aan het einde van de missie.",
+      "es": "Orbitador lunar, se estrelló intencionalmente al final de la misión.",
+      "fr": "Orbiteur lunaire, s'écrasa intentionnellement à la fin de la mission.",
+      "ro": "Orbitator lunar, s-a prăbușit intenționat la finalul misiunii."
+    }
+  },
+  {
+    "date": "24.12.1966T18:4:0",
+    "title": {
+      "en": "Luna 13 (USSR)",
+      "de": "Luna 13 (UdSSR)",
+      "nl": "Loena 13 (USSR)",
+      "es": "Luna 13 (URSS)",
+      "fr": "Luna 13 (URSS)",
+      "ro": "Luna 13 (URSS)"
+    },
+    "description": {
+      "en": "Soft landing.",
+      "de": "Weiche Landung.",
+      "nl": "Zachte landing.",
+      "es": "Aterrizaje suave.",
+      "fr": "Atterrissage doux.",
+      "ro": "Aterizare ușoară."
+    }
+  },
+  {
+    "date": "20.4.1967T0:4:53",
+    "title": {
+      "en": "Surveyor 3 (USA)",
+      "de": "Surveyor 3 (USA)",
+      "nl": "Surveyor 3 (VS)",
+      "es": "Surveyor 3 (EE.UU.)",
+      "fr": "Surveyor 3 (États-Unis)",
+      "ro": "Surveyor 3 (SUA)"
+    },
+    "description": {
+      "en": "Soft landing. First lander visited by a later manned mission (Apollo 12).",
+      "de": "Weiche Landung. Erster Lander, der von einer späteren bemannten Mission (Apollo 12) besucht wurde.",
+      "nl": "Zachte landing. Eerste lander bezocht door een latere bemande missie (Apollo 12).",
+      "es": "Aterrizaje suave. Primer módulo visitado por una misión tripulada posterior (Apollo 12).",
+      "fr": "Atterrissage doux. Premier atterrisseur visité par une mission humaine ultérieure (Apollo 12).",
+      "ro": "Aterizare ușoară. Prima navă care a fost vizitată de o misiune ulterioară cu echipaj uman (Apollo 12)."
+    }
+  },
+  {
+    "date": "17.7.1967T2:5:0",
+    "title": {
+      "en": "Surveyor 4 (USA)",
+      "de": "Surveyor 4 (USA)",
+      "nl": "Surveyor 4 (VS)",
+      "es": "Surveyor 4 (EE.UU.)",
+      "fr": "Surveyor 4 (États-Unis)",
+      "ro": "Surveyor 4 (SUA)"
+    },
+    "description": {
+      "en": "Contact lost on descent.",
+      "de": "Beim Abstieg ging der Kontakt verloren.",
+      "nl": "Contact verloren tijdens afdaling.",
+      "es": "Se perdió contacto durante el descenso.",
+      "fr": "Perte de contact lors de la descente.",
+      "ro": "Contact pierdut la coborâre."
+    }
+  },
+  {
+    "date": "11.9.1967T0:46:44",
+    "title": {
+      "en": "Surveyor 5 (USA)",
+      "de": "Surveyor 5 (USA)",
+      "nl": "Surveyor 5 (VS)",
+      "es": "Surveyor 5 (EE.UU.)",
+      "fr": "Surveyor 5 (États-Unis)",
+      "ro": "Surveyor 5 (SUA)"
+    },
+    "description": {
+      "en": "Soft landing.",
+      "de": "Weiche Landung.",
+      "nl": "Zachte landing.",
+      "es": "Aterrizaje suave.",
+      "fr": "Atterrissage doux.",
+      "ro": "Aterizare ușoară."
+    }
+  },
+  {
+    "date": "10.11.1967T1:1:6",
+    "title": {
+      "en": "Surveyor 6 (USA)",
+      "de": "Surveyor 6 (USA)",
+      "nl": "Surveyor 6 (VS)",
+      "es": "Surveyor 6 (EE.UU.)",
+      "fr": "Surveyor 6 (États-Unis)",
+      "ro": "Surveyor 6 (SUA)"
+    },
+    "description": {
+      "en": "Soft landing.",
+      "de": "Weiche Landung.",
+      "nl": "Zachte landing.",
+      "es": "Aterrizaje suave.",
+      "fr": "Atterrissage doux.",
+      "ro": "Aterizare ușoară."
+    }
+  },
+  {
+    "date": "10.1.1968T1:5:36",
+    "title": {
+      "en": "Surveyor 7 (USA)",
+      "de": "Surveyor 7 (USA)",
+      "nl": "Surveyor 7 (VS)",
+      "es": "Surveyor 7 (EE.UU.)",
+      "fr": "Surveyor 7 (États-Unis)",
+      "ro": "Surveyor 7 (SUA)"
+    },
+    "description": {
+      "en": "Soft landing.",
+      "de": "Weiche Landung.",
+      "nl": "Zachte landing.",
+      "es": "Aterrizaje suave.",
+      "fr": "Atterrissage doux.",
+      "ro": "Aterizare ușoară."
+    }
+  },
+  {
+    "date": "20.7.1969T20:18:4",
+    "title": {
+      "en": "Apollo 11 (USA)",
+      "de": "Apollo 11 (USA)",
+      "nl": "Apollo 11 (VS)",
+      "es": "Apollo 11 (EE.UU.)",
+      "fr": "Apollo 11 (États-Unis)",
+      "ro": "Apollo 11 (SUA)"
+    },
+    "description": {
+      "en": "First manned landing on extraterrestrial bodies.",
+      "de": "Erste bemannte Landung auf ausserirdischen Körpern.",
+      "nl": "Eerste bemande landing op de maan.",
+      "es": "Primera aterrizaje tripulado en cuerpos extra terrestres.",
+      "fr": "Premier atterrissage habité sur des corps extrasolaires.",
+      "ro": "Prima aterizare umană pe un corp ceresc."
+    }
+  },
+  {
+    "date": "21.7.1969T15:51:0",
+    "title": {
+      "en": "Luna 15 (USSR)",
+      "de": "Luna 15 (UdSSR)",
+      "nl": "Loena 15 (USSR)",
+      "es": "Luna 15 (URSS)",
+      "fr": "Luna 15 (URSS)",
+      "ro": "Luna 15 (URSS)"
+    },
+    "description": {
+      "en": "Possible attempted sample return; crashed into Moon.",
+      "de": "Möglicher Versuch einer Probenrückgabe; auf dem Mond abgestürzt.",
+      "nl": "Mogelijke poging tot terugkeer van monsters; neergestort op de maan.",
+      "es": "Posible intento de retorno de muestra; chocó con la Luna.",
+      "fr": "Possibilité d'essai de retour d'échantillon ; s'écrasa sur la lune.",
+      "ro": "Posibilă tentativă de recuperare a probelor; s-a prăbușit pe Lună."
+    }
+  },
+  {
+    "date": "19.11.1969T6:54:35",
+    "title": {
+      "en": "Apollo 12 (USA)",
+      "de": "Apollo 12 (USA)",
+      "nl": "Apollo 12 (VS)",
+      "es": "Apollo 12 (EE.UU.)",
+      "fr": "Apollo 12 (États-Unis)",
+      "ro": "Apollo 12 (SUA)"
+    },
+    "description": {
+      "en": "Manned mission.",
+      "de": "Bemannte Mission.",
+      "nl": "Bemande missie.",
+      "es": "Misión tripulada.",
+      "fr": "Mission habitée.",
+      "ro": "Misiune umană."
+    }
+  },
+  {
+    "date": "20.9.1970T5:18:0",
+    "title": {
+      "en": "Luna 16 (USSR)",
+      "de": "Luna 16 (UdSSR)",
+      "nl": "Loena 16 (USSR)",
+      "es": "Luna 16 (URSS)",
+      "fr": "Luna 16 (URSS)",
+      "ro": "Luna 16 (URSS)"
+    },
+    "description": {
+      "en": "First successful robotic sample return.",
+      "de": "Erste erfolgreiche robotergestützte Probenrückgabe.",
+      "nl": "Eerste succesvolle robotische terugkeer van monsters.",
+      "es": "Primero retorno exitoso de muestra robótica.",
+      "fr": "Premier retour d'échantillon robotique réussi.",
+      "ro": "Prima recuperare reușită a probelor robotice."
+    }
+  },
+  {
+    "date": "17.11.1970T3:47:0",
+    "title": {
+      "en": "Luna 17/Lunokhod 1 (USSR)",
+      "de": "Luna 17/Lunokhod 1 (UdSSR)",
+      "nl": "Loena 17/Lunokhod 1 (USSR)",
+      "es": "Luna 17/Lunokhod 1 (URSS)",
+      "fr": "Luna 17/Lunokhod 1 (URSS)",
+      "ro": "Luna 17/Lunokhod 1 (URSS)"
+    },
+    "description": {
+      "en": "Robotic lunar rover.",
+      "de": "Roboter-Mondrover.",
+      "nl": "Onbemand Maanwagentje.",
+      "es": "Rover lunar robótico.",
+      "fr": "Rover lunaire robotique.",
+      "ro": "Robot lunar."
+    }
+  },
+  {
+    "date": "5.2.1971T9:18:11",
+    "title": {
+      "en": "Apollo 14 (USA)",
+      "de": "Apollo 14 (USA)",
+      "nl": "Apollo 14 (VS)",
+      "es": "Apollo 14 (EE.UU.)",
+      "fr": "Apollo 14 (États-Unis)",
+      "ro": "Apollo 14 (SUA)"
+    },
+    "description": {
+      "en": "Manned mission.",
+      "de": "Bemannte Mission.",
+      "nl": "Bemande missie.",
+      "es": "Misión tripulada.",
+      "fr": "Mission habitée.",
+      "ro": "Misiune umană."
+    }
+  },
+  {
+    "date": "30.7.1971T22:16:29",
+    "title": {
+      "en": "Apollo 15 (USA)",
+      "de": "Apollo 15 (USA)",
+      "nl": "Apollo 15 (VS)",
+      "es": "Apollo 15 (EE.UU.)",
+      "fr": "Apollo 15 (États-Unis)",
+      "ro": "Apollo 15 (SUA)"
+    },
+    "description": {
+      "en": "Manned mission; lunar rover.",
+      "de": "Bemannte Mission; Mondrover.",
+      "nl": "Bemande missie; Maanwagentje.",
+      "es": "Misión tripulada; rover lunar.",
+      "fr": "Mission habitée ; rover lunaire.",
+      "ro": "Misiune umană; robot lunar."
+    }
+  },
+  {
+    "date": "11.9.1971T7:48:0",
+    "title": {
+      "en": "Luna 18 (USSR)",
+      "de": "Luna 18 (UdSSR)",
+      "nl": "Loena 18 (USSR)",
+      "es": "Luna 18 (URSS)",
+      "fr": "Luna 18 (URSS)",
+      "ro": "Luna 18 (URSS)"
+    },
+    "description": {
+      "en": "Failed attempt at sample return; probable crash-landing.",
+      "de": "Gescheiterter Versuch der Probenrückgabe; wahrscheinlich Bruchlandung.",
+      "nl": "Mislukte poging tot monsterteruggave; waarschijnlijke noodlanding.",
+      "es": "Intento fallido de retorno de muestra; probable aterrizaje de emergencia.",
+      "fr": "Essai infructueux de retour d'échantillon ; probable atterrissage d'urgence.",
+      "ro": "Efortul nereușit de recuperare a probelor; probabilă aterizare forțată."
+    }
+  },
+  {
+    "date": "21.2.1972T19:19:0",
+    "title": {
+      "en": "Luna 20 (USSR)",
+      "de": "Luna 20 (UdSSR)",
+      "nl": "Loena 20 (USSR)",
+      "es": "Luna 20 (URSS)",
+      "fr": "Luna 20 (URSS)",
+      "ro": "Luna 20 (URSS)"
+    },
+    "description": {
+      "en": "Robotic sample return.",
+      "de": "Roboter-Probenrückgabe.",
+      "nl": "Robot monster terugkeer.",
+      "es": "Retorno de muestra robótica.",
+      "fr": "Retour d'échantillon robotique.",
+      "ro": "Recuperare a probelor robotice."
+    }
+  },
+  {
+    "date": "21.4.1972T2:23:35",
+    "title": {
+      "en": "Apollo 16 (USA)",
+      "de": "Apollo 16 (USA)",
+      "nl": "Apollo 16 (VS)",
+      "es": "Apollo 16 (EE.UU.)",
+      "fr": "Apollo 16 (États-Unis)",
+      "ro": "Apollo 16 (SUA)"
+    },
+    "description": {
+      "en": "Manned mission; lunar rover.",
+      "de": "Bemannte Mission; Mondrover.",
+      "nl": "Bemande missie; Maanwagentje.",
+      "es": "Misión tripulada; rover lunar.",
+      "fr": "Mission habitée ; rover lunaire.",
+      "ro": "Misiune umană; robot lunar."
+    }
+  },
+  {
+    "date": "11.12.1972T19:54:57",
+    "title": {
+      "en": "Apollo 17 (USA)",
+      "de": "Apollo 17 (USA)",
+      "nl": "Apollo 17 (VS)",
+      "es": "Apollo 17 (EE.UU.)",
+      "fr": "Apollo 17 (États-Unis)",
+      "ro": "Apollo 17 (SUA)"
+    },
+    "description": {
+      "en": "Manned mission; lunar rover. Last manned landing on extraterrestrial bodies to date.",
+      "de": "Bemannte Mission; Mondrover. Bisher letzte bemannte Landung auf ausserirdischen Körpern.",
+      "nl": "Bemande missie; Maanwagentje. Laatste bemande landing op buitenaards lichaam tot nu toe.",
+      "es": "Misión tripulada; rover lunar. Último aterrizaje tripulado en cuerpos extra terrestres hasta la fecha.",
+      "fr": "Mission habitée ; rover lunaire. Dernier atterrissage habité sur des corps extrasolaires à ce jour.",
+      "ro": "Misiune umană; robot lunar. Ultima aterizare umană pe corpuri extraterestre până în prezent."
+    }
+  },
+  {
+    "date": "15.1.1973T22:35:0",
+    "title": {
+      "en": "Luna 21/Lunokhod 2 (USSR)",
+      "de": "Luna 21/Lunokhod 2 (UdSSR)",
+      "nl": "Loena 21/Lunokhod 2 (USSR)",
+      "es": "Luna 21/Lunokhod 2 (URSS)",
+      "fr": "Luna 21/Lunokhod 2 (URSS)",
+      "ro": "Luna 21/Lunokhod 2 (URSS)"
+    },
+    "description": {
+      "en": "Robotic lunar rover.",
+      "de": "Roboter-Mondrover.",
+      "nl": "Onbemand Maanwagentje.",
+      "es": "Rover lunar robótico.",
+      "fr": "Rover lunaire robotique.",
+      "ro": "Robot lunar."
+    }
+  },
+  {
+    "date": "6.11.1974T0:0:0",
+    "title": {
+      "en": "Luna 23 (USSR)",
+      "de": "Luna 23 (UdSSR)",
+      "nl": "Loena 23 (USSR)",
+      "es": "Luna 23 (URSS)",
+      "fr": "Luna 23 (URSS)",
+      "ro": "Luna 23 (URSS)"
+    },
+    "description": {
+      "en": "Failed attempt at sample return; damaged on landing.",
+      "de": "Versuch der Probenrückgabe fehlgeschlagen; bei der Landung beschädigt.",
+      "nl": "Mislukte poging tot monster terugkeer; beschadigd bij landing.",
+      "es": "Intento fallido de retorno de muestra; dañado al aterrizar.",
+      "fr": "Essai infructueux de retour d'échantillon ; endommagé lors de l'atterrissage.",
+      "ro": "Efortul nereușit de recuperare a probelor; deteriorat la aterizare."
+    }
+  },
+  {
+    "date": "18.8.1976T6:36:0",
+    "title": {
+      "en": "Luna 24 (USSR)",
+      "de": "Luna 24 (UdSSR)",
+      "nl": "Loena 24 (USSR)",
+      "es": "Luna 24 (URSS)",
+      "fr": "Luna 24 (URSS)",
+      "ro": "Luna 24 (URSS)"
+    },
+    "description": {
+      "en": "Robotic sample return.",
+      "de": "Roboter-Probenrückgabe.",
+      "nl": "Robotachtige monsterretour.",
+      "es": "Retorno de muestra robótica.",
+      "fr": "Retour d'échantillon robotique.",
+      "ro": "Recuperare a probelor robotice."
+    }
+  },
+  {
+    "date": "31.7.1999T9:52:2",
+    "title": {
+      "en": "Lunar Prospector (USA)",
+      "de": "Lunar Prospector (USA)",
+      "nl": "Lunar Prospector (VS)",
+      "es": "Lunar Prospector (EE.UU.)",
+      "fr": "Lunar Prospector (États-Unis)",
+      "ro": "Lunar Prospector (SUA)"
+    },
+    "description": {
+      "en": "Lunar orbiter, intentionally crashed into polar crater at end of mission to test for liberation of water vapour (not detected).",
+      "de": "Mondorbiter, stürzte am Ende der Mission absichtlich in den Polarkrater, um die Freisetzung von Wasserdampf zu testen (nicht entdeckt).",
+      "nl": "Maan-orbiter, opzettelijk neergestort in polaire krater aan einde missie om te testen op vrijkomen van waterdamp (niet gedetecteerd).",
+      "es": "Orbitador lunar, se estrelló intencionalmente en un cráter polar al final de la misión para probar la liberación de vapor de agua (no detectado).",
+      "fr": "Orbiteur lunaire, s'écrasa intentionnellement dans un cratère polaire à la fin de la mission pour tester la libération de vapeur d'eau (non détectée).",
+      "ro": "Orbitator lunar, s-a prăbușit intenționat într-un crater polar la finalul misiunii pentru a testa eliberarea de vapor de apă (nedetectat)."
+    }
+  },
+  {
+    "date": "3.9.2006T5:42:22",
+    "title": {
+      "en": "SMART-1 (ESA)",
+      "de": "SMART-1 (ESA)",
+      "nl": "SMART-1 (ESA)",
+      "es": "SMART-1 (ESA)",
+      "fr": "SMART-1 (ESA)",
+      "ro": "SMART-1 (ESA)"
+    },
+    "description": {
+      "en": "Lunar orbiter, intentionally crashed at end of mission.",
+      "de": "Mondorbiter, absichtlich am Ende der Mission abgestürzt.",
+      "nl": "Maan-orbiter, opzettelijk neergestort aan het einde van de missie.",
+      "es": "Orbitador lunar, se estrelló intencionalmente al final de la misión.",
+      "fr": "Orbiteur lunaire, s'écrasa intentionnellement à la fin de la mission.",
+      "ro": "Orbitator lunar, s-a prăbușit la finalul misiunii."
+    }
+  },
+  {
+    "date": "14.11.2008T15:1:0",
+    "title": {
+      "en": "Chandrayaan-1 Moon Impact Probe (ISRO)",
+      "de": "Chandrayaan-1 Moon Impact Probe (ISRO)",
+      "nl": "Chandrayaan-1 Moon Impact Probe (ISRO)",
+      "es": "Chandrayaan-1 Moon Impact Probe (ISRO)",
+      "fr": "Chandrayaan-1 Moon Impact Probe (ISRO)",
+      "ro": "Chandrayaan-1 Moon Impact Probe (ISRO)"
+    },
+    "description": {
+      "en": "Impactor.",
+      "de": "Impaktor.",
+      "nl": "Impactor.",
+      "es": "Impactador.",
+      "fr": "Projeteur d'impact.",
+      "ro": "Impactor."
+    }
+  },
+  {
+    "date": "12.2.2009T10:46:0",
+    "title": {
+      "en": "SELENE Rstar/Okina (Japan)",
+      "de": "SELENE Rstar/Okina (Japan)",
+      "nl": "SELENE Rstar/Okina (Japan)",
+      "es": "SELENE Rstar/Okina (Japón)",
+      "fr": "SELENE Rstar/Okina (Japon)",
+      "ro": "SELENE Rstar/Okina (Japonia)"
+    },
+    "description": {
+      "en": "Lunar orbiter, casually crashed at end of mission.",
+      "de": "Mondorbiter, am Ende der Mission zufällig abgestürzt.",
+      "nl": "Maan-orbiter, terloops neergestort aan het einde van de missie.",
+      "es": "Orbitador lunar, se estrelló casualmente al final de la misión.",
+      "fr": "Orbiteur lunaire, s'écrasa accidentellement à la fin de la mission.",
+      "ro": "Orbitator lunar, s-a prăbușit accidental la finalul misiunii."
+    }
+  },
+  {
+    "date": "1.3.2009T8:13:10",
+    "title": {
+      "en": "Chang'e 1 (China)",
+      "de": "Chang'e 1 (China)",
+      "nl": "Chang'e 1 (China)",
+      "es": "Chang'e 1 (China)",
+      "fr": "Chang'e 1 (Chine)",
+      "ro": "Chang'e 1 (China)"
+    },
+    "description": {
+      "en": "Lunar orbiter, intentionally crashed at end of mission.",
+      "de": "Mondorbiter, am Ende der Mission absichtlich abgestürzt.",
+      "nl": "Maan-orbiter, opzettelijk neergestort aan het einde van de missie.",
+      "es": "Orbitador lunar, se estrelló intencionalmente al final de la misión.",
+      "fr": "Orbiteur lunaire, s'écrasa intentionnellement à la fin de la mission.",
+      "ro": "Orbitator lunar, s-a prăbușit intenționat la finalul misiunii."
+    }
+  },
+  {
+    "date": "10.6.2009T18:25:0",
+    "title": {
+      "en": "Kaguya (Japan)",
+      "de": "Kaguya (Japan)",
+      "nl": "Kaguya (Japan)",
+      "es": "Kaguya (Japón)",
+      "fr": "Kaguya (Japon)",
+      "ro": "Kaguya (Japonia)"
+    },
+    "description": {
+      "en": "Lunar orbiter, intentionally crashed at end of mission.",
+      "de": "Mondorbiter, am Ende der Mission absichtlich abgestürzt.",
+      "nl": "Maan-orbiter, opzettelijk neergestort aan het einde van de missie.",
+      "es": "Orbitador lunar, se estrelló intencionalmente al final de la misión.",
+      "fr": "Orbiteur lunaire, s'écrasa intentionnellement à la fin de la mission.",
+      "ro": "Orbitator lunar, s-a prăbușit intenționat la finalul misiunii."
+    }
+  },
+  {
+    "date": "9.10.2009T11:31:0",
+    "title": {
+      "en": "LCROSS (USA)",
+      "de": "LCROSS (USA)",
+      "nl": "LCROSS (VS)",
+      "es": "LCROSS (EE.UU.)",
+      "fr": "LCROSS (États-Unis)",
+      "ro": "LCROSS (SUA)"
+    },
+    "description": {
+      "en": "Impactors. Water found.",
+      "de": "Impaktoren. Wasser gefunden.",
+      "nl": "Inslagraketten. Water gevonden.",
+      "es": "Impactadores. Se encontró agua.",
+      "fr": "Projecteurs d'impact. Eau trouvée.",
+      "ro": "Impactori. Apă găsită."
+    }
+  },
+  {
+    "date": "14.12.2013T13:11:0",
+    "title": {
+      "en": "Chang'e 3 (China)",
+      "de": "Chang'e 3 (China)",
+      "nl": "Chang'e 3 (China)",
+      "es": "Chang'e 3 (China)",
+      "fr": "Chang'e 3 (Chine)",
+      "ro": "Chang'e 3 (China)"
+    },
+    "description": {
+      "en": "First soft landing on moon since 1976, lunar rover.",
+      "de": "Erste sanfte Landung auf dem Mond seit 1976, Mondrover.",
+      "nl": "Eerste zachte landing op de maan sinds 1976, Maanwagentje.",
+      "es": "Primer aterrizaje suave en la luna desde 1976, rover lunar.",
+      "fr": "Premier atterrissage doux sur la lune depuis 1976, rover lunaire.",
+      "ro": "Prima aterizare ușoară pe Lună din 1976, robot lunar."
+    }
+  },
+  {
+    "date": "3.1.2019T2:26:0",
+    "title": {
+      "en": "Chang'e 4 (China)",
+      "de": "Chang'e 4 (China)",
+      "nl": "Chang'e 4 (China)",
+      "es": "Chang'e 4 (China)",
+      "fr": "Chang'e 4 (Chine)",
+      "ro": "Chang'e 4 (China)"
+    },
+    "description": {
+      "en": "First soft-landing on the far side of the moon.",
+      "de": "Erste sanfte Landung auf der anderen Seite des Mondes.",
+      "nl": "Eerste zachte landing op de andere kant van de maan.",
+      "es": "Primer aterrizaje suave en el lado lejano de la luna.",
+      "fr": "Premier atterrissage doux sur le côté lointain de la lune.",
+      "ro": "Prima aterizare ușoară pe partea îndepărtată a lunii."
+    }
+  },
+  {
+    "date": "11.4.2019T19:23:0",
+    "title": {
+      "en": "Beresheet (Israel)",
+      "de": "Beresheet (Israel)",
+      "nl": "Beresheet (Israël)",
+      "es": "Beresheet (Israel)",
+      "fr": "Beresheet (Israël)",
+      "ro": "Beresheet (Israel)"
+    },
+    "description": {
+      "en": "First privately funded attempted landing on the moon crashed on it.",
+      "de": "Erster privat finanzierter Landeversuch auf dem Mond, stürzte darauf ab.",
+      "nl": "Eerste particulier gefinancierde poging tot landing op de maan neergestort.",
+      "es": "Primer intento de aterrizaje privado en la luna que se estrelló contra ella.",
+      "fr": "Premier essai deatterrissage privé sur la lune qui s'est écrasé dessus.",
+      "ro": "Prima încercare privată de aterizare pe Lună, s-a prăbușit pe ea."
+    }
+  },
+  {
+    "date": "6.9.2019T20:23:0",
+    "title": {
+      "en": "Chandrayaan-2 (India)",
+      "de": "Chandrayaan-2 (Indien)",
+      "nl": "Chandrayaan-2 (India)",
+      "es": "Chandrayaan-2 (India)",
+      "fr": "Chandrayaan-2 (Inde)",
+      "ro": "Chandrayaan-2 (India)"
+    },
+    "description": {
+      "en": "First planned moon landing of India (crashed).",
+      "de": "Erste geplante Mondlandung Indiens (abgestürzt).",
+      "nl": "Eerste geplande maanlanding van India (gecrasht).",
+      "es": "Primer intento de aterrizaje lunar planeado de India (se estrelló).",
+      "fr": "Premier atterrissage planifié de l'Inde sur la lune (s'est écrasé).",
+      "ro": "Prima aterizare planificată pe Lună a Indiei (s-a prăbușit)."
+    }
+  },
+  {
+    "date": "1.12.2020T15:11:0",
+    "title": {
+      "en": "Chang'e 5 (China)",
+      "de": "Chang'e 5 (China)",
+      "nl": "Chang'e 5 (China)",
+      "es": "Chang'e 5 (China)",
+      "fr": "Chang'e 5 (Chine)",
+      "ro": "Chang'e 5 (China)"
+    },
+    "description": {
+      "en": "China's first sample return mission.",
+      "de": "Chinas erste Probenrückführungsmission.",
+      "nl": "Eerste sample return missie van China.",
+      "es": "Primera misión de retorno de muestra de China.",
+      "fr": "Première mission de retour d'échantillon de la Chine.",
+      "ro": "Prima misiune de recuperare a probelor a Chinei."
+    }
+  },
+  {
+    "date": "25.4.2023T16:40:0",
+    "title": {
+      "en": "Hakuto-R Mission 1 (Japan)",
+      "de": "Hakuto-R Mission 1 (Japan)",
+      "nl": "Hakuto-R Mission 1 (Japan)",
+      "es": "Hakuto-R Misión 1 (Japón)",
+      "fr": "Hakuto-R Mission 1 (Japon)",
+      "ro": "Hakuto-R Misie 1 (Japonia)"
+    },
+    "description": {
+      "en": "Mission from Japanese company ispace (crashed).",
+      "de": "Mission des japanischen Unternehmens ispace (abgestürzt).",
+      "nl": "Missie van het Japanse bedrijf ispace (neergestort).",
+      "es": "Misión de la compañía japonesa ispace (se estrelló).",
+      "fr": "Mission de la société japonaise ispace (s'est écrasé).",
+      "ro": "Misiunea companiei japoneze ispace (s-a prăbușit)."
+    }
+  },
+  {
+    "date": "19.8.2023T11:57:0",
+    "title": {
+      "en": "Luna 25 (Russia)",
+      "de": "Luna 25 (Russland)",
+      "nl": "Loena 25 (Rusland)",
+      "es": "Luna 25 (Rusia)",
+      "fr": "Luna 25 (Russie)",
+      "ro": "Luna 25 (Rusia)"
+    },
+    "description": {
+      "en": "First lunar mission of Russia after 47 years (crashed).",
+      "de": "Erste Mondmission Russlands nach 47 Jahren (abgestürzt).",
+      "nl": "Eerste maanmissie van Rusland na 47 jaar (neergestort).",
+      "es": "Primera misión lunar de Rusia después de 47 años (se estrelló).",
+      "fr": "Première mission lunaire de la Russie après 47 ans (s'est écrasé).",
+      "ro": "Prima misiune lunară a Rusiei după 47 ani (s-a prăbușit)."
+    }
+  },
+  {
+    "date": "23.8.2023T12:32:0",
+    "title": {
+      "en": "Chandrayaan-3 (India)",
+      "de": "Chandrayaan-3 (Indien)",
+      "nl": "Chandrayaan-3 (India)",
+      "es": "Chandrayaan-3 (India)",
+      "fr": "Chandrayaan-3 (Inde)",
+      "ro": "Chandrayaan-3 (India)"
+    },
+    "description": {
+      "en": "First spacecraft to soft land near the lunar South Pole.",
+      "de": "Erste sanfte Landung eines Raumfahrzeugs in der Nähe des Mondsüdpols.",
+      "nl": "Eerste ruimtevaartuig dat zacht landt bij de zuidpool van de maan.",
+      "es": "Primera nave espacial para aterrizaje suave cerca del Polo Sur Lunar.",
+      "fr": "Premier vaisseau spatial à atterrir doucement près du pôle sud lunaire.",
+      "ro": "Prima navă spațială care a aterizat ușoară lângă Polul Sud al Lunii."
+    }
+  },
+  {
+    "date": "19.1.2024T15:20:0",
+    "title": {
+      "en": "SLIM Lunar Landing (Japan)",
+      "de": "SLIM Lunar Landing (Japan)",
+      "nl": "SLIM Lunar Landing (Japan)",
+      "es": "SLIM Aterrizaje Lunar (Japón)",
+      "fr": "SLIM Lunar Landing (Japon)",
+      "ro": "SLIM Aterizare Lunară (Japonia)"
+    },
+    "description": {
+      "en": "First successful lunar landing by Japan with an accuracy of only 100m.",
+      "de": "Erste erfolgreiche Landung Japans, mit einer Genauigkeit von nur 100m.",
+      "nl": "Eerste succesvolle maanlanding van Japan met een nauwkeurigheid van slechts 100m.",
+      "es": "Primer aterrizaje lunar exitoso de Japón con precisión solo de 100 metros.",
+      "fr": "Premier atterrissage lunaire réussi de Japon avec une précision de seulement 100 m.",
+      "ro": "Prima aterizare lunară reușită a Japoniei cu o precizie de numai 100m."
+    }
+  },
+  {
+    "date": "22.2.2024T23:23:0",
+    "title": {
+      "en": "Intuitive Machines-1 Odysseus lander (USA)",
+      "de": "Intuitive Machines-1 Odysseus lander (USA)",
+      "nl": "Intuitive Machines-1 Odysseus lander (VS)",
+      "es": "Intuitive Machines-1 Odysseus (EE.UU.)",
+      "fr": "Intuitive Machines-1 Odysseus lander (États-Unis)",
+      "ro": "Intuitive Machines-1 Odysseus lander (SUA)"
+    },
+    "description": {
+      "en": "First successful private lunar landing, first US lunar landing since 50 years.",
+      "de": "Erste erfolgreiche private Mondlandung, erste US-Mondlandung seit 50 Jahren.",
+      "nl": "Eerste succesvolle particuliere maanlanding, eerste Amerikaanse maanlanding sinds 50 jaar.",
+      "es": "Primer aterrizaje lunar exitoso privado, primer aterrizaje lunar estadounidense desde hace 50 años.",
+      "fr": "Premier atterrissage lunaire réussi, premier atterrissage lunaire américain depuis 50 ans.",
+      "ro": "Prima aterizare lunară privată reușită, prima aterizare lunară americană din ultimii 50 de ani."
+    }
+  },
+  {
+    "date": "1.6.2024T22:23:16",
+    "title": {
+      "en": "Chang'e 6 (China)",
+      "de": "Chang'e 6 (China)",
+      "nl": "Chang'e 6 (China)",
+      "es": "Chang'e 6 (China)",
+      "fr": "Chang'e 6 (Chine)",
+      "ro": "Chang'e 6 (China)"
+    },
+    "description": {
+      "en": "First lunar sample return from Apollo Basin on the far side of the Moon.",
+      "de": "Erste Probenrückführungsmission aus dem Apollo-Becken auf der Rückseite des Mondes.",
+      "nl": "Eerste sample return missie uit Apollo Basin aan de andere kant van de maan.",
+      "es": "Primera misión de retorno de muestras desde la Cuenca Apolo en la cara oculta de la Luna.",
+      "fr": "Première mission de retour d’échantillons depuis le bassin Apollo sur la face cachée de la Lune.",
+      "ro": "Prima probă lunară returnată din Bazinul Apollo de pe partea îndepărtată a lunii."
+    }
+  }
+]

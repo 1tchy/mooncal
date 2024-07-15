@@ -87,12 +87,12 @@ export interface Calendar {
 
 export interface Export {
   title: string
+  addToCalendar: string
   ical: Ical
   print: string
 }
 
 export interface Ical {
-  title: string
   download: string
   subscribe: Subscribe
 }

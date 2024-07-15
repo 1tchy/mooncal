@@ -1,6 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import play.i18n.Lang;
@@ -9,52 +8,92 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
-public class EventTemplate implements Comparable<EventInstance> {
+public abstract class EventTemplate {
     @NotNull
-    protected ZonedDateTime dateTime;
-    @Nullable
-    protected final BiFunction<ZoneId, Lang, String> descriptionTemplate;
+    private final ZonedDateTime dateTime;
     @NotNull
-    protected BiFunction<ZoneId, Lang, String> titleTemplate;
-    @NotNull
-    protected final String eventTypeId;
+    private final String eventTypeId;
 
-    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull BiFunction<ZoneId, Lang, String> titleTemplate, @Nullable BiFunction<ZoneId, Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
-        this.titleTemplate = titleTemplate;
+    public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull String eventTypeId) {
         this.dateTime = dateTime;
-        this.descriptionTemplate = descriptionTemplate;
         this.eventTypeId = eventTypeId;
     }
 
     @NotNull
-    @JsonIgnore
     public ZonedDateTime getDateTime() {
         return dateTime;
     }
 
     @NotNull
-    public String getTitle(ZoneId timezone, Lang lang) {
-        return titleTemplate.apply(timezone, lang);
-    }
+    public abstract String getTitle(ZoneId timezone, Lang lang);
 
     @Nullable
-    public String getDescription(ZoneId timezone, Lang lang) {
-        return descriptionTemplate == null ? null : descriptionTemplate.apply(timezone, lang);
-    }
+    public abstract String getDescription(ZoneId timezone, Lang lang);
 
     @NotNull
     public String getEventTypeId() {
         return eventTypeId;
     }
 
-    @Override
-    public int compareTo(@NotNull EventInstance other) {
-        return this.dateTime.compareTo(other.dateTime);
+    public static class WithoutZoneId extends EventTemplate {
+        @Nullable
+        private final Function<Lang, String> descriptionTemplate;
+        @NotNull
+        private final Function<Lang, String> titleTemplate;
+
+        public WithoutZoneId(@NotNull ZonedDateTime dateTime, @NotNull Function<Lang, String> titleTemplate, @Nullable Function<Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
+            super(dateTime, eventTypeId);
+            this.titleTemplate = titleTemplate;
+            this.descriptionTemplate = descriptionTemplate;
+        }
+
+        @Override
+        @NotNull
+        public String getTitle(ZoneId timezone, Lang lang) {
+            return titleTemplate.apply(lang);
+        }
+
+        @Override
+        @Nullable
+        public String getDescription(ZoneId timezone, Lang lang) {
+            return descriptionTemplate == null ? null : descriptionTemplate.apply(lang);
+        }
+
+        @Override
+        public String toString() {
+            return titleTemplate.apply(Lang.forCode("en")) + "@" + getDateTime();
+        }
     }
 
-    @Override
-    public String toString() {
-        return titleTemplate.apply(ZoneOffset.UTC, Lang.forCode("en")) + "@" + dateTime;
+    public static class WithZoneId extends EventTemplate {
+        @Nullable
+        private final BiFunction<ZoneId, Lang, String> descriptionTemplate;
+        @NotNull
+        private final BiFunction<ZoneId, Lang, String> titleTemplate;
+
+        public WithZoneId(@NotNull ZonedDateTime dateTime, @NotNull BiFunction<ZoneId, Lang, String> titleTemplate, @Nullable BiFunction<ZoneId, Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
+            super(dateTime, eventTypeId);
+            this.titleTemplate = titleTemplate;
+            this.descriptionTemplate = descriptionTemplate;
+        }
+
+        @Override
+        @NotNull
+        public String getTitle(ZoneId timezone, Lang lang) {
+            return titleTemplate.apply(timezone, lang);
+        }
+
+        @Override
+        @Nullable
+        public String getDescription(ZoneId timezone, Lang lang) {
+            return descriptionTemplate == null ? null : descriptionTemplate.apply(timezone, lang);
+        }
+
+        @Override
+        public String toString() {
+            return titleTemplate.apply(ZoneOffset.UTC, Lang.forCode("en")) + "@" + getDateTime();
+        }
     }
 }

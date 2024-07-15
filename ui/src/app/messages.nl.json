@@ -57,9 +57,9 @@
   },
   "export": {
     "title": "Export",
+    "addToCalendar": "Voeg toe aan kalender",
     "ical": {
-      "title": "Naar kalender downloaden",
-      "download": "iCalendar downloaden",
+      "download": "Download bestand",
       "subscribe": {
         "title": "abonneren op iCalendar",
         "instructions": {

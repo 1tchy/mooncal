@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.LineReader;
-import models.EventInstance;
-import models.EventTemplate;
-import models.EventType;
-import models.RequestForm;
+import models.*;
 import org.jetbrains.annotations.TestOnly;
 import play.Logger;
 import play.i18n.Lang;
@@ -19,6 +16,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -31,6 +30,7 @@ public class MoonEventCalculation extends Calculation {
 
     private static final Logger.ALogger logger = Logger.of(MethodHandles.lookup().lookupClass());
     private final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
+    private final Translator translator = new Translator();
     private final TreeMap<ZonedDateTime, EventTemplate> lunarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> solarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> moonLandings = new TreeMap<>();
@@ -52,37 +52,43 @@ public class MoonEventCalculation extends Calculation {
     private void initializeLunarEclipses() {
         initializeByCVS(Objects.requireNonNull(getClass().getResource("lunar-eclipses/lunar-eclipses.csv")).getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            lunarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getLunarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getLunarEclipseName(rows[1], lang), zoneId, lang), "lunar-eclipse"));
+            lunarEclipses.put(date, new EventTemplate.WithZoneId(date, (zoneId, lang) -> getLunarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getLunarEclipseName(rows[1], lang), zoneId, lang), "lunar-eclipse"));
         });
     }
 
     private void initializeSolarEclipses() {
         initializeByCVS(Objects.requireNonNull(getClass().getResource("solar-eclipses/solar-eclipses.csv")).getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            solarEclipses.put(date, new EventTemplate(date, (zoneId, lang) -> getSolarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getSolarEclipseName(rows[1], lang), zoneId, lang), "solar-eclipse"));
+            solarEclipses.put(date, new EventTemplate.WithZoneId(date, (zoneId, lang) -> getSolarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getSolarEclipseName(rows[1], lang), zoneId, lang), "solar-eclipse"));
         });
     }
 
     private void initializeMoonLandings() {
-        Optional<String> updatedFile = Optional.ofNullable(System.getProperty("updated-moon-landings.csv"));
-        initializeByCVS(updatedFile.orElseGet(() -> Objects.requireNonNull(getClass().getResource("moon-landings/moon-landings.csv")).getFile()), rows -> {
-            final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate(date,
-                    (zoneId, lang) -> "🚀 " + getByLang(rows[1], rows[3], rows[5], rows[7], rows[9], rows[11], lang),
-                    (zoneId, lang) -> getByLang(rows[2], rows[4], rows[6], rows[8], rows[10], rows[12], lang),
-                    "moon-landing"));
-        });
+        Optional<String> updatedFile = Optional.ofNullable(System.getProperty("updated-moon-landings.json"));
+        String file = updatedFile.orElseGet(() -> Objects.requireNonNull(getClass().getResource("moon-landings/moon-landings.json")).getFile());
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ArrayNode landings = (ArrayNode) mapper.readTree(Files.readAllBytes(Path.of(file)));
+            for (JsonNode landing : landings) {
+                ZonedDateTime date = LocalDateTime.parse(landing.get("date").asText(), DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
+                TranslatedString title = toTranslatedString(landing.get("title")).prefix("🚀 ");
+                TranslatedString description = toTranslatedString(landing.get("description"));
+                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, title::getByLang, description::getByLang, "moon-landing"));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private String getByLang(String en, String de, String nl, String es, String fr, String ro, Lang lang) {
-        return switch (lang.code()) {
-            case "de" -> de;
-            case "nl" -> nl;
-            case "es" -> es;
-            case "fr" -> fr;
-            case "ro" -> ro;
-            default -> en;
-        };
+    private static TranslatedString toTranslatedString(JsonNode jsonNode) {
+        return new TranslatedString(
+                jsonNode.get("en").asText(),
+                jsonNode.get("de").asText(),
+                jsonNode.get("nl").asText(),
+                jsonNode.get("es").asText(),
+                jsonNode.get("fr").asText(),
+                jsonNode.get("ro").asText()
+        );
     }
 
     @VisibleForTesting
@@ -107,7 +113,9 @@ public class MoonEventCalculation extends Calculation {
                 if (date.getYear() < 2024 || eventDatesAlreadyKnown.contains(date.toLocalDate())) {
                     continue;
                 }
-                moonLandings.put(date, new EventTemplate(date, (zoneId, lang) -> "🚀 " + result.get("name").asText(), (zoneId, lang) -> result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " "), "moon-landing"));
+                String name = result.get("name").asText();
+                String descriptionEN = result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " ");
+                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, lang -> "🚀 " + name, TranslatedString.translate(descriptionEN, translator)::getByLang, "moon-landing"));
             }
         } catch (IOException e) {
             logger.error("Could not update moon landings", e);

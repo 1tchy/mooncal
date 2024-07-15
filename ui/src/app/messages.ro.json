@@ -57,9 +57,9 @@
   },
   "export": {
     "title": "Export",
+    "addToCalendar": "Adăugați în calendar",
     "ical": {
-      "title": "Export la calendar",
-      "download": "descarcă fișierul iCalendar",
+      "download": "descărcare fișier",
       "subscribe": {
         "title": "abonează-te la feed-ul iCalendar",
         "instructions": {

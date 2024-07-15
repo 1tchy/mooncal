@@ -1,6 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import play.i18n.Lang;
@@ -8,40 +7,60 @@ import play.i18n.Lang;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.function.BiFunction;
 
-public class EventInstance extends EventTemplate {
+public class EventInstance implements Comparable<EventInstance> {
+    @NotNull
+    private final ZonedDateTime dateTime;
+    @NotNull
+    private final String title;
+    @Nullable
+    private final String description;
     @NotNull
     private final ZoneId timezone;
     @NotNull
-    private final Lang lang;
+    private final String eventTypeId;
 
     public EventInstance(@NotNull EventTemplate eventTemplate, @NotNull ZoneId timezone, Lang lang) {
-        this(eventTemplate.dateTime, eventTemplate.getTitle(timezone, lang), eventTemplate.descriptionTemplate, timezone, lang, eventTemplate.eventTypeId);
+        this(eventTemplate.getDateTime(), eventTemplate.getTitle(timezone, lang), eventTemplate.getDescription(timezone, lang), timezone, eventTemplate.getEventTypeId());
     }
 
-    public EventInstance(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable String description, @NotNull ZoneId timezone, Lang lang, String eventTypeId) {
-        this(dateTime, title, (zoneId, langIgnored) -> description, timezone, lang, eventTypeId);
-    }
-
-    private EventInstance(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable BiFunction<ZoneId, Lang, String> descriptionTemplate, @NotNull ZoneId timezone, Lang lang, String eventTypeId) {
-        super(dateTime, (zoneId, langIgnored) -> title, descriptionTemplate, eventTypeId);
+    public EventInstance(@NotNull ZonedDateTime dateTime, @NotNull String title, @Nullable String description, @NotNull ZoneId timezone, @NotNull String eventTypeId) {
+        this.dateTime = dateTime;
+        this.title = title;
+        this.description = description;
         this.timezone = timezone;
-        this.lang = lang;
+        this.eventTypeId = eventTypeId;
     }
 
+    @NotNull
     public String getTitle() {
-        return getTitle(timezone, lang);
+        return title;
     }
 
-    @JsonProperty("date")
-    public String getDateString() {
+    public String getDate() {
         return dateTime.withZoneSameInstant(timezone).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     @Nullable
     public String getDescription() {
-        return getDescription(timezone, lang);
+        return description;
     }
 
+    @NotNull
+    public ZonedDateTime getDateTime() {
+        return dateTime;
+    }
+
+    @NotNull
+    public String getEventTypeId() {
+        return eventTypeId;
+    }
+
+    public int compareTo(@NotNull EventInstance other) {
+        return dateTime.compareTo(other.getDateTime());
+    }
+
+    public String toString() {
+        return title + "@" + dateTime;
+    }
 }
