@@ -16,13 +16,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class MoonEventCalculation extends Calculation {
@@ -63,25 +64,31 @@ public class MoonEventCalculation extends Calculation {
     }
 
     private void initializeMoonLandings() {
-        Optional<String> updatedFile = Optional.ofNullable(System.getProperty("updated-moon-landings.csv"));
-        initializeByCVS(updatedFile.orElseGet(() -> Objects.requireNonNull(getClass().getResource("moon-landings/moon-landings.csv")).getFile()), rows -> {
-            final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-            moonLandings.put(date, new EventTemplate.WithoutZoneId(date,
-                    getByLang("🚀 " + rows[1], "🚀 " + rows[3], "🚀 " + rows[5], "🚀 " + rows[7], "🚀 " + rows[9], "🚀 " + rows[11]),
-                    getByLang(rows[2], rows[4], rows[6], rows[8], rows[10], rows[12]),
-                    "moon-landing"));
-        });
+        Optional<String> updatedFile = Optional.ofNullable(System.getProperty("updated-moon-landings.json"));
+        String file = updatedFile.orElseGet(() -> Objects.requireNonNull(getClass().getResource("moon-landings/moon-landings.json")).getFile());
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ArrayNode landings = (ArrayNode) mapper.readTree(Files.readAllBytes(Path.of(file)));
+            for (JsonNode landing : landings) {
+                ZonedDateTime date = LocalDateTime.parse(landing.get("date").asText(), DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
+                TranslatedString title = toTranslatedString(landing.get("title")).prefix("🚀 ");
+                TranslatedString description = toTranslatedString(landing.get("description"));
+                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, title::getByLang, description::getByLang, "moon-landing"));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private static Function<Lang, String> getByLang(String en, String de, String nl, String es, String fr, String ro) {
-        return lang -> switch (lang.code()) {
-            case "de" -> de;
-            case "nl" -> nl;
-            case "es" -> es;
-            case "fr" -> fr;
-            case "ro" -> ro;
-            default -> en;
-        };
+    private static TranslatedString toTranslatedString(JsonNode jsonNode) {
+        return new TranslatedString(
+                jsonNode.get("en").asText(),
+                jsonNode.get("de").asText(),
+                jsonNode.get("nl").asText(),
+                jsonNode.get("es").asText(),
+                jsonNode.get("fr").asText(),
+                jsonNode.get("ro").asText()
+        );
     }
 
     @VisibleForTesting

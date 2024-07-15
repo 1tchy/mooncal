@@ -16,6 +16,17 @@ public record TranslatedString(String en, String de, String nl, String es, Strin
         return new TranslatedString(en, de, nl, es, fr, ro);
     }
 
+    public TranslatedString prefix(String prefix) {
+        return new TranslatedString(
+                prefix + en,
+                prefix + de,
+                prefix + nl,
+                prefix + es,
+                prefix + fr,
+                prefix + ro
+        );
+    }
+
     public String getByLang(Lang lang) {
         return switch (lang.code()) {
             case "de" -> de;
