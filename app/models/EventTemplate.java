@@ -11,13 +11,13 @@ import java.util.function.BiFunction;
 
 public class EventTemplate {
     @NotNull
-    protected ZonedDateTime dateTime;
+    private final ZonedDateTime dateTime;
     @Nullable
-    protected final BiFunction<ZoneId, Lang, String> descriptionTemplate;
+    private final BiFunction<ZoneId, Lang, String> descriptionTemplate;
     @NotNull
-    protected BiFunction<ZoneId, Lang, String> titleTemplate;
+    private final BiFunction<ZoneId, Lang, String> titleTemplate;
     @NotNull
-    protected final String eventTypeId;
+    private final String eventTypeId;
 
     public EventTemplate(@NotNull ZonedDateTime dateTime, @NotNull BiFunction<ZoneId, Lang, String> titleTemplate, @Nullable BiFunction<ZoneId, Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
         this.titleTemplate = titleTemplate;

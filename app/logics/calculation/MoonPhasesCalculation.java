@@ -53,7 +53,6 @@ public class MoonPhasesCalculation extends Calculation {
                     phase.getEmoticon() + " " + phase.getTitle(messagesApi, lang, moonHappening),
                     eventAt(moonHappening, phase.getSimpleName(messagesApi, lang), from.getZone(), lang),
                     from.getZone(),
-                    lang,
                     eventTypeId));
             from = moonHappening.plusDays((int) Math.floor(MoonPhase.MOON_CYCLE_DAYS) - 1);
         }
@@ -76,7 +75,7 @@ public class MoonPhasesCalculation extends Calculation {
         String description = messagesApi.get(lang, "phases.daily.visibility.morning6", moonVisiblePercentMorning) + "\n" +
                 messagesApi.get(lang, "phases.daily.visibility.noon12", moonVisiblePercentAtNoon) + "\n" +
                 messagesApi.get(lang, "phases.daily.visibility.evening6", moonVisiblePercentEvening);
-        return new EventInstance(day.atTime(12, 0).atZone(at), title, description, at, lang, "daily");
+        return new EventInstance(day.atTime(12, 0).atZone(at), title, description, at, "daily");
     }
 
     private String getMoonVisiblePercent(ZonedDateTime dateTime, DecimalFormat format) {
