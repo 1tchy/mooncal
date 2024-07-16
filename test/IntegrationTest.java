@@ -1,6 +1,8 @@
 import io.fluentlenium.core.domain.FluentWebElement;
+import io.fluentlenium.core.filter.AttributeFilter;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +17,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import static io.fluentlenium.core.filter.FilterConstructor.containingText;
 import static io.fluentlenium.core.filter.FilterConstructor.withText;
@@ -58,16 +61,15 @@ public class IntegrationTest extends WithBrowser {
             assertEquals(load("IntegrationTest_newmoon_body.txt"), getText("#calendar"));
 
             assertTrue(browser.$("button", withText("iCalendar-Feed abonnieren")).isEmpty());
-            scrollAndAwait(browser.$("button", withText("In Kalender exportieren")).first());
-            click(browser.$("button", withText("In Kalender exportieren")).first());
-            browser.$("button", withText("iCalendar-Feed abonnieren")).click();
+            click(browser.$("button", withText("Zum Kalender hinzufügen")).first());
             String iCalSubscribeLink = browser.$("#icalLink").first().value();
             assertThat(iCalSubscribeLink, matchesPattern("http.*/mooncal.ics\\?created=\\d+&lang=de&phases\\[full]=false&phases\\[new]=true&phases\\[quarter]=false&phases\\[daily]=false&events\\[lunareclipse]=false&events\\[solareclipse]=false&events\\[moonlanding]=false&before=P6M&after=P2Y&zone=Europe/Zurich"));
-            assertThat(getText("body"), containsString("Kopiere folgenden Link und füge ihn als Abonnement in deinem Kalenderprogramm hinzu:"));
+            assertThat(getText("body"), containsString("Wähle dein Kalenderprogramm aus, um dafür eine Kurzanleitung zu sehen"));
             assertIcsEquals(load("IntegrationTest_newmoon_subscribe.ics"), download(iCalSubscribeLink));
-            click(browser.$("button", withText("Schliessen")).first());
-            click(browser.$("button", withText("In Kalender exportieren")).first());
-            String iCalDownloadLink = browser.$("a", withText("iCalendar-Datei herunterladen")).attributes("href").getFirst();
+            click(browser.$("button", new AttributeFilter("aria-label", "Close")).first());
+            click(browser.$("button", withText("Zum Kalender hinzufügen")).first());
+            awaitClickable(() -> browser.$("a", withText("Datei herunterladen")).first());
+            String iCalDownloadLink = browser.$("a", withText("Datei herunterladen")).attributes("href").getFirst();
             assertThat(iCalDownloadLink, endsWith("&from=2024-02-01T01:00:00Europe/Zurich&to=2024-07-31T02:00:00Europe/Zurich"));
             assertEquals(iCalSubscribeLink
                             .replaceFirst("created=\\d+&", "")
@@ -75,9 +77,10 @@ public class IntegrationTest extends WithBrowser {
                     iCalDownloadLink
                             .replaceFirst("&from=.*", ""));
             assertIcsEquals(load("IntegrationTest_newmoon_download.ics"), download(iCalDownloadLink));
+            click(browser.$("button", new AttributeFilter("aria-label", "Close")).first());
 
             assertThat(getText("body"), not(containsString("English")));
-            scrollAndAwait(browser.$("a", containingText("Sprache ändern")).first());
+            scrollAndAwait(() -> browser.$("a", containingText("Sprache ändern")).first());
             click(browser.$("a", containingText("Sprache ändern")).first());
             click(browser.$("a", withText("English")).first());
             assertEquals("Moon Calendar", getText("h1"));
@@ -120,14 +123,25 @@ public class IntegrationTest extends WithBrowser {
         element.executeScript("arguments[0].click();", element);
     }
 
-    private void scrollAndAwait(FluentWebElement element) throws InterruptedException {
+    private void scrollAndAwait(Supplier<FluentWebElement> element) throws InterruptedException {
         try {
-            element.scrollIntoView(true);
-        } catch (NoSuchElementException ignored) {
+            element.get().scrollIntoView(true);
+        } catch (NoSuchElementException | StaleElementReferenceException ignored) {
             Thread.sleep(200);
-            element.scrollIntoView(true);
+            element.get().scrollIntoView(true);
         }
-        browser.fluentWait().until(ExpectedConditions.visibilityOf(element.getElement()));
+        browser.fluentWait().until(ExpectedConditions.visibilityOf(element.get().getElement()));
+    }
+
+    private void awaitClickable(Supplier<FluentWebElement> element) throws InterruptedException {
+        int attempts = 0;
+        while (attempts++ < 20) {
+            if (element.get().clickable()) {
+                return;
+            } else {
+                Thread.sleep(50);
+            }
+        }
     }
 
     private String getText(String selector) {
