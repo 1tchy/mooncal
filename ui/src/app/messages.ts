@@ -175,7 +175,7 @@ export interface Devs {
 
 export interface Support {
   title: string
-  donate: string
+  paypal: string
   coffee: string
   develop: string
 }

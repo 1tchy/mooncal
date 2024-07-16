@@ -58,11 +58,6 @@ export class AboutComponent implements AfterViewInit {
     return false;
   }
 
-  public trackSupport(supportType: string) {
-    // @ts-ignore
-    _paq.push(['trackEvent', 'Support', supportType]);
-  }
-
   public suggestBetterTranslation() {
     this.suggestBetterTranslationResult = ''
     this.suggestBetterTranslationInProgress = true

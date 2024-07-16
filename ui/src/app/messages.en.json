@@ -156,7 +156,7 @@
     },
     "support": {
       "title": "Do you want to support this project?",
-      "donate": "Donate",
+      "paypal": "Donate with PayPal",
       "coffee": "Buy me a coffee",
       "develop": "Help Develop"
     },
