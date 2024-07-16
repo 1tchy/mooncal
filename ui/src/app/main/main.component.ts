@@ -259,7 +259,7 @@ export class MainComponent implements AfterViewInit {
 
   public trackDownloadIcal() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'downloadIcal', this.paramsForTracking()]);
+    _paq.push(['trackLink', this.paramsForTracking(), 'download']);
   }
 
   public trackIcalSubscription() {
