@@ -152,7 +152,8 @@
         "devs": {
           "reason": "pour les derniers atterrissements"
         }
-      }
+      },
+      "developedWith": "Développé avec"
     },
     "support": {
       "title": "Souhaitez-vous soutenir ce projet?",

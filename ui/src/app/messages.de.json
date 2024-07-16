@@ -152,7 +152,8 @@
         "devs": {
           "reason": "für die neusten Landungen"
         }
-      }
+      },
+      "developedWith": "Entwickelt mit"
     },
     "support": {
       "title": "Willst du dieses Projekt unterstützen?",

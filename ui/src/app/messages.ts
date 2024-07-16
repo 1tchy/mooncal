@@ -143,6 +143,7 @@ export interface Sources {
   various: string
   mainly: string
   space: Space
+  developedWith: string
 }
 
 export interface Moonimage {

@@ -152,7 +152,8 @@
         "devs": {
           "reason": "pentru cele mai recente coborâri"
         }
-      }
+      },
+      "developedWith": "Dezvoltat cu"
     },
     "support": {
       "title": "Vrei să susții acest proiect?",
