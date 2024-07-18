@@ -68,7 +68,8 @@ export class MainComponent implements AfterViewInit {
   readonly SUBSCRIPTION_DESCRIPTION_THUNDERBIRD = 5;
   readonly SUBSCRIPTION_DESCRIPTION_OUTLOOK = 6;
   readonly SUBSCRIPTION_DESCRIPTION_MAX = this.SUBSCRIPTION_DESCRIPTION_OUTLOOK;
-  activeSubscriptionDescriptionOS = this.SUBSCRIPTION_DESCRIPTION_IOS;
+  initialSubscriptionDescriptionOS = this.SUBSCRIPTION_DESCRIPTION_IOS;
+  activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
 
   constructor(route: ActivatedRoute, private router: Router, private httpClient: HttpClient) {
     this.messages = route.snapshot.data['messages']
@@ -83,7 +84,8 @@ export class MainComponent implements AfterViewInit {
       this.toDebounced = date;
       this.fetchCalendar();
     })
-    this.activeSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS()
+    this.initialSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS();
+    this.activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
     this.redirectIfUserNotUnderstands(navigator.languages, router);
   }
 

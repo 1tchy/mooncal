@@ -123,7 +123,8 @@
     <p>{{ messages.export.ical.subscribe.instructions.lead }}:</p>
     <ul ngbNav #calAppInfo="ngbNav" class="nav-tabs" [destroyOnHide]="false"
         [(activeId)]="activeSubscriptionDescriptionOS">
-      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_IOS">
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_IOS"
+          [style.order]="initialSubscriptionDescriptionOS==SUBSCRIPTION_DESCRIPTION_IOS?-1:0">
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.iOS.name }}</button>
         <ng-template ngbNavContent>
           <ol>
@@ -132,7 +133,8 @@
           </ol>
         </ng-template>
       </li>
-      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_MAC">
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_MAC"
+          [style.order]="initialSubscriptionDescriptionOS==SUBSCRIPTION_DESCRIPTION_MAC?-1:0">
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.macOS.name }}</button>
         <ng-template ngbNavContent>
           <ol>
@@ -141,7 +143,8 @@
           </ol>
         </ng-template>
       </li>
-      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_GOOGLE">
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_GOOGLE"
+          [style.order]="initialSubscriptionDescriptionOS==SUBSCRIPTION_DESCRIPTION_GOOGLE?-1:0">
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.googleCalendar.name }}</button>
         <ng-template ngbNavContent>
           <ol>
@@ -153,7 +156,8 @@
           </ol>
         </ng-template>
       </li>
-      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_ANDROID">
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_ANDROID"
+          [style.order]="initialSubscriptionDescriptionOS==SUBSCRIPTION_DESCRIPTION_ANDROID?-1:0">
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.androidName }}</button>
         <ng-template ngbNavContent>
           <p>
@@ -163,7 +167,8 @@
           </p>
         </ng-template>
       </li>
-      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_THUNDERBIRD">
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_THUNDERBIRD"
+          [style.order]="initialSubscriptionDescriptionOS==SUBSCRIPTION_DESCRIPTION_THUNDERBIRD?-1:0">
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.thunderbird.name }}</button>
         <ng-template ngbNavContent>
           <ol>
@@ -172,7 +177,8 @@
           </ol>
         </ng-template>
       </li>
-      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_OUTLOOK">
+      <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_OUTLOOK"
+          [style.order]="initialSubscriptionDescriptionOS==SUBSCRIPTION_DESCRIPTION_OUTLOOK?-1:0">
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.outlook.name }}</button>
         <ng-template ngbNavContent>
           <ol>
