@@ -70,8 +70,10 @@ export class MainComponent implements AfterViewInit {
   readonly SUBSCRIPTION_DESCRIPTION_MAX = this.SUBSCRIPTION_DESCRIPTION_OUTLOOK;
   initialSubscriptionDescriptionOS = this.SUBSCRIPTION_DESCRIPTION_IOS;
   activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
+  clipboardSet$ = new Subject<boolean>();
+  clipboardSet = false;
 
-  constructor(route: ActivatedRoute, private router: Router, private httpClient: HttpClient) {
+  constructor(route: ActivatedRoute, router: Router, private httpClient: HttpClient) {
     this.messages = route.snapshot.data['messages']
     route.data.subscribe(data => {
       this.messages = data['messages']
@@ -83,6 +85,9 @@ export class MainComponent implements AfterViewInit {
     this.to$.pipe(debounceTime(500), distinctUntilChanged()).subscribe((date: Date) => {
       this.toDebounced = date;
       this.fetchCalendar();
+    })
+    this.clipboardSet$.pipe(debounceTime(2000)).subscribe(() => {
+      this.clipboardSet = false;
     })
     this.initialSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS();
     this.activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
@@ -280,6 +285,8 @@ export class MainComponent implements AfterViewInit {
   public copyIcalLink() {
     // noinspection JSIgnoredPromiseFromCall
     navigator.clipboard.writeText(document.getElementById('icalLink')!.textContent!);
+    this.clipboardSet = true
+    this.clipboardSet$.next(this.clipboardSet)
   }
 
   public trackDownloadIcal() {
