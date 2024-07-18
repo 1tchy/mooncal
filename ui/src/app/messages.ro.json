@@ -121,7 +121,11 @@
         },
         "explanations": "Cu acest link, toate evenimentele selectate vor fi arătate pentru jumătatea anterioară a anului și pentru următorii doi ani.",
         "copy": "Copiază link",
-        "close": "Închide"
+        "close": "Închide",
+        "support": {
+          "doYouLike": "Îți place calendarul lunar?",
+          "notFreePleaseSupport": "Operarea și dezvoltarea ulterioară nu sunt complet gratuite, m-aș bucura de puțin sprijin."
+        }
       }
     },
     "print": "Imprimă"

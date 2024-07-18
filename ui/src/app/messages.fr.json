@@ -121,7 +121,11 @@
         },
         "explanations": "Avec ce lien, tous les événements sélectionnés seront affichés pour la moitié précédente de l'année et pour les deux années suivantes.",
         "copy": "Copier le lien",
-        "close": "Fermer"
+        "close": "Fermer",
+        "support": {
+          "doYouLike": "Aimez-vous le calendrier lunaire?",
+          "notFreePleaseSupport": "Le fonctionnement et le développement ultérieur ne sont pas totalement gratuits, je me réjouirais d'un peu de soutien."
+        }
       }
     },
     "print": "Imprimer"

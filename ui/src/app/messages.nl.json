@@ -121,7 +121,11 @@
         },
         "explanations": "Met dit link worden alle geselecteerde gebeurtenissen getoond voor het laatste half jaar en voor de volgende twee jaren.",
         "copy": "Kopieer link",
-        "close": "Sluiten"
+        "close": "Sluiten",
+        "support": {
+          "doYouLike": "Vind je de maankalender leuk?",
+          "notFreePleaseSupport": "De werking en verdere ontwikkeling is niet geheel gratis, ik zou blij zijn met een beetje steun."
+        }
       }
     },
     "print": "Afdrukken"

@@ -121,7 +121,11 @@
         },
         "explanations": "Con este enlace se mostrarán todos los eventos seleccionados para la mitad del año anterior y para los dos años siguientes.",
         "copy": "Copiar enlace",
-        "close": "Cerrar"
+        "close": "Cerrar",
+        "support": {
+          "doYouLike": "¿Te gusta el calendario lunar?",
+          "notFreePleaseSupport": "El manejo y el desarrollo posterior no son completamente gratuitos, me encantaría recibir un poco de ayuda."
+        }
       }
     },
     "print": "Imprimir"

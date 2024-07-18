@@ -16,6 +16,7 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient} from "@angular/common/http";
 import {getAllLanguages} from "../app.routes";
+import {SupportButtonsComponent} from "../support-buttons/support-buttons.component";
 
 type options = { [key: string]: boolean }
 
@@ -29,6 +30,7 @@ type options = { [key: string]: boolean }
     NgClass,
     NgbDropdownModule,
     NgbNav, NgbNavItem, NgbNavLinkButton, NgbNavContent, NgbNavOutlet,
+    SupportButtonsComponent,
     DatePipe
   ],
   templateUrl: './main.component.html',
@@ -72,6 +74,7 @@ export class MainComponent implements AfterViewInit {
   activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
   clipboardSet$ = new Subject<boolean>();
   clipboardSet = false;
+  showSupportOnSubscribe = false;
 
   constructor(route: ActivatedRoute, router: Router, private httpClient: HttpClient) {
     this.messages = route.snapshot.data['messages']
@@ -287,6 +290,16 @@ export class MainComponent implements AfterViewInit {
     navigator.clipboard.writeText(document.getElementById('icalLink')!.textContent!);
     this.clipboardSet = true
     this.clipboardSet$.next(this.clipboardSet)
+  }
+
+  public showSupportInXMilliseconds(x: number) {
+    if (x > 0) {
+      setTimeout(() => {
+        this.showSupportOnSubscribe = true;
+      }, x);
+    } else {
+      this.showSupportOnSubscribe = true;
+    }
   }
 
   public trackDownloadIcal() {
