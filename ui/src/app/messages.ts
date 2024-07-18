@@ -103,6 +103,7 @@ export interface Subscribe {
   explanations: string
   copy: string
   close: string
+  support: SubscribeSupport
 }
 
 export interface SubscribeInstructions {
@@ -125,6 +126,11 @@ export interface AppSubscribeInstructions {
   steps: string[]
 }
 
+export interface SubscribeSupport {
+  doYouLike: string
+  notFreePleaseSupport: string
+}
+
 export interface About {
   title: string
   introduction: string
@@ -143,6 +149,7 @@ export interface Sources {
   various: string
   mainly: string
   space: Space
+  developedWith: string
 }
 
 export interface Moonimage {
@@ -175,7 +182,7 @@ export interface Devs {
 
 export interface Support {
   title: string
-  donate: string
+  paypal: string
   coffee: string
   develop: string
 }

@@ -3,12 +3,14 @@ import {Messages} from "../messages";
 import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import {SupportButtonsComponent} from "../support-buttons/support-buttons.component";
 
 @Component({
   selector: 'app-about',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    SupportButtonsComponent
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
@@ -56,11 +58,6 @@ export class AboutComponent implements AfterViewInit {
       return (window as any).navigation.canGoForward;
     }
     return false;
-  }
-
-  public trackSupport(supportType: string) {
-    // @ts-ignore
-    _paq.push(['trackEvent', 'Support', supportType]);
   }
 
   public suggestBetterTranslation() {

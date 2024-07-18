@@ -121,7 +121,11 @@
         },
         "explanations": "With this link all selected events will be shown for the previous half year and for the following two years.",
         "copy": "Copy link",
-        "close": "Close"
+        "close": "Close",
+        "support": {
+          "doYouLike": "Do you like the moon calendar?",
+          "notFreePleaseSupport": "The operation and further development is not completely free, I would be happy about a little support."
+        }
       }
     },
     "print": "Print"
@@ -152,11 +156,12 @@
         "devs": {
           "reason": "for the latest landings"
         }
-      }
+      },
+      "developedWith": "Developed with"
     },
     "support": {
       "title": "Do you want to support this project?",
-      "donate": "Donate",
+      "paypal": "Donate with PayPal",
       "coffee": "Buy me a coffee",
       "develop": "Help Develop"
     },

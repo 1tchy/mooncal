@@ -121,7 +121,11 @@
         },
         "explanations": "Damit werden in deinem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.",
         "copy": "Link kopieren",
-        "close": "Schliessen"
+        "close": "Schliessen",
+        "support": {
+          "doYouLike": "Gefällt dir der Mondkalender?",
+          "notFreePleaseSupport": "Der Betrieb und die Weiterentwicklung ist nicht ganz gratis, über eine kleine Unterstützung würde ich mich freuen."
+        }
       }
     },
     "print": "Drucken"
@@ -152,11 +156,12 @@
         "devs": {
           "reason": "für die neusten Landungen"
         }
-      }
+      },
+      "developedWith": "Entwickelt mit"
     },
     "support": {
       "title": "Willst du dieses Projekt unterstützen?",
-      "donate": "Spenden",
+      "paypal": "Spenden mit PayPal",
       "coffee": "Spendier mir einen Kaffee",
       "develop": "Mitentwickeln"
     },
