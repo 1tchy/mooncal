@@ -192,7 +192,7 @@
     <button type="button" class="btn btn-primary" (click)="copyIcalLink(); modal.dismiss()" data-dismiss="modal">
       📋 {{ messages.export.ical.subscribe.copy }}
     </button>
-    <a class="btn btn-light" [href]="getApiUrl(true,true)+'?'+paramsAsString(true)"
+    <a class="btn btn-light" [href]="getApiUrl(true,true)+'?'+paramsAsString(true)+'&manualDownload'"
        (click)="trackDownloadIcal()">{{ messages.export.ical.download }}</a>
   </div>
 </ng-template>

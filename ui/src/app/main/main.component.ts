@@ -47,10 +47,10 @@ export class MainComponent implements AfterViewInit {
   };
   events: options = {lunareclipse: true, solareclipse: true, moonlanding: true};
 
-  from = new Date().getFullYear() + "-01-01";
+  from = MainComponent.initialFrom();
   from$ = new Subject<Date>();
   fromDebounced = this.toDate(this.from);
-  to = new Date().getFullYear() + "-12-31";
+  to = MainComponent.initialTo();
   to$ = new Subject<Date>();
   toDebounced = this.toDate(this.to);
   zone = this.getTimezone();
@@ -85,6 +85,14 @@ export class MainComponent implements AfterViewInit {
     })
     this.activeSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS()
     this.redirectIfUserNotUnderstands(navigator.languages, router);
+  }
+
+  private static initialFrom() {
+    return new Date().getFullYear() + "-01-01";
+  }
+
+  private static initialTo() {
+    return new Date().getFullYear() + "-12-31";
   }
 
   private redirectIfUserNotUnderstands(usersLanguages: ReadonlyArray<string>, router: Router) {
@@ -150,15 +158,30 @@ export class MainComponent implements AfterViewInit {
     return options;
   }
 
-  public paramsForTracking() {
-    return (this.phases["full"] ? "full," : "")
+  public paramsForTracking(useFromTo: boolean) {
+    let params = (this.phases["full"] ? "full," : "")
       + (this.phases["new"] ? "new," : "")
       + (this.phases["quarter"] ? "quarter," : "")
       + (this.phases["daily"] ? "daily," : "")
       + (this.events["lunareclipse"] ? "lunareclipse," : "")
       + (this.events["solareclipse"] ? "solareclipse," : "")
-      + (this.events["moonlanding"] ? "moonlanding," : "")
-      + this.formatDateOnly(this.fromDebounced) + "-" + this.formatDateOnly(this.toDebounced);
+      + (this.events["moonlanding"] ? "moonlanding" : "");
+    if (params.endsWith(",")) {
+      params = params.substring(0, params.length - 1);
+    }
+    if (useFromTo) {
+      if (MainComponent.initialFrom() === this.formatDateOnly(this.fromDebounced)) {
+        params += ",initial";
+      } else {
+        params += "," + this.formatDateOnly(this.fromDebounced);
+      }
+      if (MainComponent.initialTo() === this.formatDateOnly(this.toDebounced)) {
+        params += "-initial";
+      } else {
+        params += "-" + this.formatDateOnly(this.toDebounced);
+      }
+    }
+    return params;
   }
 
   public formatDateForGui(date: any) {
@@ -209,7 +232,7 @@ export class MainComponent implements AfterViewInit {
         });
         if (this.updateCount++ > 0) {
           // @ts-ignore
-          _paq.push(['trackEvent', 'Calendar', 'update', this.paramsForTracking()]);
+          _paq.push(['trackEvent', 'Calendar', 'update', this.paramsForTracking(true)]);
         }
       }
     } else {
@@ -259,17 +282,17 @@ export class MainComponent implements AfterViewInit {
 
   public trackDownloadIcal() {
     // @ts-ignore
-    _paq.push(['trackLink', this.paramsForTracking(), 'download']);
+    _paq.push(['trackLink', this.paramsForTracking(true), 'download']);
   }
 
   public trackIcalSubscription() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'subscribeIcal', this.paramsForTracking()]);
+    _paq.push(['trackEvent', 'Calendar', 'subscribeIcal', this.paramsForTracking(false)]);
   }
 
   public trackPrint() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'print', this.paramsForTracking()]);
+    _paq.push(['trackEvent', 'Calendar', 'print', this.paramsForTracking(true)]);
   }
 
   public trackTimezoneChange() {
