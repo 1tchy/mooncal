@@ -190,7 +190,7 @@
     </ul>
     <div [ngbNavOutlet]="calAppInfo" class="mt-2"></div>
     <!-- @formatter:off -->
-    <textarea id="icalLink" type="text" class="form-control mb-3" readonly="readonly" rows="4">{{ getApiUrl(true,true) }}?created={{created}}&{{ paramsAsString(false) }}</textarea>
+    <textarea id="icalLink" type="text" class="form-control mb-3" readonly="readonly" rows="4" (selectionchange)="trackIcalSubscriptionTextarea()">{{ getApiUrl(true,true) }}?created={{created}}&{{ paramsAsString(false) }}</textarea>
     <!-- @formatter:on -->
     <p class="text-muted mb-0">{{ messages.export.ical.subscribe.explanations }}</p>
   </div>

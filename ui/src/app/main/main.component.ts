@@ -75,6 +75,7 @@ export class MainComponent implements AfterViewInit {
   clipboardSet$ = new Subject<boolean>();
   clipboardSet = false;
   showSupportOnSubscribe = false;
+  trackIcalSubscriptionTextarea$ = new Subject<string>();
 
   constructor(route: ActivatedRoute, router: Router, private httpClient: HttpClient) {
     this.messages = route.snapshot.data['messages']
@@ -91,6 +92,9 @@ export class MainComponent implements AfterViewInit {
     })
     this.clipboardSet$.pipe(debounceTime(2000)).subscribe(() => {
       this.clipboardSet = false;
+    })
+    this.trackIcalSubscriptionTextarea$.pipe(distinctUntilChanged()).subscribe(() => {
+      this.doTrackIcalSubscriptionTextarea();
     })
     this.initialSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS();
     this.activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
@@ -288,8 +292,9 @@ export class MainComponent implements AfterViewInit {
   public copyIcalLink() {
     // noinspection JSIgnoredPromiseFromCall
     navigator.clipboard.writeText(document.getElementById('icalLink')!.textContent!);
-    this.clipboardSet = true
-    this.clipboardSet$.next(this.clipboardSet)
+    this.clipboardSet = true;
+    this.clipboardSet$.next(this.clipboardSet);
+    this.trackIcalSubscriptionCopyClipboardButton();
   }
 
   public showSupportInXMilliseconds(x: number) {
@@ -310,6 +315,19 @@ export class MainComponent implements AfterViewInit {
   public trackIcalSubscription() {
     // @ts-ignore
     _paq.push(['trackEvent', 'Calendar', 'subscribeIcal', this.paramsForTracking(false)]);
+  }
+
+  private trackIcalSubscriptionCopyClipboardButton() {
+    // @ts-ignore
+    _paq.push(['trackEvent', 'Calendar', 'subscribeIcalCopyClipboardButton', this.paramsForTracking(false)]);
+  }
+
+  public trackIcalSubscriptionTextarea() {
+    this.trackIcalSubscriptionTextarea$.next(document.getElementById('icalLink')!.textContent!)
+  }
+  private doTrackIcalSubscriptionTextarea() {
+    // @ts-ignore
+    _paq.push(['trackEvent', 'Calendar', 'subscribeIcalTextField', this.paramsForTracking(false)]);
   }
 
   public trackPrint() {
