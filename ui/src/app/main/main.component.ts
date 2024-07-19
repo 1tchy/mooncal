@@ -143,7 +143,7 @@ export class MainComponent implements AfterViewInit {
   }
 
   public toDate(date: string) {
-    return new Date(date)
+    return new Date(date + "T00:00:00")
   }
 
   public getApiUrl(withHost: boolean, ics: boolean) {
@@ -325,6 +325,7 @@ export class MainComponent implements AfterViewInit {
   public trackIcalSubscriptionTextarea() {
     this.trackIcalSubscriptionTextarea$.next(document.getElementById('icalLink')!.textContent!)
   }
+
   private doTrackIcalSubscriptionTextarea() {
     // @ts-ignore
     _paq.push(['trackEvent', 'Calendar', 'subscribeIcalTextField', this.paramsForTracking(false)]);
