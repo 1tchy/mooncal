@@ -51,13 +51,13 @@ export class MainComponent implements AfterViewInit {
 
   from = MainComponent.initialFrom();
   from$ = new Subject<Date>();
-  fromDebounced = this.toDate(this.from);
+  fromDebounced = this.toDate(this.from, true);
   to = MainComponent.initialTo();
   to$ = new Subject<Date>();
-  toDebounced = this.toDate(this.to);
+  toDebounced = this.toDate(this.to, false);
   zone = this.getTimezone();
+  oldZone = this.zone;
 
-  updateCount = 0;
   created = Date.now() - 1704067200000; // - 2024-01-01
   requestPath = "";
   calendar: Event[] = [];
@@ -137,13 +137,13 @@ export class MainComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.optionsForm.form.valueChanges.subscribe(() => {
       setTimeout(() => {//timeout so that Angular can update the components fields
-        this.fetchCalendar();
+        this.fetchCalendar(false);
       }, 1)
     });
   }
 
-  public toDate(date: string) {
-    return new Date(date)
+  public toDate(date: string, startOfDay: boolean) {
+    return new Date(date + (startOfDay ? "T00:00:00" : "T23:59:59"))
   }
 
   public getApiUrl(withHost: boolean, ics: boolean) {
@@ -225,7 +225,7 @@ export class MainComponent implements AfterViewInit {
     return (norm < 10 ? '0' : '') + norm;
   }
 
-  public fetchCalendar() {
+  public fetchCalendar(track: boolean = true) {
     let requestPath = this.paramsAsString(true);
     if (!Number.isNaN(this.fromDebounced.getTime()) && !Number.isNaN(this.toDebounced.getTime())) {
       if (this.requestPath !== requestPath) {
@@ -244,7 +244,7 @@ export class MainComponent implements AfterViewInit {
             this.requestOngoing = false;
           }
         });
-        if (this.updateCount++ > 0) {
+        if (track) {
           // @ts-ignore
           _paq.push(['trackEvent', 'Calendar', 'update', this.paramsForTracking(true)]);
         }
@@ -319,25 +319,27 @@ export class MainComponent implements AfterViewInit {
 
   private trackIcalSubscriptionCopyClipboardButton() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'subscribeIcalCopyClipboardButton', this.paramsForTracking(false)]);
+    _paq.push(['trackLink', 'subscribeCopyClipboardButton:' + this.paramsForTracking(false), 'download']);
   }
 
   public trackIcalSubscriptionTextarea() {
     this.trackIcalSubscriptionTextarea$.next(document.getElementById('icalLink')!.textContent!)
   }
+
   private doTrackIcalSubscriptionTextarea() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'subscribeIcalTextField', this.paramsForTracking(false)]);
+    _paq.push(['trackLink', 'subscribeTextField:' + this.paramsForTracking(false), 'download']);
   }
 
   public trackPrint() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'print', this.paramsForTracking(true)]);
+    _paq.push(['trackLink', 'print:' + this.paramsForTracking(true), 'download']);
   }
 
   public trackTimezoneChange() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'timezone', this.zone]);
+    _paq.push(['trackEvent', 'Settings', 'timezoneChange', this.oldZone + "_to_" + this.zone]);
+    this.oldZone = this.zone;
   }
 
   public getTimezone() {

@@ -41,15 +41,15 @@
           <div class="col-auto"
                ngClass="{'has-error':fromTo_from.errors?.['date']||fromTo_from.errors?.['required']}">
             <input type="date" class="form-control" [(ngModel)]="from" name="from" id="from" #fromTo_from="ngModel"
-                   (change)="from$.next(this.toDate(this.from))"
-                   (blur)="this.fromDebounced=this.toDate(this.from); fetchCalendar()"
+                   (change)="from$.next(this.toDate(this.from, true))"
+                   (blur)="this.fromDebounced=this.toDate(this.from, true); fetchCalendar()"
                    required min="1000-01-01" [max]="this.to">
           </div>
           <label class="col-auto" for="to">{{ messages.time.fromTo.to }}</label>
           <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
             <input type="date" class="form-control" [(ngModel)]="to" name="to" id="to" #fromTo_to="ngModel"
-                   (change)="to$.next(this.toDate(this.to))"
-                   (blur)="this.toDebounced=this.toDate(this.to); fetchCalendar()"
+                   (change)="to$.next(this.toDate(this.to, false))"
+                   (blur)="this.toDebounced=this.toDate(this.to, false); fetchCalendar()"
                    required [min]="this.from" max="3000-12-31">
           </div>
           <span class="text-danger ms-2"
@@ -61,7 +61,7 @@
           <label class="col-auto" for="zone">{{ messages.time.fromTo.inTimezone }}</label>
           <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
             <select class="form-control" [(ngModel)]="zone" name="zone" id="zone"
-                    (change)="trackTimezoneChange(); fetchCalendar()">
+                    (change)="trackTimezoneChange(); fetchCalendar(false)">
               <option *ngFor="let tz of getSupportedTimezones()" [ngValue]="tz">{{ tz }}</option>
             </select>
           </div>

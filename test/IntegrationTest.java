@@ -70,7 +70,7 @@ public class IntegrationTest extends WithBrowser {
             click(browser.$("button", withText("Zum Kalender hinzufügen")).first());
             awaitClickable(() -> browser.$("a", withText("Datei herunterladen")).first());
             String iCalDownloadLink = browser.$("a", withText("Datei herunterladen")).attributes("href").getFirst();
-            assertThat(iCalDownloadLink, endsWith("&from=2024-02-01T01:00:00Europe/Zurich&to=2024-07-31T02:00:00Europe/Zurich&manualDownload"));
+            assertThat(iCalDownloadLink, endsWith("&from=2024-02-01T00:00:00Europe/Zurich&to=2024-07-31T23:59:59Europe/Zurich&manualDownload"));
             assertEquals(iCalSubscribeLink
                             .replaceFirst("created=\\d+&", "")
                             .replaceFirst("&before=.*", ""),
