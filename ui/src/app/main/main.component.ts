@@ -309,7 +309,7 @@ export class MainComponent implements AfterViewInit {
 
   public trackDownloadIcal() {
     // @ts-ignore
-    _paq.push(['trackLink', this.paramsForTracking(true), 'download']);
+    _paq.push(['trackLink', 'https://mooncal.ch/download/' + this.paramsForTracking(true), 'download']);
   }
 
   public trackIcalSubscription() {
@@ -319,7 +319,7 @@ export class MainComponent implements AfterViewInit {
 
   private trackIcalSubscriptionCopyClipboardButton() {
     // @ts-ignore
-    _paq.push(['trackLink', 'subscribeCopyClipboardButton:' + this.paramsForTracking(false), 'download']);
+    _paq.push(['trackLink', 'https://mooncal.ch/subscribeCopyClipboardButton/' + this.paramsForTracking(false), 'download']);
   }
 
   public trackIcalSubscriptionTextarea() {
@@ -328,12 +328,12 @@ export class MainComponent implements AfterViewInit {
 
   private doTrackIcalSubscriptionTextarea() {
     // @ts-ignore
-    _paq.push(['trackLink', 'subscribeTextField:' + this.paramsForTracking(false), 'download']);
+    _paq.push(['trackLink', 'https://mooncal.ch/subscribeTextField/' + this.paramsForTracking(false), 'download']);
   }
 
   public trackPrint() {
     // @ts-ignore
-    _paq.push(['trackLink', 'print:' + this.paramsForTracking(true), 'download']);
+    _paq.push(['trackLink', 'https://mooncal.ch/print/' + this.paramsForTracking(true), 'download']);
   }
 
   public trackTimezoneChange() {
