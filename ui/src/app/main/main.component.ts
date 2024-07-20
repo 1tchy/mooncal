@@ -51,10 +51,10 @@ export class MainComponent implements AfterViewInit {
 
   from = MainComponent.initialFrom();
   from$ = new Subject<Date>();
-  fromDebounced = this.toDate(this.from);
+  fromDebounced = this.toDate(this.from, true);
   to = MainComponent.initialTo();
   to$ = new Subject<Date>();
-  toDebounced = this.toDate(this.to);
+  toDebounced = this.toDate(this.to, false);
   zone = this.getTimezone();
 
   updateCount = 0;
@@ -142,8 +142,8 @@ export class MainComponent implements AfterViewInit {
     });
   }
 
-  public toDate(date: string) {
-    return new Date(date + "T00:00:00")
+  public toDate(date: string, startOfDay: boolean) {
+    return new Date(date + (startOfDay ? "T00:00:00" : "T23:59:59"))
   }
 
   public getApiUrl(withHost: boolean, ics: boolean) {
