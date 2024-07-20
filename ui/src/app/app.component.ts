@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
 
   public trackLanguageChange(newLanguage: string, oldLanguage: string, event: Event) {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Language', 'change', oldLanguage + '_to_' + newLanguage], {
+    _paq.push(['trackEvent', 'Settings', 'languageChange', oldLanguage + '_to_' + newLanguage], {
       hitCallback: function () {
         window.location.href = (<HTMLLinkElement>event.target).href;
       }

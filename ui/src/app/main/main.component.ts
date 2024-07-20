@@ -56,6 +56,7 @@ export class MainComponent implements AfterViewInit {
   to$ = new Subject<Date>();
   toDebounced = this.toDate(this.to, false);
   zone = this.getTimezone();
+  oldZone = this.zone;
 
   created = Date.now() - 1704067200000; // - 2024-01-01
   requestPath = "";
@@ -337,7 +338,8 @@ export class MainComponent implements AfterViewInit {
 
   public trackTimezoneChange() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'timezone', this.zone]);
+    _paq.push(['trackEvent', 'Settings', 'timezoneChange', this.oldZone + "_to_" + this.zone]);
+    this.oldZone = this.zone;
   }
 
   public getTimezone() {
