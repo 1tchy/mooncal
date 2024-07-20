@@ -61,7 +61,7 @@
           <label class="col-auto" for="zone">{{ messages.time.fromTo.inTimezone }}</label>
           <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
             <select class="form-control" [(ngModel)]="zone" name="zone" id="zone"
-                    (change)="trackTimezoneChange(); fetchCalendar()">
+                    (change)="trackTimezoneChange(); fetchCalendar(false)">
               <option *ngFor="let tz of getSupportedTimezones()" [ngValue]="tz">{{ tz }}</option>
             </select>
           </div>

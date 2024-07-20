@@ -57,7 +57,6 @@ export class MainComponent implements AfterViewInit {
   toDebounced = this.toDate(this.to, false);
   zone = this.getTimezone();
 
-  updateCount = 0;
   created = Date.now() - 1704067200000; // - 2024-01-01
   requestPath = "";
   calendar: Event[] = [];
@@ -137,7 +136,7 @@ export class MainComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.optionsForm.form.valueChanges.subscribe(() => {
       setTimeout(() => {//timeout so that Angular can update the components fields
-        this.fetchCalendar();
+        this.fetchCalendar(false);
       }, 1)
     });
   }
@@ -225,7 +224,7 @@ export class MainComponent implements AfterViewInit {
     return (norm < 10 ? '0' : '') + norm;
   }
 
-  public fetchCalendar() {
+  public fetchCalendar(track: boolean = true) {
     let requestPath = this.paramsAsString(true);
     if (!Number.isNaN(this.fromDebounced.getTime()) && !Number.isNaN(this.toDebounced.getTime())) {
       if (this.requestPath !== requestPath) {
@@ -244,7 +243,7 @@ export class MainComponent implements AfterViewInit {
             this.requestOngoing = false;
           }
         });
-        if (this.updateCount++ > 0) {
+        if (track) {
           // @ts-ignore
           _paq.push(['trackEvent', 'Calendar', 'update', this.paramsForTracking(true)]);
         }
