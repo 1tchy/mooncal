@@ -319,7 +319,7 @@ export class MainComponent implements AfterViewInit {
 
   private trackIcalSubscriptionCopyClipboardButton() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'subscribeIcalCopyClipboardButton', this.paramsForTracking(false)]);
+    _paq.push(['trackLink', 'subscribeCopyClipboardButton:' + this.paramsForTracking(false), 'download']);
   }
 
   public trackIcalSubscriptionTextarea() {
@@ -328,12 +328,12 @@ export class MainComponent implements AfterViewInit {
 
   private doTrackIcalSubscriptionTextarea() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'subscribeIcalTextField', this.paramsForTracking(false)]);
+    _paq.push(['trackLink', 'subscribeTextField:' + this.paramsForTracking(false), 'download']);
   }
 
   public trackPrint() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'print', this.paramsForTracking(true)]);
+    _paq.push(['trackLink', 'print:' + this.paramsForTracking(true), 'download']);
   }
 
   public trackTimezoneChange() {
