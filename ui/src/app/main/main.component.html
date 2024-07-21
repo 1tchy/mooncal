@@ -76,7 +76,7 @@
     <div class="card" id="export">
       <h5 class="card-header">{{ messages.export.title }}</h5>
       <div class="card-body">
-        <button class="btn btn-light me-1" (click)="trackIcalSubscription(); subscribeOpen(subscribeModal)"
+        <button class="btn btn-light me-1" (click)="trackOpenSubscriptionModal(); subscribeOpen(subscribeModal)"
                 data-toggle="modal" data-target="#subscribeModal">
           {{ messages.export.addToCalendar }}
         </button>
@@ -122,7 +122,7 @@
   <div class="modal-body">
     <p>{{ messages.export.ical.subscribe.instructions.lead }}:</p>
     <ul ngbNav #calAppInfo="ngbNav" class="nav-tabs" [destroyOnHide]="false"
-        [(activeId)]="activeSubscriptionDescriptionOS">
+        [(activeId)]="activeSubscriptionDescriptionOS" (navChange)="subscriptionDescriptionOSChanged($event)">
       <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_IOS"
           [style.order]="initialSubscriptionDescriptionOS==SUBSCRIPTION_DESCRIPTION_IOS?-1:0">
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.iOS.name }}</button>
