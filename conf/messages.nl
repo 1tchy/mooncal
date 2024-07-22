@@ -22,6 +22,7 @@ phases.daily.visibility=Maan {0}% zichtbaar
 phases.daily.visibility.morning6=Om 6 uur s''ochtends is de maan {0}% zichthtbaar
 phases.daily.visibility.noon12=Om 12 uur s''middags is de maan {0}% zichthtbaar
 phases.daily.visibility.evening6=Om 6 uur s''avonds is de maan {0}% zichthtbaar
+phases.daily.visibility.midnight=Om middernacht is de maan {0}% zichtbaar
 
 events.lunareclipse.total=Totale maansverduistering
 events.lunareclipse.partial=Gedeeltelijke maansverduistering

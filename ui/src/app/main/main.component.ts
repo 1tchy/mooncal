@@ -9,6 +9,7 @@ import {
   NgbDropdownModule,
   NgbModal,
   NgbNav,
+  NgbNavChangeEvent,
   NgbNavContent,
   NgbNavItem,
   NgbNavLinkButton,
@@ -289,6 +290,10 @@ export class MainComponent implements AfterViewInit {
     return event1 && event2 && event1.date === event2.date && event1.title === event2.title && event1.description === event2.description;
   }
 
+  public subscriptionDescriptionOSChanged(event: NgbNavChangeEvent) {
+    this.doTrackSubscriptionDescriptionOSChanged(this.getSubscriptionDescriptionOSName(event.activeId), this.getSubscriptionDescriptionOSName(event.nextId));
+  }
+
   public copyIcalLink() {
     // noinspection JSIgnoredPromiseFromCall
     navigator.clipboard.writeText(document.getElementById('icalLink')!.textContent!);
@@ -312,9 +317,14 @@ export class MainComponent implements AfterViewInit {
     _paq.push(['trackLink', 'https://mooncal.ch/download/' + this.paramsForTracking(true), 'download']);
   }
 
-  public trackIcalSubscription() {
+  public trackOpenSubscriptionModal() {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Calendar', 'subscribeIcal', this.paramsForTracking(false)]);
+    _paq.push(['trackEvent', 'Calendar', 'openSubscriptionModal', this.paramsForTracking(false)]);
+  }
+
+  private doTrackSubscriptionDescriptionOSChanged(oldOS: string, newOS: string) {
+    // @ts-ignore
+    _paq.push(['trackEvent', 'Settings', 'subscriptionDescriptionOSChange', oldOS + "_to_" + newOS]);
   }
 
   private trackIcalSubscriptionCopyClipboardButton() {
@@ -370,6 +380,25 @@ export class MainComponent implements AfterViewInit {
         return this.SUBSCRIPTION_DESCRIPTION_OUTLOOK
       default:
         return Math.random() * this.SUBSCRIPTION_DESCRIPTION_MAX;
+    }
+  }
+
+  private getSubscriptionDescriptionOSName(subscriptionDescriptionOSId: number) {
+    switch (subscriptionDescriptionOSId) {
+      case this.SUBSCRIPTION_DESCRIPTION_IOS:
+        return "iOS"
+      case this.SUBSCRIPTION_DESCRIPTION_ANDROID:
+        return "Android"
+      case this.SUBSCRIPTION_DESCRIPTION_MAC:
+        return "Mac"
+      case this.SUBSCRIPTION_DESCRIPTION_GOOGLE:
+        return "Google"
+      case this.SUBSCRIPTION_DESCRIPTION_THUNDERBIRD:
+        return "Thunderbird"
+      case this.SUBSCRIPTION_DESCRIPTION_OUTLOOK:
+        return "Outlook"
+      default:
+        return "Unknown"
     }
   }
 

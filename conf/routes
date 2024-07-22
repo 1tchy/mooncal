@@ -8,6 +8,15 @@ GET        /mooncal.ics          controllers.Application.queryAsICalendar(reques
 POST       /suggestBetterTranslation controllers.Application.suggestBetterTranslation(request: Request)
 GET        /server/status        controllers.Application.status()
 
+GET        /android-chrome-192x192.png controllers.Favicon.getIcon(path="android-chrome-192x192.png")
+GET        /android-chrome-512x512.png controllers.Favicon.getIcon(path="android-chrome-512x512.png")
+GET        /apple-touch-icon.png controllers.Favicon.getIcon(path="apple-touch-icon.png")
+GET        /favicon.ico controllers.Favicon.getIcon(path="favicon.ico")
+GET        /favicon-16x16.png controllers.Favicon.getIcon(path="favicon-16x16.png")
+GET        /favicon-32x32.png controllers.Favicon.getIcon(path="favicon-32x32.png")
+GET        /mstile-150x150.png controllers.Favicon.getIcon(path="mstile-150x150.png")
+GET        /safari-pinned-tab.svg controllers.Favicon.getIcon(path="safari-pinned-tab.svg")
+
 # Map static resources from the /public folder
 GET        /$file<.*\..*>        controllers.Assets.at(path="/public", file)
 GET        /$path<.*>            controllers.Application.indexHtml(path)
