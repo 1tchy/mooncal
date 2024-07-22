@@ -22,6 +22,7 @@ phases.daily.visibility=lune {0}% visible
 phases.daily.visibility.morning6=Lune {0}% visible à 6h du matin
 phases.daily.visibility.noon12=Lune {0}% visible à midi
 phases.daily.visibility.evening6=Lune {0}% visible à 6h du soir
+phases.daily.visibility.midnight=Lune {0}% visible à minuit
 
 events.lunareclipse.total=éclipse solaire totale
 events.lunareclipse.partial=éclipse solaire partielle

@@ -22,6 +22,7 @@ phases.daily.visibility=Luna este vizibilă la {0}%
 phases.daily.visibility.morning6=Luna este vizibilă la {0}% la ora 6 dimineața
 phases.daily.visibility.noon12=Luna este vizibilă la {0}% la amiază
 phases.daily.visibility.evening6=Luna este vizibilă la {0}% la ora 6 seara
+phases.daily.visibility.midnight=Luna este vizibilă cu {0}% la miezul nopții
 
 events.lunareclipse.total=eclipsă totală lunară
 events.lunareclipse.partial=eclipsă parțială lunară

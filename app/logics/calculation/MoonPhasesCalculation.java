@@ -72,9 +72,11 @@ public class MoonPhasesCalculation extends Calculation {
         final String moonVisiblePercentMorning = getMoonVisiblePercent(day.atTime(6, 0).atZone(at), precise);
         final String moonVisiblePercentAtNoon = getMoonVisiblePercent(day.atTime(12, 0).atZone(at), precise);
         final String moonVisiblePercentEvening = getMoonVisiblePercent(day.atTime(18, 0).atZone(at), precise);
+        final String moonVisiblePercentMidnight = getMoonVisiblePercent(day.plusDays(1).atTime(0, 0).atZone(at), precise);
         String description = messagesApi.get(lang, "phases.daily.visibility.morning6", moonVisiblePercentMorning) + "\n" +
                 messagesApi.get(lang, "phases.daily.visibility.noon12", moonVisiblePercentAtNoon) + "\n" +
-                messagesApi.get(lang, "phases.daily.visibility.evening6", moonVisiblePercentEvening);
+                messagesApi.get(lang, "phases.daily.visibility.evening6", moonVisiblePercentEvening) + "\n" +
+                messagesApi.get(lang, "phases.daily.visibility.midnight", moonVisiblePercentMidnight);
         return new EventInstance(day.atTime(12, 0).atZone(at), title, description, at, "daily");
     }
 
