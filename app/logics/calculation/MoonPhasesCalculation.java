@@ -84,4 +84,19 @@ public class MoonPhasesCalculation extends Calculation {
         return format.format(MoonPhaseFinder.getMoonVisiblePercent(dateTime) * 100);
     }
 
+    public CurrentMoonPhase getCurrentMoonPhase() {
+        ZonedDateTime now = ZonedDateTime.now();
+        int moonAngle = (int) Math.round(MoonPhaseFinder.getMoonAngle(now));
+        int moonVisiblePercent = (int) Math.round(MoonPhaseFinder.getMoonVisiblePercent(now) * 100);
+        return new CurrentMoonPhase(moonVisiblePercent, moonAngle < 180);
+    }
+
+    public record CurrentMoonPhase(int visibility, boolean isWaxing) {
+        /**
+         * @return A value from 0% (new moon) to 100% (full moon) to 200% (new moon again)
+         */
+        public int getPhaseVisibilityPercentage() {
+            return isWaxing ? visibility : 200 - visibility;
+        }
+    }
 }
