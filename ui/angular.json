@@ -26,9 +26,10 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/browserconfig.xml",
               "src/robots.txt",
+              "src/site.webmanifest",
               "src/sitemap.xml",
-              "src/favicon.ico",
               "src/images",
               {
                 "glob": "*.png",
@@ -93,9 +94,10 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
+              "src/browserconfig.xml",
               "src/robots.txt",
+              "src/site.webmanifest",
               "src/sitemap.xml",
-              "src/favicon.ico",
               "src/images",
               {
                 "glob": "*.png",
