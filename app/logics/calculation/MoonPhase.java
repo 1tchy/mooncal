@@ -16,7 +16,8 @@ public enum MoonPhase {
             if (isBlueMoon(date)) {
                 month = 13;
             }
-            return super.getTitle(messagesApi, lang, date) + " (" + messagesApi.get(lang, "phases.full." + month) + ")";
+            String fullMoonName = messagesApi.get(lang, "phases.full." + month);
+            return super.getTitle(messagesApi, lang, date) + (fullMoonName.isEmpty() ? "" : " (" + fullMoonName + ")");
         }
 
         private static boolean isBlueMoon(ZonedDateTime date) {

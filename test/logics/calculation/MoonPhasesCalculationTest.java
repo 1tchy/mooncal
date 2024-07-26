@@ -45,6 +45,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.getPhases().put(MoonPhaseType.NEWMOON, true);
         requestForm.setFrom(ZonedDateTime.of(2015, 10, 20, 12, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2015, 11, 30, 12, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setLang(Lang.forCode("en"));
     }
 
     private Collection<EventInstance> calculate(RequestForm requestForm) {
