@@ -46,13 +46,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routerSub$?.unsubscribe();
   }
 
-  public trackLanguageChange(newLanguage: string, oldLanguage: string, event: Event) {
+  public trackLanguageChange(newLanguage: string, oldLanguage: string) {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Settings', 'languageChange', oldLanguage + '_to_' + newLanguage], {
-      hitCallback: function () {
-        window.location.href = (<HTMLLinkElement>event.target).href;
-      }
-    });
+    _paq.push(['trackEvent', 'Settings', 'languageChange', oldLanguage + '_to_' + newLanguage]);
   }
 
   public trackNavigation(targetPath: string) {

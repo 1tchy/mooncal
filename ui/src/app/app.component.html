@@ -32,7 +32,7 @@
               <ng-container *ngFor="let langOption of allLanguages">
                 <li *ngIf="langOption!==messages.lang.current">
                   <a ngbDropdownItem [routerLink]="routeData[langOption]"
-                     (click)='isNavbarCollapsed=true; trackLanguageChange(langOption, messages.lang.current, $event)'>
+                     (click)='isNavbarCollapsed=true; trackLanguageChange(langOption, messages.lang.current)'>
                     {{ messages.lang[langOption] }}
                   </a>
                 </li>
