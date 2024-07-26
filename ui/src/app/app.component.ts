@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
@@ -14,7 +14,7 @@ import {Title} from "@angular/platform-browser";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   isNavbarCollapsed = true;
   routePath = '';
   routeData: Data = []
