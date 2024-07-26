@@ -6,6 +6,7 @@ import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
+import {getAllLanguages} from "./app.routes";
 
 @Component({
   selector: 'app-root',
@@ -62,4 +63,6 @@ export class AppComponent implements OnInit, OnDestroy {
     // @ts-ignore
     _paq.push(['trackPageView']);
   }
+
+  protected readonly allLanguages = getAllLanguages();
 }
