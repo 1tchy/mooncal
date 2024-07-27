@@ -9,6 +9,7 @@ import models.*;
 import org.jetbrains.annotations.TestOnly;
 import play.Logger;
 import play.i18n.Lang;
+import play.i18n.Langs;
 import play.i18n.MessagesApi;
 
 import javax.inject.Inject;
@@ -30,14 +31,16 @@ public class MoonEventCalculation extends Calculation {
 
     private static final Logger.ALogger logger = Logger.of(MethodHandles.lookup().lookupClass());
     private final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("d.M.u'T'H:m:s");
+    private final Langs langs;
     private final Translator translator = new Translator();
     private final TreeMap<ZonedDateTime, EventTemplate> lunarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> solarEclipses = new TreeMap<>();
     private final TreeMap<ZonedDateTime, EventTemplate> moonLandings = new TreeMap<>();
 
     @Inject
-    public MoonEventCalculation(MessagesApi messagesApi) {
+    public MoonEventCalculation(MessagesApi messagesApi, Langs langs) {
         super(messagesApi);
+        this.langs = langs;
         initializeLunarEclipses();
         initializeSolarEclipses();
         initializeMoonLandings();
@@ -80,15 +83,8 @@ public class MoonEventCalculation extends Calculation {
         }
     }
 
-    private static TranslatedString toTranslatedString(JsonNode jsonNode) {
-        return new TranslatedString(
-                jsonNode.get("en").asText(),
-                jsonNode.get("de").asText(),
-                jsonNode.get("nl").asText(),
-                jsonNode.get("es").asText(),
-                jsonNode.get("fr").asText(),
-                jsonNode.get("ro").asText()
-        );
+    private TranslatedString toTranslatedString(JsonNode jsonNode) {
+        return new TranslatedString(langs, langCode -> jsonNode.get(langCode).asText());
     }
 
     @VisibleForTesting
@@ -115,7 +111,7 @@ public class MoonEventCalculation extends Calculation {
                 }
                 String name = result.get("name").asText();
                 String descriptionEN = result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " ");
-                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, lang -> "🚀 " + name, TranslatedString.translate(descriptionEN, translator)::getByLang, "moon-landing"));
+                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, lang -> "🚀 " + name, TranslatedString.translate(langs, descriptionEN, translator)::getByLang, "moon-landing"));
             }
         } catch (IOException e) {
             logger.error("Could not update moon landings", e);

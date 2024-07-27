@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import play.i18n.Lang;
+import play.i18n.Langs;
 import play.i18n.Messages;
 import play.i18n.MessagesApi;
 import play.mvc.Http;
@@ -32,7 +33,7 @@ import static org.mockito.Mockito.when;
 
 public class MoonEventCalculationTest extends WithApplication {
 
-    private final MoonEventCalculation cut = new MoonEventCalculation(getMessagesApiMock());
+    private final MoonEventCalculation cut = new MoonEventCalculation(getMessagesApiMock(), mock(Langs.class));
 
     @NotNull
     private static MessagesApi getMessagesApiMock() {
