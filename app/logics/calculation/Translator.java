@@ -28,6 +28,9 @@ public class Translator {
     }
 
     public String translate(String langFrom, String langTo, String text) throws IOException {
+        if (langFrom.equals(langTo)) {
+            return text;
+        }
         URL url = URI.create("https://script.google.com/macros/s/" + deploymentId + "/exec?source=" + langFrom + "&target=" + langTo +
                 "&q=" + URLEncoder.encode(text, StandardCharsets.UTF_8)).toURL();
         var urlConnection = url.openConnection();

@@ -6,12 +6,7 @@
   },
   "lang": {
     "current": "en",
-    "de": "Deutsch",
-    "en": "English",
-    "nl": "Nederlands",
-    "es": "Español",
-    "fr": "Français",
-    "ro": "Romanian",
+    "currentName": "English",
     "change": "Change language"
   },
   "navigation": {

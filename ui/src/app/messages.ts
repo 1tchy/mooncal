@@ -19,14 +19,8 @@ export interface App {
 }
 
 export interface Lang {
-  [key: string]: any
-
   current: string
-  de: string
-  en: string
-  nl: string
-  es: string
-  fr: string
+  currentName: string
   change: string
 }
 

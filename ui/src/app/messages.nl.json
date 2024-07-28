@@ -6,12 +6,7 @@
   },
   "lang": {
     "current": "nl",
-    "de": "Deutsch",
-    "en": "English",
-    "nl": "Nederlands",
-    "es": "Español",
-    "fr": "Français",
-    "ro": "Romanian",
+    "currentName": "Nederlands",
     "change": "Wijzig taal"
   },
   "navigation": {

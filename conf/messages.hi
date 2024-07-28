@@ -1,0 +1,39 @@
+lang.current=hi
+
+phases.full=पूर्णचंद्र
+phases.full.1=
+phases.full.2=
+phases.full.3=
+phases.full.4=
+phases.full.5=
+phases.full.6=
+phases.full.7=
+phases.full.8=
+phases.full.9=
+phases.full.10=
+phases.full.11=
+phases.full.12=
+phases.full.13=
+phases.new=नव चांद
+phases.quarter=चौथाई
+phases.quarter.first=पहली चौथाई
+phases.quarter.last=तीसरी चौथाई
+phases.daily.visibility=चांद {0}% दिखाई दे रहा है
+phases.daily.visibility.morning6=सुबह 6 बजे चांद {0}% दिखाई दे रहा है
+phases.daily.visibility.noon12=दोपहर 12 बजे चांद {0}% दिखाई दे रहा है
+phases.daily.visibility.evening6=शाम 6 बजे चांद {0}% दिखाई दे रहा है
+phases.daily.visibility.midnight=मध्य रात्रि में चांद {0}% दिखाई दे रहा है
+
+events.lunareclipse.total=कुल चंद्रमा ग्रहण
+events.lunareclipse.partial=अर्धगोलार्ध चंद्रमा ग्रहण
+events.solareclipse.total=कुल सूर्य ग्रहण
+events.solareclipse.partial=अर्धगोलार्ध सूर्य ग्रहण
+events.solareclipse.annular=अन्नुलर सूर्य ग्रहण
+events.solareclipse.hybrid=हाइब्रिड सूर्य ग्रहण
+events.at={0} को {1} में
+
+error.notfound=पृष्ठ नहीं मिला
+error.notfound.lead=खेद, आप देख रहे पृष्ठ की खोज करने में सफल नहीं हुए।
+error.notfound.problem=यह लगता है कि यह:
+error.notfound.problem.typo=पता लिखने में गलती
+error.notfound.problem.link=समय पर अपडेट न होने वाला लिंक

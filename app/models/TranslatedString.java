@@ -2,39 +2,45 @@ package models;
 
 import logics.calculation.Translator;
 import play.i18n.Lang;
+import play.i18n.Langs;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-public record TranslatedString(String en, String de, String nl, String es, String fr, String ro) {
+public class TranslatedString {
 
-    public static TranslatedString translate(String en, Translator translator) throws IOException {
-        String de = translator.translate("en", "de", en);
-        String nl = translator.translate("en", "nl", en);
-        String es = translator.translate("en", "es", en);
-        String fr = translator.translate("en", "fr", en);
-        String ro = translator.translate("en", "ro", en);
-        return new TranslatedString(en, de, nl, es, fr, ro);
+    private final Map<String, String> strings;
+
+    public <E extends Exception> TranslatedString(Langs langs, FunctionWithException<String, String, E> stringByLangCode) throws E {
+        List<Lang> languages = langs.availables();
+        strings = new HashMap<>(languages.size());
+        for (Lang lang : languages) {
+            strings.put(lang.code(), stringByLangCode.apply(lang.code()));
+        }
+    }
+
+    private TranslatedString(Map<String, String> strings) {
+        this.strings = strings;
+    }
+
+    public static TranslatedString translate(Langs langs, String en, Translator translator) throws IOException {
+        return new TranslatedString(langs, lang -> translator.translate("en", lang, en));
     }
 
     public TranslatedString prefix(String prefix) {
-        return new TranslatedString(
-                prefix + en,
-                prefix + de,
-                prefix + nl,
-                prefix + es,
-                prefix + fr,
-                prefix + ro
-        );
+        Map<String, String> prefixedStrings = strings.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> prefix + e.getValue()));
+        return new TranslatedString(prefixedStrings);
     }
 
     public String getByLang(Lang lang) {
-        return switch (lang.code()) {
-            case "de" -> de;
-            case "nl" -> nl;
-            case "es" -> es;
-            case "fr" -> fr;
-            case "ro" -> ro;
-            default -> en;
-        };
+        return strings.get(lang.code());
+    }
+
+    public interface FunctionWithException<T, R, E extends Exception> {
+        R apply(T t) throws E;
     }
 }

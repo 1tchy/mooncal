@@ -1,20 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
+import {getAllLanguagesAndItsNames} from "./app.routes";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbCollapseModule, NgbDropdownModule, NgForOf, NgIf, RouterLink, NgClass],
+  imports: [RouterOutlet, NgbCollapseModule, NgbDropdownModule, NgForOf, NgIf, RouterLink, NgClass, KeyValuePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   isNavbarCollapsed = true;
   routePath = '';
   routeData: Data = []
@@ -45,13 +46,9 @@ export class AppComponent implements OnInit {
     this.routerSub$?.unsubscribe();
   }
 
-  public trackLanguageChange(newLanguage: string, oldLanguage: string, event: Event) {
+  public trackLanguageChange(newLanguage: string, oldLanguage: string) {
     // @ts-ignore
-    _paq.push(['trackEvent', 'Settings', 'languageChange', oldLanguage + '_to_' + newLanguage], {
-      hitCallback: function () {
-        window.location.href = (<HTMLLinkElement>event.target).href;
-      }
-    });
+    _paq.push(['trackEvent', 'Settings', 'languageChange', oldLanguage + '_to_' + newLanguage]);
   }
 
   public trackNavigation(targetPath: string) {
@@ -62,4 +59,6 @@ export class AppComponent implements OnInit {
     // @ts-ignore
     _paq.push(['trackPageView']);
   }
+
+  protected readonly allLanguagesAndItsNames = getAllLanguagesAndItsNames();
 }
