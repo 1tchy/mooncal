@@ -7,6 +7,7 @@ import messagesNL from "./messages.nl.json";
 import messagesES from "./messages.es.json";
 import messagesFR from "./messages.fr.json";
 import messagesRO from "./messages.ro.json";
+import messagesHI from "./messages.hi.json";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {Messages} from "./messages";
 
@@ -52,7 +53,7 @@ function buildRoute(messages: Messages, component: any, pathFunction: (messages:
 }
 
 function getAllLanguagesMessages(): Messages[] {
-  return [messagesDE, messagesEN, messagesNL, messagesES, messagesFR, messagesRO];
+  return [messagesDE, messagesEN, messagesNL, messagesES, messagesFR, messagesRO, messagesHI];
 }
 
 function getAllLanguages(): string[] {
