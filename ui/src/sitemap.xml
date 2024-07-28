@@ -8,6 +8,7 @@
 		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/calendario-lunar"/>
 		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/calendrier-lune"/>
 		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/calendar-lunar"/>
+		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/calendar"/>
 	</url>
 	<url>
 		<loc>https://mooncal.ch/about</loc>
@@ -17,5 +18,6 @@
 		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/acerca"/>
 		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/a-propos"/>
 		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/despre"/>
+		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/about"/>
 	</url>
 </urlset>

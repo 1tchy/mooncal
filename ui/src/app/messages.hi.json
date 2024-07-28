@@ -14,8 +14,8 @@
     "about": "बारे में",
     "toggle": "नेविगेशन टॉगल ऑन/ऑफ",
     "paths": {
-      "home": "hi/कैलेंडर",
-      "about": "hi/बारेमें",
+      "home": "hi/calendar",
+      "about": "hi/about",
       "buymeacoffee": "hi/buymeacoffee"
     }
   },
