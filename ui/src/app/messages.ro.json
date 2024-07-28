@@ -6,12 +6,7 @@
   },
   "lang": {
     "current": "ro",
-    "de": "Deutsch",
-    "en": "English",
-    "nl": "Nederlands",
-    "es": "Español",
-    "fr": "Français",
-    "ro": "Romanian",
+    "currentName": "Română",
     "change": "Schimbă limba"
   },
   "navigation": {

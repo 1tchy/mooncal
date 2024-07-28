@@ -3,15 +3,15 @@ import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} f
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
-import {getAllLanguages} from "./app.routes";
+import {getAllLanguagesAndItsNames} from "./app.routes";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbCollapseModule, NgbDropdownModule, NgForOf, NgIf, RouterLink, NgClass],
+  imports: [RouterOutlet, NgbCollapseModule, NgbDropdownModule, NgForOf, NgIf, RouterLink, NgClass, KeyValuePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -60,5 +60,5 @@ export class AppComponent implements OnInit, OnDestroy {
     _paq.push(['trackPageView']);
   }
 
-  protected readonly allLanguages = getAllLanguages();
+  protected readonly allLanguagesAndItsNames = getAllLanguagesAndItsNames();
 }

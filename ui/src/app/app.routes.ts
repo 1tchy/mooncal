@@ -59,5 +59,13 @@ function getAllLanguages(): string[] {
   return getAllLanguagesMessages().map(messages => messages.lang.current);
 }
 
+function getAllLanguagesAndItsNames(): { [key: string]: string } {
+  return getAllLanguagesMessages().reduce((accumulator, messages) => ({
+    ...accumulator,
+    [messages.lang.current]: messages.lang.currentName
+  }), {});
+}
+
 export const routes: Routes = buildAllRoutes();
 export {getAllLanguages as getAllLanguages};
+export {getAllLanguagesAndItsNames as getAllLanguagesAndItsNames};
