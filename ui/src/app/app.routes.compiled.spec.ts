@@ -36,6 +36,12 @@ export const compiledRoute = [
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
+    path: 'hi/calendar',
+    title: 'चंद्र कैलेंडर',
+    component: 'MainComponent',
+    data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
+  },
+  {
     path: 'ueber',
     title: 'Über diese Seite',
     component: 'AboutComponent',
@@ -72,6 +78,12 @@ export const compiledRoute = [
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
+    path: 'hi/about',
+    title: 'यह साइट के बारे में',
+    component: 'AboutComponent',
+    data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
+  },
+  {
     path: 'buymeacoffee',
     title: 'Über diese Seite',
     component: 'AboutComponent',
@@ -106,6 +118,12 @@ export const compiledRoute = [
     title: 'Despre acest site',
     component: 'AboutComponent',
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
+  },
+  {
+    path: 'hi/buymeacoffee',
+    title: 'यह साइट के बारे में',
+    component: 'AboutComponent',
+    data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {
     redirectFrom: 'about',

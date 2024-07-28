@@ -1,11 +1,8 @@
 import io.fluentlenium.core.domain.FluentWebElement;
 import io.fluentlenium.core.filter.AttributeFilter;
 import org.junit.Test;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import play.test.Helpers;
 import play.test.TestBrowser;
 import play.test.WithBrowser;
@@ -16,16 +13,18 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static io.fluentlenium.core.filter.FilterConstructor.containingText;
 import static io.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -45,12 +44,8 @@ public class IntegrationTest extends WithBrowser {
     }
 
     @Test
-    public void integrationTest() throws InterruptedException, IOException {
-        try {
-            browser.goTo("/");
-            assertEquals("Mondkalender", getText("h1"));
-            browser.waitUntil(webDriver -> getText("#calendar").contains("Vollmond um"));
-
+    public void subscribeAndDowload() throws InterruptedException, IOException {
+        wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
             browser.$("#phases label", withText("Vollmond")).click();
             browser.$("#events label").click();
             browser.$("#interval #from").fill().with("2024-02-01");
@@ -78,16 +73,54 @@ public class IntegrationTest extends WithBrowser {
                             .replaceFirst("&from=.*", ""));
             assertIcsEquals(load("IntegrationTest_newmoon_download.ics"), download(iCalDownloadLink));
             click(browser.$("button", new AttributeFilter("aria-label", "Close")).first());
+        });
+    }
 
+    @Test
+    public void changeLanguage() throws InterruptedException {
+        wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
             assertThat(getText("body"), not(containsString("English")));
-            scrollAndAwait(() -> browser.$("a", containingText("Sprache ändern")).first());
             click(browser.$("a", containingText("Sprache ändern")).first());
             click(browser.$("a", withText("English")).first());
             assertEquals("Moon Calendar", getText("h1"));
             click(browser.$("a", withText("About")).first());
             assertEquals("About this site", getText("h1"));
+        });
+    }
+
+    @Test
+    public void translation() throws InterruptedException {
+        List<String> configuredLangs = app.config().getStringList("play.i18n.langs");
+        wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
+            click(browser.$("a", containingText("Sprache ändern")).first());
+            Map<String, String> links = browser
+                    .$("ul", new AttributeFilter("aria-labelledby", "languagesDropdown"))
+                    .$("a")
+                    .stream()
+                    .map(link -> link.attribute("href"))
+                    .map(href -> href.substring(href.indexOf("://") + 3))
+                    .map(href -> href.substring(href.indexOf("/") + 1))
+                    .collect(Collectors.toMap(link -> link.substring(0, 2), link -> link));
+            links.put("de", "");
+            assertThat(links.keySet(), containsInAnyOrder(configuredLangs.toArray()));
+            browser.goTo("/sitemap.xml");
+            String sitemap = browser.pageSource();
+            for (String lang : links.keySet()) {
+                assertThat(sitemap, matchesPattern("[\\w\\W]*hreflang=\"" + lang + "\" href=\".*" + links.get(lang) + "\"[\\w\\W]*"));
+            }
+        });
+    }
+
+    private <E extends Exception> void wrapTestExecution(String testName, TestExecution<E> test) throws E, InterruptedException {
+        try {
+            browser.goTo("/");
+            assertEquals("Mondkalender", getText("h1"));
+            browser.waitUntil(webDriver -> getText("#calendar").contains("Vollmond um"));
+
+            test.run();
+
         } catch (Error | RuntimeException e) {
-            browser.takeScreenshot("target/integration-test-failure-" + System.currentTimeMillis() + ".png");
+            browser.takeScreenshot("target/integration-test-" + testName + "-failure-" + System.currentTimeMillis() + ".png");
             Thread.sleep(2000);
             throw e;
         }
@@ -123,16 +156,6 @@ public class IntegrationTest extends WithBrowser {
         element.executeScript("arguments[0].click();", element);
     }
 
-    private void scrollAndAwait(Supplier<FluentWebElement> element) throws InterruptedException {
-        try {
-            element.get().scrollIntoView(true);
-        } catch (NoSuchElementException | StaleElementReferenceException ignored) {
-            Thread.sleep(200);
-            element.get().scrollIntoView(true);
-        }
-        browser.fluentWait().until(ExpectedConditions.visibilityOf(element.get().getElement()));
-    }
-
     private void awaitClickable(Supplier<FluentWebElement> element) throws InterruptedException {
         int attempts = 0;
         while (attempts++ < 20) {
@@ -146,5 +169,9 @@ public class IntegrationTest extends WithBrowser {
 
     private String getText(String selector) {
         return browser.$(selector).first().text();
+    }
+
+    private interface TestExecution<E extends Exception> {
+        void run() throws E, InterruptedException;
     }
 }
