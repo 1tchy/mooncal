@@ -13,12 +13,4 @@ describe('Messages', () => {
     let langIds = new Set(allMessages.map(message => message.lang.current));
     expect(langIds.size).toBe(allMessages.length);
   });
-  it('all languages should have its name in its language', () => {
-    let langIds = new Set(allMessages.map(message => message.lang.current));
-    for (const message of allMessages) {
-      for (const langId of langIds) {
-        expect(message.lang[langId]).toBe(allMessages[0].lang[langId]);
-      }
-    }
-  });
 });

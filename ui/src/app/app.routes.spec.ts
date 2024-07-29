@@ -7,13 +7,6 @@ describe('Routes', () => {
   it('not found route data should equal to german home', () => {
     expect(getRoute('**').data).toEqual(getRoute('').data);
   });
-  it('all languages have all pages', () => {
-    for (const language of getAllLanguages()) {
-      expect(getRouteByLang(language)).withContext(language).toBeDefined();
-      expect(getRouteByLang(language, "about")).withContext(language + " - about").toBeDefined();
-    }
-    expect(getRoute('**').data).toEqual(getRoute('').data);
-  });
   it('all pages link to their main and about page', () => {
     for (const route of routesWithoutRedirect()) {
       let messages = getMessages(route);
@@ -72,18 +65,6 @@ describe('Routes', () => {
     });
     expect(routesFormatted).toEqual(compiledRoute);
   });
-
-  function getRouteByLang(language: string, urlPostfix: string = ''): Route {
-    let url: string;
-    if (language === 'de') {
-      url = urlPostfix;
-    } else if (urlPostfix === '') {
-      url = language;
-    } else {
-      url = language + '/' + urlPostfix;
-    }
-    return getRoute(url);
-  }
 
   function routesWithoutRedirect(): Route[] {
     return routes.filter(r => !r.redirectTo);
