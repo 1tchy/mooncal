@@ -16,15 +16,15 @@ libraryDependencies ++= Seq(
 	//see latest version under: https://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
 	"org.mnode.ical4j" % "ical4j" % "3.2.19",
 	//see latest version under: https://mvnrepository.com/artifact/org.jetbrains/annotations
-	"org.jetbrains" % "annotations" % "24.1.0",
+	"org.jetbrains" % "annotations" % "25.0.0",
 	//see latest version under: https://jitpack.io/#SimpleAstronomy/simple-astronomy-lib or https://github.com/SimpleAstronomy/simple-astronomy-lib
 	"com.github.SimpleAstronomy" % "simple-astronomy-lib" % "97bb30668a",
 	//see latest version under: https://mvnrepository.com/artifact/org.mockito/mockito-core
-	"org.mockito" % "mockito-core" % "5.12.0" % Test,
+	"org.mockito" % "mockito-core" % "5.14.1" % Test,
 	//see latest version under: https://mvnrepository.com/artifact/junit/junit
 	"junit" % "junit" % "4.13.2" % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-	"org.hamcrest" % "hamcrest" % "2.2" % Test,
+	"org.hamcrest" % "hamcrest" % "3.0" % Test,
 )
 
 Assets / unmanagedResourceDirectories += baseDirectory.value / "ui/dist/ui/browser"
