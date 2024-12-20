@@ -91,9 +91,17 @@
             ]
           },
           "androidName": "Android",
-          "androidPrefix": "Android zeigt Kalendereinträge aus dem Google Kalender an, du kannst also der",
-          "androidLink": "Anleitung für den Google Kalender",
-          "androidPostfix": " folgen.",
+          "androidIntro": "Android zeigt Kalendereinträge aus dem Google Kalender an, du kannst also:",
+          "androidSeeGooglePrefix": "der",
+          "androidSeeGoogleLink": "Anleitung für den Google Kalender",
+          "androidSeeGooglePostfix": " folgen.",
+          "androidIfNotAutomatic": "Sollte danach der Kalender nicht automatisch auf dem Handy angezeigt werden:",
+          "androidExtraSteps": [
+            "Öffne die App \"Kalender\"",
+            "Klicke auf das Icon links oben um die Sidebar zu öffnen, dann auf \"Einstellungen\"",
+            "Wähle den Mondkalender aus",
+            "Vergewissere dich, dass \"Synchronisieren\" aktiviert ist"
+          ],
           "thunderbird": {
             "name": "Thunderbird",
             "steps": [

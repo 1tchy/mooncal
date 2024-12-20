@@ -91,9 +91,17 @@
             ]
           },
           "androidName": "Android",
-          "androidPrefix": "Android affiche les entrées de calendrier du Google Calendrier, vous pouvez donc suivre",
-          "androidLink": "l'instructions pour le Google Calendrier",
-          "androidPostfix": ".",
+          "androidIntro": "Android affiche les entrées de calendrier du Google Calendrier, afin que vous puissiez:",
+          "androidSeeGooglePrefix": "les",
+          "androidSeeGoogleLink": "instructions pour le Google Calendrier",
+          "androidSeeGooglePostfix": ".",
+          "androidIfNotAutomatic": "Si le calendrier ne s'affiche pas automatiquement sur votre téléphone portable :",
+          "androidExtraSteps": [
+            "Ouvrez l'application \"Calendrier\"",
+            "Cliquez sur l'icône en haut à gauche pour ouvrir la barre latérale, puis cliquez sur \"Paramètres\"",
+            "Sélectionnez le calendrier lunaire",
+            "Assurez-vous que la \"synchronisation\" est activée"
+          ],
           "thunderbird": {
             "name": "Thunderbird",
             "steps": [

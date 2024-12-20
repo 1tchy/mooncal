@@ -107,9 +107,12 @@ export interface SubscribeInstructions {
   googleGoto: string
   googleCalendar: AppSubscribeInstructions
   androidName: string
-  androidPrefix: string
-  androidLink: string
-  androidPostfix: string
+  androidIntro: string
+  androidSeeGooglePrefix: string
+  androidSeeGoogleLink: string
+  androidSeeGooglePostfix: string
+  androidIfNotAutomatic: string
+  androidExtraSteps: string[]
   thunderbird: AppSubscribeInstructions
   outlook: AppSubscribeInstructions
   enjoyInstruction: string

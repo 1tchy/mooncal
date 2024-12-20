@@ -161,10 +161,20 @@
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.androidName }}</button>
         <ng-template ngbNavContent>
           <p>
-            {{ messages.export.ical.subscribe.instructions.androidPrefix }}
-            <a href="#"
-               (click)="this.activeSubscriptionDescriptionOS=this.SUBSCRIPTION_DESCRIPTION_GOOGLE;false">{{ messages.export.ical.subscribe.instructions.androidLink }}</a>{{ messages.export.ical.subscribe.instructions.androidPostfix }}
+            {{ messages.export.ical.subscribe.instructions.androidIntro }}
           </p>
+          <ol>
+            <li>
+              {{ messages.export.ical.subscribe.instructions.androidSeeGooglePrefix }}
+              <a href="#"
+                 (click)="this.activeSubscriptionDescriptionOS=this.SUBSCRIPTION_DESCRIPTION_GOOGLE;false">{{ messages.export.ical.subscribe.instructions.androidSeeGoogleLink }}</a>{{ messages.export.ical.subscribe.instructions.androidSeeGooglePostfix }}
+            </li>
+          </ol>
+          <p>{{ messages.export.ical.subscribe.instructions.androidIfNotAutomatic }}</p>
+          <ol>
+            <li *ngFor="let step of messages.export.ical.subscribe.instructions.androidExtraSteps">{{ step }}</li>
+            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+          </ol>
         </ng-template>
       </li>
       <li [ngbNavItem]="SUBSCRIPTION_DESCRIPTION_THUNDERBIRD"

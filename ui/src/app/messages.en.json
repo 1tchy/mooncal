@@ -91,9 +91,17 @@
             ]
           },
           "androidName": "Android",
-          "androidPrefix": "Android shows calendar entries from the Google Calendar, so you can follow the",
-          "androidLink": "instructions for the Google Calendar",
-          "androidPostfix": ".",
+          "androidIntro": "Android displays calendar entries from Google Calendar, so you can:",
+          "androidSeeGooglePrefix": "follow the",
+          "androidSeeGoogleLink": "Google Calendar Instructions",
+          "androidSeeGooglePostfix": ".",
+          "androidIfNotAutomatic": "If the calendar is not automatically displayed on your cell phone:",
+          "androidExtraSteps": [
+            "Open the \"Calendar\" app",
+            "Click on the icon at the top left to open the sidebar, then click on \"Settings\"",
+            "Select the moon calendar",
+            "Make sure \"Sync\" is turned on"
+          ],
           "thunderbird": {
             "name": "Thunderbird",
             "steps": [

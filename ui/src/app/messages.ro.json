@@ -91,9 +91,17 @@
             ]
           },
           "androidName": "Android",
-          "androidPrefix": "Android afișează intrările calendarului din Google Calendar, deci poți urma",
-          "androidLink": "instrucțiuni pentru Google Calendar",
-          "androidPostfix": ".",
+          "androidIntro": "Android afișează intrările calendarului din Google Calendar:",
+          "androidSeeGooglePrefix": "deci poți urma",
+          "androidSeeGoogleLink": "instrucțiuni pentru Google Calendar",
+          "androidSeeGooglePostfix": ".",
+          "androidIfNotAutomatic": "Dacă calendarul nu este afișat automat pe telefonul mobil:",
+          "androidExtraSteps": [
+            "Deschideți aplicația \"Calendar\"",
+            "Faceți clic pe pictograma din stânga sus pentru a deschide bara laterală, apoi faceți clic pe \"Setări\"",
+            "Selectați calendarul lunar",
+            "Asigurați-vă că \"sincronizarea\" este activată"
+          ],
           "thunderbird": {
             "name": "Thunderbird",
             "steps": [

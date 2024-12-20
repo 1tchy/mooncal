@@ -91,9 +91,17 @@
             ]
           },
           "androidName": "Android",
-          "androidPrefix": "Android toont kalenderinformatie uit de Google Kalender, dus volg de",
-          "androidLink": "handleiding voor de Google Kalender",
-          "androidPostfix": ".",
+          "androidIntro": "Android geeft agenda-items uit de Google Kalender weer, zodat u het volgende kunt doen:",
+          "androidSeeGooglePrefix": "de",
+          "androidSeeGoogleLink": "Google Agenda-instructies",
+          "androidSeeGooglePostfix": " gevolgen.",
+          "androidIfNotAutomatic": "Als de agenda niet automatisch op uw mobiele telefoon wordt weergegeven:",
+          "androidExtraSteps": [
+            "Open de \"Agenda\"-app",
+            "Klik op het icoontje linksboven om de zijbalk te openen en klik vervolgens op \"Instellingen\"",
+            "Selecteer de maankalender",
+            "Zorg ervoor dat \"synchronisatie\" is ingeschakeld"
+          ],
           "thunderbird": {
             "name": "Thunderbird",
             "steps": [
