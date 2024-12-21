@@ -60,7 +60,7 @@
                 *ngIf="fromTo_from.errors?.['min']||fromTo_to.errors?.['min']||fromTo_from.errors?.['max']||fromTo_to.errors?.['max']">{{ messages.time.fromTo.minmax }}</span>
           <label class="col-auto" for="zone">{{ messages.time.fromTo.inTimezone }}</label>
           <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
-            <select class="form-control" [(ngModel)]="zone" name="zone" id="zone"
+            <select class="form-control form-select" [(ngModel)]="zone" name="zone" id="zone"
                     (change)="trackTimezoneChange(); fetchCalendar(false)">
               <option *ngFor="let tz of getSupportedTimezones()" [ngValue]="tz">{{ tz }}</option>
             </select>
