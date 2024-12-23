@@ -4,6 +4,7 @@ export interface Messages {
   navigation: Navigation
   general: General
   phases: Phases
+  styles: Style
   events: Events
   time: Time
   calendar: Calendar
@@ -49,6 +50,13 @@ export interface Phases {
   new: string
   quarter: string
   daily: string
+}
+
+export interface Style {
+  title: string
+  iconOnly: string
+  fullmoon: string
+  fullmoonAndName: string
 }
 
 export interface Events {

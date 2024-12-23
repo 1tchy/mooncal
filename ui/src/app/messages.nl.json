@@ -29,6 +29,12 @@
     "quarter": "Halve maan",
     "daily": "Dagelijkse gegevens van de maan"
   },
+  "styles": {
+    "title": "Stijl",
+    "iconOnly": "gewoon een icoon",
+    "fullmoon": "Volle maan",
+    "fullmoonAndName": "Volle maan (Aardbeienmaan)"
+  },
   "events": {
     "title": "Evenementen",
     "lunareclipse": "Maansverduistering",

@@ -29,6 +29,12 @@
     "quarter": "quarter",
     "daily": "daily moon phases"
   },
+  "styles": {
+    "title": "Style",
+    "iconOnly": "just icon",
+    "fullmoon": "Full moon",
+    "fullmoonAndName": "Full moon (Strawberry Moon)"
+  },
   "events": {
     "title": "Events",
     "lunareclipse": "lunar eclipse",

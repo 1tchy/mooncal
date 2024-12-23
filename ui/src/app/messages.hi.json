@@ -29,6 +29,12 @@
     "quarter": "चौथाई",
     "daily": "दैनिक चंद्र चरण"
   },
+  "styles": {
+    "title": "शैली",
+    "iconOnly": "बस आइकन",
+    "fullmoon": "पूर्णचंद्र",
+    "fullmoonAndName": ""
+  },
   "events": {
     "title": "घटनाएं",
     "lunareclipse": "चंद्र ग्रहण",

@@ -2,6 +2,7 @@ package logics.calculation;
 
 import com.bradsbrain.simpleastronomy.MoonPhaseFinder;
 import models.EventInstance;
+import models.EventStyle;
 import models.MoonPhaseType;
 import models.RequestForm;
 import org.jetbrains.annotations.NotNull;
@@ -28,21 +29,21 @@ public class MoonPhasesCalculation extends Calculation {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
         if (requestForm.includePhase(MoonPhaseType.FULLMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON, eventCollection, requestForm.getLang(), "fullmoon");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON, eventCollection, requestForm.getLang(), requestForm.getStyle(), "fullmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.NEWMOON)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON, eventCollection, requestForm.getLang(), "newmoon");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON, eventCollection, requestForm.getLang(), requestForm.getStyle(), "newmoon");
         }
         if (requestForm.includePhase(MoonPhaseType.QUARTER)) {
-            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER, eventCollection, requestForm.getLang(), "quarter");
-            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, requestForm.getLang(), "quarter");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), "quarter");
+            calculate(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), "quarter");
         }
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
             calculateDailyEvents(requestForm.getLang(), requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
         }
     }
 
-    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, String eventTypeId) {
+    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, String eventTypeId) {
         while (true) {
             final ZonedDateTime moonHappening = moonCalculation.apply(from);
             if (moonHappening.isAfter(to)) {
@@ -50,7 +51,7 @@ public class MoonPhasesCalculation extends Calculation {
             }
             eventCollection.add(new EventInstance(
                     moonHappening,
-                    phase.getEmoticon() + " " + phase.getTitle(messagesApi, lang, moonHappening),
+                    phase.getTitle(messagesApi, lang, moonHappening, style),
                     eventAt(moonHappening, phase.getSimpleName(messagesApi, lang), from.getZone(), lang),
                     from.getZone(),
                     eventTypeId));

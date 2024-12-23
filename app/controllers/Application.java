@@ -60,6 +60,9 @@ public class Application extends Controller {
         if (request.queryString("created").isEmpty() && request.queryString("before").isPresent()) {
             return CompletableFuture.completedFuture(permanentRedirect(request.uri().replaceFirst("\\?", "?created=" + ((long) (Math.random() * 100000000) + 400000000) + "&")));
         }
+        if (request.queryString("style").isEmpty()) {
+            return CompletableFuture.completedFuture(permanentRedirect(request.uri().replaceFirst("^(.*?)&(events|before|after|zone)", "$1&style=withDescription&$2")));
+        }
         return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
             logger.info("Responding iCalender file for query: " + goodForm.getForLog() + " to " + request.remoteAddress());
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;

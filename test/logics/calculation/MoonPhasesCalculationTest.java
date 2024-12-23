@@ -1,6 +1,7 @@
 package logics.calculation;
 
 import models.EventInstance;
+import models.EventStyle;
 import models.MoonPhaseType;
 import models.RequestForm;
 import org.hamcrest.FeatureMatcher;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -81,8 +83,37 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2026, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC));
         requestForm.setLang(Lang.forCode("en"));
+        requestForm.setStyle(EventStyle.FULLMOON.getStyle());
+        Collection<EventInstance> actual = calculate(requestForm);
+        assertThat(actual, hasSize(13));
+        List<String> actualTitles = actual.stream().map(EventInstance::getTitle).distinct().toList();
+        assertEquals(List.of("🌕 phases.full"), actualTitles);
+    }
+
+    @Test
+    public void testGetFullmoonNamesWithDescription() {
+        requestForm = new RequestForm();
+        requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
+        requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setTo(ZonedDateTime.of(2026, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC));
+        requestForm.setLang(Lang.forCode("en"));
+        requestForm.setStyle(EventStyle.WITH_DESCRIPTION.getStyle());
         Collection<EventInstance> actual = calculate(requestForm);
         assertEquals(IntStream.of(1, 2, 3, 4, 5, 13, 6, 7, 8, 9, 10, 11, 12).mapToObj(i -> "🌕 phases.full (phases.full." + i + ")").toList(), actual.stream().map(EventInstance::getTitle).toList());
+    }
+
+    @Test
+    public void testGetIconOnly() {
+        requestForm = new RequestForm();
+        requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
+        requestForm.getPhases().put(MoonPhaseType.NEWMOON, true);
+        requestForm.getPhases().put(MoonPhaseType.QUARTER, true);
+        requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setTo(ZonedDateTime.of(2026, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC));
+        requestForm.setLang(Lang.forCode("en"));
+        requestForm.setStyle(EventStyle.ICON_ONLY.getStyle());
+        Collection<EventInstance> actual = calculate(requestForm);
+        assertEquals(List.of("🌕", "🌗", "🌑", "🌓"), actual.stream().map(EventInstance::getTitle).distinct().toList());
     }
 
     @Test

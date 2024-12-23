@@ -1,5 +1,6 @@
 package logics.calculation;
 
+import models.EventStyle;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
@@ -11,13 +12,17 @@ public enum MoonPhase {
     FIRST_QUARTER("phases.quarter.first", "🌓"),
     FULLMOON("phases.full", "🌕") {
         @Override
-        public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date) {
-            int month = date.getMonthValue();
-            if (isBlueMoon(date)) {
-                month = 13;
+        public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+            if (style == EventStyle.WITH_DESCRIPTION) {
+                int month = date.getMonthValue();
+                if (isBlueMoon(date)) {
+                    month = 13;
+                }
+                String fullMoonName = messagesApi.get(lang, "phases.full." + month);
+                return super.getTitle(messagesApi, lang, date, style) + (fullMoonName.isEmpty() ? "" : " (" + fullMoonName + ")");
+            } else {
+                return super.getTitle(messagesApi, lang, date, style);
             }
-            String fullMoonName = messagesApi.get(lang, "phases.full." + month);
-            return super.getTitle(messagesApi, lang, date) + (fullMoonName.isEmpty() ? "" : " (" + fullMoonName + ")");
         }
 
         private static boolean isBlueMoon(ZonedDateTime date) {
@@ -41,11 +46,10 @@ public enum MoonPhase {
         return messagesApi.get(lang, name);
     }
 
-    public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date) {
-        return getSimpleName(messagesApi, lang);
-    }
-
-    public String getEmoticon() {
-        return emoticon;
+    public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+        if (style == EventStyle.ICON_ONLY) {
+            return emoticon;
+        }
+        return emoticon + " " + getSimpleName(messagesApi, lang);
     }
 }

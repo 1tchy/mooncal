@@ -29,6 +29,12 @@
     "quarter": "Halbmond",
     "daily": "tägliche Phasen"
   },
+  "styles": {
+    "title": "Stil",
+    "iconOnly": "nur Icon",
+    "fullmoon": "Vollmond",
+    "fullmoonAndName": "Vollmond (Erntemond)"
+  },
   "events": {
     "title": "Events",
     "lunareclipse": "Mondfinsternis",

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, inject, TemplateRef, ViewChild} from '@angular/core';
 import {Messages} from '../messages';
 import {Event} from "./event";
-import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
@@ -31,8 +31,7 @@ type options = { [key: string]: boolean }
     NgClass,
     NgbDropdownModule,
     NgbNav, NgbNavItem, NgbNavLinkButton, NgbNavContent, NgbNavOutlet,
-    SupportButtonsComponent,
-    DatePipe
+    SupportButtonsComponent
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
@@ -48,6 +47,7 @@ export class MainComponent implements AfterViewInit {
     quarter: false,
     daily: false
   };
+  style = "withDescription";
   events: options = {lunareclipse: true, solareclipse: true, moonlanding: true};
 
   from = MainComponent.initialFrom();
@@ -82,7 +82,13 @@ export class MainComponent implements AfterViewInit {
     this.messages = route.snapshot.data['messages']
     route.data.subscribe(data => {
       this.messages = data['messages']
+      if (this.style == "withDescription" && this.messages.styles.fullmoonAndName == "") {
+        this.style = "fullmoon";
+      }
     })
+    if (this.style == "withDescription" && this.messages.styles.fullmoonAndName == "") {
+      this.style = "fullmoon";
+    }
     this.from$.pipe(debounceTime(500), distinctUntilChanged()).subscribe((date: Date) => {
       this.fromDebounced = date;
       this.fetchCalendar();
@@ -162,6 +168,7 @@ export class MainComponent implements AfterViewInit {
       + "&phases[new]=" + this.phases["new"]
       + "&phases[quarter]=" + this.phases["quarter"]
       + "&phases[daily]=" + this.phases["daily"]
+      + "&style=" + this.style
       + "&events[lunareclipse]=" + this.events["lunareclipse"]
       + "&events[solareclipse]=" + this.events["solareclipse"]
       + "&events[moonlanding]=" + this.events["moonlanding"];
@@ -178,6 +185,7 @@ export class MainComponent implements AfterViewInit {
       + (this.phases["new"] ? "new," : "")
       + (this.phases["quarter"] ? "quarter," : "")
       + (this.phases["daily"] ? "daily," : "")
+      + this.style + ","
       + (this.events["lunareclipse"] ? "lunareclipse," : "")
       + (this.events["solareclipse"] ? "solareclipse," : "")
       + (this.events["moonlanding"] ? "moonlanding" : "");

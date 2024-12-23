@@ -29,6 +29,12 @@
     "quarter": "pătrar",
     "daily": "faze zilnice ale lunii"
   },
+  "styles": {
+    "title": "Stil",
+    "iconOnly": "doar pictograma",
+    "fullmoon": "Lună plină",
+    "fullmoonAndName": "Luna plina (Luna Plină a Căpşunilor)"
+  },
   "events": {
     "title": "Evenimente",
     "lunareclipse": "eclipă lunară",

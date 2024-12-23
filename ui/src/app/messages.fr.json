@@ -29,6 +29,12 @@
     "quarter": "quartier",
     "daily": "phases quotidiennes de la lune"
   },
+  "styles": {
+    "title": "Style",
+    "iconOnly": "juste une icône",
+    "fullmoon": "Pleine lune",
+    "fullmoonAndName": "Pleine lune (Lune des fraises)"
+  },
   "events": {
     "title": "Événements",
     "lunareclipse": "éclipse lunaire",

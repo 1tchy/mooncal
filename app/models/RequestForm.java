@@ -16,6 +16,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
     private static final int MAX_YEARS_FOR_DAILY_PHASES = 200;
 
     private Map<MoonPhaseType, Boolean> phases = new HashMap<>();
+    private EventStyle style;
     private Map<EventType, Boolean> events = new HashMap<>();
     @Constraints.Required
     private LocalDateTime from;
@@ -35,6 +36,14 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         if (phases != null) {
             this.phases = phases;
         }
+    }
+
+    public EventStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = EventStyle.of(style);
     }
 
     public Map<EventType, Boolean> getEvents() {
@@ -137,6 +146,8 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         StringBuilder sb = new StringBuilder("W/");
         sb.append(eventsPart);
         sb.append("x");
+        sb.append(style.getStyle());
+        sb.append("x");
         sb.append(from.toEpochSecond(ZoneOffset.UTC) / 3600 / 24);
         sb.append("x");
         sb.append(to.toEpochSecond(ZoneOffset.UTC) / 3600 / 24);
@@ -156,6 +167,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
                 sb.append(" ");
             }
         }
+        sb.append(style.getStyle()).append(" ");
         for (EventType eventType : EventType.values()) {
             if (includeEvent(eventType)) {
                 sb.append(eventType.getKey());

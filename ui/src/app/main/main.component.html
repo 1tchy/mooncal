@@ -7,12 +7,30 @@
   <div class="col-lg-6">
     <div class="card" id="phases">
       <h5 class="card-header">{{ messages.phases.title }}</h5>
-      <div class="card-body">
-        <div class="form-check" *ngFor="let phase of ['full', 'new', 'quarter', 'daily']">
-          <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
-                 [name]="phase+'-checkbox'">
-          <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
+      <div class="card-body row g-0">
+        <div class="col-auto">
+          <div class="form-check" *ngFor="let phase of ['full', 'new', 'quarter', 'daily']">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
+                   [name]="phase+'-checkbox'">
+            <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
+          </div>
         </div>
+        <div class="col-auto flex-grow-1"></div>
+        <div class="col-auto row g-0">
+          <div class="col-auto">
+            <label for="style" class="col-form-label-in-sm me-2">{{ messages.styles.title }}:</label>
+          </div>
+          <div class="col-auto">
+            <select class="form-select form-select-sm form-control me-2" [(ngModel)]="style" name="style" id="style">
+              <option ngValue="iconOnly">🌕 ({{ messages.styles.iconOnly }})</option>
+              <option ngValue="fullmoon">🌕 {{ messages.styles.fullmoon }}</option>
+              <option ngValue="withDescription" *ngIf="messages.styles.fullmoonAndName!=''">
+                🌕 {{ messages.styles.fullmoonAndName }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-auto flex-grow-1"></div>
       </div>
     </div>
   </div>

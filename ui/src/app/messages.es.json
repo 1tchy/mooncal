@@ -29,6 +29,12 @@
     "quarter": "cuarto",
     "daily": "fases diarias de la luna"
   },
+  "styles": {
+    "title": "Estilo",
+    "iconOnly": "solo icono",
+    "fullmoon": "Luna llena",
+    "fullmoonAndName": "Luna llena (Luna de los Fresas)"
+  },
   "events": {
     "title": "Eventos",
     "lunareclipse": "eclips lunar",
