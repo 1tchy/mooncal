@@ -61,6 +61,7 @@
     "addToCalendar": "Ajouter au calendrier",
     "ical": {
       "download": "télécharger le fichier",
+      "downloadWarning": "Vous pouvez télécharger de nombreuses entrées de calendrier ici. Si vous n&#39;aimez pas le calendrier lunaire, vous devrez supprimer chaque entrée manuellement - en fonction de l&#39;application de calendrier. Il est préférable de s&#39;abonner au calendrier.",
       "subscribe": {
         "title": "s'abonner au flux iCalendar",
         "instructions": {

@@ -245,8 +245,12 @@
       </ng-template>
       {{ messages.export.ical.subscribe.copy }}
     </button>
-    <a class="btn btn-light" [href]="getApiUrl(true,true)+'?'+paramsAsString(true)+'&manualDownload'"
-       (click)="trackDownloadIcal(); showSupportInXMilliseconds(0)">{{ messages.export.ical.download }}</a>
+    <button-with-styled-tooltip [btnClass]="calendar.length<20 ? 'btn-light' : 'btn-warning'"
+                                [href]="getApiUrl(true,true)+'?'+paramsAsString(true)+'&manualDownload'"
+                                (onClick)="trackDownloadIcal(); showSupportInXMilliseconds(0)"
+                                [tooltipText]="messages.export.ical.downloadWarning"
+                                [tooltipType]="calendar.length<8 ? 'none' : calendar.length>20 ? 'warning' : 'default'">{{ messages.export.ical.download }}
+    </button-with-styled-tooltip>
   </div>
   <div class="modal-body row" *ngIf="showSupportOnSubscribe">
     <div class="col-2 d-flex align-items-center">

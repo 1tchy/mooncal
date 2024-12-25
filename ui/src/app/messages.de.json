@@ -61,6 +61,7 @@
     "addToCalendar": "Zum Kalender hinzufügen",
     "ical": {
       "download": "Datei herunterladen",
+      "downloadWarning": "Du lädst hiermit viele Kalender-Einträge runter. Sollte dir der Mondkalender nicht gefallen, musst du - je nach Kalender-App - jeden einzelnen Eintrag manuell löschen. Besser ist es, den Kalender zu abonnieren.",
       "subscribe": {
         "title": "iCalendar-Feed abonnieren",
         "instructions": {

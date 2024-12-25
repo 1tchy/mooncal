@@ -61,6 +61,7 @@
     "addToCalendar": "Adăugați în calendar",
     "ical": {
       "download": "descărcare fișier",
+      "downloadWarning": "Puteți descărca multe înregistrări din calendar aici. Dacă nu vă place calendarul lunar, va trebui să ștergeți manual fiecare intrare individuală - în funcție de aplicația de calendar. Este mai bine să vă abonați la calendar.",
       "subscribe": {
         "title": "abonează-te la feed-ul iCalendar",
         "instructions": {

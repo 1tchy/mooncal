@@ -61,6 +61,7 @@
     "addToCalendar": "Voeg toe aan kalender",
     "ical": {
       "download": "Download bestand",
+      "downloadWarning": "U kunt hier veel agenda-items downloaden. Als de maankalender je niet bevalt, moet je elk afzonderlijk item handmatig verwijderen - afhankelijk van de kalender-app. Het is beter om u te abonneren op de kalender.",
       "subscribe": {
         "title": "abonneren op iCalendar",
         "instructions": {

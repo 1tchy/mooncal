@@ -17,6 +17,7 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient} from "@angular/common/http";
 import {getAllLanguages} from "../app.routes";
+import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
 import {SupportButtonsComponent} from "../support-buttons/support-buttons.component";
 
 type options = { [key: string]: boolean }
@@ -31,6 +32,7 @@ type options = { [key: string]: boolean }
     NgClass,
     NgbDropdownModule,
     NgbNav, NgbNavItem, NgbNavLinkButton, NgbNavContent, NgbNavOutlet,
+    ButtonWithStyledTooltip,
     SupportButtonsComponent
   ],
   templateUrl: './main.component.html',

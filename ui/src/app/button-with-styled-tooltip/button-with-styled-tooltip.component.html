@@ -1,0 +1,5 @@
+<a class="btn" [ngClass]="btnClass"
+   [href]="href" (click)="onClick.emit()"
+   placement="top" [ngbTooltip]="tooltipText" [tooltipClass]="'tooltip-'+tooltipType">
+  <ng-content></ng-content>
+</a>

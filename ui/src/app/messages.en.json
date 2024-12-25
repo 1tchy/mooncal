@@ -61,6 +61,7 @@
     "addToCalendar": "Add to Calendar",
     "ical": {
       "download": "Download File",
+      "downloadWarning": "You can download many calendar entries here. If you don't like the moon calendar, you will have to delete each individual entry manually - depending on the calendar app. It is better to subscribe to the calendar.",
       "subscribe": {
         "title": "Subscribe to iCalendar Feed",
         "instructions": {

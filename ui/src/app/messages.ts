@@ -96,6 +96,7 @@ export interface Export {
 
 export interface Ical {
   download: string
+  downloadWarning: string
   subscribe: Subscribe
 }
 

@@ -1,0 +1,31 @@
+.tooltip-warning {
+  --bs-tooltip-bg: var(--bs-warning-bg-subtle);
+  --bs-tooltip-color: var(--bs-warning-text-emphasis);
+}
+
+.tooltip-warning .tooltip-inner {
+  background-color: var(--bs-warning-bg-subtle);
+}
+
+.tooltip-warning.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: var(--bs-warning-bg-subtle);
+}
+
+.tooltip-warning.bs-tooltip-start .tooltip-arrow::before {
+  border-left-color: var(--bs-warning-bg-subtle);
+}
+
+.tooltip-warning.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: var(--bs-warning-bg-subtle);
+}
+
+.tooltip-warning.bs-tooltip-bottom .tooltip-arrow::before {
+  border-bottom-color: var(--bs-warning-bg-subtle);
+}
+
+.tooltip-none .tooltip-inner {
+  display: none;
+}
+.tooltip-none .tooltip-arrow {
+  display: none;
+}
