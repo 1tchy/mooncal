@@ -35,34 +35,45 @@ public class UiTranslatorToolTest {
         String dePath = "ui/src/app/messages.de.json";
         ObjectNode de = (ObjectNode) objectMapper.readTree(Files.readAllBytes(Path.of(dePath).toAbsolutePath()));
         List<String> deKeys = getKeyPaths(de.fields()).toList();
-        Map<String, String[]> deTranslations = deKeys.stream().collect(Collectors.toMap(Function.identity(), key -> {
-            JsonNode node = resolveKeyPath(key, de);
+        Map<String, String[]> referenceTranslations = buildTranslationMap(deKeys, de);
+        String referenceLangCode = "de";
+        for (String otherLanguage : List.of("en", "es", "fr", "hi", "nl", "ro")) {
+            String other = Files.readString(Path.of(dePath.replace("de", otherLanguage)));
+            ObjectNode otherJson = (ObjectNode) Json.parse(other);
+            List<String> otherKeys = getKeyPaths(otherJson.fields()).toList();
+            for (String deKey : deKeys) {
+                if (!otherKeys.contains(deKey)) {
+                    addTranslation(deKey, otherJson, otherLanguage, referenceLangCode, referenceTranslations);
+                }
+            }
+            assertEquals(other, objectMapper.writeValueAsString(otherJson) + "\n");
+            if (otherLanguage.equals("en")) {
+                referenceTranslations = buildTranslationMap(otherKeys, otherJson);
+                referenceLangCode = "en";
+            }
+        }
+    }
+
+    private static Map<String, String[]> buildTranslationMap(List<String> keys, ObjectNode translationJson) {
+        return keys.stream().collect(Collectors.toMap(Function.identity(), key -> {
+            JsonNode node = resolveKeyPath(key, translationJson);
             if (node.isArray()) {
                 return Streams.stream(node.elements()).map(JsonNode::asText).toArray(String[]::new);
             }
             return new String[]{node.asText()};
         }));
-        for (String otherLanguage : List.of("en", "es", "fr", "hi", "nl", "ro")) {
-            String other = Files.readString(Path.of(dePath.replace("de", otherLanguage)));
-            ObjectNode otherJson = (ObjectNode) Json.parse(other);
-            List<String> otherKeys = getKeyPaths(otherJson.fields()).toList();
-            deKeys.stream()
-                    .filter(key -> !otherKeys.contains(key))
-                    .forEach(missingKey -> addTranslation(missingKey, otherJson, otherLanguage, deTranslations));
-            assertEquals(other, objectMapper.writeValueAsString(otherJson) + "\n");
-        }
     }
 
-    private void addTranslation(String missingKey, ObjectNode otherJson, String otherLanguage, Map<String, String[]> deTranslations) {
+    private void addTranslation(String missingKey, ObjectNode otherJson, String otherLanguage, String referenceLangCode, Map<String, String[]> referenceTranslations) {
         try {
             ObjectNode parent = (ObjectNode) resolveKeyPath(getParentKey(missingKey), otherJson);
-            String[] deTexts = deTranslations.get(missingKey);
+            String[] deTexts = referenceTranslations.get(missingKey);
             if (deTexts.length == 1) {
-                parent.put(getFieldKey(missingKey), translator.translate("de", otherLanguage, deTexts[0]));
+                parent.put(getFieldKey(missingKey), translator.translate(referenceLangCode, otherLanguage, deTexts[0]));
             } else {
                 ArrayNode arrayNode = parent.putArray(getFieldKey(missingKey));
                 for (String deText : deTexts) {
-                    arrayNode.add(translator.translate("de", otherLanguage, deText));
+                    arrayNode.add(translator.translate(referenceLangCode, otherLanguage, deText));
                 }
             }
         } catch (IOException e) {
