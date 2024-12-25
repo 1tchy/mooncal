@@ -56,16 +56,17 @@
       <div class="card-body">
         <form class="row align-items-center g-3" name="fromTo">
           <label class="col-auto" for="from">{{ messages.time.fromTo.from }}</label>
-          <div class="col-auto"
-               ngClass="{'has-error':fromTo_from.errors?.['date']||fromTo_from.errors?.['required']}">
+          <div class="col-auto">
             <input type="date" class="form-control" [(ngModel)]="from" name="from" id="from" #fromTo_from="ngModel"
+                   [ngClass]="{'is-invalid':fromTo_from.errors?.['date']||fromTo_from.errors?.['required']}"
                    (change)="from$.next(this.toDate(this.from, true))"
                    (blur)="this.fromDebounced=this.toDate(this.from, true); fetchCalendar()"
                    required min="1000-01-01" [max]="this.to">
           </div>
           <label class="col-auto" for="to">{{ messages.time.fromTo.to }}</label>
-          <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
+          <div class="col-auto">
             <input type="date" class="form-control" [(ngModel)]="to" name="to" id="to" #fromTo_to="ngModel"
+                   [ngClass]="{'is-invalid':fromTo_to.errors?.['date']||fromTo_to.errors?.['required']}"
                    (change)="to$.next(this.toDate(this.to, false))"
                    (blur)="this.toDebounced=this.toDate(this.to, false); fetchCalendar()"
                    required [min]="this.from" max="3000-12-31">
@@ -77,7 +78,7 @@
           <span class="text-danger ms-2"
                 *ngIf="fromTo_from.errors?.['min']||fromTo_to.errors?.['min']||fromTo_from.errors?.['max']||fromTo_to.errors?.['max']">{{ messages.time.fromTo.minmax }}</span>
           <label class="col-auto" for="zone">{{ messages.time.fromTo.inTimezone }}</label>
-          <div class="col-auto" ngClass="{'has-error':fromTo.to.$error.date||fromTo.to.$error.required}">
+          <div class="col-auto">
             <select class="form-control form-select" [(ngModel)]="zone" name="zone" id="zone"
                     (change)="trackTimezoneChange(); fetchCalendar(false)">
               <option *ngFor="let tz of getSupportedTimezones()" [ngValue]="tz">{{ tz }}</option>
@@ -108,7 +109,7 @@
 
 <div class="row fadeAnimation" id="calendar">
   <div class="col-lg-12">
-    <div class="card" *ngIf="calendar.length>0" ngClass="{true: 'card-warning', false: 'card-default'}[requestOngoing]">
+    <div class="card" *ngIf="calendar.length>0" [ngClass]="{'text-bg-warning': requestOngoing}">
       <h5 class="card-header">{{ messages.calendar.title }}
         <span *ngIf="requestOngoing">({{ messages.calendar.reloading }})</span>
       </h5>
