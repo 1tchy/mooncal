@@ -213,6 +213,10 @@ export class MainComponent implements AfterViewInit {
     return new Date(date).toLocaleDateString(undefined, {year: 'numeric', month: '2-digit', day: '2-digit'});
   }
 
+  public formatDateForGuiXs(date: any) {
+    return new Date(date).toLocaleDateString(undefined, {year: '2-digit', month: '2-digit', day: '2-digit'});
+  }
+
   public formatDate(date: Date) {
     if (!date) return date;
     return date.getFullYear()

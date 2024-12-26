@@ -116,7 +116,10 @@
       <table class="table table-bordered table-dark mb-0">
         <tbody>
         <tr *ngFor="let event of calendar" class="fadeAnimation">
-          <td class="dateFont">{{ this.formatDateForGui(event.date) }}</td>
+          <td class="dateFont">
+            <span class="d-none d-md-inline">{{ this.formatDateForGui(event.date) }}</span>
+            <span class="d-md-none">{{ this.formatDateForGuiXs(event.date) }}</span>
+          </td>
           <td class="xxs-hyphenation">{{ event.title }}</td>
           <td class="text-muted description xxs-hyphenation">{{ event.description }}</td>
         </tr>
