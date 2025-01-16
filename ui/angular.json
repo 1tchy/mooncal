@@ -29,6 +29,8 @@
               "src/browserconfig.xml",
               "src/robots.txt",
               "src/site.webmanifest",
+              "src/favicon.ico",
+              "src/favicon.svg",
               "src/sitemap.xml",
               "src/images",
               {
@@ -97,6 +99,8 @@
               "src/browserconfig.xml",
               "src/robots.txt",
               "src/site.webmanifest",
+              "src/favicon.ico",
+              "src/favicon.svg",
               "src/sitemap.xml",
               "src/images",
               {

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class Favicon extends Controller {
 
     private static final List<Integer> MOON_VISIBILITIES_WITH_ICON = List.of(6, 8, 11, 14, 18, 22, 26, 31, 35, 40, 45, 51, 56, 61, 67, 72, 77, 82, 86, 90, 93, 96, 98, 99, 100, 101, 102, 104, 107, 110, 114, 118, 123, 128, 133, 139, 144, 150, 155, 161, 166, 171, 175, 179, 183, 187, 190, 192, 195);
-    private static final List<String> MOON_ICONS = List.of("android-chrome-192x192.png", "android-chrome-512x512.png", "apple-touch-icon.png", "favicon.ico", "favicon-16x16.png", "favicon-32x32.png", "mstile-150x150.png", "safari-pinned-tab.svg");
+    private static final List<String> MOON_ICONS = List.of("web-app-manifest-192x192.png", "web-app-manifest-512x512.png", "apple-touch-icon.png", "favicon.ico", "favicon-96x96.png", "favicon.svg");
     private final ConcurrentHashMap<String, Action<AnyContent>> currentIcons = new ConcurrentHashMap<>();
 
     @Inject

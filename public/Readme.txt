@@ -3,10 +3,9 @@ https://commons.wikimedia.org/wiki/File:Lunar_libration_with_phase_Oct_2007.gif
 License:
 Public domain
 
-brew install potrace
 cd public
 # magick Lunar_libration_with_phase_Oct_2007.gif -define webp:lossless=true Lunar_libration_with_phase_Oct_2007.webp
-mkdir tmp favicon tmp/png tmp/48x48
+mkdir tmp favicon tmp/png tmp/transparent_png tmp/48x48 tmp/32x32 tmp/16x16
 magick Lunar_libration_with_phase_Oct_2007.gif tmp/png/rename.png
 cd tmp/png
 
@@ -17,16 +16,18 @@ cd ../../favicon
 mkdir 0 1 2 4 6 8 11 14 18 22 26 31 35 40 45 51 56 61 67 72 77 82 86 90 93 96 98 99 100 101 102 104 107 110 114 118 123 128 133 139 144 150 155 161 166 171 175 179 183 187 190 192 195 197 198 199
 cd ..
 
-magick tmp/png/*.png -crop +0+15 -trim -resize '480x480!' -bordercolor black -border 16 -modulate 130,100 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/android-chrome-512x512.png'
-magick tmp/png/*.png -crop +0+15 -trim -resize '480x480!' -bordercolor black -border 16 -modulate 130,100 -resize 192x192 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/android-chrome-192x192.png'
+for i in 0 1 2 4 6 8 11 14 18 22 26 31 35 40 45 51 56 61 67 72 77 82 86 90 93 96 98 99 100 101 102 104 107 110 114 118 123 128 133 139 144 150 155 161 166 171 175 179 183 187 190 192 195 197 198 199; do magick tmp/png/$i.png -crop +0+15 -fuzz 5% -trim -resize '480x480!' \( -size 480x480 xc:none -fill white -draw "circle 240,240 1,240" \) -compose CopyOpacity -composite -modulate 130,100 tmp/transparent_png/$i.png && magick tmp/transparent_png/$i.png -bordercolor none -border 16 tmp/transparent_png/$i.png; done
+magick tmp/transparent_png/*.png -set filename:fn '%[basename]' 'favicon/%[filename:fn]/web-app-manifest-512x512.png'
+magick tmp/transparent_png/*.png -resize 192x192 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/web-app-manifest-192x192.png'
 magick tmp/png/*.png -crop +0+15 -trim -resize '480x480!' -bordercolor black -border 16 -modulate 130,100 -resize 180x180 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/apple-touch-icon.png'
-magick tmp/png/*.png -crop +0+15 -trim -resize '480x480!' -bordercolor black -border 16 -modulate 130,100 -resize 16x16 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/favicon-16x16.png'
-magick tmp/png/*.png -crop +0+15 -trim -resize '480x480!' -bordercolor black -border 16 -modulate 130,100 -resize 32x32 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/favicon-32x32.png'
-# Yes, 150x150 is recommended to be 270x270
-magick tmp/png/*.png -crop +0+15 -trim -resize '480x480!' -bordercolor black -border 16 -modulate 130,100 -resize 270x270 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/mstile-150x150.png'
-magick tmp/png/*.png -crop +0+15 -trim -resize '480x480!' -bordercolor black -border 16 -modulate 130,100 -resize 48x48 -set filename:fn '%[basename]' 'tmp/48x48/%[filename:fn].png'
-for i in 0 1 2 4 6 8 11 14 18 22 26 31 35 40 45 51 56 61 67 72 77 82 86 90 93 96 98 99 100 101 102 104 107 110 114 118 123 128 133 139 144 150 155 161 166 171 175 179 183 187 190 192 195 197 198 199; do magick tmp/48x48/$i.png favicon/$i/favicon-32x32.png favicon/$i/favicon-16x16.png favicon/$i/favicon.ico; done
-for i in 0 1 2 4 6 8 11 14 18 22 26 31 35 40 45 51 56 61 67 72 77 82 86 90 93 96 98 99 100 101 102 104 107 110 114 118 123 128 133 139 144 150 155 161 166 171 175 179 183 187 190 192 195 197 198 199; do magick tmp/png/$i.png -crop +0+15 -trim -resize '480x480!' -brightness-contrast 39x100 -morphology Open Octagon -bordercolor black -border 16 favicon/$i/safari-pinned-tab.svg; done
+magick tmp/transparent_png/*.png -resize 16x16 -set filename:fn '%[basename]' 'tmp/16x16/%[filename:fn].png'
+magick tmp/transparent_png/*.png -resize 32x32 -set filename:fn '%[basename]' 'tmp/32x32/%[filename:fn].png'
+magick tmp/transparent_png/*.png -resize 48x48 -set filename:fn '%[basename]' 'tmp/48x48/%[filename:fn].png'
+magick tmp/transparent_png/*.png -resize 96x96 -set filename:fn '%[basename]' 'favicon/%[filename:fn]/favicon-96x96.png'
+for i in 0 1 2 4 6 8 11 14 18 22 26 31 35 40 45 51 56 61 67 72 77 82 86 90 93 96 98 99 100 101 102 104 107 110 114 118 123 128 133 139 144 150 155 161 166 171 175 179 183 187 190 192 195 197 198 199; do magick tmp/48x48/$i.png tmp/32x32/$i.png tmp/16x16/$i.png favicon/$i/favicon.ico; done
+for i in 0 1 2 4 6 8 11 14 18 22 26 31 35 40 45 51 56 61 67 72 77 82 86 90 93 96 98 99 100 101 102 104 107 110 114 118 123 128 133 139 144 150 155 161 166 171 175 179 183 187 190 192 195 197 198 199; do echo '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="512" height="512" viewBox="0 0 512 512"><image width="512" height="512" xlink:href="data:image/png;base64,' > favicon/$i/favicon.svg && cat tmp/transparent_png/$i.png | base64 >> favicon/$i/favicon.svg && echo '"></image><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>' >> favicon/$i/favicon.svg; done
 
 rm -rf tmp
 # delete, because they do not look nice
