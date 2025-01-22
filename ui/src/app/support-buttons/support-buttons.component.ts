@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Messages} from "../messages";
 
@@ -10,6 +10,8 @@ import {Messages} from "../messages";
   styleUrl: './support-buttons.component.css'
 })
 export class SupportButtonsComponent {
+
+  @Input() showOnlyDonateButtons: boolean = false;
 
   messages: Messages;
 

@@ -10,12 +10,14 @@ import messagesRO from "./messages.ro.json";
 import messagesHI from "./messages.hi.json";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {Messages} from "./messages";
+import {ThankComponent} from "./thank/thank.component";
 
 function buildAllRoutes() {
   let allRoutes: Routes = [];
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.home, m => m.app.title)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, m => m.about.title)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.buymeacoffee, m => m.about.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.buymeacoffee, m => m.app.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.thank, m => m.app.title)))
   allRoutes.push({path: 'about', redirectTo: messagesDE.navigation.paths.about, pathMatch: 'full'})
   allRoutes.push({path: 'en', redirectTo: messagesEN.navigation.paths.home, pathMatch: 'full'})
   allRoutes.push({path: 'es', redirectTo: messagesES.navigation.paths.home, pathMatch: 'full'})

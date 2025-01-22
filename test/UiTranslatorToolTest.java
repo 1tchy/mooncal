@@ -28,7 +28,7 @@ public class UiTranslatorToolTest {
     private final Translator translator = new Translator();
 
     @Test
-    public void translate() throws InterruptedException, IOException {
+    public void translate() throws IOException {
         var objectMapper = new ObjectMapper()
                 .configure(SerializationFeature.INDENT_OUTPUT, true)
                 .setDefaultPrettyPrinter(new MyPrettyPrinter());

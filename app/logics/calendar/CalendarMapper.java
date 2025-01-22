@@ -1,5 +1,6 @@
 package logics.calendar;
 
+import jakarta.inject.Inject;
 import models.EventInstance;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
@@ -9,7 +10,9 @@ import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 import play.i18n.Lang;
+import play.i18n.MessagesApi;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -24,6 +27,12 @@ public class CalendarMapper {
 
     private static final TimeZone UTC_ZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/London");
     private final CalendarOutputter calendarOutputter = new CalendarOutputter();
+    private final MessagesApi messagesApi;
+
+    @Inject
+    public CalendarMapper(MessagesApi messagesApi) {
+        this.messagesApi = messagesApi;
+    }
 
     /**
      * @param events          to map
@@ -56,8 +65,13 @@ public class CalendarMapper {
             calEvent.getProperties().add(new Description(event.getDescription()));
         }
         calEvent.getProperties().add(calculateUid(event));
-        calEvent.getProperties().add(new Url(URI.create("https://mooncal.ch/" + ("de".equals(language.code()) ? "buymeacoffee" : (language.code() + "/buymeacoffee")))));
+        calEvent.getProperties().add(new Url(URI.create("https://mooncal.ch/" + getThankUrl(language))));
         calendar.getComponents().add(calEvent);
+    }
+
+    @VisibleForTesting
+    String getThankUrl(Lang lang) {
+        return messagesApi.get(lang, "navigation.thank");
     }
 
     private Uid calculateUid(EventInstance event) {

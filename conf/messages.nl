@@ -1,5 +1,7 @@
 lang.current=nl
 
+navigation.thank=nl/bedankt
+
 phases.full=Volle maan
 phases.full.1=Wolfmaan
 phases.full.2=Sneeuwmaan

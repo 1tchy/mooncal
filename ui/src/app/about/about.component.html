@@ -40,25 +40,5 @@
 </div>
 
 
-<h3>{{ messages.about.improveTranslation.title }}</h3>
-<div class="row gx-2 align-items-center">
-  <div class="col-sm-3">
-    <label class="visually-hidden" for="oldText">{{ messages.about.improveTranslation.currentText }}</label>
-    <input type="text" class="form-control" id="oldText" [disabled]="suggestBetterTranslationInProgress"
-           [placeholder]="messages.about.improveTranslation.currentText" [(ngModel)]="oldText">
-  </div>
-  <div class="col-sm-3">
-    <label class="visually-hidden" for="betterText">{{ messages.about.improveTranslation.betterTextSuggestion }}</label>
-    <input type="text" class="form-control" id="betterText" [disabled]="suggestBetterTranslationInProgress"
-           [placeholder]="messages.about.improveTranslation.betterTextSuggestion" [(ngModel)]="betterText">
-  </div>
-  <div class="col-auto">
-    <button (click)="suggestBetterTranslation()" class="btn btn-primary"
-            [disabled]="suggestBetterTranslationInProgress || oldText==='' || betterText===''">
-      {{ messages.about.improveTranslation.submit }}
-    </button>
-  </div>
-  <div class="col-auto">
-    <span class="form-text text-success">{{ suggestBetterTranslationResult }}</span>
-  </div>
-</div>
+<h3>{{ messages.improveTranslation.title }}</h3>
+<app-improve-translation></app-improve-translation>

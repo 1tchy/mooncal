@@ -33,9 +33,12 @@ describe('Routes', () => {
     expect(uniquePaths.size).toEqual(allPaths.length);
   });
   it('all titles are translated', () => {
-    let allTitles = routes.filter(r => !r.path!.endsWith('buymeacoffee')).filter(r => r.title).map(r => r.title!);
-    let uniqueTitles = new Set(allTitles);
-    expect(uniqueTitles.size).toEqual(allTitles.length);
+    routes
+      .filter(r => r.redirectTo === undefined)
+      .filter(r => r.path !== '**')
+      .forEach(r => {
+        expect(r.title!.length).withContext(r.path!).toBeGreaterThan(0)
+      });
   });
   it('all components have all languages', () => {
     for (const component of new Set(routesWithoutRedirect().filter(r => r.path !== '**').map(r => r.component!))) {

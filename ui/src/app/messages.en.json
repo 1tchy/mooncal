@@ -16,6 +16,7 @@
     "paths": {
       "home": "en/calendar",
       "about": "en/about",
+      "thank": "en/thank",
       "buymeacoffee": "en/buymeacoffee"
     }
   },
@@ -174,14 +175,19 @@
       "paypal": "Donate with PayPal",
       "coffee": "Buy me a coffee",
       "develop": "Help Develop"
-    },
-    "improveTranslation": {
-      "title": "Do you have a suggestion for a better translation?",
-      "currentText": "Current text",
-      "betterTextSuggestion": "New text proposal",
-      "submit": "Submit",
-      "thanksForFeedback": "Thank you for your feedback."
     }
+  },
+  "thank": {
+    "title": "Support",
+    "introduction": "This moon calendar is <strong>free</strong> and <strong>ad-free</strong>. To ensure that it stays that way, it is dependent on support, because the required infrastructure, further development and maintenance cost money. I would be very happy about support, a coffee or more."
+  },
+  "improveTranslation": {
+    "title": "Do you have a suggestion for a better translation?",
+    "lead": "Is something not yet translated correctly, does something sound strange?",
+    "currentText": "Current text",
+    "betterTextSuggestion": "New text proposal",
+    "submit": "Submit",
+    "thanksForFeedback": "Thank you for your feedback."
   },
   "error": {
     "title": "Error",

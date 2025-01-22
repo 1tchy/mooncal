@@ -6,17 +6,17 @@ import {SupportButtonsComponent} from "../support-buttons/support-buttons.compon
 import {ImproveTranslationComponent} from "../improve-translation/improve-translation.component";
 
 @Component({
-  selector: 'app-about',
+  selector: 'app-thank',
   standalone: true,
   imports: [
     FormsModule,
     SupportButtonsComponent,
     ImproveTranslationComponent
   ],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.css'
+  templateUrl: './thank.component.html',
+  styleUrl: './thank.component.css'
 })
-export class AboutComponent {
+export class ThankComponent {
 
   messages: Messages;
 

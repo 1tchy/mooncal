@@ -1,5 +1,7 @@
 lang.current=es
 
+navigation.thank=es/gracias
+
 phases.full=luna llena
 phases.full.1=Luna del Lobo
 phases.full.2=Luna de la Nieve

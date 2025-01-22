@@ -1,5 +1,7 @@
 lang.current=fr
 
+navigation.thank=fr/merci
+
 phases.full=lune pleine
 phases.full.1=Lune des loups
 phases.full.2=Lune de neige

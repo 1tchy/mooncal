@@ -16,6 +16,7 @@
     "paths": {
       "home": "nl/maankalender",
       "about": "nl/over",
+      "thank": "nl/bedankt",
       "buymeacoffee": "nl/buymeacoffee"
     }
   },
@@ -174,14 +175,19 @@
       "paypal": "Doneer met PayPal",
       "coffee": "Koop een kopje koffie voor mij",
       "develop": "Meehelpen"
-    },
-    "improveTranslation": {
-      "title": "Heb je een suggestie voor een betere vertaling?",
-      "currentText": "Huidige tekst",
-      "betterTextSuggestion": "Nieuw tekstvoorstel",
-      "submit": "Indienen",
-      "thanksForFeedback": "Bedankt voor uw feedback."
     }
+  },
+  "thank": {
+    "title": "Steun",
+    "introduction": "Deze maankalender is <strong>gratis</strong> en <strong>advertentievrij</strong>. Om dat zo te houden is het afhankelijk van ondersteuning, want de benodigde infrastructuur, doorontwikkeling en onderhoud kosten geld. Ik zou heel blij zijn met ondersteuning, een kopje koffie of meer."
+  },
+  "improveTranslation": {
+    "title": "Heb je een suggestie voor een betere vertaling?",
+    "lead": "Is er iets nog niet goed vertaald, klinkt er iets vreemds?",
+    "currentText": "Huidige tekst",
+    "betterTextSuggestion": "Nieuw tekstvoorstel",
+    "submit": "Indienen",
+    "thanksForFeedback": "Bedankt voor uw feedback."
   },
   "error": {
     "title": "Fout",

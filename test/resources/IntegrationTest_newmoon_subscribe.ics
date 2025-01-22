@@ -9,7 +9,7 @@ DTSTART;VALUE=DATE:20231212
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 0:37
 UID:mooncal-20231212Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -17,7 +17,7 @@ DTSTART;VALUE=DATE:20240111
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 13:11
 UID:mooncal-20240111Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -25,7 +25,7 @@ DTSTART;VALUE=DATE:20240209
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 0:19
 UID:mooncal-20240209Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -33,7 +33,7 @@ DTSTART;VALUE=DATE:20240310
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 10:16
 UID:mooncal-20240310Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -41,7 +41,7 @@ DTSTART;VALUE=DATE:20240408
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 20:22
 UID:mooncal-20240408Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -49,7 +49,7 @@ DTSTART;VALUE=DATE:20240508
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 5:10
 UID:mooncal-20240508Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -57,7 +57,7 @@ DTSTART;VALUE=DATE:20240606
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 14:24
 UID:mooncal-20240606Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -65,7 +65,7 @@ DTSTART;VALUE=DATE:20240705
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 0:53
 UID:mooncal-20240705Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -73,7 +73,7 @@ DTSTART;VALUE=DATE:20240804
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 13:21
 UID:mooncal-20240804Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -81,7 +81,7 @@ DTSTART;VALUE=DATE:20240903
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 4:06
 UID:mooncal-20240903Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -89,7 +89,7 @@ DTSTART;VALUE=DATE:20241002
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 20:50
 UID:mooncal-20241002Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -97,7 +97,7 @@ DTSTART;VALUE=DATE:20241101
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 13:43
 UID:mooncal-20241101Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -105,7 +105,7 @@ DTSTART;VALUE=DATE:20241201
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 7:28
 UID:mooncal-20241201Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -113,7 +113,7 @@ DTSTART;VALUE=DATE:20241230
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 23:51
 UID:mooncal-20241230Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -121,7 +121,7 @@ DTSTART;VALUE=DATE:20250129
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 14:05
 UID:mooncal-20250129Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -129,7 +129,7 @@ DTSTART;VALUE=DATE:20250228
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 2:01
 UID:mooncal-20250228Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -137,7 +137,7 @@ DTSTART;VALUE=DATE:20250329
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 11:55
 UID:mooncal-20250329Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -145,7 +145,7 @@ DTSTART;VALUE=DATE:20250427
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 21:20
 UID:mooncal-20250427Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -153,7 +153,7 @@ DTSTART;VALUE=DATE:20250527
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 4:57
 UID:mooncal-20250527Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -161,7 +161,7 @@ DTSTART;VALUE=DATE:20250625
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 12:37
 UID:mooncal-20250625Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -169,7 +169,7 @@ DTSTART;VALUE=DATE:20250724
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 21:21
 UID:mooncal-20250724Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -177,7 +177,7 @@ DTSTART;VALUE=DATE:20250823
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 8:10
 UID:mooncal-20250823Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -185,7 +185,7 @@ DTSTART;VALUE=DATE:20250921
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 21:46
 UID:mooncal-20250921Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -193,7 +193,7 @@ DTSTART;VALUE=DATE:20251021
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 14:13
 UID:mooncal-20251021Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -201,7 +201,7 @@ DTSTART;VALUE=DATE:20251120
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 7:47
 UID:mooncal-20251120Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -209,7 +209,7 @@ DTSTART;VALUE=DATE:20251220
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 3:03
 UID:mooncal-20251220Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -217,7 +217,7 @@ DTSTART;VALUE=DATE:20260118
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 21:20
 UID:mooncal-20260118Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -225,7 +225,7 @@ DTSTART;VALUE=DATE:20260217
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 13:18
 UID:mooncal-20260217Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -233,7 +233,7 @@ DTSTART;VALUE=DATE:20260318
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 20:21
 UID:mooncal-20260318Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -241,7 +241,7 @@ DTSTART;VALUE=DATE:20260417
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 13:43
 UID:mooncal-20260417Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:ignored
@@ -249,6 +249,6 @@ DTSTART;VALUE=DATE:20260516
 SUMMARY:🌑 Neumond
 DESCRIPTION:Neumond um 22:01
 UID:mooncal-20260516Z-newmoon
-URL:https://mooncal.ch/buymeacoffee
+URL:https://mooncal.ch/bedanken
 END:VEVENT
 END:VCALENDAR

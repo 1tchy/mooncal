@@ -16,6 +16,7 @@
     "paths": {
       "home": "",
       "about": "ueber",
+      "thank": "bedanken",
       "buymeacoffee": "buymeacoffee"
     }
   },
@@ -174,14 +175,19 @@
       "paypal": "Spenden mit PayPal",
       "coffee": "Spendier mir einen Kaffee",
       "develop": "Mitentwickeln"
-    },
-    "improveTranslation": {
-      "title": "Hast du einen Vorschlag für eine bessere Übersetzung?",
-      "currentText": "Aktueller Text",
-      "betterTextSuggestion": "Neuer Textvorschlag",
-      "submit": "Absenden",
-      "thanksForFeedback": "Vielen Dank für die Rückmeldung."
     }
+  },
+  "thank": {
+    "title": "Unterstützen",
+    "introduction": "Dieser Mondkalender ist <strong>gratis</strong> und <strong>werbefrei</strong>. Damit dies auch so bleibt, ist er auf Unterstützung angewiesen, denn die benötigte Infrastruktur, Weiterentwicklung und Wartung kosten. Über Unterstützung, einen Kaffee oder mehr würde ich mich sehr freuen."
+  },
+  "improveTranslation": {
+    "title": "Hast du einen Vorschlag für eine bessere Übersetzung?",
+    "lead": "Ist etwas noch nicht korrekt übersetzt, hört sich etwas komisch an?",
+    "currentText": "Aktueller Text",
+    "betterTextSuggestion": "Neuer Textvorschlag",
+    "submit": "Absenden",
+    "thanksForFeedback": "Vielen Dank für die Rückmeldung."
   },
   "error": {
     "title": "Fehler",

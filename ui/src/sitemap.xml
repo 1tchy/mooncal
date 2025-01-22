@@ -11,7 +11,7 @@
 		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/calendar"/>
 	</url>
 	<url>
-		<loc>https://mooncal.ch/about</loc>
+		<loc>https://mooncal.ch/ueber</loc>
 		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/ueber"/>
 		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/about"/>
 		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/over"/>
@@ -19,5 +19,15 @@
 		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/a-propos"/>
 		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/despre"/>
 		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/about"/>
+	</url>
+	<url>
+		<loc>https://mooncal.ch/bedanken</loc>
+		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/bedanken"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/thank"/>
+		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/bedankt"/>
+		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/gracias"/>
+		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/merci"/>
+		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/multumesc"/>
+		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/thank"/>
 	</url>
 </urlset>

@@ -16,6 +16,7 @@
     "paths": {
       "home": "fr/calendrier-lune",
       "about": "fr/a-propos",
+      "thank": "fr/merci",
       "buymeacoffee": "fr/buymeacoffee"
     }
   },
@@ -174,14 +175,19 @@
       "paypal": "Faire un don avec Paypal",
       "coffee": "M'acheter un café",
       "develop": "Aider au développement"
-    },
-    "improveTranslation": {
-      "title": "Avez-vous une suggestion pour une meilleure traduction?",
-      "currentText": "Texte actuel",
-      "betterTextSuggestion": "Nouvelle proposition de texte",
-      "submit": "Soumettre",
-      "thanksForFeedback": "Merci pour vos retours."
     }
+  },
+  "thank": {
+    "title": "Soutien",
+    "introduction": "Ce calendrier lunaire est <strong>gratuit</strong> et <strong>sans publicité</strong>. Pour que cela reste ainsi, il faut du soutien, car l'infrastructure, le développement et la maintenance nécessaires coûtent de l'argent. Je serais très heureux d'avoir du soutien, un café ou plus."
+  },
+  "improveTranslation": {
+    "title": "Avez-vous une suggestion pour une meilleure traduction?",
+    "lead": "Quelque chose n’est pas encore traduit correctement, quelque chose vous semble étrange?",
+    "currentText": "Texte actuel",
+    "betterTextSuggestion": "Nouvelle proposition de texte",
+    "submit": "Soumettre",
+    "thanksForFeedback": "Merci pour vos retours."
   },
   "error": {
     "title": "Erreur",

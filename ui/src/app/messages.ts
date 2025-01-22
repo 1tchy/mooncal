@@ -10,6 +10,8 @@ export interface Messages {
   calendar: Calendar
   export: Export
   about: About
+  thank: Thank
+  improveTranslation: ImproveTranslation
   error: Error
 }
 
@@ -35,6 +37,7 @@ export interface Navigation {
 export interface Paths {
   home: string
   about: string
+  thank: string
   buymeacoffee: string
 }
 
@@ -142,7 +145,11 @@ export interface About {
   introduction: string
   sources: Sources
   support: Support
-  improveTranslation: ImproveTranslation
+}
+
+export interface Thank {
+  title: string
+  introduction: string
 }
 
 export interface Sources {
@@ -195,6 +202,7 @@ export interface Support {
 
 export interface ImproveTranslation {
   title: string
+  lead: string
   currentText: string
   betterTextSuggestion: string
   submit: string

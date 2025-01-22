@@ -85,44 +85,86 @@ export const compiledRoute = [
   },
   {
     path: 'buymeacoffee',
-    title: 'Über diese Seite',
-    component: 'AboutComponent',
+    title: 'Mondkalender',
+    component: 'ThankComponent',
     data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/buymeacoffee',
-    title: 'About this site',
-    component: 'AboutComponent',
+    title: 'Moon Calendar',
+    component: 'ThankComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
     path: 'nl/buymeacoffee',
-    title: 'Over deze pagina',
-    component: 'AboutComponent',
+    title: 'Maankalender',
+    component: 'ThankComponent',
     data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
     path: 'es/buymeacoffee',
-    title: 'Acerca de este sitio',
-    component: 'AboutComponent',
+    title: 'Calendario Lunar',
+    component: 'ThankComponent',
     data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
     path: 'fr/buymeacoffee',
-    title: 'À propos de ce site',
-    component: 'AboutComponent',
+    title: 'Calendrier de la Lune',
+    component: 'ThankComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
     path: 'ro/buymeacoffee',
-    title: 'Despre acest site',
-    component: 'AboutComponent',
+    title: 'Calendar lunar',
+    component: 'ThankComponent',
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
     path: 'hi/buymeacoffee',
-    title: 'यह साइट के बारे में',
-    component: 'AboutComponent',
+    title: 'चंद्र कैलेंडर',
+    component: 'ThankComponent',
+    data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
+  },
+  {
+    path: 'bedanken',
+    title: 'Mondkalender',
+    component: 'ThankComponent',
+    data: {messages: 'de', home: '', about: 'ueber'}
+  },
+  {
+    path: 'en/thank',
+    title: 'Moon Calendar',
+    component: 'ThankComponent',
+    data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
+  },
+  {
+    path: 'nl/bedankt',
+    title: 'Maankalender',
+    component: 'ThankComponent',
+    data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
+  },
+  {
+    path: 'es/gracias',
+    title: 'Calendario Lunar',
+    component: 'ThankComponent',
+    data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
+  },
+  {
+    path: 'fr/merci',
+    title: 'Calendrier de la Lune',
+    component: 'ThankComponent',
+    data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
+  },
+  {
+    path: 'ro/multumesc',
+    title: 'Calendar lunar',
+    component: 'ThankComponent',
+    data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
+  },
+  {
+    path: 'hi/thank',
+    title: 'चंद्र कैलेंडर',
+    component: 'ThankComponent',
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {

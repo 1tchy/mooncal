@@ -1,0 +1,22 @@
+<p>{{ messages.improveTranslation.lead }}</p>
+<div class="row gx-2 align-items-center">
+  <div class="col-sm-3">
+    <label class="visually-hidden" for="oldText">{{ messages.improveTranslation.currentText }}</label>
+    <input type="text" class="form-control" id="oldText" [disabled]="suggestBetterTranslationInProgress"
+           [placeholder]="messages.improveTranslation.currentText" [(ngModel)]="oldText">
+  </div>
+  <div class="col-sm-3">
+    <label class="visually-hidden" for="betterText">{{ messages.improveTranslation.betterTextSuggestion }}</label>
+    <input type="text" class="form-control" id="betterText" [disabled]="suggestBetterTranslationInProgress"
+           [placeholder]="messages.improveTranslation.betterTextSuggestion" [(ngModel)]="betterText">
+  </div>
+  <div class="col-auto">
+    <button (click)="suggestBetterTranslation()" class="btn btn-primary"
+            [disabled]="suggestBetterTranslationInProgress || oldText==='' || betterText===''">
+      {{ messages.improveTranslation.submit }}
+    </button>
+  </div>
+  <div class="col-auto">
+    <span class="form-text text-success">{{ suggestBetterTranslationResult }}</span>
+  </div>
+</div>

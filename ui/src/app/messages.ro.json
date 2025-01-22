@@ -16,6 +16,7 @@
     "paths": {
       "home": "ro/calendar-lunar",
       "about": "ro/despre",
+      "thank": "ro/multumesc",
       "buymeacoffee": "ro/buymeacoffee"
     }
   },
@@ -174,14 +175,19 @@
       "paypal": "Donează cu PayPal",
       "coffee": "Cumpără-mi o cafea",
       "develop": "Ajută la dezvoltare"
-    },
-    "improveTranslation": {
-      "title": "Aveți o sugestie pentru o traducere mai bună?",
-      "currentText": "Textul actual",
-      "betterTextSuggestion": "Propunere de text nou",
-      "submit": "Trimite",
-      "thanksForFeedback": "Mulțumesc pentru feedback-ul dvs."
     }
+  },
+  "thank": {
+    "title": "Sprijin",
+    "introduction": "Acest calendar lunar este <strong>gratuit</strong> și <strong>fără reclame</strong>. Pentru a se asigura că rămâne așa, depinde de suport, deoarece infrastructura necesară, dezvoltarea ulterioară și întreținerea costă bani. M-aș bucura foarte mult de sprijin, o cafea sau mai mult."
+  },
+  "improveTranslation": {
+    "title": "Aveți o sugestie pentru o traducere mai bună?",
+    "lead": "Ceva nu este încă tradus corect, sună ceva ciudat?",
+    "currentText": "Textul actual",
+    "betterTextSuggestion": "Propunere de text nou",
+    "submit": "Trimite",
+    "thanksForFeedback": "Mulțumesc pentru feedback-ul dvs."
   },
   "error": {
     "title": "Eroare",
