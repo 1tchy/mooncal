@@ -65,7 +65,7 @@ public class CalendarMapper {
             calEvent.getProperties().add(new Description(event.getDescription()));
         }
         calEvent.getProperties().add(calculateUid(event));
-        calEvent.getProperties().add(new Url(URI.create("https://mooncal.ch/" + getThankUrl(language))));
+        calEvent.getProperties().add(new Url(URI.create("https://mooncal.ch/" + getThankUrl(language) + "?t=ics")));
         calendar.getComponents().add(calEvent);
     }
 

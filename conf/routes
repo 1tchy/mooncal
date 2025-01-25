@@ -4,6 +4,7 @@
 
 GET        /mooncal              controllers.Application.query(request: Request)
 GET        /mooncal.ics          controllers.Application.queryAsICalendar(request: Request)
+GET        /mooncal.pdf          controllers.Application.queryAsPdf(request: Request)
 +nocsrf
 POST       /suggestBetterTranslation controllers.Application.suggestBetterTranslation(request: Request)
 GET        /server/status        controllers.Application.status()

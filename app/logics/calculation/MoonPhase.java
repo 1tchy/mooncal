@@ -25,6 +25,21 @@ public enum MoonPhase {
             }
         }
 
+        @Override
+        public String getPdfTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+            if (style == EventStyle.WITH_DESCRIPTION) {
+                int month = date.getMonthValue();
+                if (isBlueMoon(date)) {
+                    month = 13;
+                }
+                String fullMoonName = messagesApi.get(lang, "phases.full." + month);
+                if (!fullMoonName.isEmpty()) {
+                    return fullMoonName;
+                }
+            }
+            return super.getPdfTitle(messagesApi, lang, date, style);
+        }
+
         private static boolean isBlueMoon(ZonedDateTime date) {
             ZonedDateTime previousMoon = date.minusSeconds((long) (MOON_CYCLE_DAYS * 24 * 3600));
             return previousMoon.getMonth() == date.getMonth();
@@ -51,5 +66,12 @@ public enum MoonPhase {
             return emoticon;
         }
         return emoticon + " " + getSimpleName(messagesApi, lang);
+    }
+
+    public String getPdfTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+        if (style == EventStyle.ICON_ONLY) {
+            return "";
+        }
+        return getSimpleName(messagesApi, lang);
     }
 }

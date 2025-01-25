@@ -2,6 +2,7 @@ package controllers;
 
 import logics.calculation.TotalCalculation;
 import logics.calendar.CalendarMapper;
+import logics.calendar.PDFMapper;
 import models.BetterTranslationForm;
 import models.EventInstance;
 import models.RequestForm;
@@ -36,6 +37,7 @@ public class Application extends Controller {
 
     private final TotalCalculation calculation;
     private final CalendarMapper calendarMapper;
+    private final PDFMapper pdfMapper;
     private final Environment environment;
     private final FormFactory formFactory;
     private final Action<AnyContent> indexHtml;
@@ -43,9 +45,10 @@ public class Application extends Controller {
     private final Logger.ALogger logger = Logger.of(getClass());
 
     @Inject
-    public Application(TotalCalculation calculation, CalendarMapper calendarMapper, Environment environment, FormFactory formFactory, Assets assets, MessagesApi messagesApi) {
+    public Application(TotalCalculation calculation, CalendarMapper calendarMapper, PDFMapper pdfMapper, Environment environment, FormFactory formFactory, Assets assets, MessagesApi messagesApi) {
         this.calculation = calculation;
         this.calendarMapper = calendarMapper;
+        this.pdfMapper = pdfMapper;
         this.environment = environment;
         this.formFactory = formFactory;
         this.messagesApi = messagesApi;
@@ -68,6 +71,13 @@ public class Application extends Controller {
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
             return ok(calendarMapper.map(result, updateFrequency, goodForm.getLang())).as("text/calendar");
         }, request);
+    }
+
+    public CompletionStage<Result> queryAsPdf(Http.Request request) {
+        return handleQueryRequest(
+                badForm -> badRequest(badForm.errorsAsJson()),
+                (result, goodForm) -> ok(pdfMapper.map(result, goodForm.getLang())).as("application/pdf"),
+                request);
     }
 
     private CompletionStage<Result> handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, BiFunction<Collection<EventInstance>, RequestForm, Result> goodRequest, Http.Request request) {

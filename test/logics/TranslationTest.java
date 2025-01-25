@@ -92,6 +92,14 @@ public class TranslationTest extends WithApplication {
             put("time.fromTo.in", ".*");
             put("navigation.home", ".*");
             put("events.title", "en");
+            put("pdf.month.4", ".*");
+            put("pdf.month.5", ".*");
+            put("pdf.month.6", "nl");
+            put("pdf.month.7", "nl");
+            put("pdf.month.8", ".*");
+            put("pdf.month.9", ".*");
+            put("pdf.month.10", "nl");
+            put("pdf.month.11", ".*");
             put("calendar.title", "nl");
         }};
         final String noTranslationsRequiredForLanguage = noTranslationRequired.get(key);

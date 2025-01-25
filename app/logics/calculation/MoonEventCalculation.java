@@ -74,9 +74,10 @@ public class MoonEventCalculation extends Calculation {
             ArrayNode landings = (ArrayNode) mapper.readTree(Files.readAllBytes(Path.of(file)));
             for (JsonNode landing : landings) {
                 ZonedDateTime date = LocalDateTime.parse(landing.get("date").asText(), DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
-                TranslatedString title = toTranslatedString(landing.get("title")).prefix("🚀 ");
+                TranslatedString pdfTitle = toTranslatedString(landing.get("title"));
+                TranslatedString title = pdfTitle.prefix("🚀 ");
                 TranslatedString description = toTranslatedString(landing.get("description"));
-                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, title::getByLang, description::getByLang, "moon-landing"));
+                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, title::getByLang, pdfTitle::getByLang, description::getByLang, "moon-landing"));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -111,7 +112,7 @@ public class MoonEventCalculation extends Calculation {
                 }
                 String name = result.get("name").asText();
                 String descriptionEN = result.get("description").asText().replaceAll("\r", "").replaceAll("\n", " ");
-                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, lang -> "🚀 " + name, TranslatedString.translate(langs, descriptionEN, translator)::getByLang, "moon-landing"));
+                moonLandings.put(date, new EventTemplate.WithoutZoneId(date, lang -> "🚀 " + name, lang -> name, TranslatedString.translate(langs, descriptionEN, translator)::getByLang, "moon-landing"));
             }
         } catch (IOException e) {
             logger.error("Could not update moon landings", e);

@@ -29,6 +29,9 @@ public abstract class EventTemplate {
     @NotNull
     public abstract String getTitle(ZoneId timezone, Lang lang);
 
+    @NotNull
+    public abstract String getPdfTitle(ZoneId timezone, Lang lang);
+
     @Nullable
     public abstract String getDescription(ZoneId timezone, Lang lang);
 
@@ -42,17 +45,26 @@ public abstract class EventTemplate {
         private final Function<Lang, String> descriptionTemplate;
         @NotNull
         private final Function<Lang, String> titleTemplate;
+        @NotNull
+        private final Function<Lang, String> pdfTitleTemplate;
 
-        public WithoutZoneId(@NotNull ZonedDateTime dateTime, @NotNull Function<Lang, String> titleTemplate, @Nullable Function<Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
+        public WithoutZoneId(@NotNull ZonedDateTime dateTime, @NotNull Function<Lang, String> titleTemplate, @NotNull Function<Lang, String> pdfTitleTemplate, @Nullable Function<Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
             super(dateTime, eventTypeId);
             this.titleTemplate = titleTemplate;
             this.descriptionTemplate = descriptionTemplate;
+            this.pdfTitleTemplate = pdfTitleTemplate;
         }
 
         @Override
         @NotNull
         public String getTitle(ZoneId timezone, Lang lang) {
             return titleTemplate.apply(lang);
+        }
+
+        @Override
+        @NotNull
+        public String getPdfTitle(ZoneId timezone, Lang lang) {
+            return pdfTitleTemplate.apply(lang);
         }
 
         @Override
@@ -82,6 +94,12 @@ public abstract class EventTemplate {
         @Override
         @NotNull
         public String getTitle(ZoneId timezone, Lang lang) {
+            return titleTemplate.apply(timezone, lang);
+        }
+
+        @Override
+        @NotNull
+        public String getPdfTitle(ZoneId timezone, Lang lang) {
             return titleTemplate.apply(timezone, lang);
         }
 
