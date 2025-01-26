@@ -41,7 +41,8 @@ function buildRoute(messages: Messages, component: any, pathFunction: (messages:
   let data: { [key: string]: any } = {
     messages: messages,
     home: messages.navigation.paths.home,
-    about: messages.navigation.paths.about
+    about: messages.navigation.paths.about,
+    thank: messages.navigation.paths.thank
   };
   for (const otherLanguagesMessage of getAllLanguagesMessages()) {
     data[otherLanguagesMessage.lang.current] = pathFunction(otherLanguagesMessage)

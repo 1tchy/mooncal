@@ -128,15 +128,12 @@
               "Cliquez sur \"Importer\""
             ]
           },
-          "enjoyInstruction": "Profitez de vos nouveaux entrées de calendrier"
+          "enjoyInstruction": "Profitez de vos nouveaux entrées de calendrier et",
+          "sayThanks": "merci pour ça"
         },
         "explanations": "Avec ce lien, tous les événements sélectionnés seront affichés pour la moitié précédente de l'année et pour les deux années suivantes.",
         "copy": "Copier le lien",
-        "close": "Fermer",
-        "support": {
-          "doYouLike": "Aimez-vous le calendrier lunaire?",
-          "notFreePleaseSupport": "Le fonctionnement et le développement ultérieur ne sont pas totalement gratuits, je me réjouirais d'un peu de soutien."
-        }
+        "close": "Fermer"
       }
     },
     "print": "Imprimer"

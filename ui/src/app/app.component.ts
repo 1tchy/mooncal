@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
+import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet, Routes} from '@angular/router';
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
@@ -52,10 +52,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public trackNavigation(targetPath: string) {
+    AppComponent.trackNavigation(targetPath, this.router.config)
+  }
+
+  public static trackNavigation(targetPath: string, routes: Routes) {
     // @ts-ignore
     _paq.push(['setCustomUrl', "/" + targetPath]);
     // @ts-ignore
-    _paq.push(['setDocumentTitle', this.router.config.filter(route => route.path === targetPath)[0].title]);
+    _paq.push(['setDocumentTitle', routes.filter(route => route.path === targetPath)[0].title]);
     // @ts-ignore
     _paq.push(['trackPageView']);
   }

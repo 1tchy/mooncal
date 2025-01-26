@@ -3,7 +3,7 @@ import {Messages} from '../messages';
 import {Event} from "./event";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Data, Router, RouterLink, Routes} from "@angular/router";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {
   NgbDropdownModule,
@@ -18,7 +18,7 @@ import {
 import {HttpClient} from "@angular/common/http";
 import {getAllLanguages} from "../app.routes";
 import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
-import {SupportButtonsComponent} from "../support-buttons/support-buttons.component";
+import {AppComponent} from "../app.component";
 
 type options = { [key: string]: boolean }
 
@@ -32,8 +32,8 @@ type options = { [key: string]: boolean }
     NgClass,
     NgbDropdownModule,
     NgbNav, NgbNavItem, NgbNavLinkButton, NgbNavContent, NgbNavOutlet,
-    ButtonWithStyledTooltip,
-    SupportButtonsComponent
+    RouterLink,
+    ButtonWithStyledTooltip
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
@@ -41,6 +41,8 @@ type options = { [key: string]: boolean }
 export class MainComponent implements AfterViewInit {
   private modalService = inject(NgbModal);
   messages: Messages;
+  routeData: Data = []
+  routes: Routes;
 
   @ViewChild('optionsForm') private optionsForm!: NgForm;
   phases: options = {
@@ -77,12 +79,14 @@ export class MainComponent implements AfterViewInit {
   activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
   clipboardSet$ = new Subject<boolean>();
   clipboardSet = false;
-  showSupportOnSubscribe = false;
   trackIcalSubscriptionTextarea$ = new Subject<string>();
 
   constructor(route: ActivatedRoute, router: Router, private httpClient: HttpClient) {
+    this.routeData = route.snapshot.data;
+    this.routes = router.config;
     this.messages = route.snapshot.data['messages']
     route.data.subscribe(data => {
+      this.routeData = data;
       this.messages = data['messages']
       if (this.style == "withDescription" && this.messages.styles.fullmoonAndName == "") {
         this.style = "fullmoon";
@@ -316,16 +320,6 @@ export class MainComponent implements AfterViewInit {
     this.trackIcalSubscriptionCopyClipboardButton();
   }
 
-  public showSupportInXMilliseconds(x: number) {
-    if (x > 0) {
-      setTimeout(() => {
-        this.showSupportOnSubscribe = true;
-      }, x);
-    } else {
-      this.showSupportOnSubscribe = true;
-    }
-  }
-
   public trackDownloadIcal() {
     // @ts-ignore
     _paq.push(['trackLink', 'https://mooncal.ch/download/' + this.paramsForTracking(true), 'download']);
@@ -364,6 +358,10 @@ export class MainComponent implements AfterViewInit {
     // @ts-ignore
     _paq.push(['trackEvent', 'Settings', 'timezoneChange', this.oldZone + "_to_" + this.zone]);
     this.oldZone = this.zone;
+  }
+
+  public trackNavigation(targetPath: string) {
+    AppComponent.trackNavigation(targetPath, this.routes)
   }
 
   public getTimezone() {

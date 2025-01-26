@@ -128,15 +128,12 @@
               "Klicke auf \"Importieren\""
             ]
           },
-          "enjoyInstruction": "Geniesse deine neuen Kalendereinträge"
+          "enjoyInstruction": "Geniesse deine neuen Kalendereinträge und",
+          "sayThanks": "bedanke dich dafür"
         },
         "explanations": "Damit werden in deinem Kalender jeweils alle ausgewählten Einträge im letzten halben Jahr und in den nächsten zwei Jahren angezeigt.",
         "copy": "Link kopieren",
-        "close": "Schliessen",
-        "support": {
-          "doYouLike": "Gefällt dir der Mondkalender?",
-          "notFreePleaseSupport": "Der Betrieb und die Weiterentwicklung ist nicht ganz gratis, über eine kleine Unterstützung würde ich mich freuen."
-        }
+        "close": "Schliessen"
       }
     },
     "print": "Drucken"

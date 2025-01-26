@@ -151,7 +151,13 @@
         <ng-template ngbNavContent>
           <ol>
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.iOS.steps">{{ step }}</li>
-            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+            <li>
+              {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+                {{ messages.export.ical.subscribe.instructions.sayThanks }}
+              </a>
+              &hearts;
+            </li>
           </ol>
         </ng-template>
       </li>
@@ -161,7 +167,13 @@
         <ng-template ngbNavContent>
           <ol>
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.macOS.steps">{{ step }}</li>
-            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+            <li>
+              {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+                {{ messages.export.ical.subscribe.instructions.sayThanks }}
+              </a>
+              &hearts;
+            </li>
           </ol>
         </ng-template>
       </li>
@@ -174,7 +186,13 @@
                                                                                 target="_blank">{{ messages.export.ical.subscribe.instructions.googleCalendar.name }}</a>
             </li>
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.googleCalendar.steps">{{ step }}</li>
-            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+            <li>
+              {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+                {{ messages.export.ical.subscribe.instructions.sayThanks }}
+              </a>
+              &hearts;
+            </li>
           </ol>
         </ng-template>
       </li>
@@ -195,7 +213,13 @@
           <p>{{ messages.export.ical.subscribe.instructions.androidIfNotAutomatic }}</p>
           <ol>
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.androidExtraSteps">{{ step }}</li>
-            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+            <li>
+              {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+                {{ messages.export.ical.subscribe.instructions.sayThanks }}
+              </a>
+              &hearts;
+            </li>
           </ol>
         </ng-template>
       </li>
@@ -205,7 +229,13 @@
         <ng-template ngbNavContent>
           <ol>
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.thunderbird.steps">{{ step }}</li>
-            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+            <li>
+              {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+                {{ messages.export.ical.subscribe.instructions.sayThanks }}
+              </a>
+              &hearts;
+            </li>
           </ol>
         </ng-template>
       </li>
@@ -215,7 +245,13 @@
         <ng-template ngbNavContent>
           <ol>
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.outlook.steps">{{ step }}</li>
-            <li>{{ messages.export.ical.subscribe.instructions.enjoyInstruction }}</li>
+            <li>
+              {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+                {{ messages.export.ical.subscribe.instructions.sayThanks }}
+              </a>
+              &hearts;
+            </li>
           </ol>
         </ng-template>
       </li>
@@ -227,8 +263,7 @@
     <p class="text-muted mb-0">{{ messages.export.ical.subscribe.explanations }}</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="copyIcalLink(); showSupportInXMilliseconds(750)"
-            data-dismiss="modal">
+    <button type="button" class="btn btn-primary" (click)="copyIcalLink()" data-dismiss="modal">
       <svg *ngIf="!clipboardSet; else clipboardCheckFilled" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
            fill="currentColor" class="bi bi-clipboard"
            viewBox="0 0 16 16">
@@ -250,24 +285,10 @@
     </button>
     <button-with-styled-tooltip [btnClass]="calendar.length<20 ? 'btn-light' : 'btn-warning'"
                                 [href]="getApiUrl(true,true)+'?'+paramsAsString(true)+'&manualDownload'"
-                                (onClick)="trackDownloadIcal(); showSupportInXMilliseconds(0)"
+                                (onClick)="trackDownloadIcal()"
                                 [tooltipText]="messages.export.ical.downloadWarning"
                                 [tooltipType]="calendar.length<8 ? 'none' : calendar.length>20 ? 'warning' : 'default'">{{ messages.export.ical.download }}
     </button-with-styled-tooltip>
-  </div>
-  <div class="modal-body row" *ngIf="showSupportOnSubscribe">
-    <div class="col-2 d-flex align-items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-box2-heart" viewBox="0 0 16 16">
-        <path d="M8 7.982C9.664 6.309 13.825 9.236 8 13 2.175 9.236 6.336 6.31 8 7.982"/>
-        <path
-          d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zm0 1H7.5v3h-6zM8.5 4V1h3.75l2.25 3zM15 5v10H1V5z"/>
-      </svg>
-    </div>
-    <div class="col">
-      <h5>{{ messages.export.ical.subscribe.support.doYouLike }}</h5>
-      <p>{{ messages.export.ical.subscribe.support.notFreePleaseSupport }}</p>
-      <app-support-buttons></app-support-buttons>
-    </div>
   </div>
 </ng-template>
 <br/>

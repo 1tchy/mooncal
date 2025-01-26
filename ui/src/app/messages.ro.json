@@ -128,15 +128,12 @@
               "Clic pe \"Importă\""
             ]
           },
-          "enjoyInstruction": "Felicitari! Calendarul tău tocmai a primit noi înregistrări"
+          "enjoyInstruction": "Felicitari! Calendarul tău tocmai a primit noi înregistrări și",
+          "sayThanks": "multumesc pentru asta"
         },
         "explanations": "Cu acest link, toate evenimentele selectate vor fi arătate pentru jumătatea anterioară a anului și pentru următorii doi ani.",
         "copy": "Copiază link",
-        "close": "Închide",
-        "support": {
-          "doYouLike": "Îți place calendarul lunar?",
-          "notFreePleaseSupport": "Operarea și dezvoltarea ulterioară nu sunt complet gratuite, m-aș bucura de puțin sprijin."
-        }
+        "close": "Închide"
       }
     },
     "print": "Imprimă"

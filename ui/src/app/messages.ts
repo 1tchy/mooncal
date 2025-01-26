@@ -109,7 +109,6 @@ export interface Subscribe {
   explanations: string
   copy: string
   close: string
-  support: SubscribeSupport
 }
 
 export interface SubscribeInstructions {
@@ -128,16 +127,12 @@ export interface SubscribeInstructions {
   thunderbird: AppSubscribeInstructions
   outlook: AppSubscribeInstructions
   enjoyInstruction: string
+  sayThanks: string
 }
 
 export interface AppSubscribeInstructions {
   name: string
   steps: string[]
-}
-
-export interface SubscribeSupport {
-  doYouLike: string
-  notFreePleaseSupport: string
 }
 
 export interface About {
