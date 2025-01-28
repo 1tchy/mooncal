@@ -41,9 +41,9 @@ import static org.vandeseer.easytable.settings.VerticalAlignment.MIDDLE;
 
 public class PDFMapper {
 
-    private static final int MOON_IMAGE_SIZE = 50;
+    private static final int MOON_IMAGE_SIZE = 60;
     private static final int THANK_QR_CODE_SIZE = 25;
-    private static final int TABLE_OFFSET_FROM_TOP = 60;
+    private static final int TABLE_OFFSET_FROM_TOP = 80;
     private static final int DAY_EVENT_TEXT_PADDING = 2;
     private static final int FONT_SIZE = 8;
     private static final PDRectangle A4_QUER = new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth());
@@ -83,8 +83,8 @@ public class PDFMapper {
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 float startX = (A4_QUER.getWidth() - (12 * MONTH_ROW_WIDTH)) / 2;
                 contentStream.beginText();
-                contentStream.newLineAtOffset(startX, page.getMediaBox().getUpperRightY() - 40);
-                contentStream.setFont(fontBold, 16);
+                contentStream.newLineAtOffset(startX, page.getMediaBox().getUpperRightY() - 50);
+                contentStream.setFont(fontBold, 18);
                 contentStream.showText(messagesApi.get(language, "pdf.title") + " " + year);
                 contentStream.endText();
                 contentStream.drawImage(loadImage("/public/favicon/31/web-app-manifest-192x192.png", document),
