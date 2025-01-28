@@ -180,13 +180,13 @@ public class PDFMapper {
         return eventInstances.stream()
                 .map(eventInstance -> switch (eventInstance.getEventTypeId()) {
                     case MoonPhasesCalculation.FULLMOON_EVENT_TYPE_ID ->
-                            "/public/favicon/100/web-app-manifest-192x192.png";
+                            "/public/emoji/full.png";
                     case MoonPhasesCalculation.NEWMOON_EVENT_TYPE_ID ->
-                            "/public/favicon/6/web-app-manifest-192x192.png";
+                            "/public/emoji/new.png";
                     case MoonPhasesCalculation.FIRST_QUARTER_EVENT_TYPE_ID ->
-                            "/public/favicon/51/web-app-manifest-192x192.png";
+                            "/public/emoji/first-quarter.png";
                     case MoonPhasesCalculation.LAST_QUARTER_EVENT_TYPE_ID ->
-                            "/public/favicon/150/web-app-manifest-192x192.png";
+                            "/public/emoji/last-quarter.png";
                     default -> null;
                 }).filter(Objects::nonNull)
                 .findFirst();
