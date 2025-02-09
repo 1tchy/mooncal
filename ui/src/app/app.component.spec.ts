@@ -4,6 +4,9 @@ import messages from "./messages.en.json";
 import {ActivatedRoute} from "@angular/router";
 import {of} from "rxjs";
 
+// @ts-ignore
+window._paq = [];
+
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;

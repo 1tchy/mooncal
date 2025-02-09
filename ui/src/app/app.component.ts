@@ -7,6 +7,7 @@ import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
 import {getAllLanguagesAndItsNames} from "./app.routes";
+import {AB} from "./ab";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,12 @@ export class AppComponent implements OnInit, OnDestroy {
   messages: Messages = messagesDE;
   routerSub$: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router, private titleService: Title) {
+  constructor(private route: ActivatedRoute, private router: Router, private titleService: Title, private ab: AB) {
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    // @ts-ignore
+    _paq.push(['setCustomDimension', 1, ab.isA ? 'A' : 'B']);
+    // @ts-ignore
+    _paq.push(['trackPageView']);
   }
 
   ngOnInit() {
