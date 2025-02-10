@@ -7,7 +7,7 @@ export class AB {
 
   constructor() {
     this._isA = [...(window.navigator.userAgent + window.navigator.language + new Date().toLocaleDateString())]
-      .reduce((acc, curr) => acc ^ curr.charCodeAt(0), 0) >= 64;
+      .reduce((hash, c) => ((hash << 5) + hash) + c.charCodeAt(0), 5381) % 2 == 0;
   }
 
 
