@@ -176,7 +176,13 @@
   },
   "thank": {
     "title": "Steun",
-    "introduction": "Deze maankalender is <strong>gratis</strong> en <strong>advertentievrij</strong>. Om dat zo te houden is het afhankelijk van ondersteuning, want de benodigde infrastructuur, doorontwikkeling en onderhoud kosten geld. Ik zou heel blij zijn met ondersteuning, een kopje koffie of meer."
+    "introduction": "Deze maankalender is <strong>gratis</strong> en <strong>advertentievrij</strong>. Om dat zo te houden is het afhankelijk van ondersteuning, want de benodigde infrastructuur, doorontwikkeling en onderhoud kosten geld. Ik zou heel blij zijn met ondersteuning, een kopje koffie of meer.",
+    "review": {
+      "title": "Herziening van de financiering",
+      "drunk": "Dronk {0} koffie",
+      "notDrunk": "Koffie is nog steeds nodig",
+      "pleaseHelp": "Help mij dit jaar nooit meer zonder koffie te zitten!"
+    }
   },
   "improveTranslation": {
     "title": "Heb je een suggestie voor een betere vertaling?",

@@ -145,6 +145,14 @@ export interface About {
 export interface Thank {
   title: string
   introduction: string
+  review: Review
+}
+
+export interface Review {
+  title: string
+  drunk: string
+  notDrunk: string
+  pleaseHelp: string
 }
 
 export interface Sources {
