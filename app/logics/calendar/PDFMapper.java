@@ -27,11 +27,13 @@ import org.vandeseer.easytable.util.PdfUtil;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -115,8 +117,15 @@ public class PDFMapper {
                             row.add(TextCell.builder().text("").colSpan(2).build());
                             continue;
                         }
-                        List<EventInstance> eventInstancesAtDay = eventsByDate.getOrDefault(LocalDate.of(year, month, day), List.of());
+                        LocalDate date = LocalDate.of(year, month, day);
+                        List<EventInstance> eventInstancesAtDay = eventsByDate.getOrDefault(date, List.of());
+                        Color backgroundColor = switch (date.getDayOfWeek()) {
+                            case SATURDAY -> new Color(240, 240, 240);
+                            case SUNDAY -> new Color(225, 225, 225);
+                            default -> null;
+                        };
                         row.add(draftDayOfMonthCell(day, getMoonIconFilename(eventInstancesAtDay), document)
+                                .backgroundColor(backgroundColor)
                                 .horizontalAlignment(CENTER)
                                 .verticalAlignment(MIDDLE)
                                 .borderWidthRight(0)
@@ -125,6 +134,7 @@ public class PDFMapper {
                         TextWithSize textWithSize = calculateOptimalTextWithSize(eventInstancesAtDay, font, DAY_EVENT_TEXT_WIDTH - 2 * DAY_EVENT_TEXT_PADDING);
                         row.add(TextCell.builder().text(textWithSize.text())
                                 .fontSize(textWithSize.size())
+                                .backgroundColor(backgroundColor)
                                 .borderWidthLeft(0)
                                 .padding(DAY_EVENT_TEXT_PADDING)
                                 .verticalAlignment(MIDDLE)
@@ -179,14 +189,10 @@ public class PDFMapper {
     private Optional<String> getMoonIconFilename(List<EventInstance> eventInstances) {
         return eventInstances.stream()
                 .map(eventInstance -> switch (eventInstance.getEventTypeId()) {
-                    case MoonPhasesCalculation.FULLMOON_EVENT_TYPE_ID ->
-                            "/public/emoji/full.png";
-                    case MoonPhasesCalculation.NEWMOON_EVENT_TYPE_ID ->
-                            "/public/emoji/new.png";
-                    case MoonPhasesCalculation.FIRST_QUARTER_EVENT_TYPE_ID ->
-                            "/public/emoji/first-quarter.png";
-                    case MoonPhasesCalculation.LAST_QUARTER_EVENT_TYPE_ID ->
-                            "/public/emoji/last-quarter.png";
+                    case MoonPhasesCalculation.FULLMOON_EVENT_TYPE_ID -> "/public/emoji/full.png";
+                    case MoonPhasesCalculation.NEWMOON_EVENT_TYPE_ID -> "/public/emoji/new.png";
+                    case MoonPhasesCalculation.FIRST_QUARTER_EVENT_TYPE_ID -> "/public/emoji/first-quarter.png";
+                    case MoonPhasesCalculation.LAST_QUARTER_EVENT_TYPE_ID -> "/public/emoji/last-quarter.png";
                     default -> null;
                 }).filter(Objects::nonNull)
                 .findFirst();
