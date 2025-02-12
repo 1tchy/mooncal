@@ -16,6 +16,7 @@
     "paths": {
       "home": "hi/calendar",
       "about": "hi/about",
+      "donate": "hi/donate",
       "thank": "hi/thank",
       "buymeacoffee": "hi/buymeacoffee"
     }

@@ -16,6 +16,7 @@
     "paths": {
       "home": "fr/calendrier-lune",
       "about": "fr/a-propos",
+      "donate": "fr/faire-un-don",
       "thank": "fr/merci",
       "buymeacoffee": "fr/buymeacoffee"
     }

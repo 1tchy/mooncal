@@ -168,6 +168,34 @@ export const compiledRoute = [
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {
+    redirectFrom: 'spenden',
+    redirectTo: 'bedanken'
+  },
+  {
+    redirectFrom: 'en/donate',
+    redirectTo: 'en/thank'
+  },
+  {
+    redirectFrom: 'nl/doneren',
+    redirectTo: 'nl/bedankt'
+  },
+  {
+    redirectFrom: 'es/donar',
+    redirectTo: 'es/gracias'
+  },
+  {
+    redirectFrom: 'fr/faire-un-don',
+    redirectTo: 'fr/merci'
+  },
+  {
+    redirectFrom: 'ro/donează',
+    redirectTo: 'ro/multumesc'
+  },
+  {
+    redirectFrom: 'hi/donate',
+    redirectTo: 'hi/thank'
+  },
+  {
     redirectFrom: 'about',
     redirectTo: 'ueber'
   },

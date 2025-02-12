@@ -1,5 +1,7 @@
 import io.fluentlenium.core.domain.FluentWebElement;
 import io.fluentlenium.core.filter.AttributeFilter;
+import logics.Randomizer;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -41,6 +43,11 @@ public class IntegrationTest extends WithBrowser {
                 .addArguments("-width=1920")
                 .addArguments("-height=1080")
         ), port);
+    }
+
+    @Before
+    public void setUp() {
+        Randomizer.reseed();
     }
 
     @Test

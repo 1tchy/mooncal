@@ -37,6 +37,7 @@ export interface Navigation {
 export interface Paths {
   home: string
   about: string
+  donate: string
   thank: string
   buymeacoffee: string
 }

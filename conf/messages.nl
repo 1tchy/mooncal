@@ -1,6 +1,7 @@
 lang.current=nl
 
 navigation.thank=nl/bedankt
+navigation.donate=nl/doneren
 
 phases.full=Volle maan
 phases.full.1=Wolfmaan

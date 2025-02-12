@@ -1,6 +1,7 @@
 lang.current=es
 
 navigation.thank=es/gracias
+navigation.donate=es/donar
 
 phases.full=luna llena
 phases.full.1=Luna del Lobo

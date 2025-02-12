@@ -16,6 +16,7 @@
     "paths": {
       "home": "es/calendario-lunar",
       "about": "es/acerca",
+      "donate": "es/donar",
       "thank": "es/gracias",
       "buymeacoffee": "es/buymeacoffee"
     }

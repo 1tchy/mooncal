@@ -16,6 +16,7 @@
     "paths": {
       "home": "en/calendar",
       "about": "en/about",
+      "donate": "en/donate",
       "thank": "en/thank",
       "buymeacoffee": "en/buymeacoffee"
     }

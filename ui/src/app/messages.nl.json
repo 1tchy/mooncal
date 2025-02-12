@@ -16,6 +16,7 @@
     "paths": {
       "home": "nl/maankalender",
       "about": "nl/over",
+      "donate": "nl/doneren",
       "thank": "nl/bedankt",
       "buymeacoffee": "nl/buymeacoffee"
     }

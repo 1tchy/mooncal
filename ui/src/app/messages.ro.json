@@ -16,6 +16,7 @@
     "paths": {
       "home": "ro/calendar-lunar",
       "about": "ro/despre",
+      "donate": "ro/donează",
       "thank": "ro/multumesc",
       "buymeacoffee": "ro/buymeacoffee"
     }

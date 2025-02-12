@@ -1,6 +1,7 @@
 lang.current=fr
 
 navigation.thank=fr/merci
+navigation.donate=fr/faire-un-don
 
 phases.full=lune pleine
 phases.full.1=Lune des loups

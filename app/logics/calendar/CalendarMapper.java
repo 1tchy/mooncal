@@ -1,6 +1,7 @@
 package logics.calendar;
 
 import jakarta.inject.Inject;
+import logics.Randomizer;
 import models.EventInstance;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
@@ -41,8 +42,9 @@ public class CalendarMapper {
      */
     public String map(Collection<EventInstance> events, long updateFrequency, Lang language) {
         final Calendar calendar = createCalendar(updateFrequency);
+        Url thankUrl = new Url(URI.create("https://mooncal.ch/" + getThankUrl(language) + "?t=ics"));
         for (EventInstance event : events) {
-            addEvent(calendar, event, language);
+            addEvent(calendar, event, thankUrl);
         }
         return getICalendarString(calendar);
     }
@@ -59,19 +61,19 @@ public class CalendarMapper {
         return calendar;
     }
 
-    private void addEvent(Calendar calendar, EventInstance event, Lang language) {
+    private void addEvent(Calendar calendar, EventInstance event, Url thankUrl) {
         final VEvent calEvent = new VEvent(toDate(event.getDateTime()), event.getTitle());
         if (event.getDescription() != null) {
             calEvent.getProperties().add(new Description(event.getDescription()));
         }
         calEvent.getProperties().add(calculateUid(event));
-        calEvent.getProperties().add(new Url(URI.create("https://mooncal.ch/" + getThankUrl(language) + "?t=ics")));
+        calEvent.getProperties().add(thankUrl);
         calendar.getComponents().add(calEvent);
     }
 
     @VisibleForTesting
     String getThankUrl(Lang lang) {
-        return messagesApi.get(lang, "navigation.thank");
+        return messagesApi.get(lang, Randomizer.chooseRandom("navigation.thank", "navigation.donate"));
     }
 
     private Uid calculateUid(EventInstance event) {

@@ -18,6 +18,11 @@ function buildAllRoutes() {
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, m => m.app.title + " - " + m.about.title)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.buymeacoffee, m => m.app.title + " - " + m.thank.title)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.thank, m => m.app.title + " - " + m.thank.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push({
+    path: messages.navigation.paths.donate,
+    redirectTo: messages.navigation.paths.thank,
+    pathMatch: 'full'
+  }))
   allRoutes.push({path: 'about', redirectTo: messagesDE.navigation.paths.about, pathMatch: 'full'})
   allRoutes.push({path: 'en', redirectTo: messagesEN.navigation.paths.home, pathMatch: 'full'})
   allRoutes.push({path: 'es', redirectTo: messagesES.navigation.paths.home, pathMatch: 'full'})
