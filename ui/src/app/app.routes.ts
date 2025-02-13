@@ -14,10 +14,10 @@ import {ThankComponent} from "./thank/thank.component";
 
 function buildAllRoutes() {
   let allRoutes: Routes = [];
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.home, m => m.app.title)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, m => m.app.title + " - " + m.about.title)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.buymeacoffee, m => m.app.title + " - " + m.thank.title)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.thank, m => m.app.title + " - " + m.thank.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.home, 'home', m => m.app.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, 'about', m => m.app.title + " - " + m.about.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.buymeacoffee, 'buymeacoffee', m => m.app.title + " - " + m.thank.title)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.thank, 'thank', m => m.app.title + " - " + m.thank.title)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push({
     path: messages.navigation.paths.donate,
     redirectTo: messages.navigation.paths.thank,
@@ -41,10 +41,11 @@ function buildAllRoutes() {
   return allRoutes;
 }
 
-function buildRoute(messages: Messages, component: any, pathFunction: (messages: Messages) => string, titleFunction: (messages: Messages) => string): Route {
+function buildRoute(messages: Messages, component: any, pathFunction: (messages: Messages) => string, id: string, titleFunction: (messages: Messages) => string): Route {
   let language = messages.lang.current;
   let data: { [key: string]: any } = {
     messages: messages,
+    id: id,
     home: messages.navigation.paths.home,
     about: messages.navigation.paths.about,
     thank: messages.navigation.paths.thank

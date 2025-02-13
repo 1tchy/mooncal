@@ -153,7 +153,7 @@
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.iOS.steps">{{ step }}</li>
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
-              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss();">
                 {{ messages.export.ical.subscribe.instructions.sayThanks }}
               </a>
               &hearts;
@@ -169,7 +169,7 @@
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.macOS.steps">{{ step }}</li>
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
-              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss();">
                 {{ messages.export.ical.subscribe.instructions.sayThanks }}
               </a>
               &hearts;
@@ -188,7 +188,7 @@
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.googleCalendar.steps">{{ step }}</li>
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
-              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss();">
                 {{ messages.export.ical.subscribe.instructions.sayThanks }}
               </a>
               &hearts;
@@ -215,7 +215,7 @@
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.androidExtraSteps">{{ step }}</li>
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
-              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss();">
                 {{ messages.export.ical.subscribe.instructions.sayThanks }}
               </a>
               &hearts;
@@ -231,7 +231,7 @@
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.thunderbird.steps">{{ step }}</li>
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
-              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss();">
                 {{ messages.export.ical.subscribe.instructions.sayThanks }}
               </a>
               &hearts;
@@ -247,7 +247,7 @@
             <li *ngFor="let step of messages.export.ical.subscribe.instructions.outlook.steps">{{ step }}</li>
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
-              <a [routerLink]="routeData['thank']" (click)="modal.dismiss(); trackNavigation(routeData['thank'])">
+              <a [routerLink]="routeData['thank']" (click)="modal.dismiss();">
                 {{ messages.export.ical.subscribe.instructions.sayThanks }}
               </a>
               &hearts;

@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
       <a class="navbar-brand" [routerLink]="routeData['home']"
-         (click)="isNavbarCollapsed=true; trackNavigation(routeData['home'])">Mooncal.ch</a>
+         (click)="isNavbarCollapsed=true;">Mooncal.ch</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
               (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarNav"
               aria-expanded="false" [attr.aria-label]="messages.navigation.toggle">
@@ -13,11 +13,11 @@
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <a [routerLink]="routeData['home']" ngClass="{active:routePath===routeData['home']}" class="nav-link"
-               (click)="isNavbarCollapsed=true; trackNavigation(routeData['home'])">{{ messages.navigation.home }}</a>
+               (click)="isNavbarCollapsed=true;">{{ messages.navigation.home }}</a>
           </li>
           <li class="nav-item">
             <a [routerLink]="routeData['about']" ngClass="{active:routePath===routeData['about']}" class="nav-link"
-               (click)="isNavbarCollapsed=true; trackNavigation(routeData['about'])">{{ messages.navigation.about }}</a>
+               (click)="isNavbarCollapsed=true;">{{ messages.navigation.about }}</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">

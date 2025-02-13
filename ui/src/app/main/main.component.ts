@@ -18,7 +18,6 @@ import {
 import {HttpClient} from "@angular/common/http";
 import {getAllLanguages} from "../app.routes";
 import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
-import {AppComponent} from "../app.component";
 
 type options = { [key: string]: boolean }
 
@@ -358,10 +357,6 @@ export class MainComponent implements AfterViewInit {
     // @ts-ignore
     _paq.push(['trackEvent', 'Settings', 'timezoneChange', this.oldZone + "_to_" + this.zone]);
     this.oldZone = this.zone;
-  }
-
-  public trackNavigation(targetPath: string) {
-    AppComponent.trackNavigation(targetPath, this.routes)
   }
 
   public getTimezone() {

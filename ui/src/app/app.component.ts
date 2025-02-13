@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet, Routes} from '@angular/router';
+import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {Subscription} from "rxjs";
-import {Title} from "@angular/platform-browser";
 import {getAllLanguagesAndItsNames} from "./app.routes";
 import {AB} from "./ab";
 
@@ -23,12 +22,9 @@ export class AppComponent implements OnInit, OnDestroy {
   messages: Messages = messagesDE;
   routerSub$: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router, private titleService: Title, private ab: AB) {
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  constructor(private route: ActivatedRoute, private router: Router, ab: AB) {
     // @ts-ignore
     _paq.push(['setCustomDimension', 1, ab.isA ? 'A' : 'B']);
-    // @ts-ignore
-    _paq.push(['trackPageView']);
   }
 
   ngOnInit() {
@@ -42,7 +38,14 @@ export class AppComponent implements OnInit, OnDestroy {
           this.routeData = r.snapshot.data
           this.messages = r.snapshot.data['messages']
           // @ts-ignore
-          _paq.push(['setDocumentTitle', this.titleService.getTitle()]);
+          _paq.push(['setCustomUrl', "/" + this.routePath + window.location.search]);
+          // @ts-ignore
+          _paq.push(['setCustomDimension', 2, this.routeData['id'] + window.location.search]);
+          // @ts-ignore
+          _paq.push(['setDocumentTitle', r.snapshot.routeConfig?.title]);
+          /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+          // @ts-ignore
+          _paq.push(['trackPageView']);
         }
       }
     })
@@ -55,19 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public trackLanguageChange(newLanguage: string, oldLanguage: string) {
     // @ts-ignore
     _paq.push(['trackEvent', 'Settings', 'languageChange', oldLanguage + '_to_' + newLanguage]);
-  }
-
-  public trackNavigation(targetPath: string) {
-    AppComponent.trackNavigation(targetPath, this.router.config)
-  }
-
-  public static trackNavigation(targetPath: string, routes: Routes) {
-    // @ts-ignore
-    _paq.push(['setCustomUrl', "/" + targetPath]);
-    // @ts-ignore
-    _paq.push(['setDocumentTitle', routes.filter(route => route.path === targetPath)[0].title]);
-    // @ts-ignore
-    _paq.push(['trackPageView']);
   }
 
   protected readonly allLanguagesAndItsNames = getAllLanguagesAndItsNames();
