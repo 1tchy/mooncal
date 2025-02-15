@@ -30,7 +30,7 @@ public class CalendarMapperTest extends WithApplication {
         EventInstance event = new EventInstance(ZonedDateTime.of(2015, 12, 24, 18, 0, 0, 0, ZoneOffset.UTC), "Christmas", "title visible only in PDF", "6pm at christmas in UTC", ZoneOffset.UTC, "test");
         String actual = cut.map(Collections.singletonList(event), 123, Lang.forCode("en"));
         assertThat(actual, startsWith("BEGIN:VCALENDAR\r\nPRODID:-//Mooncal 1.0//EN\r\nVERSION:2.0\r\nCALSCALE:GREGORIAN\r\nX-PUBLISHED-TTL:P123D\r\nBEGIN:VEVENT\r\nDTSTAMP:"));
-        assertThat(actual, endsWith("\r\nDTSTART;VALUE=DATE:20151224\r\nSUMMARY:Christmas\r\nDESCRIPTION:6pm at christmas in UTC\r\nUID:mooncal-20151224Z-test\r\nURL:https://mooncal.ch/en/thank?t=ics\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"));
+        assertThat(actual, endsWith("\r\nDTSTART;VALUE=DATE:20151224\r\nSUMMARY:Christmas\r\nDESCRIPTION:6pm at christmas in UTC\r\nUID:mooncal-20151224Z-test\r\nURL:https://mooncal.ch/en/thank?s=ics\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"));
     }
 
     @Test
