@@ -17,6 +17,8 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionURI;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationLink;
 import org.vandeseer.easytable.TableDrawer;
 import org.vandeseer.easytable.structure.Row;
 import org.vandeseer.easytable.structure.Table;
@@ -154,19 +156,23 @@ public class PDFMapper {
 
                 contentStream.beginText();
                 contentStream.setFont(font, FONT_SIZE);
-                contentStream.newLineAtOffset(startX, tableDrawer.getFinalY() - (THANK_QR_CODE_SIZE + FONT_SIZE - 2) / 2f);
+                float footerY = tableDrawer.getFinalY() - (THANK_QR_CODE_SIZE + FONT_SIZE - 2) / 2f;
+                contentStream.newLineAtOffset(startX, footerY);
                 contentStream.showText(messagesApi.get(language, "pdf.timezone") + ": " + zonedDateTime.getZone().getId());
 
-                String thankUrl = "https://mooncal.ch/" + getThankUrl(language);
-                float textWidth = PdfUtil.getStringWidth(thankUrl, font, FONT_SIZE);
-                contentStream.newLineAtOffset(page.getMediaBox().getUpperRightX() - 2 * startX - textWidth - THANK_QR_CODE_SIZE, 0);
-                contentStream.showText(thankUrl);
+                String visibleThankUrl = "https://mooncal.ch/" + getThankUrl(language);
+                String thankUrl = visibleThankUrl + "?c=pdf";
+                float thankUrlWidth = PdfUtil.getStringWidth(visibleThankUrl, font, FONT_SIZE);
+                float thankUrlX = page.getMediaBox().getUpperRightX() - startX - thankUrlWidth - THANK_QR_CODE_SIZE;
+                contentStream.newLineAtOffset(thankUrlX - startX, 0); // "-startX" and "0" because it's relative to the previous newLineAtOffset(...)
+                contentStream.showText(visibleThankUrl);
                 contentStream.endText();
+                page.getAnnotations().add(createLink(thankUrl, thankUrlX, footerY, thankUrlX + thankUrlWidth, footerY + FONT_SIZE, 1));
 
-                contentStream.drawImage(generateQRCodeImage(thankUrl + "?c=pdf", document),
-                        page.getMediaBox().getUpperRightX() - startX - THANK_QR_CODE_SIZE,
-                        tableDrawer.getFinalY() - THANK_QR_CODE_SIZE,
-                        THANK_QR_CODE_SIZE, THANK_QR_CODE_SIZE);
+                float thankQrX = page.getMediaBox().getUpperRightX() - startX - THANK_QR_CODE_SIZE;
+                float thankQrY = tableDrawer.getFinalY() - THANK_QR_CODE_SIZE;
+                contentStream.drawImage(generateQRCodeImage(thankUrl, document), thankQrX, thankQrY, THANK_QR_CODE_SIZE, THANK_QR_CODE_SIZE);
+                page.getAnnotations().add(createLink(thankUrl, thankQrX, thankQrY, thankQrX + THANK_QR_CODE_SIZE, thankQrY + THANK_QR_CODE_SIZE, -3));
             }
 
             var os = new ByteArrayOutputStream();
@@ -176,6 +182,20 @@ public class PDFMapper {
                 IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static PDAnnotationLink createLink(String url, float lowerLeftX, float lowerLeftY, float upperRightX, float upperRightY, int linkBorderWidth) {
+        PDAnnotationLink txtLink = new PDAnnotationLink();
+        PDActionURI action = new PDActionURI();
+        action.setURI(url);
+        txtLink.setAction(action);
+        PDRectangle position = new PDRectangle();
+        position.setLowerLeftX(lowerLeftX - linkBorderWidth);
+        position.setLowerLeftY(lowerLeftY - linkBorderWidth);
+        position.setUpperRightX(upperRightX + linkBorderWidth);
+        position.setUpperRightY(upperRightY + linkBorderWidth);
+        txtLink.setRectangle(position);
+        return txtLink;
     }
 
     private PDFont loadFont(String langCode, PDDocument document, boolean bold) throws IOException {
