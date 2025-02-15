@@ -42,7 +42,7 @@ public class CalendarMapper {
      */
     public String map(Collection<EventInstance> events, long updateFrequency, Lang language) {
         final Calendar calendar = createCalendar(updateFrequency);
-        Url thankUrl = new Url(URI.create("https://mooncal.ch/" + getThankUrl(language) + "?s=ics"));
+        Url thankUrl = new Url(URI.create("https://mooncal.ch/" + getThankUrl(language) + "?c=ics"));
         for (EventInstance event : events) {
             addEvent(calendar, event, thankUrl);
         }

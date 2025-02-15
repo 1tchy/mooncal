@@ -162,7 +162,7 @@ public class PDFMapper {
                 contentStream.showText(thankUrl);
                 contentStream.endText();
 
-                contentStream.drawImage(generateQRCodeImage(thankUrl + "?s=pdf", document),
+                contentStream.drawImage(generateQRCodeImage(thankUrl + "?c=pdf", document),
                         page.getMediaBox().getUpperRightX() - startX - THANK_QR_CODE_SIZE,
                         tableDrawer.getFinalY() - THANK_QR_CODE_SIZE,
                         THANK_QR_CODE_SIZE, THANK_QR_CODE_SIZE);
