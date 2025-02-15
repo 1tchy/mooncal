@@ -109,6 +109,7 @@ public class PDFMapper {
                                 .colSpan(2)
                                 .build()));
                 table.addRow(monthRowBuilder.build());
+                Map<String, PDImageXObject> loadedImagesCache = new HashMap<>(4);
 
                 for (int day = 1; day <= 31; day++) {
                     Row.RowBuilder row = Row.builder();
@@ -124,7 +125,7 @@ public class PDFMapper {
                             case SUNDAY -> new Color(225, 225, 225);
                             default -> null;
                         };
-                        row.add(draftDayOfMonthCell(day, getMoonIconFilename(eventInstancesAtDay), document)
+                        row.add(draftDayOfMonthCell(day, getMoonIconFilename(eventInstancesAtDay), document, loadedImagesCache)
                                 .backgroundColor(backgroundColor)
                                 .horizontalAlignment(CENTER)
                                 .verticalAlignment(MIDDLE)
@@ -198,10 +199,10 @@ public class PDFMapper {
                 .findFirst();
     }
 
-    private AbstractCell.AbstractCellBuilder<?, ?> draftDayOfMonthCell(int day, Optional<String> moonIconFilename, PDDocument document) throws IOException {
+    private AbstractCell.AbstractCellBuilder<?, ?> draftDayOfMonthCell(int day, Optional<String> moonIconFilename, PDDocument document, Map<String, PDImageXObject> loadedImages) throws IOException {
         if (moonIconFilename.isPresent()) {
             return ImageCell.builder()
-                    .image(loadImage(moonIconFilename.get(), document))
+                    .image(loadedImages.computeIfAbsent(moonIconFilename.get(), filename -> loadImage(filename, document)))
                     .scale(0.05f)
                     .padding(0);
         } else {
@@ -245,9 +246,13 @@ public class PDFMapper {
         return text;
     }
 
-    private PDImageXObject loadImage(String name, PDDocument document) throws IOException {
-        byte[] imageBytes = IOUtils.toByteArray(Objects.requireNonNull(getClass().getResourceAsStream(name)));
-        return PDImageXObject.createFromByteArray(document, imageBytes, "moon");
+    private PDImageXObject loadImage(String name, PDDocument document) {
+        try {
+            byte[] imageBytes = IOUtils.toByteArray(Objects.requireNonNull(getClass().getResourceAsStream(name)));
+            return PDImageXObject.createFromByteArray(document, imageBytes, "moon");
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     String getThankUrl(Lang lang) {
