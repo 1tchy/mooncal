@@ -40,9 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
           // @ts-ignore
           _paq.push(['setCustomUrl', "/" + this.routePath + window.location.search]);
           // @ts-ignore
-          _paq.push(['setCustomDimension', 2, this.routeData['id'] + window.location.search]);
-          // @ts-ignore
-          _paq.push(['setDocumentTitle', r.snapshot.routeConfig?.title]);
+          _paq.push(['setDocumentTitle', this.routeData['id'] + window.location.search]);
           /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
           // @ts-ignore
           _paq.push(['trackPageView']);
