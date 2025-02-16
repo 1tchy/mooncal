@@ -11,6 +11,7 @@ import logics.calculation.MoonPhasesCalculation;
 import models.EventInstance;
 import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -79,6 +80,11 @@ public class PDFMapper {
                 month -> month,
                 month -> LocalDate.of(year, month, 1).lengthOfMonth()));
         try (PDDocument document = new PDDocument()) {
+            PDDocumentInformation documentInformation = document.getDocumentInformation();
+            String title = messagesApi.get(language, "pdf.title") + " " + year;
+            documentInformation.setTitle(title);
+            documentInformation.setProducer("https://mooncal.ch");
+            document.getDocumentCatalog().setLanguage(language.code());
             PDFont font = loadFont(language.code(), document, false);
             PDFont fontBold = loadFont(language.code(), document, true);
 
@@ -89,7 +95,7 @@ public class PDFMapper {
                 contentStream.beginText();
                 contentStream.newLineAtOffset(startX, page.getMediaBox().getUpperRightY() - 50);
                 contentStream.setFont(fontBold, 18);
-                contentStream.showText(messagesApi.get(language, "pdf.title") + " " + year);
+                contentStream.showText(title);
                 contentStream.endText();
                 contentStream.drawImage(loadImage("/public/favicon/31/web-app-manifest-192x192.png", document),
                         page.getMediaBox().getUpperRightX() - startX - MOON_IMAGE_SIZE,
