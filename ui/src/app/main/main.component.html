@@ -99,9 +99,10 @@
                 data-toggle="modal" data-target="#subscribeModal">
           {{ messages.export.addToCalendar }}
         </button>
-        <button type="button" class="btn btn-light" onclick="window.print()" (click)="trackPrint()">
-          {{ messages.export.print }}
-        </button>
+        <a class="btn btn-light" (click)="trackPdfDownload()" target="_blank"
+           [href]="getApiUrl(false,'pdf')+'?'+paramsAsString(true)">
+          {{ messages.export.downloadPDF }}
+        </a>
       </div>
     </div>
   </div>
@@ -258,7 +259,7 @@
     </ul>
     <div [ngbNavOutlet]="calAppInfo" class="mt-2"></div>
     <!-- @formatter:off -->
-    <textarea id="icalLink" type="text" class="form-control mb-3" readonly="readonly" rows="4" (selectionchange)="trackIcalSubscriptionTextarea()">{{ getApiUrl(true,true) }}?created={{created}}&{{ paramsAsString(false) }}</textarea>
+    <textarea id="icalLink" type="text" class="form-control mb-3" readonly="readonly" rows="4" (selectionchange)="trackIcalSubscriptionTextarea()">{{ getApiUrl(true, 'ics') }}?created={{created}}&{{ paramsAsString(false) }}</textarea>
     <!-- @formatter:on -->
     <p class="text-muted mb-0">{{ messages.export.ical.subscribe.explanations }}</p>
   </div>
@@ -284,7 +285,7 @@
       {{ messages.export.ical.subscribe.copy }}
     </button>
     <button-with-styled-tooltip [btnClass]="calendar.length<20 ? 'btn-light' : 'btn-warning'"
-                                [href]="getApiUrl(true,true)+'?'+paramsAsString(true)+'&manualDownload'"
+                                [href]="getApiUrl(true,'ics')+'?'+paramsAsString(true)+'&manualDownload'"
                                 (onClick)="trackDownloadIcal()"
                                 [tooltipText]="messages.export.ical.downloadWarning"
                                 [tooltipType]="calendar.length<8 ? 'none' : calendar.length>20 ? 'warning' : 'default'">{{ messages.export.ical.download }}

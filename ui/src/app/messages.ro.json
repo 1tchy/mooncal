@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Calendar lunar",
-    "introduction": "Căutați un calendar lunar simplu? Acum l-ați găsit. Cu această aplicație web puteți genera propriul dvs. calendar lunar, nu numai cu fazele lunii, ci și cu evenimente speciale despre lună. Puteți exporta calendarul dvs. personal în partea de jos a paginii ca fișier iCalendar (ICS).",
+    "introduction": "Căutați un calendar lunar simplu? Acum l-ați găsit. Cu această aplicație web puteți genera calendarul lunar personal, nu numai cu fazele lunii, ci și cu evenimente speciale despre lună. Calendarul lunar poate fi vizualizat mai jos și exportat în calendarul dvs. ca fișier iCalendar (ICS) sau descărcat și tipărit ca fișier PDF.",
     "moon": "lună"
   },
   "lang": {
@@ -137,7 +137,8 @@
         "close": "Închide"
       }
     },
-    "print": "Imprimă"
+    "print": "Imprimă",
+    "downloadPDF": "Descărcați PDF"
   },
   "about": {
     "title": "Despre acest site",

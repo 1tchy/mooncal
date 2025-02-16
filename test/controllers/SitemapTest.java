@@ -21,9 +21,28 @@ public class SitemapTest {
                 .toList();
         List<String> sitemap = Files.readAllLines(Path.of("ui/src/sitemap.xml")).stream()
                 .filter(line -> line.contains("href="))
+                .filter(line -> !line.contains("mooncal.pdf"))
                 .map(line -> line.replaceAll(".*href=\"(.*)\".*", "$1"))
                 .map(link -> link.replaceAll("https://mooncal.ch/?", ""))
                 .toList();
         assertEquals(routes, sitemap);
+    }
+
+    @Test
+    public void pdfLinksAreAllowedInRobotsTxt() throws IOException {
+        List<String> sitemap = Files.readAllLines(Path.of("ui/src/sitemap.xml")).stream()
+                .filter(line -> line.contains("href="))
+                .filter(line -> line.contains("mooncal.pdf"))
+                .map(line -> line.replaceAll(".*href=\"(.*)\".*", "$1"))
+                .map(link -> link.replaceAll("https://mooncal.ch", ""))
+                .map(link -> link.replaceAll("&amp;", "&"))
+                .map(link -> link.replaceAll("2025", "*"))
+                .toList();
+        List<String> robots = Files.readAllLines(Path.of("ui/src/robots.txt")).stream()
+                .filter(line -> line.contains("Allow:"))
+                .filter(line -> line.contains("mooncal.pdf"))
+                .map(line -> line.replaceAll("Allow:\\s+", ""))
+                .toList();
+        assertEquals(robots, sitemap);
     }
 }

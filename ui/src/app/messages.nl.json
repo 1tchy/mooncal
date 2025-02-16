@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Maankalender",
-    "introduction": "Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanstanden te weten? Dan bent u hier aan de juiste adres. Met deze app kunt u uw persoonlijke maankalender vasenstellen. Niet alleen met de maanstanden, maar ook met speciale evenementen in verband met de maan. Helemaal onderaan de pagina kunt u uw kalender als iCalendar (ICS) bestand downloaden.",
+    "introduction": "Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanstanden te weten? Dan bent u hier aan de juiste adres. Met deze webapp kunt u uw persoonlijke maankalender vasenstellen. Niet alleen met de maanstanden, maar ook met speciale evenementen in verband met de maan. De maankalender kunt u hieronder bekijken en als iCalendar (ICS) bestand naar uw agenda exporteren of downloaden en afdrukken als PDF-bestand.",
     "moon": "moon"
   },
   "lang": {
@@ -137,7 +137,8 @@
         "close": "Sluiten"
       }
     },
-    "print": "Afdrukken"
+    "print": "Afdrukken",
+    "downloadPDF": "PDF downloaden"
   },
   "about": {
     "title": "Over deze pagina",

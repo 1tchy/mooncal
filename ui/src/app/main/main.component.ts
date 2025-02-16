@@ -158,8 +158,8 @@ export class MainComponent implements AfterViewInit {
     return new Date(date + (startOfDay ? "T00:00:00" : "T23:59:59"))
   }
 
-  public getApiUrl(withHost: boolean, ics: boolean) {
-    let path = "/mooncal" + (ics ? ".ics" : "");
+  public getApiUrl(withHost: boolean, suffix: string | null) {
+    let path = "/mooncal" + (suffix ? "." + suffix : "");
     if (withHost) {
       return window.location.protocol + "//" + window.location.host + path
     } else {
@@ -249,7 +249,7 @@ export class MainComponent implements AfterViewInit {
       if (this.requestPath !== requestPath) {
         this.requestPath = requestPath;
         this.requestOngoing = true;
-        let url = this.getApiUrl(false, false) + "?" + requestPath;
+        let url = this.getApiUrl(false, null) + "?" + requestPath;
         this.httpClient.get(url).subscribe({
           next: (data: any) => {
             this.error = null;
@@ -348,9 +348,9 @@ export class MainComponent implements AfterViewInit {
     _paq.push(['trackLink', 'https://mooncal.ch/subscribeTextField/' + this.paramsForTracking(false), 'download']);
   }
 
-  public trackPrint() {
+  public trackPdfDownload() {
     // @ts-ignore
-    _paq.push(['trackLink', 'https://mooncal.ch/print/' + this.paramsForTracking(true), 'download']);
+    _paq.push(['trackLink', 'https://mooncal.ch/pdf/' + this.paramsForTracking(true), 'download']);
   }
 
   public trackTimezoneChange() {

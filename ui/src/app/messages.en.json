@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Moon Calendar",
-    "introduction": "Are you looking for a simple moon calendar? Now you found it! With this web app you can generate your personal moon calendar, not only with moon phases, but also with special events about the moon. You can export your personal calendar at the bottom of the page as an iCalendar (ICS) file.",
+    "introduction": "Are you looking for a simple moon calendar? Then you have found it! With this web app you can generate your personal moon calendar, not only with moon phases, but also with special events related to the moon. The moon calendar can be viewed below and exported to your calendar as an iCalendar (ICS) file or downloaded and printed as a PDF file.",
     "moon": "moon"
   },
   "lang": {
@@ -137,7 +137,8 @@
         "close": "Close"
       }
     },
-    "print": "Print"
+    "print": "Print",
+    "downloadPDF": "Download PDF"
   },
   "about": {
     "title": "About this site",

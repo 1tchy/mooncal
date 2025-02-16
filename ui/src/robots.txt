@@ -1,7 +1,15 @@
 # robotstxt.org
 
 User-agent: *
-Disallow:
+Allow: /mooncal.pdf?lang=de&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/Zurich&to=*-12-31T23:59:59Europe/Zurich
+Allow: /mooncal.pdf?lang=en&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/London&to=*-12-31T23:59:59Europe/London
+Allow: /mooncal.pdf?lang=nl&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/Amsterdam&to=*-12-31T23:59:59Europe/Amsterdam
+Allow: /mooncal.pdf?lang=es&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/Madrid&to=*-12-31T23:59:59Europe/Madrid
+Allow: /mooncal.pdf?lang=fr&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/Paris&to=*-12-31T23:59:59Europe/Paris
+Allow: /mooncal.pdf?lang=ro&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/Bucharest&to=*-12-31T23:59:59Europe/Bucharest
+Allow: /mooncal.pdf?lang=hi&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Asia/Calcutta&to=*-12-31T23:59:59Asia/Calcutta
+Disallow: /mooncal.pdf
+
 Disallow: /mooncal.ics
 
 Sitemap: https://mooncal.ch/sitemap.xml

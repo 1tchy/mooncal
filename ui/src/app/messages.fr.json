@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Calendrier de la Lune",
-    "introduction": "Vous cherchez un calendrier de lune simple? Vous l'avez trouvé! Avec cette application Web, vous pouvez générer votre propre calendrier de lune, pas seulement avec les phases de la lune, mais aussi avec des événements spéciaux concernant la lune. Vous pouvez exporter votre calendrier personnel en bas de la page sous forme de fichier iCalendar (ICS).",
+    "introduction": "Vous cherchez un calendrier lunaire simple ? Vous l'avez trouvé! Avec cette application Web, vous pouvez générer votre calendrier lunaire personnel, non seulement avec les phases de la lune, mais aussi avec les événements spéciaux liés à la lune. Le calendrier lunaire peut être consulté ci-dessous et exporté vers votre calendrier sous forme de fichier iCalendar (ICS) ou téléchargé et imprimé sous forme de fichier PDF.",
     "moon": "lune"
   },
   "lang": {
@@ -63,7 +63,7 @@
     "addToCalendar": "Ajouter au calendrier",
     "ical": {
       "download": "télécharger le fichier",
-      "downloadWarning": "Vous pouvez télécharger de nombreuses entrées de calendrier ici. Si vous n&#39;aimez pas le calendrier lunaire, vous devrez supprimer chaque entrée manuellement - en fonction de l&#39;application de calendrier. Il est préférable de s&#39;abonner au calendrier.",
+      "downloadWarning": "Vous pouvez télécharger de nombreuses entrées de calendrier ici. Si vous n'aimez pas le calendrier lunaire, vous devrez supprimer chaque entrée manuellement - en fonction de l'application de calendrier. Il est préférable de s'abonner au calendrier.",
       "subscribe": {
         "title": "s'abonner au flux iCalendar",
         "instructions": {
@@ -137,7 +137,8 @@
         "close": "Fermer"
       }
     },
-    "print": "Imprimer"
+    "print": "Imprimer",
+    "downloadPDF": "Télécharger un PDF"
   },
   "about": {
     "title": "À propos de ce site",

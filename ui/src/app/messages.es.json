@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Calendario Lunar",
-    "introduction": "¿Buscas un calendario lunar sencillo? ¡Ahora lo has encontrado Con esta aplicación web puedes generar tu calendario lunar personalizado, no solo con las fases de la luna sino también con eventos especiales sobre la luna. Puedes exportar tu calendario personalizado en la parte inferior de la página como un archivo iCalendar (ICS).",
+    "introduction": "¿Buscas un calendario lunar sencillo? ¡Ahora lo has encontrado! Con esta aplicación web puedes generar tu calendario lunar personalizado, no sólo con las fases lunares, sino también con eventos especiales relacionados con la luna. El calendario lunar puede verse a continuación y exportarse a su calendario como un archivo iCalendar (ICS) o descargarse e imprimirse como un archivo PDF.",
     "moon": "luna"
   },
   "lang": {
@@ -137,7 +137,8 @@
         "close": "Cerrar"
       }
     },
-    "print": "Imprimir"
+    "print": "Imprimir",
+    "downloadPDF": "Descargar PDF"
   },
   "about": {
     "title": "Acerca de este sitio",

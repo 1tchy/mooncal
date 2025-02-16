@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Mondkalender",
-    "introduction": "Bist du schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die Mondphasen zu erfahren? Dann hast du sie jetzt gefunden! In der folgenden App kannst du dir deinen persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle Ereignisse im Zusammenhang mit dem Mond. Der Mondkalender lässt sich unten anzeigen und als iCalendar (ICS) Datei in deinen Kalender exportieren.",
+    "introduction": "Bist du schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die Mondphasen zu erfahren? Dann hast du sie jetzt gefunden! In der folgenden App kannst du dir deinen persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle Ereignisse im Zusammenhang mit dem Mond. Der Mondkalender lässt sich unten anzeigen und als iCalendar (ICS) Datei in deinen Kalender exportieren oder als PDF Datei herunterladen und ausdrucken.",
     "moon": "Mond"
   },
   "lang": {
@@ -137,7 +137,8 @@
         "close": "Schliessen"
       }
     },
-    "print": "Drucken"
+    "print": "Drucken",
+    "downloadPDF": "PDF herunterladen"
   },
   "about": {
     "title": "Über diese Seite",

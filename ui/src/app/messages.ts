@@ -96,6 +96,7 @@ export interface Export {
   addToCalendar: string
   ical: Ical
   print: string
+  downloadPDF: string
 }
 
 export interface Ical {
