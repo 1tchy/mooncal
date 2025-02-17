@@ -5,11 +5,10 @@ import logics.Randomizer;
 import models.EventInstance;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Date;
-import net.fortuna.ical4j.model.TimeZone;
-import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.*;
+import net.fortuna.ical4j.model.property.immutable.ImmutableCalScale;
+import net.fortuna.ical4j.model.property.immutable.ImmutableVersion;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 import play.i18n.Lang;
@@ -19,14 +18,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URI;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 
 public class CalendarMapper {
 
-    private static final TimeZone UTC_ZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/London");
     private final CalendarOutputter calendarOutputter = new CalendarOutputter();
     private final MessagesApi messagesApi;
 
@@ -52,23 +48,23 @@ public class CalendarMapper {
     @NotNull
     private Calendar createCalendar(long updateFrequency) {
         final Calendar calendar = new Calendar();
-        calendar.getProperties().add(new ProdId("-//Mooncal 1.0//EN"));
-        calendar.getProperties().add(Version.VERSION_2_0);
-        calendar.getProperties().add(CalScale.GREGORIAN);
+        calendar.add(new ProdId("-//Mooncal 1.0//EN"));
+        calendar.add(ImmutableVersion.VERSION_2_0);
+        calendar.add(ImmutableCalScale.GREGORIAN);
         if (updateFrequency > 0) {
-            calendar.getProperties().add(new XProperty("X-PUBLISHED-TTL", "P" + updateFrequency + "D"));
+            calendar.add(new XProperty("X-PUBLISHED-TTL", "P" + updateFrequency + "D"));
         }
         return calendar;
     }
 
     private void addEvent(Calendar calendar, EventInstance event, Url thankUrl) {
-        final VEvent calEvent = new VEvent(toDate(event.getDateTime()), event.getTitle());
+        final VEvent calEvent = new VEvent(event.getDateTime().toLocalDate(), event.getTitle());
         if (event.getDescription() != null) {
-            calEvent.getProperties().add(new Description(event.getDescription()));
+            calEvent.add(new Description(event.getDescription()));
         }
-        calEvent.getProperties().add(calculateUid(event));
-        calEvent.getProperties().add(thankUrl);
-        calendar.getComponents().add(calEvent);
+        calEvent.add(calculateUid(event));
+        calEvent.add(thankUrl);
+        calendar.add(calEvent);
     }
 
     @VisibleForTesting
@@ -93,13 +89,5 @@ public class CalendarMapper {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private Date toDate(ZonedDateTime in) {
-        final GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTimeZone(UTC_ZONE);
-        //noinspection MagicConstant
-        gregorianCalendar.set(in.getYear(), in.getMonthValue() - 1, in.getDayOfMonth(), in.getHour(), in.getMinute(), in.getSecond());
-        return new Date(gregorianCalendar.getTime());
     }
 }
