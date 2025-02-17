@@ -96,11 +96,10 @@ public class CalendarMapper {
     }
 
     private Date toDate(ZonedDateTime in) {
-        ZonedDateTime utcTime = in.withZoneSameInstant(ZoneOffset.UTC);
         final GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTimeZone(UTC_ZONE);
         //noinspection MagicConstant
-        gregorianCalendar.set(utcTime.getYear(), utcTime.getMonthValue() - 1, utcTime.getDayOfMonth(), utcTime.getHour(), utcTime.getMinute(), utcTime.getSecond());
+        gregorianCalendar.set(in.getYear(), in.getMonthValue() - 1, in.getDayOfMonth(), in.getHour(), in.getMinute(), in.getSecond());
         return new Date(gregorianCalendar.getTime());
     }
 }
