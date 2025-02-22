@@ -99,7 +99,7 @@
                 data-toggle="modal" data-target="#subscribeModal">
           {{ messages.export.addToCalendar }}
         </button>
-        <a class="btn btn-light" (click)="trackPdfDownload()" target="_blank"
+        <a class="btn btn-light matomo_ignore" (click)="trackPdfDownload()" target="_blank"
            [href]="getApiUrl(false,'pdf')+'?'+paramsAsString(true)">
           {{ messages.export.downloadPDF }}
         </a>
