@@ -60,10 +60,6 @@ public class Application extends Controller {
     }
 
     public CompletionStage<Result> queryAsICalendar(Http.Request request) {
-        if (request.queryString("created").isEmpty() && request.queryString("before").isPresent()) {
-            logger.info("Adding 'created' to old iCalender file query " + request.uri() + " to " + request.remoteAddress());
-            return CompletableFuture.completedFuture(permanentRedirect(request.uri().replaceFirst("\\?", "?created=" + ((long) (Math.random() * 100000000) + 400000000) + "&")));
-        }
         if (request.queryString("style").isEmpty()) {
             logger.info("Adding 'style' to old iCalender file query " + request.uri() + " to " + request.remoteAddress());
             return CompletableFuture.completedFuture(permanentRedirect(request.uri().replaceFirst("^(.*?)&(events|before|after|zone)", "$1&style=withDescription&$2")));
