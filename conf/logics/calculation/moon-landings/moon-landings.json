@@ -1031,13 +1031,13 @@
   {
     "date": "22.2.2024T23:23:0",
     "title": {
-      "en": "Intuitive Machines-1 Odysseus lander (USA)",
-      "de": "Intuitive Machines-1 Odysseus lander (USA)",
-      "nl": "Intuitive Machines-1 Odysseus lander (VS)",
-      "es": "Intuitive Machines-1 Odysseus (EE.UU.)",
-      "fr": "Intuitive Machines-1 Odysseus lander (États-Unis)",
-      "ro": "Intuitive Machines-1 Odysseus lander (SUA)",
-      "hi": "Intuitive Machines-1 Odysseus lander (यूएसए)"
+      "en": "IM-1 Odysseus lander (Intuitive Machines, USA)",
+      "de": "IM-1 Odysseus lander (Intuitive Machines, USA)",
+      "nl": "IM-1 Odysseus lander (Intuitive Machines, VS)",
+      "es": "IM-1 Odysseus (Intuitive Machines, EE.UU.)",
+      "fr": "IM-1 Odysseus lander (Intuitive Machines, États-Unis)",
+      "ro": "IM-1 Odysseus lander (Intuitive Machines, SUA)",
+      "hi": "IM-1 Odysseus lander (Intuitive Machines, यूएसए)"
     },
     "description": {
       "en": "First successful private lunar landing, first US lunar landing since 50 years.",
@@ -1068,6 +1068,27 @@
       "fr": "Première mission de retour d’échantillons depuis le bassin Apollo sur la face cachée de la Lune.",
       "ro": "Prima probă lunară returnată din Bazinul Apollo de pe partea îndepărtată a lunii.",
       "hi": "चंद्रमा के दूरस्थ भाग पर स्थित अपोलो बेसिन से पहला चंद्र नमूना वापस लाया गया।"
+    }
+  },
+  {
+    "date": "2.3.2025T08:34:00",
+    "title": {
+      "en": "Blue Ghost Mission 1 (Firefly Aerospace, USA)",
+      "de": "Blue Ghost Mission 1 (Firefly Aerospace, USA)",
+      "nl": "Blue Ghost Mission 1 (Firefly Aerospace, VS)",
+      "es": "Blue Ghost Mission 1 (Firefly Aerospace, EE.UU.)",
+      "fr": "Blue Ghost Mission 1 (Firefly Aerospace, États-Unis)",
+      "ro": "Blue Ghost Mission 1 (Firefly Aerospace, SUA)",
+      "hi": "Blue Ghost Mission 1 (Firefly Aerospace, यूएसए)"
+    },
+    "description": {
+      "en": "First commercial company to successfully land on the Moon to deploy scientific instruments for lunar research.",
+      "de": "Erstes kommerzielles Unternehmen, das erfolgreich auf dem Mond gelandet ist, um wissenschaftliche Instrumente zur Mondforschung einzusetzen.",
+      "nl": "Eerste commercieel bedrijf dat succesvol op de Maan is geland om wetenschappelijke instrumenten voor maanonderzoek te deployeren.",
+      "es": "Primera empresa comercial en aterrizar exitosamente en la Luna para desplegar instrumentos científicos para investigación lunar.",
+      "fr": "Première entreprise commerciale à atterrir avec succès sur la Lune pour déployer des instruments scientifiques pour la recherche lunaire.",
+      "ro": "Prima companie comercială care a aterizat cu succes pe Lună pentru a dezvolta instrumente științifice pentru cercetarea lunară.",
+      "hi": "चंद्रमा पर वैज्ञानिक उपकरणों को तैनात करने के लिए चंद्रमा पर सफलतापूर्वक उतरने वाली पहली व्यावसायिक कंपनी।"
     }
   }
 ]

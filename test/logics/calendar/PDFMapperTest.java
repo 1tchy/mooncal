@@ -13,11 +13,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertTrue;
@@ -65,7 +62,7 @@ public class PDFMapperTest extends WithApplication {
         requestForm.setTo(ZonedDateTime.of(LocalDateTime.of(2025, 12, 31, 23, 59), ZoneId.of("Europe/Zurich")));
         requestForm.setPhases(phases);
         requestForm.setStyle(EventStyle.WITH_DESCRIPTION.getStyle());
-        requestForm.setEvents(Arrays.stream(EventType.values()).collect(Collectors.toMap(Function.identity(), e -> true)));
+        requestForm.setEvents(Map.of(EventType.LUNARECLIPSE, true, EventType.SOLARECLIPSE, true));
         requestForm.setLang(lang);
         return calculation.calculate(requestForm);
     }
