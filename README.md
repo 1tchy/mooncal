@@ -35,6 +35,10 @@ And in your IDE add a remote debugging configuration.
 * https://en.wikipedia.org/wiki/List_of_missions_to_the_Moon#Missions_by_date
 * https://en.wikipedia.org/wiki/Moon_landing#21st_century_uncrewed_soft_landings_and_attempts
 
+#### AI-Queries
+* `Please give a summary up to 100 characters about what's special about the following mission, without too much sensation, without repeating its name and without too much technicality.`
+* `Please translate it into de, nl, es, fr, ro and hi.`
+
 ### Supporting Mooncal
 * Feel free to [make a donation](https://mooncal.ch/en/about)
 * Feel free to develop a new feature/fix a bug/...

@@ -1034,7 +1034,7 @@
       "en": "IM-1 Odysseus lander (Intuitive Machines, USA)",
       "de": "IM-1 Odysseus lander (Intuitive Machines, USA)",
       "nl": "IM-1 Odysseus lander (Intuitive Machines, VS)",
-      "es": "IM-1 Odysseus (Intuitive Machines, EE.UU.)",
+      "es": "IM-1 Odysseus lander (Intuitive Machines, EE.UU.)",
       "fr": "IM-1 Odysseus lander (Intuitive Machines, États-Unis)",
       "ro": "IM-1 Odysseus lander (Intuitive Machines, SUA)",
       "hi": "IM-1 Odysseus lander (Intuitive Machines, यूएसए)"
@@ -1089,6 +1089,27 @@
       "fr": "Première entreprise commerciale à atterrir avec succès sur la Lune pour déployer des instruments scientifiques pour la recherche lunaire.",
       "ro": "Prima companie comercială care a aterizat cu succes pe Lună pentru a dezvolta instrumente științifice pentru cercetarea lunară.",
       "hi": "चंद्रमा पर वैज्ञानिक उपकरणों को तैनात करने के लिए चंद्रमा पर सफलतापूर्वक उतरने वाली पहली व्यावसायिक कंपनी।"
+    }
+  },
+  {
+    "date": "5.3.2025T17:30:00",
+    "title": {
+      "en": "IM-2 Athena lander (Intuitive Machines, USA)",
+      "de": "IM-2 Athena lander (Intuitive Machines, USA)",
+      "nl": "IM-2 Athena lander (Intuitive Machines, VS)",
+      "es": "IM-2 Athena lander (Intuitive Machines, EE.UU.)",
+      "fr": "IM-2 Athena lander (Intuitive Machines, États-Unis)",
+      "ro": "IM-2 Athena lander (Intuitive Machines, SUA)",
+      "hi": "IM-2 Athena lander (Intuitive Machines, यूएसए)"
+    },
+    "description": {
+      "en": "First-ever surface measurements of hydrogen in permanently shadowed lunar regions, searching for signs of water ice.",
+      "de": "Erste Oberflächenmessungen von Wasserstoff in permanent beschatteten Mondregionen auf der Suche nach Wassereis.",
+      "nl": "Eerste oppervlaktemetingen van waterstof in permanent beschaduwde maanregio's op zoek naar watervries.",
+      "es": "Primas mediciones de superficie de hidrógeno en regiones lunares permanentemente sombreadas en busca de hielo de agua.",
+      "fr": "Premières mesures de surface d'hydrogène dans les régions lunaires à ombre permanente à la recherche de glace d'eau.",
+      "ro": "Primele măsurători de suprafață ale hidrogenului în regiunile lunare cu umbră permanentă, căutând semne de gheață de apă.",
+      "hi": "स्थायी रूप से छायादार चंद्र क्षेत्रों में हाइड्रोजन के पहले सतह मापन, पानी के बर्फ के संकेतों की खोज में।"
     }
   }
 ]
