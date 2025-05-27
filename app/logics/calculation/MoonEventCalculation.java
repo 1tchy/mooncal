@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.io.LineReader;
 import models.*;
 import org.jetbrains.annotations.TestOnly;
 import play.Logger;
@@ -13,7 +12,6 @@ import play.i18n.Langs;
 import play.i18n.MessagesApi;
 
 import javax.inject.Inject;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -24,7 +22,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class MoonEventCalculation extends Calculation {
@@ -53,14 +50,14 @@ public class MoonEventCalculation extends Calculation {
     }
 
     private void initializeLunarEclipses() {
-        initializeByCVS(Objects.requireNonNull(getClass().getResource("lunar-eclipses/lunar-eclipses.csv")).getFile(), rows -> {
+        CSVUtil.load(Objects.requireNonNull(getClass().getResource("lunar-eclipses/lunar-eclipses.csv")).getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             lunarEclipses.put(date, new EventTemplate.WithZoneId(date, (zoneId, lang) -> getLunarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getLunarEclipseName(rows[1], lang), zoneId, lang), "lunar-eclipse"));
         });
     }
 
     private void initializeSolarEclipses() {
-        initializeByCVS(Objects.requireNonNull(getClass().getResource("solar-eclipses/solar-eclipses.csv")).getFile(), rows -> {
+        CSVUtil.load(Objects.requireNonNull(getClass().getResource("solar-eclipses/solar-eclipses.csv")).getFile(), rows -> {
             final ZonedDateTime date = LocalDateTime.parse(rows[0], DATE_TIME_PATTERN).atZone(ZoneOffset.UTC);
             solarEclipses.put(date, new EventTemplate.WithZoneId(date, (zoneId, lang) -> getSolarEclipseName(rows[1], lang), (zoneId, lang) -> eventAt(date, getSolarEclipseName(rows[1], lang), zoneId, lang), "solar-eclipse"));
         });
@@ -122,20 +119,6 @@ public class MoonEventCalculation extends Calculation {
     @TestOnly
     void removeLatestMoonLanding() {
         moonLandings.remove(moonLandings.lastKey());
-    }
-
-    private void initializeByCVS(String file, Consumer<String[]> lineHandler) {
-        try (final FileReader fileReader = new FileReader(file)) {
-            final LineReader csvFile = new LineReader(fileReader);
-            csvFile.readLine(); //skip header
-            String line;
-            while ((line = csvFile.readLine()) != null) {
-                final String[] rows = line.split("\\t");
-                lineHandler.accept(rows);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private String getLunarEclipseName(String shortcut, Lang lang) {

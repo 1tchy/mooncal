@@ -1,0 +1,10 @@
+https://www.somacon.com/p570.php
+^.*,([1234]),([^,]+):00,.*$      ->      $1\t$2
+removed first line
+
+
+
+1: New Moon
+2: First Quarter
+3: Full Moon
+4: Last Quarter

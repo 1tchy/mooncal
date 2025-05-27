@@ -84,11 +84,21 @@ public abstract class EventTemplate {
         private final BiFunction<ZoneId, Lang, String> descriptionTemplate;
         @NotNull
         private final BiFunction<ZoneId, Lang, String> titleTemplate;
+        @NotNull
+        private final BiFunction<ZoneId, Lang, String> pdfTitleTemplate;
 
         public WithZoneId(@NotNull ZonedDateTime dateTime, @NotNull BiFunction<ZoneId, Lang, String> titleTemplate, @Nullable BiFunction<ZoneId, Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
             super(dateTime, eventTypeId);
             this.titleTemplate = titleTemplate;
+            this.pdfTitleTemplate = titleTemplate;
             this.descriptionTemplate = descriptionTemplate;
+        }
+
+        public WithZoneId(@NotNull ZonedDateTime dateTime, @NotNull BiFunction<ZoneId, Lang, String> titleTemplate, @NotNull BiFunction<ZoneId, Lang, String> pdfTitleTemplate, @Nullable BiFunction<ZoneId, Lang, String> descriptionTemplate, @NotNull String eventTypeId) {
+            super(dateTime, eventTypeId);
+            this.titleTemplate = titleTemplate;
+            this.descriptionTemplate = descriptionTemplate;
+            this.pdfTitleTemplate = pdfTitleTemplate;
         }
 
         @Override
@@ -100,7 +110,7 @@ public abstract class EventTemplate {
         @Override
         @NotNull
         public String getPdfTitle(ZoneId timezone, Lang lang) {
-            return titleTemplate.apply(timezone, lang);
+            return pdfTitleTemplate.apply(timezone, lang);
         }
 
         @Override

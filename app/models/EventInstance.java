@@ -19,8 +19,6 @@ public class EventInstance implements Comparable<EventInstance> {
     @Nullable
     private final String description;
     @NotNull
-    private final ZoneId timezone;
-    @NotNull
     private final String eventTypeId;
 
     public EventInstance(@NotNull EventTemplate eventTemplate, @NotNull ZoneId timezone, Lang lang) {
@@ -28,11 +26,10 @@ public class EventInstance implements Comparable<EventInstance> {
     }
 
     public EventInstance(@NotNull ZonedDateTime dateTime, @NotNull String title, @NotNull String pdfTitle, @Nullable String description, @NotNull ZoneId timezone, @NotNull String eventTypeId) {
-        this.dateTime = dateTime;
+        this.dateTime = dateTime.withZoneSameInstant(timezone);
         this.title = title;
         this.pdfTitle = pdfTitle;
         this.description = description;
-        this.timezone = timezone;
         this.eventTypeId = eventTypeId;
     }
 
@@ -47,11 +44,11 @@ public class EventInstance implements Comparable<EventInstance> {
     }
 
     public String getDate() {
-        return dateTime.withZoneSameInstant(timezone).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     public LocalDate getLocalDate() {
-        return dateTime.withZoneSameInstant(timezone).toLocalDate();
+        return dateTime.toLocalDate();
     }
 
     @Nullable

@@ -12,9 +12,7 @@ import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.test.WithApplication;
 
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
@@ -31,6 +29,7 @@ import static org.mockito.Mockito.when;
 
 public class MoonPhasesCalculationTest extends WithApplication {
 
+    private static final ZoneId CH_ZONE = ZoneId.of("Europe/Zurich");
     private MoonPhasesCalculation cut;
     private RequestForm requestForm;
 
@@ -154,6 +153,36 @@ public class MoonPhasesCalculationTest extends WithApplication {
         final Collection<EventInstance> actual = calculate(requestForm);
 
         assertThat(actual.stream().map(EventInstance::getTitle).collect(Collectors.toList()), containsInAnyOrder("55", "64"));
+    }
+
+    @Test
+    public void testCalculatedAndCsvFullMoons() {
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
+        requestForm.setFrom(ZonedDateTime.of(1699, 11, 1, 12, 0, 0, 0, CH_ZONE));
+        requestForm.setTo(ZonedDateTime.of(1700, 3, 1, 12, 0, 0, 0, CH_ZONE));
+        requestForm.setLang(Lang.forCode("en"));
+
+        Collection<EventInstance> actual = calculate(requestForm);
+
+        assertEquals(List.of("1699-11-07T12:49", "1699-12-07T00:13", "1700-01-05T11:06", "1700-02-03T21:38"), actual.stream()
+                .map(EventInstance::getDateTime)
+                .map(ZonedDateTime::toLocalDateTime)
+                .map(LocalDateTime::toString)
+                .collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testLoadCurrentFullMoons() {
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
+        requestForm.setFrom(ZonedDateTime.of(2025, 1, 1, 0, 0, 0, 0, CH_ZONE));
+        requestForm.setTo(ZonedDateTime.of(2025, 12, 31, 23, 59, 59, 0, CH_ZONE));
+        requestForm.setLang(Lang.forCode("en"));
+
+        Collection<EventInstance> actual = calculate(requestForm);
+
+        assertEquals(12, actual.size());
     }
 
     private Matcher<EventInstance> eventAt(final LocalDate expectedDate) {

@@ -43,7 +43,7 @@ public class CalendarMapperTest extends WithApplication {
         EventInstance event = new EventInstance(ZonedDateTime.of(2025, 12, 5, 0, 22, 0, 0, zoneId), "Vollmond (Julmond)", "title visible only in PDF", "Vollmond um 0:22", ZoneOffset.UTC, "test");
         String actual = cut.map(Collections.singletonList(event), 123, Lang.forCode("en"));
         assertThat(actual, startsWith("BEGIN:VCALENDAR\r\nPRODID:-//Mooncal 1.0//EN\r\nVERSION:2.0\r\nCALSCALE:GREGORIAN\r\nX-PUBLISHED-TTL:P123D\r\nBEGIN:VEVENT\r\nDTSTAMP:"));
-        assertThat(actual, endsWith("\r\nDTSTART;VALUE=DATE:20251205\r\nSUMMARY:Vollmond (Julmond)\r\nDESCRIPTION:Vollmond um 0:22\r\nUID:mooncal-20251204Z-test\r\nURL:https://mooncal.ch/en/donate?c=ics\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"));
+        assertThat(actual, endsWith("\r\nDTSTART;VALUE=DATE:20251204\r\nSUMMARY:Vollmond (Julmond)\r\nDESCRIPTION:Vollmond um 0:22\r\nUID:mooncal-20251204Z-test\r\nURL:https://mooncal.ch/en/donate?c=ics\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"));
     }
 
     @Test
