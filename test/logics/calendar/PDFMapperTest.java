@@ -32,7 +32,7 @@ public class PDFMapperTest extends WithApplication {
         cut = app.injector().instanceOf(PDFMapper.class);
     }
 
-    // http://localhost:9000/mooncal.pdf?lang=de&phases[full]=true&phases[new]=true&phases[quarter]=true&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
+    // http://localhost:9000/mooncal.pdf?lang=de&phases[full]=true&phases[new]=true&phases[quarter]=true&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=false&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
     @Test
     public void de() throws IOException {
         var events = calculateEvents(LANG_DE, Map.of(MoonPhaseType.FULLMOON, true, MoonPhaseType.NEWMOON, true, MoonPhaseType.QUARTER, true));
@@ -40,7 +40,7 @@ public class PDFMapperTest extends WithApplication {
         assertEquals("mooncal_de.pdf", actual);
     }
 
-    // http://localhost:9000/mooncal.pdf?lang=ro&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=true&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
+    // http://localhost:9000/mooncal.pdf?lang=ro&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=true&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=false&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
     @Test
     public void roDaily() throws IOException {
         var events = calculateEvents(LANG_RO, Map.of(MoonPhaseType.FULLMOON, true, MoonPhaseType.DAILY, true));
@@ -48,7 +48,7 @@ public class PDFMapperTest extends WithApplication {
         assertEquals("mooncal_ro_daily.pdf", actual);
     }
 
-    // http://localhost:9000/mooncal.pdf?lang=hi&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
+    // http://localhost:9000/mooncal.pdf?lang=hi&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=false&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
     @Test
     public void hi() throws IOException {
         var events = calculateEvents(LANG_HI, Map.of(MoonPhaseType.FULLMOON, true));
@@ -62,7 +62,7 @@ public class PDFMapperTest extends WithApplication {
         requestForm.setTo(ZonedDateTime.of(LocalDateTime.of(2025, 12, 31, 23, 59), ZoneId.of("Europe/Zurich")));
         requestForm.setPhases(phases);
         requestForm.setStyle(EventStyle.WITH_DESCRIPTION.getStyle());
-        requestForm.setEvents(Map.of(EventType.LUNARECLIPSE, true, EventType.SOLARECLIPSE, true));
+        requestForm.setEvents(Map.of(EventType.LUNARECLIPSE, true, EventType.SOLARECLIPSE, true, EventType.MOONLANDING, false));
         requestForm.setLang(lang);
         return calculation.calculate(requestForm);
     }
