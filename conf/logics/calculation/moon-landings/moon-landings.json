@@ -947,13 +947,13 @@
   {
     "date": "25.4.2023T16:40:0",
     "title": {
-      "en": "Hakuto-R Mission 1 (Japan)",
-      "de": "Hakuto-R Mission 1 (Japan)",
-      "nl": "Hakuto-R Mission 1 (Japan)",
-      "es": "Hakuto-R Misión 1 (Japón)",
-      "fr": "Hakuto-R Mission 1 (Japon)",
-      "ro": "Hakuto-R Misie 1 (Japonia)",
-      "hi": "Hakuto-R उद्देश्य 1 (जापान)"
+      "en": "Hakuto-R Mission 1 (ispace, Japan)",
+      "de": "Hakuto-R Mission 1 (ispace, Japan)",
+      "nl": "Hakuto-R Mission 1 (ispace, Japan)",
+      "es": "Hakuto-R Misión 1 (ispace, Japón)",
+      "fr": "Hakuto-R Mission 1 (ispace, Japon)",
+      "ro": "Hakuto-R Misie 1 (ispace, Japonia)",
+      "hi": "Hakuto-R उद्देश्य 1 (ispace, जापान)"
     },
     "description": {
       "en": "Mission from Japanese company ispace (crashed).",
@@ -1110,6 +1110,27 @@
       "fr": "Premières mesures de surface d'hydrogène dans les régions lunaires à ombre permanente à la recherche de glace d'eau.",
       "ro": "Primele măsurători de suprafață ale hidrogenului în regiunile lunare cu umbră permanentă, căutând semne de gheață de apă.",
       "hi": "स्थायी रूप से छायादार चंद्र क्षेत्रों में हाइड्रोजन के पहले सतह मापन, पानी के बर्फ के संकेतों की खोज में।"
+    }
+  },
+  {
+    "date": "5.6.2025T19:17:00",
+    "title": {
+      "en": "Hakuto-R Mission 2 (ispace, Japan)",
+      "de": "Hakuto-R Mission 2 (ispace, Japan)",
+      "nl": "Hakuto-R Mission 2 (ispace, Japan)",
+      "es": "Hakuto-R Misión 2 (ispace, Japón)",
+      "fr": "Hakuto-R Mission 2 (ispace, Japon)",
+      "ro": "Hakuto-R Misie 2 (ispace, Japonia)",
+      "hi": "Hakuto-R उद्देश्य 2 (ispace, जापान)"
+    },
+    "description": {
+      "en": "Mission from Japanese company ispace (crashed).",
+      "de": "Mission des japanischen Unternehmens ispace (abgestürzt).",
+      "nl": "Missie van het Japanse bedrijf ispace (neergestort).",
+      "es": "Misión de la compañía japonesa ispace (se estrelló).",
+      "fr": "Mission de la société japonaise ispace (s'est écrasé).",
+      "ro": "Misiunea companiei japoneze ispace (s-a prăbușit).",
+      "hi": "जापानी कंपनी आईस्पेस का मिशन (दुर्घटनाग्रस्त)।"
     }
   }
 ]
