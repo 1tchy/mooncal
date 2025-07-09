@@ -31,7 +31,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, true, false, false, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(12, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals("🌑 new moon", ((JsString) firstResult.value().get("title").get()).value());
+        assertEquals("🌑 New Moon", ((JsString) firstResult.value().get("title").get()).value());
         assertEquals("2015-01-20", ((JsString) firstResult.value().get("date").get()).value());
     }
 
@@ -40,7 +40,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, false, true, false, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(24, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals("🌗 third quarter", ((JsString) firstResult.value().get("title").get()).value());
+        assertEquals("🌗 Third Quarter", ((JsString) firstResult.value().get("title").get()).value());
         assertEquals("2015-01-13", ((JsString) firstResult.value().get("date").get()).value());
     }
 
@@ -49,7 +49,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, false, false, true, EventStyle.ICON_ONLY, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-01-31T00:00:00CET");
         assertEquals(31, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals("moon 87% visible", ((JsString) firstResult.value().get("title").get()).value());
+        assertEquals("Moon 87% visible", ((JsString) firstResult.value().get("title").get()).value());
         assertEquals("2015-01-01", ((JsString) firstResult.value().get("date").get()).value());
     }
 
@@ -76,7 +76,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, false, false, false, EventStyle.WITH_DESCRIPTION, true, true, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(4, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals("total solar eclipse", ((JsString) firstResult.value().get("title").get()).value());
+        assertEquals("Total Solar Eclipse", ((JsString) firstResult.value().get("title").get()).value());
         assertEquals("2015-03-20", ((JsString) firstResult.value().get("date").get()).value());
     }
 

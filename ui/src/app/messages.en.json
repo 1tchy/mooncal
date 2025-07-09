@@ -1,8 +1,8 @@
 {
   "app": {
     "title": "Moon Calendar",
-    "introduction": "Are you looking for a simple moon calendar? Then you have found it! With this web app you can generate your personal moon calendar, not only with moon phases, but also with special events related to the moon. The moon calendar can be viewed below and exported to your calendar as an iCalendar (ICS) file or downloaded and printed as a PDF file.",
-    "moon": "moon"
+    "introduction": "Are you looking for a simple Moon calendar? Then you have found it! With this web app you can generate your personal Moon calendar, not only with Moon phases, but also with special events related to the Moon. The Moon calendar can be viewed below and exported to your calendar as an iCalendar (ICS) file or downloaded and printed as a PDF file.",
+    "moon": "Moon"
   },
   "lang": {
     "current": "en",
@@ -26,22 +26,22 @@
   },
   "phases": {
     "title": "Moon Phases",
-    "full": "full moon",
-    "new": "new moon",
-    "quarter": "quarter",
-    "daily": "daily moon phases"
+    "full": "Full Moon",
+    "new": "New Moon",
+    "quarter": "Quarter",
+    "daily": "Daily Moon Phases"
   },
   "styles": {
     "title": "Style",
     "iconOnly": "just icon",
-    "fullmoon": "Full moon",
-    "fullmoonAndName": "Full moon (Strawberry Moon)"
+    "fullmoon": "Full Moon",
+    "fullmoonAndName": "Full Moon (Strawberry Moon)"
   },
   "events": {
     "title": "Events",
-    "lunareclipse": "lunar eclipse",
-    "solareclipse": "solar eclipse",
-    "moonlanding": "moon landing"
+    "lunareclipse": "Lunar Eclipse",
+    "solareclipse": "Solar Eclipse",
+    "moonlanding": "Moon Landing"
   },
   "time": {
     "title": "Interval",
@@ -63,7 +63,7 @@
     "addToCalendar": "Add to Calendar",
     "ical": {
       "download": "Download File",
-      "downloadWarning": "You can download many calendar entries here. If you don't like the moon calendar, you will have to delete each individual entry manually - depending on the calendar app. It is better to subscribe to the calendar.",
+      "downloadWarning": "You can download many calendar entries here. If you don't like the Moon calendar, you will have to delete each individual entry manually - depending on the calendar app. It is better to subscribe to the calendar.",
       "subscribe": {
         "title": "Subscribe to iCalendar Feed",
         "instructions": {
@@ -108,7 +108,7 @@
           "androidExtraSteps": [
             "Open the \"Calendar\" app",
             "Click on the icon at the top left to open the sidebar, then click on \"Settings\"",
-            "Select the moon calendar",
+            "Select the Moon calendar",
             "Make sure \"Sync\" is turned on"
           ],
           "thunderbird": {
@@ -142,25 +142,25 @@
   },
   "about": {
     "title": "About this site",
-    "introduction": "The aim of this project is to provide a simple and neat moon calendar for everyone. The data is calculated and collected from various sources to the best of one''s knowledge and belief.",
+    "introduction": "The aim of this project is to provide a simple and neat Moon calendar for everyone. The data is calculated and collected from various sources to the best of one's knowledge and belief.",
     "sources": {
       "title": "Sources",
       "moonimage": {
-        "title": "moon picture"
+        "title": "Moon Picture"
       },
       "phases": {
-        "title": "moon phases"
+        "title": "Moon Phases"
       },
       "lunareclipse": {
-        "title": "lunar eclipse"
+        "title": "Lunar Eclipse"
       },
       "solareclipse": {
-        "title": "solar eclipse"
+        "title": "Solar Eclipse"
       },
       "moonlanding": {
-        "title": "moon landing"
+        "title": "Moon Landing"
       },
-      "various": "various sources",
+      "various": "Various Sources",
       "mainly": "mainly",
       "space": {
         "devs": {
@@ -178,7 +178,7 @@
   },
   "thank": {
     "title": "Support",
-    "introduction": "This moon calendar is <strong>free</strong> and <strong>ad-free</strong>. To ensure that it stays that way, it is dependent on support, because the required infrastructure, further development and maintenance cost money. I would be very happy about support, a coffee or more.",
+    "introduction": "This Moon calendar is <strong>free</strong> and <strong>ad-free</strong>. To ensure that it stays that way, it is dependent on support, because the required infrastructure, further development and maintenance cost money. I would be very happy about support, a coffee or more.",
     "review": {
       "title": "Review of funding",
       "drunk": "Drank {0} coffees",
