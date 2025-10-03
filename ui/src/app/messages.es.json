@@ -26,22 +26,22 @@
   },
   "phases": {
     "title": "Fases de la Luna",
-    "full": "luna llena",
-    "new": "luna nueva",
-    "quarter": "cuarto",
-    "daily": "fases diarias de la luna"
+    "full": "Luna llena",
+    "new": "Luna nueva",
+    "quarter": "Cuarto",
+    "daily": "Fases diarias de la Luna"
   },
   "styles": {
     "title": "Estilo",
     "iconOnly": "solo icono",
-    "fullmoon": "Luna llena",
-    "fullmoonAndName": "Luna llena (Luna de los Fresas)"
+    "fullmoon": "Luna Llena",
+    "fullmoonAndName": "Luna Llena (Luna de las Fresas)"
   },
   "events": {
     "title": "Eventos",
-    "lunareclipse": "eclips lunar",
-    "solareclipse": "eclips solar",
-    "moonlanding": "desembarco lunar"
+    "lunareclipse": "Eclipse lunar",
+    "solareclipse": "Eclipse solar",
+    "moonlanding": "Aterrizaje lunar"
   },
   "time": {
     "title": "Intervalo",
@@ -62,7 +62,7 @@
     "title": "Exportar",
     "addToCalendar": "Añadir al calendario",
     "ical": {
-      "download": "descargar archivo",
+      "download": "Descargar archivo",
       "downloadWarning": "Puede descargar muchas entradas del calendario aquí. Si no te gusta el calendario lunar, tendrás que eliminar cada entrada individualmente manualmente, dependiendo de la aplicación de calendario. Es mejor suscribirse al calendario.",
       "subscribe": {
         "title": "suscribirse al feed iCalendar",
@@ -152,10 +152,10 @@
         "title": "fases de la luna"
       },
       "lunareclipse": {
-        "title": "eclips lunar"
+        "title": "eclipse lunar"
       },
       "solareclipse": {
-        "title": "eclips solar"
+        "title": "eclipse solar"
       },
       "moonlanding": {
         "title": "desembarco lunar"

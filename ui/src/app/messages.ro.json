@@ -12,7 +12,7 @@
   "navigation": {
     "home": "Acasă",
     "about": "Despre",
-    "toggle": "Alternativă navigației pe/în afara",
+    "toggle": "Comutare navigație pornit/oprit",
     "paths": {
       "home": "ro/calendar-lunar",
       "about": "ro/despre",
@@ -28,7 +28,7 @@
     "title": "Faze ale Lunii",
     "full": "Lună plină",
     "new": "Lună nouă",
-    "quarter": "pătrar",
+    "quarter": "sfert",
     "daily": "faze zilnice ale lunii"
   },
   "styles": {
