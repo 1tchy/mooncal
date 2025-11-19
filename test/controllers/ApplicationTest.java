@@ -40,7 +40,7 @@ public class ApplicationTest extends WithApplication {
         final Seq<JsValue> resultList = query("en", false, false, true, false, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(24, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
-        assertEquals("🌗 Third Quarter", ((JsString) firstResult.value().get("title").get()).value());
+        assertEquals("🌗 Waning crescent Moon", ((JsString) firstResult.value().get("title").get()).value());
         assertEquals("2015-01-13", ((JsString) firstResult.value().get("date").get()).value());
     }
 
