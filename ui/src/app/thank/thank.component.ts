@@ -4,8 +4,6 @@ import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {SupportButtonsComponent} from "../support-buttons/support-buttons.component";
 import {ImproveTranslationComponent} from "../improve-translation/improve-translation.component";
-import {AB} from "../ab";
-import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-thank',
@@ -13,8 +11,7 @@ import {NgIf} from "@angular/common";
   imports: [
     FormsModule,
     SupportButtonsComponent,
-    ImproveTranslationComponent,
-    NgIf
+    ImproveTranslationComponent
   ],
   templateUrl: './thank.component.html',
   styleUrl: './thank.component.css'
@@ -23,7 +20,7 @@ export class ThankComponent {
 
   messages: Messages;
 
-  constructor(route: ActivatedRoute, public ab: AB) {
+  constructor(route: ActivatedRoute) {
     this.messages = route.snapshot.data['messages']
     route.data.subscribe(data => {
       this.messages = data['messages']
