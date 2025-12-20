@@ -181,6 +181,7 @@
     "introduction": "Dieser Mondkalender ist <strong>gratis</strong> und <strong>werbefrei</strong>. Damit dies auch so bleibt, ist er auf Unterstützung angewiesen, denn die benötigte Infrastruktur, Weiterentwicklung und Wartung kosten. Über Unterstützung, einen Kaffee oder mehr würde ich mich sehr freuen.",
     "review": {
       "title": "Rückblick Funding",
+      "tilNov": "bis November",
       "drunk": "{0} Kaffees getrunken",
       "notDrunk": "Noch benötigte Kaffees",
       "pleaseHelp": "Hilf mir, in diesem Jahr nie auf Kaffee verzichten zu müssen!"

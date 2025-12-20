@@ -152,6 +152,7 @@ export interface Thank {
 
 export interface Review {
   title: string
+  tilNov: string
   drunk: string
   notDrunk: string
   pleaseHelp: string

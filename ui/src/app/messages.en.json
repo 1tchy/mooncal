@@ -181,6 +181,7 @@
     "introduction": "This Moon calendar is <strong>free</strong> and <strong>ad-free</strong>. To ensure that it stays that way, it is dependent on support, because the required infrastructure, further development and maintenance cost money. I would be very happy about support, a coffee or more.",
     "review": {
       "title": "Review of funding",
+      "tilNov": "until November",
       "drunk": "Drank {0} coffees",
       "notDrunk": "Coffees still needed",
       "pleaseHelp": "Help me never have to go without coffee this year!"

@@ -181,6 +181,7 @@
     "introduction": "Acest calendar lunar este <strong>gratuit</strong> și <strong>fără reclame</strong>. Pentru a se asigura că rămâne așa, depinde de suport, deoarece infrastructura necesară, dezvoltarea ulterioară și întreținerea costă bani. M-aș bucura foarte mult de sprijin, o cafea sau mai mult.",
     "review": {
       "title": "Revizuirea finanțării",
+      "tilNov": "până în noiembrie",
       "drunk": "Am băut {0} cafele",
       "notDrunk": "Mai este nevoie de cafea",
       "pleaseHelp": "Ajută-mă să nu rămân niciodată fără cafea anul acesta!"

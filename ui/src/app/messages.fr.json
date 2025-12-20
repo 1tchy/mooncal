@@ -181,6 +181,7 @@
     "introduction": "Ce calendrier lunaire est <strong>gratuit</strong> et <strong>sans publicité</strong>. Pour que cela reste ainsi, il faut du soutien, car l'infrastructure, le développement et la maintenance nécessaires coûtent de l'argent. Je serais très heureux d'avoir du soutien, un café ou plus.",
     "review": {
       "title": "Examen du financement",
+      "tilNov": "jusqu'en novembre",
       "drunk": "J'ai bu {0} cafés",
       "notDrunk": "Des cafés encore nécessaires",
       "pleaseHelp": "Aide-moi à ne jamais me passer de café cette année!"
