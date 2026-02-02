@@ -21,10 +21,7 @@
             "outputPath": "dist/ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "@angular/localize/init",
-              "zone.js"
-            ],
+            "polyfills": ["@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/browserconfig.xml",
@@ -92,9 +89,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
-              "@angular/localize/init",
-              "zone.js",
-              "zone.js/testing"
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [

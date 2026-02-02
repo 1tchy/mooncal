@@ -26,10 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 cd ui
 npm outdated
 ncu --upgrade
-rm -rf node_modules
-rm package-lock.json
-npm install
-npm run build
+rm -rf node_modules package-lock.json && npm install && npm run build
 ```
 
 ## Further help

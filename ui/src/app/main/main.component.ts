@@ -1,20 +1,12 @@
-import {AfterViewInit, Component, inject, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, inject, TemplateRef, ViewChild} from '@angular/core';
 import {Messages} from '../messages';
 import {Event} from "./event";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
 import {ActivatedRoute, Data, Router, RouterLink, Routes} from "@angular/router";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
-import {
-  NgbDropdownModule,
-  NgbModal,
-  NgbNav,
-  NgbNavChangeEvent,
-  NgbNavContent,
-  NgbNavItem,
-  NgbNavLinkButton,
-  NgbNavOutlet
-} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap/modal";
+import {NgbModule, NgbNavChangeEvent} from "@ng-bootstrap/ng-bootstrap";
 
 import {getAllLanguages} from "../app.routes";
 import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
@@ -29,8 +21,7 @@ type options = { [key: string]: boolean }
     NgForOf,
     FormsModule,
     NgClass,
-    NgbDropdownModule,
-    NgbNav, NgbNavItem, NgbNavLinkButton, NgbNavContent, NgbNavOutlet,
+    NgbModule,
     RouterLink,
     ButtonWithStyledTooltip
   ],
@@ -39,6 +30,8 @@ type options = { [key: string]: boolean }
 })
 export class MainComponent implements AfterViewInit {
   private modalService = inject(NgbModal);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+
   messages: Messages;
   routeData: Data = []
   routes: Routes;
@@ -278,38 +271,8 @@ export class MainComponent implements AfterViewInit {
   }
 
   public updateCalendar(newCalendar: Event[]) {
-    if (!this.calendar) {
-      this.calendar = newCalendar;
-      return;
-    }
-    let newBase = 0;
-    for (let o = 0; o < this.calendar.length;) {
-      const oldElement = this.calendar[o];
-      if (this.eventsEquals(oldElement, newCalendar[newBase])) {
-        o++;
-        newBase++; //nothing to do, event already in list
-      } else {
-        let oldElementInNewList = false;
-        for (let n = newBase; n < newCalendar.length; n++) {
-          if (this.eventsEquals(oldElement, newCalendar[n])) {
-            oldElementInNewList = true;
-            break;
-          }
-        }
-        if (oldElementInNewList) {
-          this.calendar.splice(o++, 0, newCalendar[newBase++]); //add new event
-        } else {
-          this.calendar.splice(o, 1); //delete old event
-        }
-      }
-    }
-    while (newBase < newCalendar.length) {
-      this.calendar.push(newCalendar[newBase++]);
-    }
-  }
-
-  public eventsEquals(event1: Event, event2: Event) {
-    return event1 && event2 && event1.date === event2.date && event1.title === event2.title && event1.description === event2.description;
+    this.calendar = newCalendar;
+    this.changeDetectorRef.markForCheck();
   }
 
   public subscriptionDescriptionOSChanged(event: NgbNavChangeEvent) {
