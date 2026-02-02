@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Messages} from "../messages";
 import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-improve-translation',
@@ -19,7 +19,7 @@ export class ImproveTranslationComponent {
   suggestBetterTranslationInProgress = false;
   suggestBetterTranslationResult = '';
 
-  constructor(route: ActivatedRoute, private http: HttpClient) {
+  constructor(route: ActivatedRoute) {
     this.messages = route.snapshot.data['messages']
     route.data.subscribe(data => {
       this.messages = data['messages']
@@ -33,7 +33,10 @@ export class ImproveTranslationComponent {
     form.append('language', this.messages.lang.current);
     form.append('oldText', this.oldText);
     form.append('betterText', this.betterText);
-    return this.http.post(`/suggestBetterTranslation`, form).subscribe(() => {
+    return fetch(`/suggestBetterTranslation`, {
+      method: 'POST',
+      body: form
+    }).then(() => {
       this.suggestBetterTranslationResult = this.messages.improveTranslation.thanksForFeedback
       this.oldText = '';
       this.betterText = '';

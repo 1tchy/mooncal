@@ -15,7 +15,7 @@ import {
   NgbNavLinkButton,
   NgbNavOutlet
 } from "@ng-bootstrap/ng-bootstrap";
-import {HttpClient} from "@angular/common/http";
+
 import {getAllLanguages} from "../app.routes";
 import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
 
@@ -80,7 +80,7 @@ export class MainComponent implements AfterViewInit {
   clipboardSet = false;
   trackIcalSubscriptionTextarea$ = new Subject<string>();
 
-  constructor(route: ActivatedRoute, router: Router, private httpClient: HttpClient) {
+  constructor(route: ActivatedRoute, router: Router) {
     this.routeData = route.snapshot.data;
     this.routes = router.config;
     this.messages = route.snapshot.data['messages']
@@ -250,18 +250,23 @@ export class MainComponent implements AfterViewInit {
         this.requestPath = requestPath;
         this.requestOngoing = true;
         let url = this.getApiUrl(false, null) + "?" + requestPath;
-        this.httpClient.get(url).subscribe({
-          next: (data: any) => {
+        fetch(url)
+          .then(response => {
+            if (!response.ok) {
+              throw response;
+            }
+            return response.json();
+          })
+          .then((data: any) => {
             this.error = null;
             this.updateCalendar(data);
             this.requestOngoing = false;
-          },
-          error: (response) => {
+          })
+          .catch((response) => {
             this.error = response;
             this.calendar = [];
             this.requestOngoing = false;
-          }
-        });
+          });
         if (track) {
           // @ts-ignore
           _paq.push(['trackEvent', 'Calendar', 'update', this.paramsForTracking(true)]);

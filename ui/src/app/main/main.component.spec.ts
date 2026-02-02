@@ -4,7 +4,6 @@ import {MainComponent} from './main.component';
 import messages from "../messages.en.json";
 import {ActivatedRoute} from "@angular/router";
 import {of} from "rxjs";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -13,7 +12,7 @@ describe('MainComponent', () => {
   beforeEach(async () => {
     const route = {data: {messages: messages}};
     await TestBed.configureTestingModule({
-      imports: [MainComponent, HttpClientTestingModule],
+      imports: [MainComponent],
       providers: [{
         provide: ActivatedRoute,
         useValue: {

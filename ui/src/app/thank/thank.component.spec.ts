@@ -3,7 +3,6 @@ import {ThankComponent} from './thank.component';
 import messages from "../messages.en.json";
 import {of} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
 
 describe('ThankComponent', () => {
   let component: ThankComponent;
@@ -19,9 +18,6 @@ describe('ThankComponent', () => {
           snapshot: route,
           data: of(route.data)
         }
-      }, {
-        provide: HttpClient,
-        useValue: {}
       }]
     }).compileComponents();
 

@@ -3,7 +3,6 @@ import {ImproveTranslationComponent} from './improve-translation.component';
 import messages from "../messages.en.json";
 import {of} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
 
 describe('ImproveTranslationComponent', () => {
   let component: ImproveTranslationComponent;
@@ -19,9 +18,6 @@ describe('ImproveTranslationComponent', () => {
           snapshot: route,
           data: of(route.data)
         }
-      }, {
-        provide: HttpClient,
-        useValue: {}
       }]
     }).compileComponents();
 
