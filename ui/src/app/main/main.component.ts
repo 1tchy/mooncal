@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, inject, TemplateRef, ViewChild} from '@angular/core';
 import {Messages} from '../messages';
 import {Event} from "./event";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
 import {ActivatedRoute, Data, Router, RouterLink, Routes} from "@angular/router";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
@@ -17,8 +17,6 @@ type options = { [key: string]: boolean }
   selector: 'app-main',
   standalone: true,
   imports: [
-    NgIf,
-    NgForOf,
     FormsModule,
     NgClass,
     NgbModule,

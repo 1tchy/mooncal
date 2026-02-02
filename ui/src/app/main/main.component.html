@@ -9,11 +9,13 @@
       <h5 class="card-header">{{ messages.phases.title }}</h5>
       <div class="card-body row g-0">
         <div class="col-auto">
-          <div class="form-check" *ngFor="let phase of ['full', 'new', 'quarter', 'daily']">
-            <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
-                   [name]="phase+'-checkbox'">
-            <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
-          </div>
+          @for (phase of ['full', 'new', 'quarter', 'daily']; track phase) {
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
+                     [name]="phase+'-checkbox'">
+              <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
+            </div>
+          }
         </div>
         <div class="col-auto flex-grow-1"></div>
         <div class="col-auto row g-0">
@@ -24,9 +26,11 @@
             <select class="form-select form-select-sm form-control me-2" [(ngModel)]="style" name="style" id="style">
               <option ngValue="iconOnly">🌕 ({{ messages.styles.iconOnly }})</option>
               <option ngValue="fullmoon">🌕 {{ messages.styles.fullmoon }}</option>
-              <option ngValue="withDescription" *ngIf="messages.styles.fullmoonAndName!=''">
-                🌕 {{ messages.styles.fullmoonAndName }}
-              </option>
+              @if (messages.styles.fullmoonAndName!=='') {
+                <option ngValue="withDescription">
+                  🌕 {{ messages.styles.fullmoonAndName }}
+                </option>
+              }
             </select>
           </div>
         </div>
@@ -38,12 +42,13 @@
     <div class="card" id="events">
       <h5 class="card-header">{{ messages.events.title }}</h5>
       <div class="card-body">
-        <div class="form-check"
-             *ngFor="let event of ['lunareclipse','solareclipse','moonlanding']">
-          <input class="form-check-input" type="checkbox" [(ngModel)]="events[event]" [id]="event+'-checkbox'"
-                 [name]="event+'-checkbox'">
-          <label class="form-check-label" [for]="event+'-checkbox'">{{ messages.events[event] }}</label>
-        </div>
+        @for (event of ['lunareclipse','solareclipse','moonlanding']; track event) {
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="events[event]" [id]="event+'-checkbox'"
+                   [name]="event+'-checkbox'">
+            <label class="form-check-label" [for]="event+'-checkbox'">{{ messages.events[event] }}</label>
+          </div>
+        }
       </div>
     </div>
   </div>
@@ -71,17 +76,22 @@
                    (blur)="this.toDebounced=this.toDate(this.to, false); fetchCalendar()"
                    required [min]="this.from" max="3000-12-31">
           </div>
-          <span class="text-danger ms-2"
-                *ngIf="fromTo_from.errors?.['required']||fromTo_to.errors?.['required']">{{ messages.time.fromTo.required }}</span>
-          <span class="text-danger ms-2"
-                *ngIf="fromTo_from.errors?.['date']||fromTo_to.errors?.['date']">{{ messages.time.fromTo.date }}</span>
-          <span class="text-danger ms-2"
-                *ngIf="fromTo_from.errors?.['min']||fromTo_to.errors?.['min']||fromTo_from.errors?.['max']||fromTo_to.errors?.['max']">{{ messages.time.fromTo.minmax }}</span>
+          @if (fromTo_from.errors?.['required']||fromTo_to.errors?.['required']) {
+            <span class="text-danger ms-2">{{ messages.time.fromTo.required }}</span>
+          }
+          @if (fromTo_from.errors?.['date']||fromTo_to.errors?.['date']) {
+            <span class="text-danger ms-2">{{ messages.time.fromTo.date }}</span>
+          }
+          @if (fromTo_from.errors?.['min']||fromTo_to.errors?.['min']||fromTo_from.errors?.['max']||fromTo_to.errors?.['max']) {
+            <span class="text-danger ms-2">{{ messages.time.fromTo.minmax }}</span>
+          }
           <label class="col-auto" for="zone">{{ messages.time.fromTo.inTimezone }}</label>
           <div class="col-auto">
             <select class="form-control form-select" [(ngModel)]="zone" name="zone" id="zone"
                     (change)="trackTimezoneChange(); fetchCalendar(false)">
-              <option *ngFor="let tz of getSupportedTimezones()" [ngValue]="tz">{{ tz }}</option>
+              @for (tz of getSupportedTimezones(); track tz) {
+                <option [ngValue]="tz">{{ tz }}</option>
+              }
             </select>
           </div>
         </form>
@@ -112,33 +122,43 @@
   <div class="col-lg-12">
     <div class="card" [ngClass]="{'text-bg-warning': requestOngoing && calendar.length>0}">
       <h5 class="card-header">{{ messages.calendar.title }}
-        <span *ngIf="requestOngoing && calendar.length>0">({{ messages.calendar.reloading }})</span>
+        @if (requestOngoing && calendar.length>0) {
+          <span>({{ messages.calendar.reloading }})</span>
+        }
       </h5>
-      <div class="card-body" *ngIf="requestOngoing && calendar.length==0">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">{{ messages.calendar.reloading }}</span>
+      @if (requestOngoing && calendar.length==0) {
+        <div class="card-body">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">{{ messages.calendar.reloading }}</span>
+          </div>
         </div>
-      </div>
-      <table class="table table-bordered table-dark mb-0" *ngIf="calendar.length>0">
-        <tbody>
-        <tr *ngFor="let event of calendar" class="fadeAnimation">
-          <td class="dateFont">
-            <span class="d-none d-md-inline">{{ this.formatDateForGui(event.date) }}</span>
-            <span class="d-md-none">{{ this.formatDateForGuiXs(event.date) }}</span>
-          </td>
-          <td class="xxs-hyphenation">{{ event.title }}</td>
-          <td class="text-muted description xxs-hyphenation">{{ event.description }}</td>
-        </tr>
-        </tbody>
-      </table>
+      }
+      @if (calendar.length>0) {
+        <table class="table table-bordered table-dark mb-0">
+          <tbody>
+          @for (event of calendar; track event.date) {
+            <tr class="fadeAnimation">
+              <td class="dateFont">
+                <span class="d-none d-md-inline">{{ this.formatDateForGui(event.date) }}</span>
+                <span class="d-md-none">{{ this.formatDateForGuiXs(event.date) }}</span>
+              </td>
+              <td class="xxs-hyphenation">{{ event.title }}</td>
+              <td class="text-muted description xxs-hyphenation">{{ event.description }}</td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      }
     </div>
 
-    <div class="card text-white bg-danger" *ngIf="error">
-      <h5 class="card-header">Fehler {{ error.status }}: {{ error.statusText }}</h5>
-      <div class="card-body">
-        {{ error.error }}
+    @if (error) {
+      <div class="card text-white bg-danger">
+        <h5 class="card-header">Fehler {{ error.status }}: {{ error.statusText }}</h5>
+        <div class="card-body">
+          {{ error.error }}
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>
 
@@ -156,7 +176,9 @@
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.iOS.name }}</button>
         <ng-template ngbNavContent>
           <ol>
-            <li *ngFor="let step of messages.export.ical.subscribe.instructions.iOS.steps">{{ step }}</li>
+            @for (step of messages.export.ical.subscribe.instructions.iOS.steps; track $index) {
+              <li>{{ step }}</li>
+            }
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
               <a [routerLink]="'/'+routeData['thank']" (click)="modal.dismiss();">
@@ -172,7 +194,9 @@
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.macOS.name }}</button>
         <ng-template ngbNavContent>
           <ol>
-            <li *ngFor="let step of messages.export.ical.subscribe.instructions.macOS.steps">{{ step }}</li>
+            @for (step of messages.export.ical.subscribe.instructions.macOS.steps; track $index) {
+              <li>{{ step }}</li>
+            }
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
               <a [routerLink]="'/'+routeData['thank']" (click)="modal.dismiss();">
@@ -191,7 +215,9 @@
             <li>{{ messages.export.ical.subscribe.instructions.googleGoto }} <a href="https://calendar.google.com/"
                                                                                 target="_blank">{{ messages.export.ical.subscribe.instructions.googleCalendar.name }}</a>
             </li>
-            <li *ngFor="let step of messages.export.ical.subscribe.instructions.googleCalendar.steps">{{ step }}</li>
+            @for (step of messages.export.ical.subscribe.instructions.googleCalendar.steps; track $index) {
+              <li>{{ step }}</li>
+            }
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
               <a [routerLink]="'/'+routeData['thank']" (click)="modal.dismiss();">
@@ -218,7 +244,9 @@
           </ol>
           <p>{{ messages.export.ical.subscribe.instructions.androidIfNotAutomatic }}</p>
           <ol>
-            <li *ngFor="let step of messages.export.ical.subscribe.instructions.androidExtraSteps">{{ step }}</li>
+            @for (step of messages.export.ical.subscribe.instructions.androidExtraSteps; track $index) {
+              <li>{{ step }}</li>
+            }
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
               <a [routerLink]="'/'+routeData['thank']" (click)="modal.dismiss();">
@@ -234,7 +262,9 @@
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.thunderbird.name }}</button>
         <ng-template ngbNavContent>
           <ol>
-            <li *ngFor="let step of messages.export.ical.subscribe.instructions.thunderbird.steps">{{ step }}</li>
+            @for (step of messages.export.ical.subscribe.instructions.thunderbird.steps; track $index) {
+              <li>{{ step }}</li>
+            }
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
               <a [routerLink]="'/'+routeData['thank']" (click)="modal.dismiss();">
@@ -250,7 +280,9 @@
         <button ngbNavLink>{{ messages.export.ical.subscribe.instructions.outlook.name }}</button>
         <ng-template ngbNavContent>
           <ol>
-            <li *ngFor="let step of messages.export.ical.subscribe.instructions.outlook.steps">{{ step }}</li>
+            @for (step of messages.export.ical.subscribe.instructions.outlook.steps; track $index) {
+              <li>{{ step }}</li>
+            }
             <li>
               {{ messages.export.ical.subscribe.instructions.enjoyInstruction }}
               <a [routerLink]="'/'+routeData['thank']" (click)="modal.dismiss();">
@@ -270,15 +302,16 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="copyIcalLink()" data-dismiss="modal">
-      <svg *ngIf="!clipboardSet; else clipboardCheckFilled" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-           fill="currentColor" class="bi bi-clipboard"
-           viewBox="0 0 16 16">
-        <path
-          d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
-        <path
-          d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
-      </svg>
-      <ng-template #clipboardCheckFilled>
+      @if (!clipboardSet) {
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+             fill="currentColor" class="bi bi-clipboard"
+             viewBox="0 0 16 16">
+          <path
+            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+          <path
+            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+        </svg>
+      } @else {
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
           <path
@@ -286,7 +319,7 @@
           <path
             d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
         </svg>
-      </ng-template>
+      }
       {{ messages.export.ical.subscribe.copy }}
     </button>
     <button-with-styled-tooltip [btnClass]="calendar.length<20 ? 'btn-light' : 'btn-warning'"

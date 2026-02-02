@@ -3,7 +3,7 @@ import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} f
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
-import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {KeyValuePipe, NgClass} from "@angular/common";
 import {Subscription} from "rxjs";
 import {getAllLanguagesAndItsNames} from "./app.routes";
 import {AB} from "./ab";
@@ -11,7 +11,7 @@ import {AB} from "./ab";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbCollapseModule, NgbDropdownModule, NgForOf, NgIf, RouterLink, NgClass, KeyValuePipe],
+  imports: [RouterOutlet, NgbCollapseModule, NgbDropdownModule, RouterLink, NgClass, KeyValuePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
