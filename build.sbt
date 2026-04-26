@@ -27,8 +27,10 @@ libraryDependencies ++= Seq(
 	"org.mockito" % "mockito-core" % "5.23.0" % Test,
 	///see latest version under: https://mvnrepository.com/artifact/de.redsix/pdfcompare
 	"de.redsix" % "pdfcompare" % "1.2.8" % Test,
-	//see latest version under: https://mvnrepository.com/artifact/junit/junit
-	"junit" % "junit" % "4.13.2" % Test,
+	//see latest version under: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+	"org.junit.jupiter" % "junit-jupiter" % "6.0.3" % Test,
+	//see latest version under: https://mvnrepository.com/artifact/com.github.sbt.junit/jupiter-interface
+	"com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 	"org.hamcrest" % "hamcrest" % "3.0" % Test,
 )

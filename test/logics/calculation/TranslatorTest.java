@@ -1,17 +1,17 @@
 package logics.calculation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TranslatorTest {
+class TranslatorTest {
 
     private final Translator cut = new Translator();
 
     @Test
-    public void testTranslate() throws IOException {
+    void testTranslate() throws IOException {
         String text = "Hello world!";
         String actual = cut.translate("en", "es", text);
         assertEquals("¡Hola Mundo!", actual);

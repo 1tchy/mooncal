@@ -1,7 +1,8 @@
 package logics;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import play.i18n.Lang;
 import play.i18n.Messages;
 import play.i18n.MessagesApi;
@@ -13,20 +14,27 @@ import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TranslationTest extends WithApplication {
+@SuppressWarnings("JUnitMixedFramework")
+class TranslationTest extends WithApplication {
 
     private static final Lang defaultLang = Lang.forCode("de");
     private MessagesApi messagesApi;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
+        startPlay();
         messagesApi = app.injector().instanceOf(MessagesApi.class);
     }
 
+    @AfterEach
+    void tearDown() {
+        stopPlay();
+    }
+
     @Test
-    public void testGetAllKeysHelperMethod() throws IOException {
+    void testGetAllKeysHelperMethod() throws IOException {
         final Set<String> allKeys = getAllKeys();
         assertThat(allKeys.size(), greaterThan(20));
         assertTrue(allKeys.contains("events.lunareclipse.total"));
@@ -45,7 +53,7 @@ public class TranslationTest extends WithApplication {
     }
 
     @Test
-    public void testGetAllLangsHelperMethod() {
+    void testGetAllLangsHelperMethod() {
         final List<Lang> allKeys = getAllLangs();
         assertThat(allKeys.size(), greaterThan(2));
     }
@@ -56,7 +64,7 @@ public class TranslationTest extends WithApplication {
     }
 
     @Test
-    public void noMessageIsJustItsKey() throws IOException {
+    void noMessageIsJustItsKey() throws IOException {
         for (Lang lang : getAllLangs()) {
             for (String key : getAllKeys()) {
                 assertNotEquals(key, messagesApi.get(lang, key));
@@ -65,7 +73,7 @@ public class TranslationTest extends WithApplication {
     }
 
     @Test
-    public void allMessagesInAllLanguages() throws IOException {
+    void allMessagesInAllLanguages() throws IOException {
         for (Lang lang : getAllLangs()) {
             if (!lang.equals(defaultLang)) {
                 for (String key : getAllKeys()) {
@@ -77,9 +85,9 @@ public class TranslationTest extends WithApplication {
 
     private void assertSpecificTranslation(Lang lang, String key) {
         if (isTranslationRequired(lang, key)) {
-            assertNotEquals(key + " for '" + lang.code() + "' and '" + defaultLang.code() + "' are equal but probably shouldn't",
-                    messagesApi.get(lang, key),
-                    messagesApi.get(defaultLang, key));
+            assertNotEquals(messagesApi.get(lang, key),
+                    messagesApi.get(defaultLang, key),
+                    key + " for '" + lang.code() + "' and '" + defaultLang.code() + "' are equal but probably shouldn't");
         }
     }
 
@@ -109,7 +117,7 @@ public class TranslationTest extends WithApplication {
     }
 
     @Test
-    public void langField_lang_current() {
+    void langField_lang_current() {
         for (Lang lang : getAllLangs()) {
             assertEquals(lang.code(), messagesApi.get(lang, "lang.current"));
         }

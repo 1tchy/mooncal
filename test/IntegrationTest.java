@@ -1,8 +1,9 @@
 import io.fluentlenium.core.domain.FluentWebElement;
 import io.fluentlenium.core.filter.AttributeFilter;
 import logics.Randomizer;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import play.test.Helpers;
@@ -27,10 +28,11 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class IntegrationTest extends WithBrowser {
+@SuppressWarnings("JUnitMixedFramework")
+class IntegrationTest extends WithBrowser {
     @Override
     protected TestBrowser provideBrowser(int port) {
         System.setProperty("today", "2024-06-09");
@@ -45,13 +47,21 @@ public class IntegrationTest extends WithBrowser {
         ), port);
     }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
+        startServer();
+        createBrowser();
         Randomizer.reseed();
     }
 
+    @AfterEach
+    void tearDown() {
+        quitBrowser();
+        stopServer();
+    }
+
     @Test
-    public void subscribeAndDowload() throws InterruptedException, IOException {
+    void subscribeAndDowload() throws InterruptedException, IOException {
         wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
             browser.$("#phases label", withText("Vollmond")).click();
             browser.$("#events label").click();
@@ -84,7 +94,7 @@ public class IntegrationTest extends WithBrowser {
     }
 
     @Test
-    public void changeLanguage() throws InterruptedException {
+    void changeLanguage() throws InterruptedException {
         wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
             assertThat(getText("body"), not(containsString("English")));
             click(browser.$("a", containingText("Sprache ändern")).first());
@@ -96,7 +106,7 @@ public class IntegrationTest extends WithBrowser {
     }
 
     @Test
-    public void translation() throws InterruptedException {
+    void translation() throws InterruptedException {
         List<String> configuredLangs = app.config().getStringList("play.i18n.langs");
         wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
             click(browser.$("a", containingText("Sprache ändern")).first());

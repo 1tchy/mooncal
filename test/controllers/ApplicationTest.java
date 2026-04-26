@@ -1,7 +1,9 @@
 package controllers;
 
 import models.EventStyle;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import play.api.libs.json.*;
 import play.api.mvc.Call;
 import play.mvc.Http;
@@ -11,14 +13,25 @@ import scala.collection.Seq;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.route;
 
-public class ApplicationTest extends WithApplication {
+@SuppressWarnings("JUnitMixedFramework")
+class ApplicationTest extends WithApplication {
+
+    @BeforeEach
+    void setUpPlay() {
+        startPlay();
+    }
+
+    @AfterEach
+    void tearDownPlay() {
+        stopPlay();
+    }
 
     @Test
-    public void testDefaultQueryCall() {
+    void testDefaultQueryCall() {
         final Seq<JsValue> resultList = query("de", true, false, false, false, EventStyle.WITH_DESCRIPTION, true, true, true, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -27,7 +40,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testNewPhasesQueryCall() {
+    void testNewPhasesQueryCall() {
         final Seq<JsValue> resultList = query("en", false, true, false, false, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(12, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -36,7 +49,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testQuarterPhasesQueryCall() {
+    void testQuarterPhasesQueryCall() {
         final Seq<JsValue> resultList = query("en", false, false, true, false, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(24, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -45,7 +58,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testDailyPhasesQueryCall() {
+    void testDailyPhasesQueryCall() {
         final Seq<JsValue> resultList = query("en", false, false, false, true, EventStyle.ICON_ONLY, false, false, false, "from=2015-01-01T00:00:00CET", "to=2015-01-31T00:00:00CET");
         assertEquals(31, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -54,7 +67,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testWithoutDescriptionQueryCall() {
+    void testWithoutDescriptionQueryCall() {
         final Seq<JsValue> resultList = query("de", true, false, false, false, EventStyle.FULLMOON, true, true, true, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -63,7 +76,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testIconOnlyQueryCall() {
+    void testIconOnlyQueryCall() {
         final Seq<JsValue> resultList = query("de", true, false, false, false, EventStyle.ICON_ONLY, true, true, true, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -72,7 +85,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testEclipsesQueryCall() {
+    void testEclipsesQueryCall() {
         final Seq<JsValue> resultList = query("en", false, false, false, false, EventStyle.WITH_DESCRIPTION, true, true, false, "from=2015-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(4, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -81,7 +94,7 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testMoonLandingQueryCall() {
+    void testMoonLandingQueryCall() {
         final Seq<JsValue> resultList = query("en", false, false, false, false, EventStyle.WITH_DESCRIPTION, false, false, true, "from=2000-01-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertEquals(7, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
@@ -90,20 +103,20 @@ public class ApplicationTest extends WithApplication {
     }
 
     @Test
-    public void testFloatingQuery() {
+    void testFloatingQuery() {
         final Seq<JsValue> resultList = query("de", true, false, false, false, EventStyle.WITH_DESCRIPTION, false, false, false, "before=P1M", "after=P11M", "zone=CET");
         assertThat(resultList.size(), greaterThanOrEqualTo(12));
         assertThat(resultList.size(), lessThanOrEqualTo(13));
     }
 
     @Test
-    public void testICalendarDefaultQuery() {
+    void testICalendarDefaultQuery() {
         final String result = queryAsICalendar("de", true, false, false, false, true, true, true, "from=2015-12-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertThat(result, containsString("Vollmond"));
     }
 
     @Test
-    public void testICalendarQueryInverted() {
+    void testICalendarQueryInverted() {
         final String result = queryAsICalendar("nl", false, true, true, true, false, false, false, "from=2015-12-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
         assertThat(result, containsString("Nieuwe maan"));
     }

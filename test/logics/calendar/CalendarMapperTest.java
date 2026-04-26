@@ -2,8 +2,9 @@ package logics.calendar;
 
 import logics.Randomizer;
 import models.EventInstance;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import play.i18n.Lang;
 import play.test.WithApplication;
 
@@ -19,18 +20,25 @@ import java.util.TimeZone;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class CalendarMapperTest extends WithApplication {
+@SuppressWarnings("JUnitMixedFramework")
+class CalendarMapperTest extends WithApplication {
 
     private CalendarMapper cut;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
+        startPlay();
         cut = app.injector().instanceOf(CalendarMapper.class);
         Randomizer.reseed();
     }
 
+    @AfterEach
+    void tearDown() {
+        stopPlay();
+    }
+
     @Test
-    public void testSingleEventCalendar() {
+    void testSingleEventCalendar() {
         EventInstance event = new EventInstance(ZonedDateTime.of(2015, 12, 24, 18, 0, 0, 0, ZoneOffset.UTC), "Christmas", "title visible only in PDF", "6pm at christmas in UTC", ZoneOffset.UTC, "test");
         String actual = cut.map(Collections.singletonList(event), 123, Lang.forCode("en"));
         assertThat(actual, startsWith("BEGIN:VCALENDAR\r\nPRODID:-//Mooncal 1.0//EN\r\nVERSION:2.0\r\nCALSCALE:GREGORIAN\r\nX-PUBLISHED-TTL:P123D\r\nBEGIN:VEVENT\r\nDTSTAMP:"));
@@ -38,7 +46,7 @@ public class CalendarMapperTest extends WithApplication {
     }
 
     @Test
-    public void testTimezoneOffset() {
+    void testTimezoneOffset() {
         ZoneId zoneId = TimeZone.getTimeZone("Europe/Zurich").toZoneId();
         EventInstance event = new EventInstance(ZonedDateTime.of(2025, 12, 5, 0, 22, 0, 0, zoneId), "Vollmond (Julmond)", "title visible only in PDF", "Vollmond um 0:22", ZoneOffset.UTC, "test");
         String actual = cut.map(Collections.singletonList(event), 123, Lang.forCode("en"));
@@ -47,7 +55,7 @@ public class CalendarMapperTest extends WithApplication {
     }
 
     @Test
-    public void testAllThankUrlsAreCorrect() throws IOException {
+    void testAllThankUrlsAreCorrect() throws IOException {
         String routesCompiled = Files.readString(Path.of("ui/src/app/app.routes.compiled.spec.ts"));
         for (Lang lang : Lang.availables(app)) {
             String thankUrl = cut.getThankUrl(lang);

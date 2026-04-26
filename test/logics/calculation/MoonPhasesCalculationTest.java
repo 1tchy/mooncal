@@ -6,8 +6,9 @@ import models.MoonPhaseType;
 import models.RequestForm;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.test.WithApplication;
@@ -21,20 +22,22 @@ import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MoonPhasesCalculationTest extends WithApplication {
+@SuppressWarnings("JUnitMixedFramework")
+class MoonPhasesCalculationTest extends WithApplication {
 
     private static final ZoneId CH_ZONE = ZoneId.of("Europe/Zurich");
     private MoonPhasesCalculation cut;
     private RequestForm requestForm;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
+        startPlay();
         final MessagesApi messagesApi = mock(MessagesApi.class);
         when(messagesApi.get(any(Lang.class), anyString(), any(Object[].class))).thenAnswer(invocation -> {
             final Object[] arguments = invocation.getArguments();
@@ -49,6 +52,11 @@ public class MoonPhasesCalculationTest extends WithApplication {
         requestForm.setLang(Lang.forCode("en"));
     }
 
+    @AfterEach
+    void tearDown() {
+        stopPlay();
+    }
+
     private Collection<EventInstance> calculate(RequestForm requestForm) {
         final Collection<EventInstance> eventCollection = new TreeSet<>();
         cut.calculate(requestForm, eventCollection);
@@ -56,27 +64,27 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testGetFullmoonWithNoResult() {
+    void testGetFullmoonWithNoResult() {
         requestForm.setFrom(ZonedDateTime.of(2015, 11, 12, 12, 0, 0, 0, ZoneOffset.UTC));
         requestForm.setTo(ZonedDateTime.of(2015, 11, 20, 12, 0, 0, 0, ZoneOffset.UTC));
         assertThat(calculate(requestForm), is(empty()));
     }
 
     @Test
-    public void testGetFullmoonWithOneResult() {
+    void testGetFullmoonWithOneResult() {
         requestForm.setFrom(ZonedDateTime.of(2015, 11, 20, 12, 0, 0, 0, ZoneOffset.UTC));
         final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, contains(eventAt(LocalDate.of(2015, 11, 25))));
     }
 
     @Test
-    public void testGetMoonWithMoreResult() {
+    void testGetMoonWithMoreResult() {
         final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, containsInAnyOrder(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
     }
 
     @Test
-    public void testGetFullmoonNames() {
+    void testGetFullmoonNames() {
         requestForm = new RequestForm();
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
         requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
@@ -90,7 +98,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testGetFullmoonNamesWithDescription() {
+    void testGetFullmoonNamesWithDescription() {
         requestForm = new RequestForm();
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
         requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
@@ -102,7 +110,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testGetIconOnly() {
+    void testGetIconOnly() {
         requestForm = new RequestForm();
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
         requestForm.getPhases().put(MoonPhaseType.NEWMOON, true);
@@ -116,13 +124,13 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testGetMoonWithResultsInTemporalOrder() {
+    void testGetMoonWithResultsInTemporalOrder() {
         final Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, contains(eventAt(LocalDate.of(2015, 10, 27)), eventAt(LocalDate.of(2015, 11, 11)), eventAt(LocalDate.of(2015, 11, 25))));
     }
 
     @Test
-    public void testGetHalfMoonResults() {
+    void testGetHalfMoonResults() {
         requestForm.getPhases().clear();
         requestForm.getPhases().put(MoonPhaseType.QUARTER, true);
         requestForm.setTo(ZonedDateTime.of(2015, 10, 31, 12, 0, 0, 0, ZoneOffset.UTC));
@@ -133,7 +141,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testDailyEventsProvidedForAllDays() {
+    void testDailyEventsProvidedForAllDays() {
         requestForm.getPhases().clear();
         requestForm.getPhases().put(MoonPhaseType.DAILY, true);
 
@@ -143,7 +151,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testEventOnLapYear() {
+    void testEventOnLapYear() {
         requestForm.getPhases().clear();
         requestForm.getPhases().put(MoonPhaseType.DAILY, true);
         requestForm.setFrom(ZonedDateTime.of(2016, 2, 29, 12, 0, 0, 0, ZoneOffset.UTC));
@@ -156,7 +164,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testCalculatedAndCsvFullMoons() {
+    void testCalculatedAndCsvFullMoons() {
         requestForm.getPhases().clear();
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
         requestForm.setFrom(ZonedDateTime.of(1699, 11, 1, 12, 0, 0, 0, CH_ZONE));
@@ -173,7 +181,7 @@ public class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testLoadCurrentFullMoons() {
+    void testLoadCurrentFullMoons() {
         requestForm.getPhases().clear();
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
         requestForm.setFrom(ZonedDateTime.of(2025, 1, 1, 0, 0, 0, 0, CH_ZONE));

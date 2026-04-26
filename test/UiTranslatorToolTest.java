@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Streams;
 import logics.calculation.Translator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import play.libs.Json;
 
 import java.io.IOException;
@@ -21,14 +21,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UiTranslatorToolTest {
+class UiTranslatorToolTest {
 
     private final Translator translator = new Translator();
 
     @Test
-    public void translate() throws IOException {
+    void translate() throws IOException {
         var objectMapper = new ObjectMapper()
                 .configure(SerializationFeature.INDENT_OUTPUT, true)
                 .setDefaultPrettyPrinter(new MyPrettyPrinter());

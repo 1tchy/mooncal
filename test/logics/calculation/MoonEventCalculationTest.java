@@ -4,7 +4,9 @@ import models.EventInstance;
 import models.EventType;
 import models.RequestForm;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import play.i18n.Lang;
 import play.i18n.Langs;
@@ -25,15 +27,26 @@ import java.util.TreeSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MoonEventCalculationTest extends WithApplication {
+@SuppressWarnings("JUnitMixedFramework")
+class MoonEventCalculationTest extends WithApplication {
 
     private final MoonEventCalculation cut = new MoonEventCalculation(getMessagesApiMock(), mock(Langs.class));
+
+    @BeforeEach
+    void setUpPlay() {
+        startPlay();
+    }
+
+    @AfterEach
+    void tearDownPlay() {
+        stopPlay();
+    }
 
     @NotNull
     private static MessagesApi getMessagesApiMock() {
@@ -62,7 +75,7 @@ public class MoonEventCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testFindFirstKnownLunarEclipse() {
+    void testFindFirstKnownLunarEclipse() {
         RequestForm requestForm = prepareRequestForm(EventType.LUNARECLIPSE, LocalDate.of(-2000, 1, 1), LocalDate.of(-1998, 5, 18));
         Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
@@ -70,7 +83,7 @@ public class MoonEventCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testFindLastKnownLunarEclipse() {
+    void testFindLastKnownLunarEclipse() {
         RequestForm requestForm = prepareRequestForm(EventType.LUNARECLIPSE, LocalDate.of(2999, 11, 1), LocalDate.of(5000, 1, 1));
         Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
@@ -78,14 +91,14 @@ public class MoonEventCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testFindSeveralLunarEclipse() {
+    void testFindSeveralLunarEclipse() {
         RequestForm requestForm = prepareRequestForm(EventType.LUNARECLIPSE, LocalDate.of(2014, 1, 1), LocalDate.of(2015, 12, 31));
         Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, hasSize(4));
     }
 
     @Test
-    public void testFindFirstKnownSolarEclipse() {
+    void testFindFirstKnownSolarEclipse() {
         RequestForm requestForm = prepareRequestForm(EventType.SOLARECLIPSE, LocalDate.of(-2000, 1, 1), LocalDate.of(-1999, 10, 10));
         Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
@@ -93,7 +106,7 @@ public class MoonEventCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testFindLastKnownSolarEclipse() {
+    void testFindLastKnownSolarEclipse() {
         RequestForm requestForm = prepareRequestForm(EventType.SOLARECLIPSE, LocalDate.of(3000, 6, 1), LocalDate.of(5000, 1, 1));
         Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
@@ -101,7 +114,7 @@ public class MoonEventCalculationTest extends WithApplication {
     }
 
     @Test
-    public void testFindAMoonLanding() {
+    void testFindAMoonLanding() {
         RequestForm requestForm = prepareRequestForm(EventType.MOONLANDING, LocalDate.of(1959, 9, 1), LocalDate.of(1959, 9, 30));
         Collection<EventInstance> actual = calculate(requestForm);
         assertThat(actual, hasSize(1));
@@ -109,7 +122,7 @@ public class MoonEventCalculationTest extends WithApplication {
 
 
     @Test
-    public void testFindSeveralMoonLandings() {
+    void testFindSeveralMoonLandings() {
         //Arrange
         RequestForm requestForm = prepareRequestForm(EventType.MOONLANDING, LocalDate.of(1950, 1, 1), LocalDate.of(2029, 12, 31));
         cut.removeLatestMoonLanding();
