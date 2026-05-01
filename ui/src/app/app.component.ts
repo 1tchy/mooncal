@@ -1,13 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
-import {KeyValuePipe, NgClass} from "@angular/common";
+import {DOCUMENT, KeyValuePipe, NgClass} from "@angular/common";
 import {Meta} from "@angular/platform-browser";
 import {Subscription} from "rxjs";
-import {getAllLanguagesAndItsNames} from "./app.routes";
+import {getAllLanguages, getAllLanguagesAndItsNames} from "./app.routes";
 import {AB} from "./ab";
+
+const BASE_URL = 'https://mooncal.ch/';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
   messages: Messages = messagesDE;
   routerSub$: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router, private meta: Meta, ab: AB) {
+  constructor(private route: ActivatedRoute, private router: Router, private meta: Meta, @Inject(DOCUMENT) private document: Document, ab: AB) {
     // @ts-ignore
     _paq.push(['setCustomDimension', 1, ab.isA ? 'A' : 'B']);
   }
@@ -42,6 +44,10 @@ export class AppComponent implements OnInit, OnDestroy {
           if (description) {
             this.meta.updateTag({name: 'description', content: description});
           }
+          this.document.documentElement.lang = this.messages.lang.current;
+          if (this.routePath !== '**') {
+            this.updateCanonicalAndHreflangs();
+          }
           // @ts-ignore
           _paq.push(['setCustomUrl', "/" + this.routePath + window.location.search]);
           // @ts-ignore
@@ -52,6 +58,34 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }
     })
+  }
+
+  private updateCanonicalAndHreflangs() {
+    const canonicalPath = this.routeData['id'] === 'buymeacoffee' ? this.routeData['thank'] : this.routePath;
+    let canonical = this.document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = this.document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      this.document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', BASE_URL + canonicalPath);
+
+    this.document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(el => el.remove());
+    for (const lang of getAllLanguages()) {
+      const path = this.routeData[lang];
+      if (path !== undefined) {
+        const link = this.document.createElement('link');
+        link.setAttribute('rel', 'alternate');
+        link.setAttribute('hreflang', lang);
+        link.setAttribute('href', BASE_URL + path);
+        this.document.head.appendChild(link);
+      }
+    }
+    const xDefault = this.document.createElement('link');
+    xDefault.setAttribute('rel', 'alternate');
+    xDefault.setAttribute('hreflang', 'x-default');
+    xDefault.setAttribute('href', BASE_URL + this.routeData['de']);
+    this.document.head.appendChild(xDefault);
   }
 
   ngOnDestroy(): void {

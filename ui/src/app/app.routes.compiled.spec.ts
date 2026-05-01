@@ -1,43 +1,43 @@
 export const compiledRoute = [
   {
     path: '',
-    title: 'Mondkalender - persönlicher Kalender mit Mondphasen, Mondfinsternissen und Mondlandungen',
+    title: 'Mondkalender - Mondphasen, Mondfinsternisse, Mondlandungen',
     component: 'MainComponent',
     data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/calendar',
-    title: 'Moon Calendar - personal calendar with moon phases, eclipses and landings',
+    title: 'Moon Calendar - phases, eclipses and moon landings',
     component: 'MainComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
     path: 'nl/maankalender',
-    title: 'Maankalender - persoonlijke kalender met maanstanden, verduisteringen en landingen',
+    title: 'Maankalender - maanstanden, verduisteringen, landingen',
     component: 'MainComponent',
     data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
     path: 'es/calendario-lunar',
-    title: 'Calendario Lunar - calendario personal con fases lunares, eclipses y alunizajes',
+    title: 'Calendario Lunar - fases, eclipses y alunizajes',
     component: 'MainComponent',
     data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
     path: 'fr/calendrier-lune',
-    title: 'Calendrier de la Lune - calendrier personnel avec phases, éclipses et alunissages',
+    title: 'Calendrier de la Lune - phases, éclipses, alunissages',
     component: 'MainComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
     path: 'ro/calendar-lunar',
-    title: 'Calendar lunar - calendar personal cu faze ale Lunii, eclipse și aselenizări',
+    title: 'Calendar lunar - faze ale Lunii, eclipse, aselenizări',
     component: 'MainComponent',
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
     path: 'hi/calendar',
-    title: 'चंद्र कैलेंडर - चंद्र चरण, ग्रहण और अवकाश यात्रा वाला व्यक्तिगत कैलेंडर',
+    title: 'चंद्र कैलेंडर - चंद्र चरण, ग्रहण और अवकाश यात्रा',
     component: 'MainComponent',
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
@@ -91,7 +91,7 @@ export const compiledRoute = [
   },
   {
     path: 'en/buymeacoffee',
-    title: 'Support the Moon Calendar - donate, buy a coffee or contribute',
+    title: 'Support the Moon Calendar - donate, coffee or contribute',
     component: 'ThankComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
@@ -109,7 +109,7 @@ export const compiledRoute = [
   },
   {
     path: 'fr/buymeacoffee',
-    title: 'Soutenir le Calendrier de la Lune - don, café ou contribution',
+    title: 'Soutenir le Calendrier de la Lune - don ou café',
     component: 'ThankComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
@@ -133,7 +133,7 @@ export const compiledRoute = [
   },
   {
     path: 'en/thank',
-    title: 'Support the Moon Calendar - donate, buy a coffee or contribute',
+    title: 'Support the Moon Calendar - donate, coffee or contribute',
     component: 'ThankComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
@@ -151,7 +151,7 @@ export const compiledRoute = [
   },
   {
     path: 'fr/merci',
-    title: 'Soutenir le Calendrier de la Lune - don, café ou contribution',
+    title: 'Soutenir le Calendrier de la Lune - don ou café',
     component: 'ThankComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
