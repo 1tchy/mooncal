@@ -10,8 +10,7 @@ import {NgbModule, NgbNavChangeEvent} from "@ng-bootstrap/ng-bootstrap";
 
 import {getAllLanguages} from "../app.routes";
 import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
-
-type options = { [key: string]: boolean }
+import {MainSettingsService} from "./main-settings.service";
 
 @Component({
   selector: 'app-main',
@@ -29,28 +28,30 @@ type options = { [key: string]: boolean }
 export class MainComponent implements AfterViewInit {
   private modalService = inject(NgbModal);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private settings = inject(MainSettingsService);
 
   messages: Messages;
   routeData: Data = []
   routes: Routes;
 
   @ViewChild('optionsForm') private optionsForm!: NgForm;
-  phases: options = {
-    full: true,
-    'new': false,
-    quarter: false,
-    daily: false
-  };
-  style = "withDescription";
-  events: options = {lunareclipse: true, solareclipse: true, moonlanding: true};
+  get phases() { return this.settings.phases; }
+  set phases(v) { this.settings.phases = v; }
+  get style() { return this.settings.style; }
+  set style(v) { this.settings.style = v; }
+  get events() { return this.settings.events; }
+  set events(v) { this.settings.events = v; }
+  get from() { return this.settings.from; }
+  set from(v) { this.settings.from = v; }
+  get to() { return this.settings.to; }
+  set to(v) { this.settings.to = v; }
+  get zone() { return this.settings.zone; }
+  set zone(v) { this.settings.zone = v; }
 
-  from = MainComponent.initialFrom();
   from$ = new Subject<Date>();
   fromDebounced = this.toDate(this.from, true);
-  to = MainComponent.initialTo();
   to$ = new Subject<Date>();
   toDebounced = this.toDate(this.to, false);
-  zone = this.getTimezone();
   oldZone = this.zone;
 
   created = Date.now() - 1704067200000; // - 2024-01-01
@@ -102,14 +103,6 @@ export class MainComponent implements AfterViewInit {
     this.initialSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS();
     this.activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
     this.redirectIfUserNotUnderstands(navigator.languages, router);
-  }
-
-  private static initialFrom() {
-    return new Date().getFullYear() + "-01-01";
-  }
-
-  private static initialTo() {
-    return new Date().getFullYear() + "-12-31";
   }
 
   private redirectIfUserNotUnderstands(usersLanguages: ReadonlyArray<string>, router: Router) {
@@ -189,12 +182,12 @@ export class MainComponent implements AfterViewInit {
       params = params.substring(0, params.length - 1);
     }
     if (useFromTo) {
-      if (MainComponent.initialFrom() === this.formatDateOnly(this.fromDebounced)) {
+      if (MainSettingsService.initialFrom() === this.formatDateOnly(this.fromDebounced)) {
         params += ",initial";
       } else {
         params += "," + this.formatDateOnly(this.fromDebounced);
       }
-      if (MainComponent.initialTo() === this.formatDateOnly(this.toDebounced)) {
+      if (MainSettingsService.initialTo() === this.formatDateOnly(this.toDebounced)) {
         params += "-initial";
       } else {
         params += "-" + this.formatDateOnly(this.toDebounced);
@@ -323,10 +316,6 @@ export class MainComponent implements AfterViewInit {
     // @ts-ignore
     _paq.push(['trackEvent', 'Settings', 'timezoneChange', this.oldZone + "_to_" + this.zone]);
     this.oldZone = this.zone;
-  }
-
-  public getTimezone() {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone
   }
 
   public getSupportedTimezones() {
