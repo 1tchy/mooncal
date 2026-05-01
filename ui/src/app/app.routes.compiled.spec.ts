@@ -1,169 +1,169 @@
 export const compiledRoute = [
   {
     path: '',
-    title: 'Mondkalender',
+    title: 'Mondkalender - persönlicher Kalender mit Mondphasen, Mondfinsternissen und Mondlandungen',
     component: 'MainComponent',
     data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/calendar',
-    title: 'Moon Calendar',
+    title: 'Moon Calendar - personal calendar with moon phases, eclipses and landings',
     component: 'MainComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
     path: 'nl/maankalender',
-    title: 'Maankalender',
+    title: 'Maankalender - persoonlijke kalender met maanstanden, verduisteringen en landingen',
     component: 'MainComponent',
     data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
     path: 'es/calendario-lunar',
-    title: 'Calendario Lunar',
+    title: 'Calendario Lunar - calendario personal con fases lunares, eclipses y alunizajes',
     component: 'MainComponent',
     data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
     path: 'fr/calendrier-lune',
-    title: 'Calendrier de la Lune',
+    title: 'Calendrier de la Lune - calendrier personnel avec phases, éclipses et alunissages',
     component: 'MainComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
     path: 'ro/calendar-lunar',
-    title: 'Calendar lunar',
+    title: 'Calendar lunar - calendar personal cu faze ale Lunii, eclipse și aselenizări',
     component: 'MainComponent',
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
     path: 'hi/calendar',
-    title: 'चंद्र कैलेंडर',
+    title: 'चंद्र कैलेंडर - चंद्र चरण, ग्रहण और अवकाश यात्रा वाला व्यक्तिगत कैलेंडर',
     component: 'MainComponent',
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {
     path: 'ueber',
-    title: 'Mondkalender - Über diese Seite',
+    title: 'Über den Mondkalender - Hintergrund, Quellen und Daten',
     component: 'AboutComponent',
     data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/about',
-    title: 'Moon Calendar - About this site',
+    title: 'About the Moon Calendar - background, sources and data',
     component: 'AboutComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
     path: 'nl/over',
-    title: 'Maankalender - Over deze pagina',
+    title: 'Over de maankalender - achtergrond, bronnen en gegevens',
     component: 'AboutComponent',
     data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
     path: 'es/acerca',
-    title: 'Calendario Lunar - Acerca de este sitio',
+    title: 'Acerca del Calendario Lunar - origen, fuentes y datos',
     component: 'AboutComponent',
     data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
     path: 'fr/a-propos',
-    title: 'Calendrier de la Lune - À propos de ce site',
+    title: 'À propos du Calendrier de la Lune - sources et contexte',
     component: 'AboutComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
     path: 'ro/despre',
-    title: 'Calendar lunar - Despre acest site',
+    title: 'Despre Calendarul lunar - context, surse și date',
     component: 'AboutComponent',
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
     path: 'hi/about',
-    title: 'चंद्र कैलेंडर - यह साइट के बारे में',
+    title: 'चंद्र कैलेंडर के बारे में - पृष्ठभूमि, स्रोत और डेटा',
     component: 'AboutComponent',
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {
     path: 'buymeacoffee',
-    title: 'Mondkalender - Unterstützen',
+    title: 'Mondkalender unterstützen - mit Spende, Kaffee oder Mithilfe',
     component: 'ThankComponent',
     data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/buymeacoffee',
-    title: 'Moon Calendar - Support',
+    title: 'Support the Moon Calendar - donate, buy a coffee or contribute',
     component: 'ThankComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
     path: 'nl/buymeacoffee',
-    title: 'Maankalender - Steun',
+    title: 'Maankalender steunen - met donatie, koffie of meehelpen',
     component: 'ThankComponent',
     data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
     path: 'es/buymeacoffee',
-    title: 'Calendario Lunar - Apoyo',
+    title: 'Apoya el Calendario Lunar - donación, café o colaboración',
     component: 'ThankComponent',
     data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
     path: 'fr/buymeacoffee',
-    title: 'Calendrier de la Lune - Soutien',
+    title: 'Soutenir le Calendrier de la Lune - don, café ou contribution',
     component: 'ThankComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
     path: 'ro/buymeacoffee',
-    title: 'Calendar lunar - Sprijin',
+    title: 'Susține Calendarul lunar - donație, cafea sau contribuție',
     component: 'ThankComponent',
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
     path: 'hi/buymeacoffee',
-    title: 'चंद्र कैलेंडर - सहायता',
+    title: 'चंद्र कैलेंडर का समर्थन करें - दान, कॉफ़ी या योगदान',
     component: 'ThankComponent',
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {
     path: 'bedanken',
-    title: 'Mondkalender - Unterstützen',
+    title: 'Mondkalender unterstützen - mit Spende, Kaffee oder Mithilfe',
     component: 'ThankComponent',
     data: {messages: 'de', home: '', about: 'ueber'}
   },
   {
     path: 'en/thank',
-    title: 'Moon Calendar - Support',
+    title: 'Support the Moon Calendar - donate, buy a coffee or contribute',
     component: 'ThankComponent',
     data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
   },
   {
     path: 'nl/bedankt',
-    title: 'Maankalender - Steun',
+    title: 'Maankalender steunen - met donatie, koffie of meehelpen',
     component: 'ThankComponent',
     data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
   },
   {
     path: 'es/gracias',
-    title: 'Calendario Lunar - Apoyo',
+    title: 'Apoya el Calendario Lunar - donación, café o colaboración',
     component: 'ThankComponent',
     data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
   },
   {
     path: 'fr/merci',
-    title: 'Calendrier de la Lune - Soutien',
+    title: 'Soutenir le Calendrier de la Lune - don, café ou contribution',
     component: 'ThankComponent',
     data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
   },
   {
     path: 'ro/multumesc',
-    title: 'Calendar lunar - Sprijin',
+    title: 'Susține Calendarul lunar - donație, cafea sau contribuție',
     component: 'ThankComponent',
     data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
   },
   {
     path: 'hi/thank',
-    title: 'चंद्र कैलेंडर - सहायता',
+    title: 'चंद्र कैलेंडर का समर्थन करें - दान, कॉफ़ी या योगदान',
     component: 'ThankComponent',
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },

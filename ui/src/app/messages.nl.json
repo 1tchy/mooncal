@@ -1,6 +1,8 @@
 {
   "app": {
     "title": "Maankalender",
+    "pageTitle": "Maankalender - persoonlijke kalender met maanstanden, verduisteringen en landingen",
+    "description": "Stel je persoonlijke maankalender samen met maanstanden, maan- en zonsverduisteringen en maanlandingen. Abonneer je via iCalendar of download als PDF.",
     "introduction": "Bent u op zoek naar een simpel en overzichtelijk web-app om alles over de maanstanden te weten? Dan bent u hier aan de juiste adres. Met deze webapp kunt u uw persoonlijke maankalender vasenstellen. Niet alleen met de maanstanden, maar ook met speciale evenementen in verband met de maan. De maankalender kunt u hieronder bekijken en als iCalendar (ICS) bestand naar uw agenda exporteren of downloaden en afdrukken als PDF-bestand.",
     "moon": "moon"
   },
@@ -142,6 +144,8 @@
   },
   "about": {
     "title": "Over deze pagina",
+    "pageTitle": "Over de maankalender - achtergrond, bronnen en gegevens",
+    "description": "Achtergrond bij de maankalender: wie zit erachter, waar komen de gegevens over maanstanden, verduisteringen en maanlandingen vandaan en welke bronnen worden gebruikt?",
     "introduction": "Het doel van dit project is een simpel en overzichtelijk maankalender voor iedereen ter beschikking te stellen. De gegevens zijn berekend en verzameld van verschillende bronnen naar beste weten en geweten.",
     "sources": {
       "title": "Bronnen",
@@ -178,6 +182,8 @@
   },
   "thank": {
     "title": "Steun",
+    "pageTitle": "Maankalender steunen - met donatie, koffie of meehelpen",
+    "description": "De maankalender is gratis en zonder reclame. Steun het project met een kop koffie, een PayPal-donatie of door mee te ontwikkelen – elke bijdrage helpt.",
     "introduction": "Deze maankalender is <strong>gratis</strong> en <strong>advertentievrij</strong>. Om dat zo te houden is het afhankelijk van ondersteuning, want de benodigde infrastructuur, doorontwikkeling en onderhoud kosten geld. Ik zou heel blij zijn met ondersteuning, een kopje koffie of meer.",
     "review": {
       "title": "Herziening van de financiering",

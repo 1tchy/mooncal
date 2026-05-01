@@ -1,6 +1,8 @@
 {
   "app": {
     "title": "Mondkalender",
+    "pageTitle": "Mondkalender - persönlicher Kalender mit Mondphasen, Mondfinsternissen und Mondlandungen",
+    "description": "Stelle deinen persönlichen Mondkalender mit Mondphasen, Mondfinsternissen und Mondlandungen zusammen. Als iCalendar abonnieren oder als PDF herunterladen.",
     "introduction": "Bist du schon lange auf der Suche nach einer einfachen und übersichtlichen Web-App, um alles rund um die Mondphasen zu erfahren? Dann hast du sie jetzt gefunden! In der folgenden App kannst du dir deinen persönlichen Mondkalender zusammenstellen. Einerseits sind das die Mondphasen, andererseits aber auch spezielle Ereignisse im Zusammenhang mit dem Mond. Der Mondkalender lässt sich unten anzeigen und als iCalendar (ICS) Datei in deinen Kalender exportieren oder als PDF Datei herunterladen und ausdrucken.",
     "moon": "Mond"
   },
@@ -142,6 +144,8 @@
   },
   "about": {
     "title": "Über diese Seite",
+    "pageTitle": "Über den Mondkalender - Hintergrund, Quellen und Daten",
+    "description": "Hintergrund zum Mondkalender: Wer steckt dahinter, woher stammen die Daten zu Mondphasen, Mondfinsternissen und Mondlandungen, und welche Quellen werden genutzt?",
     "introduction": "Dieser Mondkalender ist ein privates Projekt mit dem Zweck, einen möglichst einfachen und übersichtlichen Mondkalender der Allgemeinheit zur Verfügung zu stellen. Die Daten wurden nach bestem Wissen und Gewissen berechnet und von verschiedenen Quellen zusammengetragen.",
     "sources": {
       "title": "Quellen",
@@ -178,6 +182,8 @@
   },
   "thank": {
     "title": "Unterstützen",
+    "pageTitle": "Mondkalender unterstützen - mit Spende, Kaffee oder Mithilfe",
+    "description": "Der Mondkalender ist gratis und werbefrei. Unterstütze das Projekt mit einem Kaffee, einer PayPal-Spende oder durch Mitentwicklung – jede Hilfe zählt.",
     "introduction": "Dieser Mondkalender ist <strong>gratis</strong> und <strong>werbefrei</strong>. Damit dies auch so bleibt, ist er auf Unterstützung angewiesen, denn die benötigte Infrastruktur, Weiterentwicklung und Wartung kosten. Über Unterstützung, einen Kaffee oder mehr würde ich mich sehr freuen.",
     "review": {
       "title": "Rückblick Funding",

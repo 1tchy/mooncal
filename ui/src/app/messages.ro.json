@@ -1,6 +1,8 @@
 {
   "app": {
     "title": "Calendar lunar",
+    "pageTitle": "Calendar lunar - calendar personal cu faze ale Lunii, eclipse și aselenizări",
+    "description": "Creează-ți calendarul lunar personal cu faze ale Lunii, eclipse de Lună și de Soare și aselenizări. Abonează-te prin iCalendar sau descarcă în PDF.",
     "introduction": "Căutați un calendar lunar simplu? Acum l-ați găsit. Cu această aplicație web puteți genera calendarul lunar personal, nu numai cu fazele lunii, ci și cu evenimente speciale despre lună. Calendarul lunar poate fi vizualizat mai jos și exportat în calendarul dvs. ca fișier iCalendar (ICS) sau descărcat și tipărit ca fișier PDF.",
     "moon": "lună"
   },
@@ -142,6 +144,8 @@
   },
   "about": {
     "title": "Despre acest site",
+    "pageTitle": "Despre Calendarul lunar - context, surse și date",
+    "description": "Despre calendarul lunar: cine este în spatele proiectului, de unde provin datele despre faze, eclipse și aselenizări și ce surse sunt folosite.",
     "introduction": "Scopul acestui proiect este să ofere un calendar lunar simplu și curat pentru toți. Datele sunt calculate și colectate din varii surse, conform cunoștințelor și celor mai bune intenţii.",
     "sources": {
       "title": "Surse",
@@ -178,6 +182,8 @@
   },
   "thank": {
     "title": "Sprijin",
+    "pageTitle": "Susține Calendarul lunar - donație, cafea sau contribuție",
+    "description": "Calendarul lunar este gratuit și fără reclame. Sprijină proiectul cu o cafea, o donație PayPal sau prin contribuții la dezvoltare – orice ajutor contează.",
     "introduction": "Acest calendar lunar este <strong>gratuit</strong> și <strong>fără reclame</strong>. Pentru a se asigura că rămâne așa, depinde de suport, deoarece infrastructura necesară, dezvoltarea ulterioară și întreținerea costă bani. M-aș bucura foarte mult de sprijin, o cafea sau mai mult.",
     "review": {
       "title": "Revizuirea finanțării",

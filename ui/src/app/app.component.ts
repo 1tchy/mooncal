@@ -4,6 +4,7 @@ import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {KeyValuePipe, NgClass} from "@angular/common";
+import {Meta} from "@angular/platform-browser";
 import {Subscription} from "rxjs";
 import {getAllLanguagesAndItsNames} from "./app.routes";
 import {AB} from "./ab";
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   messages: Messages = messagesDE;
   routerSub$: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router, ab: AB) {
+  constructor(private route: ActivatedRoute, private router: Router, private meta: Meta, ab: AB) {
     // @ts-ignore
     _paq.push(['setCustomDimension', 1, ab.isA ? 'A' : 'B']);
   }
@@ -37,6 +38,10 @@ export class AppComponent implements OnInit, OnDestroy {
           this.routePath = r.snapshot.routeConfig?.path!
           this.routeData = r.snapshot.data
           this.messages = r.snapshot.data['messages']
+          const description = r.snapshot.data['description'];
+          if (description) {
+            this.meta.updateTag({name: 'description', content: description});
+          }
           // @ts-ignore
           _paq.push(['setCustomUrl', "/" + this.routePath + window.location.search]);
           // @ts-ignore

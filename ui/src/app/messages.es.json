@@ -1,6 +1,8 @@
 {
   "app": {
     "title": "Calendario Lunar",
+    "pageTitle": "Calendario Lunar - calendario personal con fases lunares, eclipses y alunizajes",
+    "description": "Crea tu calendario lunar personal con fases de la Luna, eclipses lunares y solares y alunizajes. Suscríbete por iCalendar o descárgalo en PDF.",
     "introduction": "¿Buscas un calendario lunar sencillo? ¡Ahora lo has encontrado! Con esta aplicación web puedes generar tu calendario lunar personalizado, no sólo con las fases lunares, sino también con eventos especiales relacionados con la luna. El calendario lunar puede verse a continuación y exportarse a su calendario como un archivo iCalendar (ICS) o descargarse e imprimirse como un archivo PDF.",
     "moon": "luna"
   },
@@ -142,6 +144,8 @@
   },
   "about": {
     "title": "Acerca de este sitio",
+    "pageTitle": "Acerca del Calendario Lunar - origen, fuentes y datos",
+    "description": "Información sobre el calendario lunar: quién lo hace, de dónde proceden los datos sobre fases lunares, eclipses y alunizajes, y qué fuentes se utilizan.",
     "introduction": "El objetivo de este proyecto es proporcionar un calendario lunar sencillo y limpio para todos. Los datos se calculan y recopilan de diversas fuentes según el mejor conocimiento y creencia posible.",
     "sources": {
       "title": "Fuentes",
@@ -178,6 +182,8 @@
   },
   "thank": {
     "title": "Apoyo",
+    "pageTitle": "Apoya el Calendario Lunar - donación, café o colaboración",
+    "description": "El calendario lunar es gratuito y sin publicidad. Apoya el proyecto con un café, una donación por PayPal o colaborando en el desarrollo – toda ayuda cuenta.",
     "introduction": "Este calendario lunar es <strong>gratuito</strong> y <strong>no tiene publicidad</strong>. Para que esto siga siendo así, depende del apoyo, porque la infraestructura necesaria, su posterior desarrollo y mantenimiento cuestan dinero. Me encantaría recibir apoyo, un café o más.",
     "review": {
       "title": "Revisión de la financiación",

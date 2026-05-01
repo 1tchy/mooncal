@@ -17,6 +17,8 @@ export interface Messages {
 
 export interface App {
   title: string
+  pageTitle: string
+  description: string
   introduction: string
   moon: string
 }
@@ -139,6 +141,8 @@ export interface AppSubscribeInstructions {
 
 export interface About {
   title: string
+  pageTitle: string
+  description: string
   introduction: string
   sources: Sources
   support: Support
@@ -146,6 +150,8 @@ export interface About {
 
 export interface Thank {
   title: string
+  pageTitle: string
+  description: string
   introduction: string
   review: Review
 }

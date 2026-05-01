@@ -1,6 +1,8 @@
 {
   "app": {
     "title": "Moon Calendar",
+    "pageTitle": "Moon Calendar - personal calendar with moon phases, eclipses and landings",
+    "description": "Build your personal moon calendar with moon phases, lunar and solar eclipses and moon landings. Subscribe via iCalendar or download as a PDF.",
     "introduction": "Are you looking for a simple Moon calendar? Then you have found it! With this web app you can generate your personal Moon calendar, not only with Moon phases, but also with special events related to the Moon. The Moon calendar can be viewed below and exported to your calendar as an iCalendar (ICS) file or downloaded and printed as a PDF file.",
     "moon": "Moon"
   },
@@ -142,6 +144,8 @@
   },
   "about": {
     "title": "About this site",
+    "pageTitle": "About the Moon Calendar - background, sources and data",
+    "description": "Background on the moon calendar: who runs it, where the data on moon phases, eclipses and moon landings comes from, and which sources are used.",
     "introduction": "The aim of this project is to provide a simple and neat Moon calendar for everyone. The data is calculated and collected from various sources to the best of one's knowledge and belief.",
     "sources": {
       "title": "Sources",
@@ -178,6 +182,8 @@
   },
   "thank": {
     "title": "Support",
+    "pageTitle": "Support the Moon Calendar - donate, buy a coffee or contribute",
+    "description": "The moon calendar is free and ad-free. Support the project with a coffee, a PayPal donation or by contributing code – every bit helps.",
     "introduction": "This Moon calendar is <strong>free</strong> and <strong>ad-free</strong>. To ensure that it stays that way, it is dependent on support, because the required infrastructure, further development and maintenance cost money. I would be very happy about support, a coffee or more.",
     "review": {
       "title": "Review of funding",
