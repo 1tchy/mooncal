@@ -31,7 +31,12 @@
     "full": "Vollmond",
     "new": "Neumond",
     "quarter": "Halbmond",
-    "daily": "tägliche Phasen"
+    "daily": "tägliche Phasen",
+    "hemisphere": {
+      "title": "Hemisphäre",
+      "northern": "Nördlich",
+      "southern": "Südlich"
+    }
   },
   "styles": {
     "title": "Stil",

@@ -21,9 +21,12 @@ public class MoonPhasesCalculation extends Calculation {
     public static final String NEWMOON_EVENT_TYPE_ID = "newmoon";
     public static final String FIRST_QUARTER_EVENT_TYPE_ID = "first-quarter";
     public static final String LAST_QUARTER_EVENT_TYPE_ID = "last-quarter";
-    private final EnumMap<EventStyle, ArrayList<EventTemplate>> moonPhases1700to2100 = new EnumMap<>(Arrays.stream(EventStyle.values()).collect(Collectors.toMap(
+    private final EnumMap<Hemisphere, EnumMap<EventStyle, ArrayList<EventTemplate>>> moonPhases1700to2100 = new EnumMap<>(Arrays.stream(Hemisphere.values()).collect(Collectors.toMap(
             Function.identity(),
-            style -> new ArrayList<>()
+            hemisphere -> new EnumMap<>(Arrays.stream(EventStyle.values()).collect(Collectors.toMap(
+                    Function.identity(),
+                    style -> new ArrayList<>()
+            )))
     )));
 
     @Inject
@@ -48,51 +51,54 @@ public class MoonPhasesCalculation extends Calculation {
                 case FULLMOON -> FULLMOON_EVENT_TYPE_ID;
                 case LAST_QUARTER -> LAST_QUARTER_EVENT_TYPE_ID;
             };
-            for (EventStyle style : EventStyle.values()) {
-                moonPhases1700to2100.get(style).add(new EventTemplate.WithZoneId(
-                        date,
-                        (zoneId, lang) -> phase.getTitle(messagesApi, lang, date, style),
-                        (zoneId, lang) -> phase.getPdfTitle(messagesApi, lang, date, style),
-                        (zoneId, lang) -> eventAt(date, phase.getSimpleName(messagesApi, lang), zoneId, lang),
-                        eventTypeId)
-                );
+            for (Hemisphere hemisphere : Hemisphere.values()) {
+                for (EventStyle style : EventStyle.values()) {
+                    moonPhases1700to2100.get(hemisphere).get(style).add(new EventTemplate.WithZoneId(
+                            date,
+                            (zoneId, lang) -> phase.getTitle(messagesApi, lang, date, style, hemisphere),
+                            (zoneId, lang) -> phase.getPdfTitle(messagesApi, lang, date, style, hemisphere),
+                            (zoneId, lang) -> eventAt(date, phase.getSimpleName(messagesApi, lang), zoneId, lang),
+                            eventTypeId)
+                    );
+                }
             }
         });
-        moonPhases1700to2100.values().forEach(ArrayList::trimToSize);
+        moonPhases1700to2100.values().forEach(byStyle -> byStyle.values().forEach(ArrayList::trimToSize));
     }
 
     @Override
     public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection) {
         final ZonedDateTime fromMorning = requestForm.getFrom().withHour(0).withMinute(0).withSecond(0);
         final ZonedDateTime toNight = requestForm.getTo().withHour(23).withMinute(59).withSecond(59);
+        final Hemisphere hemisphere = requestForm.getHemisphere();
         if (requestForm.includePhase(MoonPhaseType.FULLMOON)) {
-            load(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON, eventCollection, requestForm.getLang(), requestForm.getStyle(), FULLMOON_EVENT_TYPE_ID);
+            load(fromMorning, toNight, MoonPhaseFinder::findFullMoonFollowing, MoonPhase.FULLMOON, eventCollection, requestForm.getLang(), requestForm.getStyle(), hemisphere, FULLMOON_EVENT_TYPE_ID);
         }
         if (requestForm.includePhase(MoonPhaseType.NEWMOON)) {
-            load(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON, eventCollection, requestForm.getLang(), requestForm.getStyle(), NEWMOON_EVENT_TYPE_ID);
+            load(fromMorning, toNight, MoonPhaseFinder::findNewMoonFollowing, MoonPhase.NEWMOON, eventCollection, requestForm.getLang(), requestForm.getStyle(), hemisphere, NEWMOON_EVENT_TYPE_ID);
         }
         if (requestForm.includePhase(MoonPhaseType.QUARTER)) {
-            load(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), FIRST_QUARTER_EVENT_TYPE_ID);
-            load(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), LAST_QUARTER_EVENT_TYPE_ID);
+            load(fromMorning, toNight, MoonPhaseFinder::findFirsQuarterFollowing, MoonPhase.FIRST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), hemisphere, FIRST_QUARTER_EVENT_TYPE_ID);
+            load(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), hemisphere, LAST_QUARTER_EVENT_TYPE_ID);
         }
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
             calculateDailyEvents(requestForm.getLang(), requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
         }
     }
 
-    private void load(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, String eventTypeId) {
+    private void load(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, Hemisphere hemisphere, String eventTypeId) {
         if (from.toLocalDate().isAfter(LocalDate.of(1970, 1, 1)) &&
                 to.toLocalDate().isBefore(LocalDate.of(2100, 12, 31))) {
-            fromCSV(from, to, eventCollection, lang, style, eventTypeId);
+            fromCSV(from, to, eventCollection, lang, style, hemisphere, eventTypeId);
         } else {
-            calculate(from, to, moonCalculation, phase, eventCollection, lang, style, eventTypeId);
+            calculate(from, to, moonCalculation, phase, eventCollection, lang, style, hemisphere, eventTypeId);
         }
     }
 
-    private void fromCSV(ZonedDateTime from, ZonedDateTime to, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, String eventTypeId) {
+    private void fromCSV(ZonedDateTime from, ZonedDateTime to, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, Hemisphere hemisphere, String eventTypeId) {
         ZonedDateTime utcFrom = from.withZoneSameInstant(ZoneOffset.UTC);
         ZonedDateTime utcTo = to.withZoneSameInstant(ZoneOffset.UTC);
-        moonPhases1700to2100.get(style == null ? EventStyle.FULLMOON : style).stream()
+        moonPhases1700to2100.get(hemisphere).get(style == null ? EventStyle.FULLMOON : style).stream()
                 .dropWhile(eventTemplate -> eventTemplate.getDateTime().isBefore(utcFrom))
                 .takeWhile(eventTemplate -> eventTemplate.getDateTime().isBefore(utcTo))
                 .filter(eventTemplate -> eventTemplate.getEventTypeId().equals(eventTypeId))
@@ -100,7 +106,7 @@ public class MoonPhasesCalculation extends Calculation {
                 .forEach(eventCollection::add);
     }
 
-    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, String eventTypeId) {
+    private void calculate(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, Hemisphere hemisphere, String eventTypeId) {
         while (true) {
             final ZonedDateTime moonHappening = moonCalculation.apply(from);
             if (moonHappening.isAfter(to)) {
@@ -108,8 +114,8 @@ public class MoonPhasesCalculation extends Calculation {
             }
             eventCollection.add(new EventInstance(
                     moonHappening,
-                    phase.getTitle(messagesApi, lang, moonHappening, style),
-                    phase.getPdfTitle(messagesApi, lang, moonHappening, style),
+                    phase.getTitle(messagesApi, lang, moonHappening, style, hemisphere),
+                    phase.getPdfTitle(messagesApi, lang, moonHappening, style, hemisphere),
                     eventAt(moonHappening, phase.getSimpleName(messagesApi, lang), from.getZone(), lang),
                     from.getZone(),
                     eventTypeId));

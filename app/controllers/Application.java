@@ -74,7 +74,7 @@ public class Application extends Controller {
     public CompletionStage<Result> queryAsPdf(Http.Request request) {
         return handleQueryRequest(
                 badForm -> badRequest(badForm.errorsAsJson()),
-                (result, goodForm) -> ok(pdfMapper.map(result, goodForm.getLang())).as("application/pdf"),
+                (result, goodForm) -> ok(pdfMapper.map(result, goodForm.getLang(), goodForm.getHemisphere())).as("application/pdf"),
                 request);
     }
 

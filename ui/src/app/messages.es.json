@@ -31,7 +31,12 @@
     "full": "Luna llena",
     "new": "Luna nueva",
     "quarter": "Cuarto",
-    "daily": "Fases diarias de la Luna"
+    "daily": "Fases diarias de la Luna",
+    "hemisphere": {
+      "title": "Hemisferio",
+      "northern": "Norte",
+      "southern": "Sur"
+    }
   },
   "styles": {
     "title": "Estilo",

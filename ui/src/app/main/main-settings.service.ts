@@ -11,6 +11,7 @@ export class MainSettingsService {
     daily: false
   };
   style = "withDescription";
+  hemisphere: 'northern' | 'southern' = 'northern';
   events: options = {lunareclipse: true, solareclipse: true, moonlanding: true};
   from = MainSettingsService.initialFrom();
   to = MainSettingsService.initialTo();

@@ -44,7 +44,7 @@ class PDFMapperTest extends WithApplication {
     @Test
     void de() throws IOException {
         var events = calculateEvents(LANG_DE, Map.of(MoonPhaseType.FULLMOON, true, MoonPhaseType.NEWMOON, true, MoonPhaseType.QUARTER, true));
-        byte[] actual = cut.map(events, LANG_DE);
+        byte[] actual = cut.map(events, LANG_DE, Hemisphere.NORTHERN);
         assertEquals("mooncal_de.pdf", actual);
     }
 
@@ -52,7 +52,7 @@ class PDFMapperTest extends WithApplication {
     @Test
     void roDaily() throws IOException {
         var events = calculateEvents(LANG_RO, Map.of(MoonPhaseType.FULLMOON, true, MoonPhaseType.DAILY, true));
-        byte[] actual = cut.map(events, LANG_RO);
+        byte[] actual = cut.map(events, LANG_RO, Hemisphere.NORTHERN);
         assertEquals("mooncal_ro_daily.pdf", actual);
     }
 
@@ -60,7 +60,7 @@ class PDFMapperTest extends WithApplication {
     @Test
     void hi() throws IOException {
         var events = calculateEvents(LANG_HI, Map.of(MoonPhaseType.FULLMOON, true));
-        byte[] actual = cut.map(events, LANG_HI);
+        byte[] actual = cut.map(events, LANG_HI, Hemisphere.NORTHERN);
         assertEquals("mooncal_hi.pdf", actual);
     }
 

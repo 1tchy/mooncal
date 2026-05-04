@@ -18,20 +18,33 @@
           }
         </div>
         <div class="col-auto flex-grow-1"></div>
-        <div class="col-auto row g-0">
-          <div class="col-auto">
-            <label for="style" class="col-form-label-in-sm me-2">{{ messages.styles.title }}:</label>
+        <div class="col-auto">
+          <div class="row g-0 align-items-center">
+            <div class="col-auto">
+              <label for="style" class="col-form-label-in-sm me-2">{{ messages.styles.title }}:</label>
+            </div>
+            <div class="col-auto">
+              <select class="form-select form-select-sm form-control me-2" [(ngModel)]="style" name="style" id="style">
+                <option ngValue="iconOnly">🌕 ({{ messages.styles.iconOnly }})</option>
+                <option ngValue="fullmoon">🌕 {{ messages.styles.fullmoon }}</option>
+                @if (messages.styles.fullmoonAndName!=='') {
+                  <option ngValue="withDescription">
+                    🌕 {{ messages.styles.fullmoonAndName }}
+                  </option>
+                }
+              </select>
+            </div>
           </div>
-          <div class="col-auto">
-            <select class="form-select form-select-sm form-control me-2" [(ngModel)]="style" name="style" id="style">
-              <option ngValue="iconOnly">🌕 ({{ messages.styles.iconOnly }})</option>
-              <option ngValue="fullmoon">🌕 {{ messages.styles.fullmoon }}</option>
-              @if (messages.styles.fullmoonAndName!=='') {
-                <option ngValue="withDescription">
-                  🌕 {{ messages.styles.fullmoonAndName }}
-                </option>
-              }
-            </select>
+          <div class="row g-0 align-items-center mt-3">
+            <div class="col-auto">
+              <label for="hemisphere" class="col-form-label-in-sm me-2">{{ messages.phases.hemisphere.title }}:</label>
+            </div>
+            <div class="col-auto">
+              <select class="form-select form-select-sm form-control me-2" [(ngModel)]="hemisphere" name="hemisphere" id="hemisphere">
+                <option value="northern">{{ messages.phases.hemisphere.northern }} (🌕, 🌗, 🌑, 🌓)</option>
+                <option value="southern">{{ messages.phases.hemisphere.southern }} (🌕, 🌓, 🌑, 🌗)</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="col-auto flex-grow-1"></div>

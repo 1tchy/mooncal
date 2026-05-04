@@ -1,6 +1,8 @@
 package logics.calculation;
 
 import models.EventStyle;
+import models.Hemisphere;
+import org.jetbrains.annotations.VisibleForTesting;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
@@ -12,21 +14,21 @@ public enum MoonPhase {
     FIRST_QUARTER("phases.quarter.first", "🌓"),
     FULLMOON("phases.full", "🌕") {
         @Override
-        public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+        public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style, Hemisphere hemisphere) {
             if (style == EventStyle.WITH_DESCRIPTION) {
                 int month = date.getMonthValue();
                 if (isBlueMoon(date)) {
                     month = 13;
                 }
                 String fullMoonName = messagesApi.get(lang, "phases.full." + month);
-                return super.getTitle(messagesApi, lang, date, style) + (fullMoonName.isEmpty() ? "" : " (" + fullMoonName + ")");
+                return super.getTitle(messagesApi, lang, date, style, hemisphere) + (fullMoonName.isEmpty() ? "" : " (" + fullMoonName + ")");
             } else {
-                return super.getTitle(messagesApi, lang, date, style);
+                return super.getTitle(messagesApi, lang, date, style, hemisphere);
             }
         }
 
         @Override
-        public String getPdfTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+        public String getPdfTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style, Hemisphere hemisphere) {
             if (style == EventStyle.WITH_DESCRIPTION) {
                 int month = date.getMonthValue();
                 if (isBlueMoon(date)) {
@@ -37,7 +39,7 @@ public enum MoonPhase {
                     return fullMoonName;
                 }
             }
-            return super.getPdfTitle(messagesApi, lang, date, style);
+            return super.getPdfTitle(messagesApi, lang, date, style, hemisphere);
         }
 
         private static boolean isBlueMoon(ZonedDateTime date) {
@@ -61,14 +63,28 @@ public enum MoonPhase {
         return messagesApi.get(lang, name);
     }
 
-    public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+    public String getTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style, Hemisphere hemisphere) {
+        String emoji = getEmoticon(hemisphere);
         if (style == EventStyle.ICON_ONLY) {
-            return emoticon;
+            return emoji;
         }
-        return emoticon + " " + getSimpleName(messagesApi, lang);
+        return emoji + " " + getSimpleName(messagesApi, lang);
     }
 
-    public String getPdfTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style) {
+    @VisibleForTesting
+    String getEmoticon(Hemisphere hemisphere) {
+        if (hemisphere == Hemisphere.SOUTHERN) {
+            if (this == FIRST_QUARTER) {
+                return LAST_QUARTER.emoticon;
+            }
+            if (this == LAST_QUARTER) {
+                return FIRST_QUARTER.emoticon;
+            }
+        }
+        return emoticon;
+    }
+
+    public String getPdfTitle(MessagesApi messagesApi, Lang lang, ZonedDateTime date, EventStyle style, Hemisphere hemisphere) {
         if (style == EventStyle.ICON_ONLY) {
             return "";
         }

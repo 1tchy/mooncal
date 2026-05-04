@@ -31,7 +31,12 @@
     "full": "Full Moon",
     "new": "New Moon",
     "quarter": "Quarter",
-    "daily": "Daily Moon Phases"
+    "daily": "Daily Moon Phases",
+    "hemisphere": {
+      "title": "Hemisphere",
+      "northern": "Northern",
+      "southern": "Southern"
+    }
   },
   "styles": {
     "title": "Style",

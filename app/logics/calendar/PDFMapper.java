@@ -9,6 +9,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import jakarta.inject.Inject;
 import logics.calculation.MoonPhasesCalculation;
 import models.EventInstance;
+import models.Hemisphere;
 import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
@@ -36,8 +37,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -69,7 +70,7 @@ public class PDFMapper {
      * @param events to map
      * @return the pdf-file
      */
-    public byte[] map(Collection<EventInstance> events, Lang language) {
+    public byte[] map(Collection<EventInstance> events, Lang language, Hemisphere hemisphere) {
         ZonedDateTime zonedDateTime = events.stream().findFirst().map(EventInstance::getDateTime).orElseGet(ZonedDateTime::now);
         int year = zonedDateTime.getYear();
         Map<LocalDate, List<EventInstance>> eventsByDate = events.stream()
@@ -133,7 +134,7 @@ public class PDFMapper {
                             case SUNDAY -> new Color(225, 225, 225);
                             default -> null;
                         };
-                        row.add(draftDayOfMonthCell(day, getMoonIconFilename(eventInstancesAtDay), document, loadedImagesCache)
+                        row.add(draftDayOfMonthCell(day, getMoonIconFilename(eventInstancesAtDay, hemisphere), document, loadedImagesCache)
                                 .backgroundColor(backgroundColor)
                                 .horizontalAlignment(CENTER)
                                 .verticalAlignment(MIDDLE)
@@ -213,13 +214,15 @@ public class PDFMapper {
         }
     }
 
-    private Optional<String> getMoonIconFilename(List<EventInstance> eventInstances) {
+    private Optional<String> getMoonIconFilename(List<EventInstance> eventInstances, Hemisphere hemisphere) {
         return eventInstances.stream()
                 .map(eventInstance -> switch (eventInstance.getEventTypeId()) {
                     case MoonPhasesCalculation.FULLMOON_EVENT_TYPE_ID -> "/public/emoji/full.png";
                     case MoonPhasesCalculation.NEWMOON_EVENT_TYPE_ID -> "/public/emoji/new.png";
-                    case MoonPhasesCalculation.FIRST_QUARTER_EVENT_TYPE_ID -> "/public/emoji/first-quarter.png";
-                    case MoonPhasesCalculation.LAST_QUARTER_EVENT_TYPE_ID -> "/public/emoji/last-quarter.png";
+                    case MoonPhasesCalculation.FIRST_QUARTER_EVENT_TYPE_ID ->
+                            hemisphere == Hemisphere.NORTHERN ? "/public/emoji/first-quarter.png" : "/public/emoji/last-quarter.png";
+                    case MoonPhasesCalculation.LAST_QUARTER_EVENT_TYPE_ID ->
+                            hemisphere == Hemisphere.NORTHERN ? "/public/emoji/last-quarter.png" : "/public/emoji/first-quarter.png";
                     default -> null;
                 }).filter(Objects::nonNull)
                 .findFirst();

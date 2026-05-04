@@ -56,6 +56,13 @@ export interface Phases {
   new: string
   quarter: string
   daily: string
+  hemisphere: Hemisphere
+}
+
+export interface Hemisphere {
+  title: string
+  northern: string
+  southern: string
 }
 
 export interface Style {

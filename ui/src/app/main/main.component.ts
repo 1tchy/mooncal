@@ -39,6 +39,8 @@ export class MainComponent implements AfterViewInit {
   set phases(v) { this.settings.phases = v; }
   get style() { return this.settings.style; }
   set style(v) { this.settings.style = v; }
+  get hemisphere() { return this.settings.hemisphere; }
+  set hemisphere(v) { this.settings.hemisphere = v; }
   get events() { return this.settings.events; }
   set events(v) { this.settings.events = v; }
   get from() { return this.settings.from; }
@@ -158,6 +160,7 @@ export class MainComponent implements AfterViewInit {
       + "&phases[quarter]=" + this.phases["quarter"]
       + "&phases[daily]=" + this.phases["daily"]
       + "&style=" + this.style
+      + "&hemisphere=" + this.hemisphere
       + "&events[lunareclipse]=" + this.events["lunareclipse"]
       + "&events[solareclipse]=" + this.events["solareclipse"]
       + "&events[moonlanding]=" + this.events["moonlanding"];
@@ -175,6 +178,7 @@ export class MainComponent implements AfterViewInit {
       + (this.phases["quarter"] ? "quarter," : "")
       + (this.phases["daily"] ? "daily," : "")
       + this.style + ","
+      + (this.hemisphere === "southern" ? "southern," : "")
       + (this.events["lunareclipse"] ? "lunareclipse," : "")
       + (this.events["solareclipse"] ? "solareclipse," : "")
       + (this.events["moonlanding"] ? "moonlanding" : "");

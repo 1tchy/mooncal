@@ -2,6 +2,7 @@ package logics.calculation;
 
 import models.EventInstance;
 import models.EventStyle;
+import models.Hemisphere;
 import models.MoonPhaseType;
 import models.RequestForm;
 import org.hamcrest.FeatureMatcher;
@@ -121,6 +122,21 @@ class MoonPhasesCalculationTest extends WithApplication {
         requestForm.setStyle(EventStyle.ICON_ONLY.getStyle());
         Collection<EventInstance> actual = calculate(requestForm);
         assertEquals(List.of("🌕", "🌗", "🌑", "🌓"), actual.stream().map(EventInstance::getTitle).distinct().toList());
+    }
+
+    @Test
+    void testGetIconOnlySouthernHemisphereSwapsQuarters() {
+        requestForm = new RequestForm();
+        requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
+        requestForm.getPhases().put(MoonPhaseType.NEWMOON, true);
+        requestForm.getPhases().put(MoonPhaseType.QUARTER, true);
+        requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
+        requestForm.setTo(ZonedDateTime.of(2026, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC));
+        requestForm.setLang(Lang.forCode("en"));
+        requestForm.setStyle(EventStyle.ICON_ONLY.getStyle());
+        requestForm.setHemisphere(Hemisphere.SOUTHERN.getKey());
+        Collection<EventInstance> actual = calculate(requestForm);
+        assertEquals(List.of("🌕", "🌓", "🌑", "🌗"), actual.stream().map(EventInstance::getTitle).distinct().toList());
     }
 
     @Test

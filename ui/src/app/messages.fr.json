@@ -31,7 +31,12 @@
     "full": "pleine lune",
     "new": "nouvelle lune",
     "quarter": "quartier",
-    "daily": "phases quotidiennes de la lune"
+    "daily": "phases quotidiennes de la lune",
+    "hemisphere": {
+      "title": "Hémisphère",
+      "northern": "Nord",
+      "southern": "Sud"
+    }
   },
   "styles": {
     "title": "Style",

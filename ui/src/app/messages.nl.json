@@ -31,7 +31,12 @@
     "full": "Volle maan",
     "new": "Nieuwe maan",
     "quarter": "Halve maan",
-    "daily": "Dagelijkse gegevens van de maan"
+    "daily": "Dagelijkse gegevens van de maan",
+    "hemisphere": {
+      "title": "Halfrond",
+      "northern": "Noordelijk",
+      "southern": "Zuidelijk"
+    }
   },
   "styles": {
     "title": "Stijl",

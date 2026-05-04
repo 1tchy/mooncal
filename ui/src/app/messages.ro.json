@@ -31,7 +31,12 @@
     "full": "Lună plină",
     "new": "Lună nouă",
     "quarter": "sfert",
-    "daily": "faze zilnice ale lunii"
+    "daily": "faze zilnice ale lunii",
+    "hemisphere": {
+      "title": "Emisferă",
+      "northern": "Nordică",
+      "southern": "Sudică"
+    }
   },
   "styles": {
     "title": "Stil",
