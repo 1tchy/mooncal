@@ -75,7 +75,7 @@ class IntegrationTest extends WithBrowser {
             assertTrue(browser.$("button", withText("iCalendar-Feed abonnieren")).isEmpty());
             click(browser.$("button", withText("Zum Kalender hinzufügen")).first());
             String iCalSubscribeLink = browser.$("#icalLink").first().value();
-            assertThat(iCalSubscribeLink, matchesPattern("http.*/mooncal.ics\\?created=\\d+&lang=de&phases\\[full]=false&phases\\[new]=true&phases\\[quarter]=false&phases\\[daily]=false&style=withDescription&events\\[lunareclipse]=false&events\\[solareclipse]=false&events\\[moonlanding]=false&before=P6M&after=P2Y&zone=Europe/Zurich"));
+            assertThat(iCalSubscribeLink, matchesPattern("http.*/mooncal.ics\\?created=\\d+&lang=de&phases\\[full]=false&phases\\[new]=true&phases\\[quarter]=false&phases\\[daily]=false&style=withDescription&hemisphere=northern&events\\[lunareclipse]=false&events\\[solareclipse]=false&events\\[moonlanding]=false&before=P6M&after=P2Y&zone=Europe/Zurich"));
             assertThat(getText("body"), containsString("Wähle dein Kalenderprogramm aus, um dafür eine Kurzanleitung zu sehen"));
             assertIcsEquals(load("IntegrationTest_newmoon_subscribe.ics"), download(iCalSubscribeLink));
             click(browser.$("button", new AttributeFilter("aria-label", "Close")).first());
