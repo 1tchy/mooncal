@@ -29,7 +29,6 @@ libraryDependencies ++= Seq(
 	"de.redsix" % "pdfcompare" % "1.2.8" % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
 	"org.junit.jupiter" % "junit-jupiter" % "6.1.0" % Test,
-	//see latest version under: https://mvnrepository.com/artifact/com.github.sbt.junit/jupiter-interface
 	"com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 	"org.hamcrest" % "hamcrest" % "3.0" % Test,
