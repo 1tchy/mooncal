@@ -48,7 +48,9 @@
     "title": "घटनाएं",
     "lunareclipse": "चंद्र ग्रहण",
     "solareclipse": "सूर्य ग्रहण",
-    "moonlanding": "चंद्र अवकाश यात्रा"
+    "moonlanding": "चंद्र अवकाश यात्रा",
+    "garden-synodic": "Garden: phases (synodic)",
+    "garden-biodynamic": "Garden: zodiac (biodynamic)"
   },
   "time": {
     "title": "अंतराल",
@@ -205,6 +207,9 @@
     "betterTextSuggestion": "नया टेक्स्ट प्रस्ताव",
     "submit": "प्रस्तुत करें",
     "thanksForFeedback": "आपके प्रतिक्रिया के लिए धन्यवाद।"
+  },
+  "garden": {
+    "disclaimer": "\"Gardening by the moon\" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice."
   },
   "error": {
     "title": "गलती",

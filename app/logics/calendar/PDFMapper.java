@@ -21,6 +21,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionURI;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationLink;
+import org.jetbrains.annotations.VisibleForTesting;
 import org.vandeseer.easytable.TableDrawer;
 import org.vandeseer.easytable.structure.Row;
 import org.vandeseer.easytable.structure.Table;
@@ -36,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.List;
@@ -52,6 +54,10 @@ public class PDFMapper {
     private static final int TABLE_OFFSET_FROM_TOP = 80;
     private static final int DAY_EVENT_TEXT_PADDING = 2;
     private static final int FONT_SIZE = 8;
+    // A multi-day garden period is dropped from its first day if it starts after this time,
+    // and from its last day if it ends before GARDEN_EDGE_EARLY_END, to avoid edge-day clutter.
+    private static final LocalTime GARDEN_EDGE_LATE_START = LocalTime.of(22, 0);
+    private static final LocalTime GARDEN_EDGE_EARLY_END = LocalTime.of(6, 0);
     private static final PDRectangle A4_QUER = new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth());
     private static final float MONTH_ROW_WIDTH = A4_QUER.getWidth() / 13;
     private static final float DAY_OF_MONTH_WIDTH = 17.5f;
@@ -73,10 +79,27 @@ public class PDFMapper {
     public byte[] map(Collection<EventInstance> events, Lang language, Hemisphere hemisphere) {
         ZonedDateTime zonedDateTime = events.stream().findFirst().map(EventInstance::getDateTime).orElseGet(ZonedDateTime::now);
         int year = zonedDateTime.getYear();
-        Map<LocalDate, List<EventInstance>> eventsByDate = events.stream()
-                .filter(event -> event.getLocalDate().getYear() == year)
-                .collect(Collectors.groupingBy(EventInstance::getLocalDate));
-        eventsByDate.values().forEach(eventInstances -> eventInstances.sort(Comparator.comparing(EventInstance::getEventTypeId).thenComparing(EventInstance::getDateTime)));
+        Map<LocalDate, List<EventInstance>> eventsByDate = new HashMap<>();
+        for (EventInstance e : events) {
+            LocalDate start = e.getLocalDate();
+            LocalDate end = e.isMultiDay() ? e.getEndLocalDate() : start;
+            for (LocalDate d = start; !d.isAfter(end); d = d.plusDays(1)) {
+                if (d.getYear() == year) {
+                    if (e.isGardenEvent()) {
+                        // Don't clutter a day's cell with a garden period that only just touches it:
+                        // skip its first day if it starts late at night, and its last day if it ends early.
+                        if (d.equals(start) && e.getDateTime().toLocalTime().isAfter(GARDEN_EDGE_LATE_START)) {
+                            continue;
+                        }
+                        if (e.isMultiDay() && d.equals(end) && e.getEndDateTime().toLocalTime().isBefore(GARDEN_EDGE_EARLY_END)) {
+                            continue;
+                        }
+                    }
+                    eventsByDate.computeIfAbsent(d, k -> new ArrayList<>()).add(e);
+                }
+            }
+        }
+        eventsByDate.forEach((date, eventInstances) -> eventInstances.sort(dayEventOrder(date)));
         Map<Integer, Integer> lengthsOfMonths = IntStream.range(1, 13).boxed().collect(Collectors.toMap(
                 month -> month,
                 month -> LocalDate.of(year, month, 1).lengthOfMonth()));
@@ -161,9 +184,40 @@ public class PDFMapper {
                         .build();
                 tableDrawer.draw();
 
+                float footerY = tableDrawer.getFinalY() - (THANK_QR_CODE_SIZE + FONT_SIZE - 2) / 2f;
+
+                // Explain the biodynamic plant-part day labels (root/leaf/flower/fruit) shown in the grid.
+                // No moon-gardening disclaimer in the PDF (it lives in the .ics description and the web UI).
+                boolean hasBiodynamic = events.stream().anyMatch(e -> e.getEventTypeId().startsWith("garden-biodynamic-"));
+                if (hasBiodynamic) {
+                    int legendFontSize = FONT_SIZE - 2;
+                    float legendLeading = legendFontSize - 1;
+                    float legendMaxWidth = 12 * MONTH_ROW_WIDTH;
+                    // One wrapped paragraph per plant-part day, separated by a blank line.
+                    List<String> legendLines = new ArrayList<>();
+                    for (String part : new String[]{"root", "leaf", "flower", "fruit"}) {
+                        if (!legendLines.isEmpty()) {
+                            legendLines.add("");
+                        }
+                        legendLines.addAll(PdfUtil.getOptimalTextBreakLines(
+                                messagesApi.get(language, "garden.pdf.legend." + part), font, legendFontSize, legendMaxWidth));
+                    }
+                    float legendBaselineY = page.getMediaBox().getLowerLeftY() + 10;
+                    contentStream.beginText();
+                    contentStream.setFont(font, legendFontSize);
+                    // Position at the lowest line; subsequent lines are rendered upward
+                    contentStream.newLineAtOffset(startX, legendBaselineY + (legendLines.size() - 1) * legendLeading);
+                    for (int i = 0; i < legendLines.size(); i++) {
+                        if (i > 0) {
+                            contentStream.newLineAtOffset(0, -legendLeading);
+                        }
+                        contentStream.showText(legendLines.get(i));
+                    }
+                    contentStream.endText();
+                }
+
                 contentStream.beginText();
                 contentStream.setFont(font, FONT_SIZE);
-                float footerY = tableDrawer.getFinalY() - (THANK_QR_CODE_SIZE + FONT_SIZE - 2) / 2f;
                 contentStream.newLineAtOffset(startX, footerY);
                 contentStream.showText(messagesApi.get(language, "pdf.timezone") + ": " + zonedDateTime.getZone().getId());
 
@@ -189,6 +243,30 @@ public class PDFMapper {
                 IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Order events shown within a single day cell. Garden events are ordered by the time they
+     * appear on that day (a multi-day period that began earlier counts as starting at 00:00), so
+     * overlapping garden events read top-to-bottom in chronological order. Non-garden events keep
+     * their previous {@code eventTypeId}-then-time order; because every garden event id starts with
+     * "garden-" they form one contiguous block, so reordering within it leaves non-garden events
+     * (and the garden/non-garden boundary) untouched.
+     */
+    @VisibleForTesting
+    static Comparator<EventInstance> dayEventOrder(LocalDate day) {
+        return (a, b) -> {
+            if (a.isGardenEvent() && b.isGardenEvent()) {
+                int byTime = startTimeOnDay(a, day).compareTo(startTimeOnDay(b, day));
+                return byTime != 0 ? byTime : a.getEventTypeId().compareTo(b.getEventTypeId());
+            }
+            int byType = a.getEventTypeId().compareTo(b.getEventTypeId());
+            return byType != 0 ? byType : a.getDateTime().compareTo(b.getDateTime());
+        };
+    }
+
+    private static LocalTime startTimeOnDay(EventInstance event, LocalDate day) {
+        return event.getLocalDate().isBefore(day) ? LocalTime.MIN : event.getDateTime().toLocalTime();
     }
 
     private static PDAnnotationLink createLink(String url, float lowerLeftX, float lowerLeftY, float upperRightX, float upperRightY, int linkBorderWidth) {

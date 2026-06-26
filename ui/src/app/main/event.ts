@@ -1,5 +1,6 @@
 export interface Event {
-  date: Date
+  date: string
+  endDate?: string
   title: string
   description: string
 }

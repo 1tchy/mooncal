@@ -154,22 +154,29 @@ export class MainComponent implements AfterViewInit {
   }
 
   public paramsAsString(useFromTo: boolean) {
+    // Boolean flags are only emitted when enabled; an omitted flag is read as false by the backend.
     let options = "lang=" + this.messages.lang.current
-      + "&phases[full]=" + this.phases["full"]
-      + "&phases[new]=" + this.phases["new"]
-      + "&phases[quarter]=" + this.phases["quarter"]
-      + "&phases[daily]=" + this.phases["daily"]
+      + this.flagParam("phases[full]", this.phases["full"])
+      + this.flagParam("phases[new]", this.phases["new"])
+      + this.flagParam("phases[quarter]", this.phases["quarter"])
+      + this.flagParam("phases[daily]", this.phases["daily"])
       + "&style=" + this.style
       + "&hemisphere=" + this.hemisphere
-      + "&events[lunareclipse]=" + this.events["lunareclipse"]
-      + "&events[solareclipse]=" + this.events["solareclipse"]
-      + "&events[moonlanding]=" + this.events["moonlanding"];
+      + this.flagParam("events[lunareclipse]", this.events["lunareclipse"])
+      + this.flagParam("events[solareclipse]", this.events["solareclipse"])
+      + this.flagParam("events[moonlanding]", this.events["moonlanding"])
+      + this.flagParam("events[garden-synodic]", this.events["garden-synodic"])
+      + this.flagParam("events[garden-biodynamic]", this.events["garden-biodynamic"]);
     if (useFromTo) {
       options += "&from=" + this.formatDate(this.fromDebounced) + "&to=" + this.formatDate(this.toDebounced);
     } else {
       options += "&before=P6M&after=P2Y&zone=" + this.zone;
     }
     return options;
+  }
+
+  private flagParam(key: string, value: boolean) {
+    return value ? "&" + key + "=true" : "";
   }
 
   public paramsForTracking(useFromTo: boolean) {
@@ -200,12 +207,19 @@ export class MainComponent implements AfterViewInit {
     return params;
   }
 
-  public formatDateForGui(date: any) {
-    return new Date(date).toLocaleDateString(undefined, {year: 'numeric', month: '2-digit', day: '2-digit'});
+  // xs uses a 2-digit year to save horizontal space on narrow screens.
+  public formatDateForGui(date: any, xs = false) {
+    return new Date(date).toLocaleDateString(undefined, {year: xs ? '2-digit' : 'numeric', month: '2-digit', day: '2-digit'});
   }
 
-  public formatDateForGuiXs(date: any) {
-    return new Date(date).toLocaleDateString(undefined, {year: '2-digit', month: '2-digit', day: '2-digit'});
+  public formatDateTimeForGui(local: any, xs = false) {
+    return new Date(local).toLocaleString(undefined, {year: xs ? '2-digit' : 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'});
+  }
+
+  public formatEventDateForGui(event: Event, xs = false) {
+    return event.endDate
+      ? this.formatDateTimeForGui(event.date, xs) + ' - ' + this.formatDateTimeForGui(event.endDate, xs)
+      : this.formatDateForGui(event.date, xs);
   }
 
   public formatDate(date: Date) {

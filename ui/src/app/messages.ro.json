@@ -48,7 +48,9 @@
     "title": "Evenimente",
     "lunareclipse": "eclipă lunară",
     "solareclipse": "eclipsă solară",
-    "moonlanding": "coborârea pe lună"
+    "moonlanding": "coborârea pe lună",
+    "garden-synodic": "Garden: phases (synodic)",
+    "garden-biodynamic": "Garden: zodiac (biodynamic)"
   },
   "time": {
     "title": "Interval",
@@ -205,6 +207,9 @@
     "betterTextSuggestion": "Propunere de text nou",
     "submit": "Trimite",
     "thanksForFeedback": "Mulțumesc pentru feedback-ul dvs."
+  },
+  "garden": {
+    "disclaimer": "\"Gardening by the moon\" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice."
   },
   "error": {
     "title": "Eroare",

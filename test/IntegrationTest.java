@@ -64,7 +64,11 @@ class IntegrationTest extends WithBrowser {
     void subscribeAndDowload() throws InterruptedException, IOException {
         wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
             browser.$("#phases label", withText("Vollmond")).click();
-            browser.$("#events label").click();
+            // Toggle off the three default-on events individually. A blanket "#events label" click would
+            // also toggle the garden-calendar checkboxes (which live in the same #events group), enabling them.
+            browser.$("#events label", withText("Mondfinsternis")).click();
+            browser.$("#events label", withText("Sonnenfinsternis")).click();
+            browser.$("#events label", withText("Mondlandung")).click();
             browser.$("#interval #from").fill().with("2024-02-01");
             browser.$("#interval #to").fill().with("2024-07-31");
             browser.$("#interval #zone").fillSelect().withText("Europe/Zurich");
@@ -75,7 +79,7 @@ class IntegrationTest extends WithBrowser {
             assertTrue(browser.$("button", withText("iCalendar-Feed abonnieren")).isEmpty());
             click(browser.$("button", withText("Zum Kalender hinzufügen")).first());
             String iCalSubscribeLink = browser.$("#icalLink").first().value();
-            assertThat(iCalSubscribeLink, matchesPattern("http.*/mooncal.ics\\?created=\\d+&lang=de&phases\\[full]=false&phases\\[new]=true&phases\\[quarter]=false&phases\\[daily]=false&style=withDescription&hemisphere=northern&events\\[lunareclipse]=false&events\\[solareclipse]=false&events\\[moonlanding]=false&before=P6M&after=P2Y&zone=Europe/Zurich"));
+            assertThat(iCalSubscribeLink, matchesPattern("http.*/mooncal.ics\\?created=\\d+&lang=de&phases\\[full]=false&phases\\[new]=true&phases\\[quarter]=false&phases\\[daily]=false&style=withDescription&hemisphere=northern&events\\[lunareclipse]=false&events\\[solareclipse]=false&events\\[moonlanding]=false&events\\[garden-synodic]=false&events\\[garden-biodynamic]=false&before=P6M&after=P2Y&zone=Europe/Zurich"));
             assertThat(getText("body"), containsString("Wähle dein Kalenderprogramm aus, um dafür eine Kurzanleitung zu sehen"));
             assertIcsEquals(load("IntegrationTest_newmoon_subscribe.ics"), download(iCalSubscribeLink));
             click(browser.$("button", new AttributeFilter("aria-label", "Close")).first());

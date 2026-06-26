@@ -38,6 +38,10 @@ public class CalendarMapper {
      */
     public String map(Collection<EventInstance> events, long updateFrequency, Lang language) {
         final Calendar calendar = createCalendar(updateFrequency);
+        boolean hasGarden = events.stream().anyMatch(EventInstance::isGardenEvent);
+        if (hasGarden) {
+            calendar.add(new XProperty("X-WR-CALDESC", messagesApi.get(language, "garden.disclaimer")));
+        }
         Url thankUrl = new Url(URI.create("https://mooncal.ch/" + getThankUrl(language) + "?c=ics"));
         for (EventInstance event : events) {
             addEvent(calendar, event, thankUrl);
@@ -58,7 +62,9 @@ public class CalendarMapper {
     }
 
     private void addEvent(Calendar calendar, EventInstance event, Url thankUrl) {
-        final VEvent calEvent = new VEvent(event.getDateTime().toLocalDate(), event.getTitle());
+        final VEvent calEvent = event.isMultiDay()
+                ? new VEvent(event.getDateTime().toLocalDate(), event.getEndLocalDate().plusDays(1), event.getTitle())
+                : new VEvent(event.getDateTime().toLocalDate(), event.getTitle());
         if (event.getDescription() != null) {
             calEvent.add(new Description(event.getDescription()));
         }

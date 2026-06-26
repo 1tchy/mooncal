@@ -48,7 +48,9 @@
     "title": "Events",
     "lunareclipse": "Lunar Eclipse",
     "solareclipse": "Solar Eclipse",
-    "moonlanding": "Moon Landing"
+    "moonlanding": "Moon Landing",
+    "garden-synodic": "Garden: phases (synodic)",
+    "garden-biodynamic": "Garden: zodiac (biodynamic)"
   },
   "time": {
     "title": "Interval",
@@ -205,6 +207,9 @@
     "betterTextSuggestion": "New text proposal",
     "submit": "Submit",
     "thanksForFeedback": "Thank you for your feedback."
+  },
+  "garden": {
+    "disclaimer": "\"Gardening by the moon\" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice."
   },
   "error": {
     "title": "Error",

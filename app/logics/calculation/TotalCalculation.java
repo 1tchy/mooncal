@@ -12,12 +12,18 @@ public class TotalCalculation extends Calculation {
 
     private final MoonPhasesCalculation moonPhasesCalculation;
     private final MoonEventCalculation moonEventCalculation;
+    private final GardenSynodicCalculation gardenSynodicCalculation;
+    private final GardenBiodynamicCalculation gardenBiodynamicCalculation;
 
     @Inject
-    public TotalCalculation(MoonPhasesCalculation moonPhasesCalculation, MoonEventCalculation moonEventCalculation, MessagesApi messagesApi) {
+    public TotalCalculation(MoonPhasesCalculation moonPhasesCalculation, MoonEventCalculation moonEventCalculation,
+                            GardenSynodicCalculation gardenSynodicCalculation,
+                            GardenBiodynamicCalculation gardenBiodynamicCalculation, MessagesApi messagesApi) {
         super(messagesApi);
         this.moonPhasesCalculation = moonPhasesCalculation;
         this.moonEventCalculation = moonEventCalculation;
+        this.gardenSynodicCalculation = gardenSynodicCalculation;
+        this.gardenBiodynamicCalculation = gardenBiodynamicCalculation;
     }
 
     public Collection<EventInstance> calculate(RequestForm requestForm) {
@@ -30,6 +36,8 @@ public class TotalCalculation extends Calculation {
     public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection) {
         moonPhasesCalculation.calculate(requestForm, eventCollection);
         moonEventCalculation.calculate(requestForm, eventCollection);
+        gardenSynodicCalculation.calculate(requestForm, eventCollection);
+        gardenBiodynamicCalculation.calculate(requestForm, eventCollection);
     }
 
 }

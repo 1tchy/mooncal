@@ -13,6 +13,7 @@ export interface Messages {
   thank: Thank
   improveTranslation: ImproveTranslation
   error: Error
+  garden: Garden
 }
 
 export interface App {
@@ -79,6 +80,12 @@ export interface Events {
   lunareclipse: string
   solareclipse: string
   moonlanding: string
+  'garden-synodic': string
+  'garden-biodynamic': string
+}
+
+export interface Garden {
+  disclaimer: string
 }
 
 export interface Time {

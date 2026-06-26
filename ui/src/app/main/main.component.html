@@ -55,11 +55,15 @@
     <div class="card" id="events">
       <h5 class="card-header">{{ messages.events.title }}</h5>
       <div class="card-body">
-        @for (event of ['lunareclipse','solareclipse','moonlanding']; track event) {
+        @for (event of ['lunareclipse','solareclipse','moonlanding','garden-synodic','garden-biodynamic']; track event) {
           <div class="form-check">
             <input class="form-check-input" type="checkbox" [(ngModel)]="events[event]" [id]="event+'-checkbox'"
                    [name]="event+'-checkbox'">
             <label class="form-check-label" [for]="event+'-checkbox'">{{ messages.events[event] }}</label>
+            @if (event === 'garden-synodic' || event === 'garden-biodynamic') {
+              <span class="ms-1 text-primary garden-info" style="cursor: help;" tabindex="0" role="button"
+                    aria-label="info" [ngbTooltip]="messages.garden.disclaimer" tooltipClass="garden-disclaimer-tooltip">ⓘ</span>
+            }
           </div>
         }
       </div>
@@ -152,8 +156,8 @@
           @for (event of calendar; track event.date) {
             <tr class="fadeAnimation">
               <td class="dateFont">
-                <span class="d-none d-md-inline">{{ this.formatDateForGui(event.date) }}</span>
-                <span class="d-md-none">{{ this.formatDateForGuiXs(event.date) }}</span>
+                <span class="d-none d-md-inline">{{ this.formatEventDateForGui(event) }}</span>
+                <span class="d-md-none">{{ this.formatEventDateForGui(event, true) }}</span>
               </td>
               <td class="xxs-hyphenation">{{ event.title }}</td>
               <td class="text-muted description xxs-hyphenation">{{ event.description }}</td>

@@ -117,16 +117,22 @@ public class Application extends Controller {
 
     public Result suggestBetterTranslation(Http.Request request) {
         formFactory.form(BetterTranslationForm.class).bindFromRequest(request).value().ifPresent(requestForm -> {
-            String file = Optional.ofNullable(System.getProperty("translation-improvements.txt")).orElse("translation-improvements.txt");
-            synchronized (this) {
-                try {
-                    Files.writeString(Paths.get(file), requestForm.getLanguage() + ": \"" + requestForm.getOldText() + "\" should better be \"" + requestForm.getBetterText() + "\"\n", StandardOpenOption.APPEND);
-                } catch (IOException e) {
-                    logger.error("Could not write to " + file, e);
-                }
-            }
+            appendLine("translation-improvements.txt",
+                    requestForm.getLanguage() + ": \"" + requestForm.getOldText() + "\" should better be \"" + requestForm.getBetterText() + "\"\n",
+                    StandardOpenOption.APPEND);
         });
         return noContent();
+    }
+
+    private void appendLine(String fileProperty, String line, StandardOpenOption... options) {
+        String file = Optional.ofNullable(System.getProperty(fileProperty)).orElse(fileProperty);
+        synchronized (this) {
+            try {
+                Files.writeString(Paths.get(file), line, options);
+            } catch (IOException e) {
+                logger.error("Could not write to " + file, e);
+            }
+        }
     }
 
     public Result status() {
