@@ -20,7 +20,8 @@
       "about": "ro/despre",
       "donate": "ro/donează",
       "thank": "ro/multumesc",
-      "buymeacoffee": "ro/buymeacoffee"
+      "buymeacoffee": "ro/buymeacoffee",
+      "suggestCalendar": "ro/sugereaza-calendar"
     }
   },
   "general": {
@@ -210,6 +211,34 @@
   },
   "garden": {
     "disclaimer": "\"Gardening by the moon\" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice."
+  },
+  "suggestCalendar": {
+    "title": "Suggest a Calendar",
+    "pageTitle": "Suggest a Calendar - Moon Calendar",
+    "description": "Know a lunar calendar tradition not yet in the Moon Calendar? Submit your suggestion here.",
+    "lead": "Do you know a lunar calendar tradition that is not yet included? Please share it here!",
+    "fieldTitle": "Calendar title",
+    "fieldMethodology": "Methodology description",
+    "fieldMethodologyPlaceholder": "Describe how this calendar system works, which lunar variables are used, and how they map to gardening recommendations.",
+    "fieldLunarVariables": "Lunar variables used",
+    "fieldSource": "Source / reference",
+    "fieldSourcePlaceholder": "Book title, URL, author, publication, etc.",
+    "fieldSourceLicense": "Source license",
+    "licenseUnknown": "Unknown / not specified",
+    "licenseOther": "Other",
+    "fieldSourceLicenseOther": "Please describe the license",
+    "fieldOriginCulture": "Origin culture / tradition",
+    "fieldHemisphereDependence": "Hemisphere dependence",
+    "hemisphereYes": "Yes",
+    "hemisphereNo": "No",
+    "hemisphereUnsure": "Unsure",
+    "fieldOutputGranularity": "Output granularity",
+    "fieldOutputGranularityPlaceholder": "e.g. daily, per lunar phase, weekly",
+    "fieldContactEmail": "Your email (optional, only used for any follow-up questions)",
+    "fieldNotes": "Additional notes",
+    "privacy": "Your submission will be stored on the server and reviewed by the maintainer. Only the information you enter is stored — no other personal data is collected.",
+    "submit": "Submit",
+    "thanks": "Thank you for your suggestion!"
   },
   "error": {
     "title": "Eroare",

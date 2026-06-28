@@ -11,6 +11,7 @@ import messagesHI from "./messages.hi.json";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {Messages} from "./messages";
 import {ThankComponent} from "./thank/thank.component";
+import {SuggestCalendarComponent} from "./suggest-calendar/suggest-calendar.component";
 
 function buildAllRoutes() {
   let allRoutes: Routes = [];
@@ -18,6 +19,7 @@ function buildAllRoutes() {
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, 'about', m => m.about.pageTitle, m => m.about.description)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.buymeacoffee, 'buymeacoffee', m => m.thank.pageTitle, m => m.thank.description)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.thank, 'thank', m => m.thank.pageTitle, m => m.thank.description)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, SuggestCalendarComponent, m => m.navigation.paths.suggestCalendar, 'suggestCalendar', m => m.suggestCalendar.pageTitle, m => m.suggestCalendar.description)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push({
     path: messages.navigation.paths.donate,
     redirectTo: messages.navigation.paths.thank,

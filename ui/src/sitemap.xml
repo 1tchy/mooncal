@@ -31,6 +31,16 @@
 		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/thank"/>
 	</url>
 	<url>
+		<loc>https://mooncal.ch/kalender-vorschlagen</loc>
+		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/kalender-vorschlagen"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/suggest-calendar"/>
+		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/kalender-voorstellen"/>
+		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/sugerir-calendario"/>
+		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/suggerer-calendrier"/>
+		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/sugereaza-calendar"/>
+		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/suggest-calendar"/>
+	</url>
+	<url>
 		<loc>https://mooncal.ch/mooncal.pdf?lang=de&amp;phases[full]=true&amp;phases[new]=false&amp;phases[quarter]=false&amp;phases[daily]=false&amp;style=withDescription&amp;events[lunareclipse]=true&amp;events[solareclipse]=true&amp;events[moonlanding]=true&amp;from=2025-01-01T00:00:00Europe/Zurich&amp;to=2025-12-31T23:59:59Europe/Zurich</loc>
 		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/mooncal.pdf?lang=de&amp;phases[full]=true&amp;phases[new]=false&amp;phases[quarter]=false&amp;phases[daily]=false&amp;style=withDescription&amp;events[lunareclipse]=true&amp;events[solareclipse]=true&amp;events[moonlanding]=true&amp;from=2025-01-01T00:00:00Europe/Zurich&amp;to=2025-12-31T23:59:59Europe/Zurich"/>
 		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/mooncal.pdf?lang=en&amp;phases[full]=true&amp;phases[new]=false&amp;phases[quarter]=false&amp;phases[daily]=false&amp;style=withDescription&amp;events[lunareclipse]=true&amp;events[solareclipse]=true&amp;events[moonlanding]=true&amp;from=2025-01-01T00:00:00Europe/London&amp;to=2025-12-31T23:59:59Europe/London"/>

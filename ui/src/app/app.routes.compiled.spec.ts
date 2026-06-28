@@ -168,6 +168,48 @@ export const compiledRoute = [
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {
+    path: 'kalender-vorschlagen',
+    title: 'Kalender vorschlagen – Mondkalender',
+    component: 'SuggestCalendarComponent',
+    data: {messages: 'de', home: '', about: 'ueber'}
+  },
+  {
+    path: 'en/suggest-calendar',
+    title: 'Suggest a Calendar - Moon Calendar',
+    component: 'SuggestCalendarComponent',
+    data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
+  },
+  {
+    path: 'nl/kalender-voorstellen',
+    title: 'Suggest a Calendar - Moon Calendar',
+    component: 'SuggestCalendarComponent',
+    data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
+  },
+  {
+    path: 'es/sugerir-calendario',
+    title: 'Suggest a Calendar - Moon Calendar',
+    component: 'SuggestCalendarComponent',
+    data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
+  },
+  {
+    path: 'fr/suggerer-calendrier',
+    title: 'Suggest a Calendar - Moon Calendar',
+    component: 'SuggestCalendarComponent',
+    data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
+  },
+  {
+    path: 'ro/sugereaza-calendar',
+    title: 'Suggest a Calendar - Moon Calendar',
+    component: 'SuggestCalendarComponent',
+    data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
+  },
+  {
+    path: 'hi/suggest-calendar',
+    title: 'Suggest a Calendar - Moon Calendar',
+    component: 'SuggestCalendarComponent',
+    data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
+  },
+  {
     redirectFrom: 'spenden',
     redirectTo: 'bedanken'
   },

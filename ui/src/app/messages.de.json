@@ -20,7 +20,8 @@
       "about": "ueber",
       "donate": "spenden",
       "thank": "bedanken",
-      "buymeacoffee": "buymeacoffee"
+      "buymeacoffee": "buymeacoffee",
+      "suggestCalendar": "kalender-vorschlagen"
     }
   },
   "general": {
@@ -210,6 +211,34 @@
   },
   "garden": {
     "disclaimer": "„Gärtnern nach dem Mond” ist eine traditionelle Praxis, die hier aus kulturellem und historischem Interesse angeboten wird. Kontrollierte wissenschaftliche Studien fanden keine verlässlichen Belege dafür, dass Mondzyklen das Pflanzenwachstum beeinflussen — Klima, Boden und Jahreszeit vor Ort sind weit wichtiger. Viel Freude damit, aber nicht als Anbau-Ratschlag."
+  },
+  "suggestCalendar": {
+    "title": "Kalender vorschlagen",
+    "pageTitle": "Kalender vorschlagen – Mondkalender",
+    "description": "Kennst du eine Mondkalender-Tradition, die noch nicht im Mondkalender enthalten ist? Reiche deinen Vorschlag ein.",
+    "lead": "Kennst du eine Mondkalender-Tradition, die noch nicht enthalten ist? Teile sie hier mit!",
+    "fieldTitle": "Kalender-Titel",
+    "fieldMethodology": "Methodikbeschreibung",
+    "fieldMethodologyPlaceholder": "Beschreibe, wie dieses Kalendersystem funktioniert, welche Mondvariablen verwendet werden und wie sie Gartenempfehlungen zugeordnet werden.",
+    "fieldLunarVariables": "Verwendete Mondvariablen",
+    "fieldSource": "Quelle / Referenz",
+    "fieldSourcePlaceholder": "Buchtitel, URL, Autor, Publikation, usw.",
+    "fieldSourceLicense": "Lizenz der Quelle",
+    "licenseUnknown": "Unbekannt / nicht angegeben",
+    "licenseOther": "Andere",
+    "fieldSourceLicenseOther": "Bitte Lizenz beschreiben",
+    "fieldOriginCulture": "Herkunftskultur / Tradition",
+    "fieldHemisphereDependence": "Hemisphärenabhängigkeit",
+    "hemisphereYes": "Ja",
+    "hemisphereNo": "Nein",
+    "hemisphereUnsure": "Unsicher",
+    "fieldOutputGranularity": "Ausgabegranularität",
+    "fieldOutputGranularityPlaceholder": "z.B. täglich, pro Mondphase, wöchentlich",
+    "fieldContactEmail": "Deine E-Mail (optional, nur für eventuelle Rückfragen)",
+    "fieldNotes": "Weitere Anmerkungen",
+    "privacy": "Dein Vorschlag wird auf dem Server gespeichert und vom Betreiber geprüft. Es werden nur die von dir eingegebenen Informationen gespeichert — keine weiteren persönlichen Daten werden erfasst.",
+    "submit": "Absenden",
+    "thanks": "Vielen Dank für deinen Vorschlag!"
   },
   "error": {
     "title": "Fehler",
