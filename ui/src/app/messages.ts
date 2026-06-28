@@ -14,7 +14,6 @@ export interface Messages {
   improveTranslation: ImproveTranslation
   error: Error
   garden: Garden
-  suggestCalendar: SuggestCalendar
 }
 
 export interface App {
@@ -44,7 +43,6 @@ export interface Paths {
   donate: string
   thank: string
   buymeacoffee: string
-  suggestCalendar: string
 }
 
 export interface General {
@@ -259,33 +257,4 @@ export interface Problem {
   title: string
   typo: string
   link: string
-}
-
-export interface SuggestCalendar {
-  title: string
-  pageTitle: string
-  description: string
-  lead: string
-  fieldTitle: string
-  fieldMethodology: string
-  fieldMethodologyPlaceholder: string
-  fieldLunarVariables: string
-  fieldSource: string
-  fieldSourcePlaceholder: string
-  fieldSourceLicense: string
-  licenseUnknown: string
-  licenseOther: string
-  fieldSourceLicenseOther: string
-  fieldOriginCulture: string
-  fieldHemisphereDependence: string
-  hemisphereYes: string
-  hemisphereNo: string
-  hemisphereUnsure: string
-  fieldOutputGranularity: string
-  fieldOutputGranularityPlaceholder: string
-  fieldContactEmail: string
-  fieldNotes: string
-  privacy: string
-  submit: string
-  thanks: string
 }

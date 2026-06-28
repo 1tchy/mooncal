@@ -7,8 +7,6 @@ GET        /mooncal.ics          controllers.Application.queryAsICalendar(reques
 GET        /mooncal.pdf          controllers.Application.queryAsPdf(request: Request)
 +nocsrf
 POST       /suggestBetterTranslation controllers.Application.suggestBetterTranslation(request: Request)
-+nocsrf
-POST       /suggestCalendar      controllers.Application.suggestCalendar(request: Request)
 GET        /server/status        controllers.Application.status()
 
 GET        /web-app-manifest-192x192.png controllers.Favicon.getIcon(path="web-app-manifest-192x192.png")

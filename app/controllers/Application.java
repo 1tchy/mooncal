@@ -6,7 +6,6 @@ import logics.calendar.PDFMapper;
 import models.BetterTranslationForm;
 import models.EventInstance;
 import models.RequestForm;
-import models.SuggestCalendarForm;
 import play.Environment;
 import play.Logger;
 import play.api.mvc.Action;
@@ -114,17 +113,6 @@ public class Application extends Controller {
                         .map(error -> messagesApi.preferred(request).at(error.message(), error.key()))
                         .collect(Collectors.joining(", "))
         );
-    }
-
-    public Result suggestCalendar(Http.Request request) {
-        formFactory.form(SuggestCalendarForm.class).bindFromRequest(request).value().ifPresent(form -> {
-            if (form.isHoneypotTriggered()) {
-                return; // silently drop
-            }
-            appendLine("calendar-suggestions.txt", form.toLogLine() + "\n",
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-        });
-        return noContent();
     }
 
     public Result suggestBetterTranslation(Http.Request request) {

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Messages} from "../messages";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {SupportButtonsComponent} from "../support-buttons/support-buttons.component";
 import {ImproveTranslationComponent} from "../improve-translation/improve-translation.component";
@@ -11,8 +11,7 @@ import {ImproveTranslationComponent} from "../improve-translation/improve-transl
   imports: [
     FormsModule,
     SupportButtonsComponent,
-    ImproveTranslationComponent,
-    RouterLink
+    ImproveTranslationComponent
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
