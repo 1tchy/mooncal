@@ -142,9 +142,6 @@ public class GardenBiodynamicCalculation extends Calculation {
         boolean ascending = isAscending(start, hemisphere);
         d.append("\n").append(messagesApi.get(lang,
                 ascending ? "garden.biodynamic.ascending" : "garden.biodynamic.descending"));
-        // crop examples by hemisphere
-        d.append("\n").append(messagesApi.get(lang,
-                "garden.biodynamic." + element.name().toLowerCase() + ".crops." + hemisphere.getKey()));
         // perigee/apogee rest-period notes (node and eclipse days are handled as bad garden days instead)
         Ephemeris.Apsis apsis = ephemeris.nextApsis(start, periodEnd);
         if (apsis != null) {

@@ -49,8 +49,8 @@
     "lunareclipse": "éclipse lunaire",
     "solareclipse": "éclipse solaire",
     "moonlanding": "atterrissage sur la lune",
-    "garden-synodic": "Garden: phases (synodic)",
-    "garden-biodynamic": "Garden: zodiac (biodynamic)"
+    "garden-synodic": "Jardin : phases (synodique)",
+    "garden-biodynamic": "Jardin : zodiaque (biodynamique)"
   },
   "time": {
     "title": "Intervalle",
@@ -209,7 +209,7 @@
     "thanksForFeedback": "Merci pour vos retours."
   },
   "garden": {
-    "disclaimer": "\"Gardening by the moon\" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice."
+    "disclaimer": "Le « jardinage avec la Lune » est une pratique traditionnelle proposée ici par intérêt culturel et historique. Les études scientifiques contrôlées n'ont pas trouvé de preuves fiables que les cycles lunaires influencent la croissance des plantes — le climat, le sol et la saison de votre région comptent bien davantage. Profitez-en pour le plaisir, non comme un conseil de culture."
   },
   "error": {
     "title": "Erreur",

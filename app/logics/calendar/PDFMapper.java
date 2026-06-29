@@ -58,6 +58,9 @@ public class PDFMapper {
     // and from its last day if it ends before GARDEN_EDGE_EARLY_END, to avoid edge-day clutter.
     private static final LocalTime GARDEN_EDGE_LATE_START = LocalTime.of(22, 0);
     private static final LocalTime GARDEN_EDGE_EARLY_END = LocalTime.of(6, 0);
+    // Garden events are shown in the grid as small icons rather than names.
+    private static final float GARDEN_ICON_SIZE = 7f;
+    private static final float GARDEN_ICON_GAP = 1.5f;
     private static final PDRectangle A4_QUER = new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth());
     private static final float MONTH_ROW_WIDTH = A4_QUER.getWidth() / 13;
     private static final float DAY_OF_MONTH_WIDTH = 17.5f;
@@ -142,6 +145,8 @@ public class PDFMapper {
                                 .build()));
                 table.addRow(monthRowBuilder.build());
                 Map<String, PDImageXObject> loadedImagesCache = new HashMap<>(4);
+                record IconPlacement(int day, int month, List<String> icons) {}
+                List<IconPlacement> iconPlacements = new ArrayList<>();
 
                 for (int day = 1; day <= 31; day++) {
                     Row.RowBuilder row = Row.builder();
@@ -164,49 +169,112 @@ public class PDFMapper {
                                 .borderWidthRight(0)
                                 .build());
 
-                        TextWithSize textWithSize = calculateOptimalTextWithSize(eventInstancesAtDay, font, DAY_EVENT_TEXT_WIDTH - 2 * DAY_EVENT_TEXT_PADDING);
+                        // Garden events are shown as icons (drawn on top of the table afterwards); everything
+                        // else keeps its text. The text cell reserves left padding so the two never overlap.
+                        List<String> dayIcons = eventInstancesAtDay.stream()
+                                .map(e -> gardenIconResource(e.getEventTypeId()))
+                                .filter(Objects::nonNull)
+                                .toList();
+                        if (!dayIcons.isEmpty()) {
+                            iconPlacements.add(new IconPlacement(day, month, dayIcons));
+                        }
+                        float iconArea = dayIcons.size() * (GARDEN_ICON_SIZE + GARDEN_ICON_GAP);
+                        List<EventInstance> textEvents = eventInstancesAtDay.stream()
+                                .filter(e -> !e.isGardenEvent())
+                                .toList();
+                        TextWithSize textWithSize = calculateOptimalTextWithSize(textEvents, font,
+                                DAY_EVENT_TEXT_WIDTH - 2 * DAY_EVENT_TEXT_PADDING - iconArea);
                         row.add(TextCell.builder().text(textWithSize.text())
                                 .fontSize(textWithSize.size())
                                 .backgroundColor(backgroundColor)
                                 .borderWidthLeft(0)
-                                .padding(DAY_EVENT_TEXT_PADDING)
+                                .paddingTop(DAY_EVENT_TEXT_PADDING)
+                                .paddingBottom(DAY_EVENT_TEXT_PADDING)
+                                .paddingLeft(DAY_EVENT_TEXT_PADDING + iconArea)
+                                .paddingRight(DAY_EVENT_TEXT_PADDING)
                                 .verticalAlignment(MIDDLE)
                                 .build());
                     }
                     table.addRow(row.build());
                 }
 
+                Table builtTable = table.build();
                 TableDrawer tableDrawer = TableDrawer.builder()
                         .contentStream(contentStream)
                         .startX(startX)
                         .startY(page.getMediaBox().getUpperRightY() - TABLE_OFFSET_FROM_TOP)
-                        .table(table.build())
+                        .table(builtTable)
                         .build();
                 tableDrawer.draw();
 
+                // Overlay the garden icons into their day cells using the table's computed row heights
+                // (row 0 is the month-name header, so calendar day N is table row N).
+                if (!iconPlacements.isEmpty()) {
+                    List<Row> tableRows = builtTable.getRows();
+                    float tableTopY = page.getMediaBox().getUpperRightY() - TABLE_OFFSET_FROM_TOP;
+                    float[] rowTopY = new float[tableRows.size()];
+                    float cursorY = tableTopY;
+                    for (int r = 0; r < tableRows.size(); r++) {
+                        rowTopY[r] = cursorY;
+                        cursorY -= tableRows.get(r).getHeight();
+                    }
+                    for (IconPlacement placement : iconPlacements) {
+                        int rowIndex = placement.day();
+                        float rowCenterY = rowTopY[rowIndex] - tableRows.get(rowIndex).getHeight() / 2f;
+                        float cellX = startX + (placement.month() - 1) * MONTH_ROW_WIDTH + DAY_OF_MONTH_WIDTH;
+                        float iconX = cellX + DAY_EVENT_TEXT_PADDING;
+                        for (String iconResource : placement.icons()) {
+                            PDImageXObject icon = loadedImagesCache.computeIfAbsent(iconResource, f -> loadImage(f, document));
+                            contentStream.drawImage(icon, iconX, rowCenterY - GARDEN_ICON_SIZE / 2f, GARDEN_ICON_SIZE, GARDEN_ICON_SIZE);
+                            iconX += GARDEN_ICON_SIZE + GARDEN_ICON_GAP;
+                        }
+                    }
+                }
+
                 float footerY = tableDrawer.getFinalY() - (THANK_QR_CODE_SIZE + FONT_SIZE - 2) / 2f;
 
-                // Explain the biodynamic plant-part day labels (root/leaf/flower/fruit) shown in the grid.
+                // Explain the garden icons shown in the grid, one wrapped paragraph per icon.
                 // No moon-gardening disclaimer in the PDF (it lives in the .ics description and the web UI).
+                boolean hasSynodic = events.stream().anyMatch(e -> e.getEventTypeId().startsWith("garden-synodic-"));
                 boolean hasBiodynamic = events.stream().anyMatch(e -> e.getEventTypeId().startsWith("garden-biodynamic-"));
-                if (hasBiodynamic) {
+                if (hasSynodic || hasBiodynamic) {
                     int legendFontSize = FONT_SIZE - 2;
-                    float legendLeading = legendFontSize - 1;
-                    float legendMaxWidth = 12 * MONTH_ROW_WIDTH;
-                    // One wrapped paragraph per plant-part day, separated by a blank line.
-                    List<String> legendLines = new ArrayList<>();
-                    for (String part : new String[]{"root", "leaf", "flower", "fruit"}) {
-                        if (!legendLines.isEmpty()) {
-                            legendLines.add("");
-                        }
-                        legendLines.addAll(PdfUtil.getOptimalTextBreakLines(
-                                messagesApi.get(language, "garden.pdf.legend." + part), font, legendFontSize, legendMaxWidth));
+                    float legendLeading = legendFontSize + 1f;
+                    float legendIndent = GARDEN_ICON_SIZE + 3f;
+                    float legendMaxWidth = 12 * MONTH_ROW_WIDTH - legendIndent;
+
+                    List<String[]> entries = new ArrayList<>(); // {iconResource, messageKey}
+                    if (hasSynodic) {
+                        entries.add(new String[]{"/public/emoji/waxing.png", "garden.pdf.legend.waxing"});
+                        entries.add(new String[]{"/public/emoji/waning.png", "garden.pdf.legend.waning"});
                     }
+                    if (hasBiodynamic) {
+                        for (String part : new String[]{"root", "leaf", "flower", "fruit"}) {
+                            entries.add(new String[]{"/public/emoji/" + part + ".png", "garden.pdf.legend." + part});
+                        }
+                        entries.add(new String[]{"/public/emoji/badday.png", "garden.pdf.legend.badday"});
+                    }
+
+                    // Flatten to lines; the first line of each entry carries its icon. Entries follow one
+                    // another without a blank line — the icon on each first line separates them — to keep the
+                    // legend compact enough to sit below the calendar grid and clear of the footer.
+                    List<String> legendLines = new ArrayList<>();
+                    List<String> legendLineIcon = new ArrayList<>();
+                    for (String[] entry : entries) {
+                        List<String> wrapped = PdfUtil.getOptimalTextBreakLines(
+                                messagesApi.get(language, entry[1]), font, legendFontSize, legendMaxWidth);
+                        for (int i = 0; i < wrapped.size(); i++) {
+                            legendLines.add(wrapped.get(i));
+                            legendLineIcon.add(i == 0 ? entry[0] : null);
+                        }
+                    }
+
                     float legendBaselineY = page.getMediaBox().getLowerLeftY() + 10;
+                    float firstLineY = legendBaselineY + (legendLines.size() - 1) * legendLeading;
                     contentStream.beginText();
                     contentStream.setFont(font, legendFontSize);
                     // Position at the lowest line; subsequent lines are rendered upward
-                    contentStream.newLineAtOffset(startX, legendBaselineY + (legendLines.size() - 1) * legendLeading);
+                    contentStream.newLineAtOffset(startX + legendIndent, firstLineY);
                     for (int i = 0; i < legendLines.size(); i++) {
                         if (i > 0) {
                             contentStream.newLineAtOffset(0, -legendLeading);
@@ -214,6 +282,15 @@ public class PDFMapper {
                         contentStream.showText(legendLines.get(i));
                     }
                     contentStream.endText();
+
+                    for (int i = 0; i < legendLines.size(); i++) {
+                        String iconResource = legendLineIcon.get(i);
+                        if (iconResource != null) {
+                            float lineY = firstLineY - i * legendLeading;
+                            PDImageXObject icon = loadedImagesCache.computeIfAbsent(iconResource, f -> loadImage(f, document));
+                            contentStream.drawImage(icon, startX, lineY - 1f, GARDEN_ICON_SIZE, GARDEN_ICON_SIZE);
+                        }
+                    }
                 }
 
                 contentStream.beginText();
@@ -290,6 +367,20 @@ public class PDFMapper {
         } else {
             return PDType0Font.load(document, new ByteArrayInputStream(bold ? quicksandBoldTtf : quicksandTtf));
         }
+    }
+
+    /** The icon resource shown for a garden event, or {@code null} for non-garden events (which keep text). */
+    private static String gardenIconResource(String eventTypeId) {
+        return switch (eventTypeId) {
+            case "garden-biodynamic-root" -> "/public/emoji/root.png";
+            case "garden-biodynamic-leaf" -> "/public/emoji/leaf.png";
+            case "garden-biodynamic-flower" -> "/public/emoji/flower.png";
+            case "garden-biodynamic-fruit" -> "/public/emoji/fruit.png";
+            case "garden-biodynamic-badday" -> "/public/emoji/badday.png";
+            case "garden-synodic-waxing" -> "/public/emoji/waxing.png";
+            case "garden-synodic-waning" -> "/public/emoji/waning.png";
+            default -> null;
+        };
     }
 
     private Optional<String> getMoonIconFilename(List<EventInstance> eventInstances, Hemisphere hemisphere) {

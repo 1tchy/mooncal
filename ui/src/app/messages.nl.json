@@ -49,8 +49,8 @@
     "lunareclipse": "Maansverduistering",
     "solareclipse": "Zonsverduistering",
     "moonlanding": "Maanlanding",
-    "garden-synodic": "Garden: phases (synodic)",
-    "garden-biodynamic": "Garden: zodiac (biodynamic)"
+    "garden-synodic": "Tuin: fasen (synodisch)",
+    "garden-biodynamic": "Tuin: dierenriem (biodynamisch)"
   },
   "time": {
     "title": "Datum",
@@ -209,7 +209,7 @@
     "thanksForFeedback": "Bedankt voor uw feedback."
   },
   "garden": {
-    "disclaimer": "\"Gardening by the moon\" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice."
+    "disclaimer": "„Tuinieren op het ritme van de maan” is een traditionele praktijk die hier wordt aangeboden vanwege de culturele en historische interesse. Gecontroleerde wetenschappelijke studies hebben geen betrouwbaar bewijs gevonden dat maancycli de plantengroei beïnvloeden — het lokale klimaat, de bodem en het seizoen zijn veel belangrijker. Beleef er plezier aan, maar niet als teeltadvies."
   },
   "error": {
     "title": "Fout",
