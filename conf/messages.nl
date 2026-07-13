@@ -57,10 +57,6 @@ pdf.month.12=December
 pdf.timezone=Tijdzone
 
 garden.disclaimer="Tuinieren op het ritme van de maan" is een traditionele praktijk die hier wordt aangeboden vanwege de culturele en historische interesse. Gecontroleerde wetenschappelijke studies hebben geen betrouwbaar bewijs gevonden dat maancycli de plantengroei beïnvloeden — het lokale klimaat, de bodem en het seizoen zijn veel belangrijker. Beleef er plezier aan, maar niet als teeltadvies.
-garden.synodic.waxing.title=Wassende maan — bovengrondse gewassen zaaien
-garden.synodic.waxing.guidance=Van nieuwe maan tot volle maan. Traditioneel een tijdvenster om blad- en bovengrondse gewassen te zaaien, zoals sla, spinazie, kool en granen.
-garden.synodic.waning.title=Afnemende maan — wortelwerk en oogst
-garden.synodic.waning.guidance=Van volle maan tot nieuwe maan. Traditioneel geliefd voor wortelgewassen, verplanten, snoeien en oogsten voor de opslag.
 
 garden.part.root=Wortel
 garden.part.leaf=Blad
@@ -83,6 +79,4 @@ garden.pdf.legend.root=Worteldagen: de maan staat voor een aarde-sterrenbeeld. I
 garden.pdf.legend.leaf=Bladdagen: de maan staat voor een water-sterrenbeeld. In de overlevering passen deze dagen bij bladgewassen zoals sla, spinazie, snijbiet, kool en boerenkool — om planten te zaaien en te verzorgen die om hun blad worden geteeld.
 garden.pdf.legend.flower=Bloemdagen: de maan staat voor een lucht-sterrenbeeld. In de overlevering passen deze dagen bij bloemen en bloeiende planten zoals broccoli, sierbloemen en in bloei geoogste kruiden — om te zaaien en te verzorgen wat bloeit.
 garden.pdf.legend.fruit=Vruchtdagen: de maan staat voor een vuur-sterrenbeeld. In de overlevering passen deze dagen bij vrucht- en zaadgewassen zoals tomaten, bonen, paprika's, pompoen en granen — om vrucht of zaad te zaaien en te oogsten.
-garden.pdf.legend.waxing=Wassende maan: van nieuwe maan tot volle maan. In de overlevering een tijdvenster om blad- en bovengrondse gewassen te zaaien, zoals sla, spinazie, kool en granen.
-garden.pdf.legend.waning=Afnemende maan: van volle maan tot nieuwe maan. Traditioneel geliefd voor wortelwerk, verplanten, snoeien en oogsten voor de opslag.
 garden.pdf.legend.badday=Ongunstige tuindag: de maan kruist een maansknoop of er valt een verduistering in de periode. In de overlevering een rustdag – niet zaaien en niet planten.

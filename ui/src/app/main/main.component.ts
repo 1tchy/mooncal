@@ -165,7 +165,6 @@ export class MainComponent implements AfterViewInit {
       + this.flagParam("events[lunareclipse]", this.events["lunareclipse"])
       + this.flagParam("events[solareclipse]", this.events["solareclipse"])
       + this.flagParam("events[moonlanding]", this.events["moonlanding"])
-      + this.flagParam("events[garden-synodic]", this.events["garden-synodic"])
       + this.flagParam("events[garden-biodynamic]", this.events["garden-biodynamic"]);
     if (useFromTo) {
       options += "&from=" + this.formatDate(this.fromDebounced) + "&to=" + this.formatDate(this.toDebounced);

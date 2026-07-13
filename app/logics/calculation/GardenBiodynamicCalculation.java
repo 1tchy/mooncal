@@ -17,7 +17,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 // Singleton so the eclipse CSVs are parsed once rather than on every calendar request
-// (the class holds no per-request state after construction). Mirrors MoonPhaseData.
+// (the class holds no per-request state after construction).
 @Singleton
 public class GardenBiodynamicCalculation extends Calculation {
 

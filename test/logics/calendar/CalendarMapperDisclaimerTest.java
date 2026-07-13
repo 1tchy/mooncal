@@ -20,7 +20,7 @@ class CalendarMapperDisclaimerTest {
     void addsCalendarDescriptionWhenGardenEventPresent() {
         CalendarMapper mapper = new CalendarMapper(messages);
         EventInstance garden = new EventInstance(ZonedDateTime.now(ZoneOffset.UTC),
-                "t", "t", "d", ZoneOffset.UTC, "garden-synodic-waxing");
+                "t", "t", "d", ZoneOffset.UTC, "garden-biodynamic-fruit");
         String ics = mapper.map(List.of(garden), 0, Lang.forCode("en"));
         assertTrue(ics.contains("X-WR-CALDESC"), "Expected X-WR-CALDESC in ICS for garden event");
         assertTrue(ics.contains("DISCLAIMER_TEXT"), "Expected disclaimer text in ICS for garden event");

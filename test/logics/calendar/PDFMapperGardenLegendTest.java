@@ -61,9 +61,8 @@ class PDFMapperGardenLegendTest {
     @Test
     void noLegendWhenNoBiodynamicEvent() throws IOException {
         PDFMapper mapper = new PDFMapper(messages);
-        EventInstance synodic = new EventInstance(dt, "Waxing", "Waxing", null, ZoneOffset.UTC, "garden-synodic-waxing");
         EventInstance fullmoon = new EventInstance(dt, "Full Moon", "Full Moon", null, ZoneOffset.UTC, "fullmoon");
-        String text = extractText(mapper.map(List.of(synodic, fullmoon), Lang.forCode("en"), Hemisphere.NORTHERN));
+        String text = extractText(mapper.map(List.of(fullmoon), Lang.forCode("en"), Hemisphere.NORTHERN));
         assertFalse(text.contains("LEGENDROOT"), "Legend should only appear for biodynamic events. Extracted: " + text);
     }
 

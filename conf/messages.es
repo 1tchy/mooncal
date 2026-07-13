@@ -57,10 +57,6 @@ pdf.month.12=Diciembre
 pdf.timezone=Zona horaria
 
 garden.disclaimer="La jardinería según la luna" es una práctica tradicional que se ofrece aquí por interés cultural e histórico. Los estudios científicos controlados no han encontrado pruebas fiables de que los ciclos lunares influyan en el crecimiento de las plantas — el clima, el suelo y la estación de cada lugar importan mucho más. Disfrútala por placer, no como consejo agronómico.
-garden.synodic.waxing.title=Luna creciente — sembrar cultivos aéreos
-garden.synodic.waxing.guidance=De luna nueva a luna llena. Tradicionalmente una ventana para sembrar cultivos de hoja y aéreos como lechuga, espinaca, col y cereales.
-garden.synodic.waning.title=Luna menguante — trabajo de raíz y cosecha
-garden.synodic.waning.guidance=De luna llena a luna nueva. Tradicionalmente favorecida para cultivos de raíz, trasplante, poda y cosecha para almacenamiento.
 
 garden.part.root=raíz
 garden.part.leaf=hoja
@@ -83,6 +79,4 @@ garden.pdf.legend.root=Días de raíz: la Luna se sitúa ante una constelación 
 garden.pdf.legend.leaf=Días de hoja: la Luna se sitúa ante una constelación de agua. En la tradición popular estos días convienen a los cultivos de hoja como lechuga, espinaca, acelga, col y berza — para sembrar y cuidar las plantas que se cultivan por su follaje.
 garden.pdf.legend.flower=Días de flor: la Luna se sitúa ante una constelación de aire. En la tradición popular estos días convienen a las flores y plantas florales como el brócoli, las flores ornamentales y las hierbas recogidas en flor — para sembrar y cuidar lo que florece.
 garden.pdf.legend.fruit=Días de fruto: la Luna se sitúa ante una constelación de fuego. En la tradición popular estos días convienen a los cultivos de fruto y semilla como tomates, judías, pimientos, calabazas y cereales — para sembrar y cosechar fruto o semilla.
-garden.pdf.legend.waxing=Luna creciente: de luna nueva a luna llena. En la tradición popular una ventana para sembrar cultivos de hoja y aéreos como lechuga, espinaca, col y cereales.
-garden.pdf.legend.waning=Luna menguante: de luna llena a luna nueva. Tradicionalmente favorecida para el trabajo de raíz, el trasplante, la poda y la cosecha para almacenamiento.
 garden.pdf.legend.badday=Día de jardín desfavorable: la Luna cruza un nodo, o cae un eclipse en el periodo. En la tradición popular un día para descansar — ni sembrar ni plantar.

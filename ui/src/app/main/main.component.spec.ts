@@ -41,15 +41,15 @@ describe('MainComponent', () => {
   });
 
   it('paramsAsString includes an enabled event flag', () => {
-    component.events['garden-synodic'] = true;
+    component.events['garden-biodynamic'] = true;
     const params = component.paramsAsString(true);
-    expect(params).toContain('events[garden-synodic]=true');
+    expect(params).toContain('events[garden-biodynamic]=true');
   });
 
   it('paramsAsString omits a disabled event flag', () => {
-    component.events['garden-biodynamic'] = false;
+    component.events['moonlanding'] = false;
     const params = component.paramsAsString(true);
-    expect(params).not.toContain('events[garden-biodynamic]');
+    expect(params).not.toContain('events[moonlanding]');
   });
 
   it('formats a single-day event as one date (no range)', () => {

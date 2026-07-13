@@ -18,9 +18,8 @@ class TotalCalculationBiodynamicWiringTest {
                 inv.getArguments().length > 1 ? inv.getArguments()[1].toString() : "");
         MoonPhasesCalculation phases = mock(MoonPhasesCalculation.class);
         MoonEventCalculation events = mock(MoonEventCalculation.class);
-        GardenSynodicCalculation synodic = mock(GardenSynodicCalculation.class);
         GardenBiodynamicCalculation biodynamic = new GardenBiodynamicCalculation(new logics.astronomy.MeeusEphemeris(), messages);
-        TotalCalculation total = new TotalCalculation(phases, events, synodic, biodynamic, messages);
+        TotalCalculation total = new TotalCalculation(phases, events, biodynamic, messages);
 
         RequestForm f = new RequestForm();
         f.setLang(Lang.forCode("en"));

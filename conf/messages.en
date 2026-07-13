@@ -57,10 +57,6 @@ pdf.month.12=December
 pdf.timezone=Timezone
 
 garden.disclaimer="Gardening by the moon" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice.
-garden.synodic.waxing.title=Waxing moon — sow above-ground crops
-garden.synodic.waxing.guidance=From new to full moon. A traditional window for sowing leafy and above-ground crops such as lettuce, spinach, cabbage and grains.
-garden.synodic.waning.title=Waning moon — root work and harvest
-garden.synodic.waning.guidance=From full to new moon. Traditionally favoured for root crops, transplanting, pruning and harvesting for storage.
 
 garden.part.root=root
 garden.part.leaf=leaf
@@ -83,6 +79,4 @@ garden.pdf.legend.root=Root days: the Moon stands before an earth constellation.
 garden.pdf.legend.leaf=Leaf days: the Moon stands before a water constellation. In the folk tradition these days suit leafy crops such as lettuce, spinach, chard, cabbage and kale — for sowing and tending plants grown for their foliage.
 garden.pdf.legend.flower=Flower days: the Moon stands before an air constellation. In the folk tradition these days suit flowers and flowering plants such as broccoli, ornamental blooms and herbs gathered in flower — for sowing and tending what blossoms.
 garden.pdf.legend.fruit=Fruit days: the Moon stands before a fire constellation. In the folk tradition these days suit fruiting and seed crops such as tomatoes, beans, peppers, squash and grains — for sowing and harvesting fruit or seed.
-garden.pdf.legend.waxing=Waxing moon: from new to full moon. In the folk tradition a window for sowing leafy and above-ground crops such as lettuce, spinach, cabbage and grains.
-garden.pdf.legend.waning=Waning moon: from full to new moon. Traditionally favoured for root work, transplanting, pruning and harvesting for storage.
 garden.pdf.legend.badday=Unfavourable garden day: the Moon crosses a node, or an eclipse falls in the period. In the folk tradition a day to rest — neither sow nor plant.

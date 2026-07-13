@@ -80,7 +80,6 @@ export interface Events {
   lunareclipse: string
   solareclipse: string
   moonlanding: string
-  'garden-synodic': string
   'garden-biodynamic': string
 }
 

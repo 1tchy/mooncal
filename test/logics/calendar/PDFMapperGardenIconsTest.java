@@ -51,7 +51,7 @@ class PDFMapperGardenIconsTest extends WithApplication {
         f.setStyle(EventStyle.WITH_DESCRIPTION.getStyle());
         f.setEvents(Map.of(
                 EventType.LUNARECLIPSE, true, EventType.SOLARECLIPSE, true, EventType.MOONLANDING, false,
-                EventType.GARDEN_SYNODIC, withGarden, EventType.GARDEN_BIODYNAMIC, withGarden));
+                EventType.GARDEN_BIODYNAMIC, withGarden));
         f.setHemisphere("northern");
         f.setLang(Lang.forCode("en"));
         return calculation.calculate(f);
@@ -78,22 +78,20 @@ class PDFMapperGardenIconsTest extends WithApplication {
         // Write the garden PDF out so it can be inspected visually.
         Files.write(Path.of("target/garden-icons-test.pdf"), gardenPdf);
 
-        // The seven distinct garden icons (root/leaf/flower/fruit/bad-day/waxing/waning) appear over a full year,
+        // The five distinct biodynamic garden icons (root/leaf/flower/fruit/bad-day) appear over a full year,
         // so the garden PDF embeds clearly more image XObjects than the same calendar without garden events.
         int garden = imageCount(gardenPdf);
         int plain = imageCount(plainPdf);
-        assertTrue(garden >= plain + 5,
+        assertTrue(garden >= plain + 4,
                 "expected garden PDF to embed the garden icons; images garden=" + garden + " plain=" + plain);
     }
 
     @Test
-    void gardenPdfShowsTheSynodicAndBadDayLegend() throws IOException {
+    void gardenPdfShowsTheBiodynamicAndBadDayLegend() throws IOException {
         byte[] pdf = cut.map(events(true), Lang.forCode("en"), Hemisphere.NORTHERN);
         try (PDDocument doc = Loader.loadPDF(pdf)) {
             String text = new PDFTextStripper().getText(doc);
-            assertTrue(text.contains("Waxing moon"), "synodic waxing legend missing: " + text);
-            assertTrue(text.contains("Waning moon"), "synodic waning legend missing");
-            assertTrue(text.contains("Unfavourable garden day"), "bad-day legend missing");
+            assertTrue(text.contains("Unfavourable garden day"), "bad-day legend missing: " + text);
             assertTrue(text.contains("Root days"), "biodynamic legend missing");
         }
     }

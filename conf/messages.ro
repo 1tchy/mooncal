@@ -57,10 +57,6 @@ pdf.month.12=Decembrie
 pdf.timezone=Fus orar
 
 garden.disclaimer="Grădinăritul după Lună" este o practică tradițională prezentată aici din interes cultural și istoric. Studiile științifice controlate nu au găsit dovezi sigure că ciclurile lunare ar influența creșterea plantelor — clima, solul și anotimpul din zona ta contează mult mai mult. Bucură-te de ea ca de o curiozitate, nu ca de un sfat agronomic.
-garden.synodic.waxing.title=Lună în creștere — semănați culturi de suprafață
-garden.synodic.waxing.guidance=De la Lună nouă la Lună plină. Tradițional, o fereastră potrivită pentru semănatul plantelor de frunze și al culturilor de suprafață precum salata, spanacul, varza și cerealele.
-garden.synodic.waning.title=Lună în descreștere — lucrări la rădăcini și recoltare
-garden.synodic.waning.guidance=De la Lună plină la Lună nouă. Tradițional preferată pentru culturile de rădăcină, transplantare, tăiere și recoltarea pentru păstrare.
 
 garden.part.root=rădăcină
 garden.part.leaf=frunză
@@ -83,6 +79,4 @@ garden.pdf.legend.root=Zile de rădăcină: Luna se află în dreptul unei const
 garden.pdf.legend.leaf=Zile de frunză: Luna se află în dreptul unei constelații de apă. În tradiția populară aceste zile se potrivesc legumelor de frunze precum salata, spanacul, sfecla de frunze, varza și kale — pentru semănat și îngrijit plantele cultivate pentru frunzele lor.
 garden.pdf.legend.flower=Zile de floare: Luna se află în dreptul unei constelații de aer. În tradiția populară aceste zile se potrivesc florilor și plantelor cu flori precum broccoli, florile ornamentale și ierburile recoltate în floare — pentru semănat și îngrijit ceea ce înflorește.
 garden.pdf.legend.fruit=Zile de fruct: Luna se află în dreptul unei constelații de foc. În tradiția populară aceste zile se potrivesc plantelor de fruct și de sămânță precum roșiile, fasolea, ardeii, dovleceii și cerealele — pentru semănat și recoltat fructul sau sămânța.
-garden.pdf.legend.waxing=Lună în creștere: de la Lună nouă la Lună plină. În tradiția populară o fereastră pentru semănatul plantelor de frunze și al culturilor de suprafață precum salata, spanacul, varza și cerealele.
-garden.pdf.legend.waning=Lună în descreștere: de la Lună plină la Lună nouă. Tradițional preferată pentru lucrări la rădăcini, transplantare, tăiere și recoltarea pentru păstrare.
 garden.pdf.legend.badday=Zi de grădină nefavorabilă: Luna traversează un nod lunar sau o eclipsă cade în această perioadă. În tradiția populară o zi de repaus — nici de semănat, nici de plantat.

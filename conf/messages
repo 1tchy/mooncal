@@ -57,10 +57,6 @@ pdf.month.12=Dezember
 pdf.timezone=Zeitzone
 
 garden.disclaimer=„Gärtnern nach dem Mond" ist eine traditionelle Praxis, die hier aus kulturellem und historischem Interesse angeboten wird. Kontrollierte wissenschaftliche Studien fanden keine verlässlichen Belege dafür, dass Mondzyklen das Pflanzenwachstum beeinflussen — Klima, Boden und Jahreszeit vor Ort sind weit wichtiger. Viel Freude damit, aber nicht als Anbau-Ratschlag.
-garden.synodic.waxing.title=Zunehmender Mond — oberirdische Pflanzen säen
-garden.synodic.waxing.guidance=Von Neumond bis Vollmond. Traditionell ein Zeitfenster zum Säen von Blatt- und oberirdischen Pflanzen wie Salat, Spinat, Kohl und Getreide.
-garden.synodic.waning.title=Abnehmender Mond — Wurzelarbeit und Ernte
-garden.synodic.waning.guidance=Von Vollmond bis Neumond. Traditionell bevorzugt für Wurzelkulturen, Umpflanzen, Schnitt und Ernte zur Lagerung.
 
 garden.part.root=Wurzel
 garden.part.leaf=Blatt
@@ -83,6 +79,4 @@ garden.pdf.legend.root=Wurzeltage: Der Mond steht vor einem Erd-Sternbild. In de
 garden.pdf.legend.leaf=Blatttage: Der Mond steht vor einem Wasser-Sternbild. In der Überlieferung passen diese Tage zu Blattgemüse wie Salat, Spinat, Mangold, Kohl und Grünkohl — zum Säen und Pflegen von Pflanzen, die wegen ihrer Blätter angebaut werden.
 garden.pdf.legend.flower=Blütentage: Der Mond steht vor einem Luft-Sternbild. In der Überlieferung passen diese Tage zu Blumen und blühenden Pflanzen wie Brokkoli, Zierblumen und in der Blüte geernteten Kräutern — zum Säen und Pflegen dessen, was blüht.
 garden.pdf.legend.fruit=Fruchttage: Der Mond steht vor einem Feuer-Sternbild. In der Überlieferung passen diese Tage zu Frucht- und Samenpflanzen wie Tomaten, Bohnen, Paprika, Kürbis und Getreide — zum Säen und Ernten von Frucht oder Samen.
-garden.pdf.legend.waxing=Zunehmender Mond: von Neumond bis Vollmond. In der Überlieferung ein Zeitfenster zum Säen von Blatt- und oberirdischen Kulturen wie Salat, Spinat, Kohl und Getreide.
-garden.pdf.legend.waning=Abnehmender Mond: von Vollmond bis Neumond. Traditionell bevorzugt für Wurzelarbeit, Umpflanzen, Schnitt und die Ernte zur Lagerung.
 garden.pdf.legend.badday=Ungünstiger Gartentag: der Mond kreuzt einen Mondknoten oder es fällt eine Finsternis hinein. In der Überlieferung ein Ruhetag – weder säen noch pflanzen.

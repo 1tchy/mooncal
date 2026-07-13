@@ -3,7 +3,7 @@ package models;
 public enum EventType {
 
     LUNARECLIPSE("lunareclipse"), SOLARECLIPSE("solareclipse"), MOONLANDING("moonlanding"),
-    GARDEN_SYNODIC("garden-synodic"), GARDEN_BIODYNAMIC("garden-biodynamic");
+    GARDEN_BIODYNAMIC("garden-biodynamic");
 
     private final String key;
 

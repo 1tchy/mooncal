@@ -12,7 +12,7 @@ export class MainSettingsService {
   };
   style = "withDescription";
   hemisphere: 'northern' | 'southern' = 'northern';
-  events: options = {lunareclipse: true, solareclipse: true, moonlanding: true, 'garden-synodic': false, 'garden-biodynamic': false};
+  events: options = {lunareclipse: true, solareclipse: true, moonlanding: true, 'garden-biodynamic': false};
   from = MainSettingsService.initialFrom();
   to = MainSettingsService.initialTo();
   zone = MainSettingsService.detectTimezone();

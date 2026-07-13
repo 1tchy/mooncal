@@ -57,10 +57,6 @@ pdf.month.12=Décembre
 pdf.timezone=fuseau horaire
 
 garden.disclaimer=Le « jardinage avec la Lune » est une pratique traditionnelle proposée ici par intérêt culturel et historique. Les études scientifiques contrôlées n'ont pas trouvé de preuves fiables que les cycles lunaires influencent la croissance des plantes — le climat, le sol et la saison de votre région comptent bien davantage. Profitez-en pour le plaisir, non comme un conseil de culture.
-garden.synodic.waxing.title=Lune croissante — semer les plantes aériennes
-garden.synodic.waxing.guidance=De la nouvelle lune à la pleine lune. Une période traditionnellement propice au semis des plantes à feuilles et aériennes comme la laitue, l'épinard, le chou et les céréales.
-garden.synodic.waning.title=Lune décroissante — travail des racines et récolte
-garden.synodic.waning.guidance=De la pleine lune à la nouvelle lune. Traditionnellement favorable aux cultures de racines, au repiquage, à la taille et à la récolte pour la conservation.
 
 garden.part.root=racine
 garden.part.leaf=feuille
@@ -83,6 +79,4 @@ garden.pdf.legend.root=Jours racine : la Lune se trouve devant une constellation
 garden.pdf.legend.leaf=Jours feuille : la Lune se trouve devant une constellation d'eau. Dans la tradition populaire, ces jours conviennent aux légumes-feuilles comme la laitue, l'épinard, la bette, le chou et le chou frisé — pour semer et soigner les plantes cultivées pour leur feuillage.
 garden.pdf.legend.flower=Jours fleur : la Lune se trouve devant une constellation d'air. Dans la tradition populaire, ces jours conviennent aux fleurs et aux plantes à fleurs comme le brocoli, les fleurs ornementales et les herbes cueillies en fleur — pour semer et soigner ce qui fleurit.
 garden.pdf.legend.fruit=Jours fruit : la Lune se trouve devant une constellation de feu. Dans la tradition populaire, ces jours conviennent aux plantes à fruits et à graines comme les tomates, les haricots, les poivrons, les courges et les céréales — pour semer et récolter le fruit ou la graine.
-garden.pdf.legend.waxing=Lune croissante : de la nouvelle lune à la pleine lune. Dans la tradition populaire, une période propice au semis des plantes à feuilles et aériennes comme la laitue, l'épinard, le chou et les céréales.
-garden.pdf.legend.waning=Lune décroissante : de la pleine lune à la nouvelle lune. Traditionnellement favorable au travail des racines, au repiquage, à la taille et à la récolte pour la conservation.
 garden.pdf.legend.badday=Jour de jardinage défavorable : la Lune croise un nœud, ou une éclipse survient durant la période. Dans la tradition populaire, un jour de repos — ne rien semer ni planter.

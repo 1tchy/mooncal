@@ -235,25 +235,18 @@ public class PDFMapper {
 
                 // Explain the garden icons shown in the grid, one wrapped paragraph per icon.
                 // No moon-gardening disclaimer in the PDF (it lives in the .ics description and the web UI).
-                boolean hasSynodic = events.stream().anyMatch(e -> e.getEventTypeId().startsWith("garden-synodic-"));
                 boolean hasBiodynamic = events.stream().anyMatch(e -> e.getEventTypeId().startsWith("garden-biodynamic-"));
-                if (hasSynodic || hasBiodynamic) {
+                if (hasBiodynamic) {
                     int legendFontSize = FONT_SIZE - 2;
                     float legendLeading = legendFontSize + 1f;
                     float legendIndent = GARDEN_ICON_SIZE + 3f;
                     float legendMaxWidth = 12 * MONTH_ROW_WIDTH - legendIndent;
 
                     List<String[]> entries = new ArrayList<>(); // {iconResource, messageKey}
-                    if (hasSynodic) {
-                        entries.add(new String[]{"/public/emoji/waxing.png", "garden.pdf.legend.waxing"});
-                        entries.add(new String[]{"/public/emoji/waning.png", "garden.pdf.legend.waning"});
+                    for (String part : new String[]{"root", "leaf", "flower", "fruit"}) {
+                        entries.add(new String[]{"/public/emoji/" + part + ".png", "garden.pdf.legend." + part});
                     }
-                    if (hasBiodynamic) {
-                        for (String part : new String[]{"root", "leaf", "flower", "fruit"}) {
-                            entries.add(new String[]{"/public/emoji/" + part + ".png", "garden.pdf.legend." + part});
-                        }
-                        entries.add(new String[]{"/public/emoji/badday.png", "garden.pdf.legend.badday"});
-                    }
+                    entries.add(new String[]{"/public/emoji/badday.png", "garden.pdf.legend.badday"});
 
                     // Flatten to lines; the first line of each entry carries its icon. Entries follow one
                     // another without a blank line — the icon on each first line separates them — to keep the
@@ -377,8 +370,6 @@ public class PDFMapper {
             case "garden-biodynamic-flower" -> "/public/emoji/flower.png";
             case "garden-biodynamic-fruit" -> "/public/emoji/fruit.png";
             case "garden-biodynamic-badday" -> "/public/emoji/badday.png";
-            case "garden-synodic-waxing" -> "/public/emoji/waxing.png";
-            case "garden-synodic-waning" -> "/public/emoji/waning.png";
             default -> null;
         };
     }

@@ -45,13 +45,13 @@ class PDFMapperDayOrderTest {
     @Test
     void allDayBadDayOrdersWithOngoingPeriodsAtStartOfDay() {
         EventInstance badDay = event(utc(2026, 1, 10, 0, 0), null, "garden-biodynamic-badday");
-        EventInstance ongoingSynodic = event(utc(2026, 1, 6, 18, 0), utc(2026, 1, 18, 5, 0), "garden-synodic-waning");
+        EventInstance ongoingLeaf = event(utc(2026, 1, 6, 18, 0), utc(2026, 1, 18, 5, 0), "garden-biodynamic-leaf");
         EventInstance newFruit = event(utc(2026, 1, 10, 9, 30), utc(2026, 1, 12, 3, 0), "garden-biodynamic-fruit");
 
-        // 00:00 events (bad day + ongoing synodic) come before the 09:30 fruit; the two 00:00 events
-        // tie-break by type id ("garden-biodynamic-badday" < "garden-synodic-waning").
-        assertEquals(List.of("garden-biodynamic-badday", "garden-synodic-waning", "garden-biodynamic-fruit"),
-                sortedIds(List.of(newFruit, ongoingSynodic, badDay)));
+        // 00:00 events (bad day + ongoing leaf period) come before the 09:30 fruit; the two 00:00 events
+        // tie-break by type id ("garden-biodynamic-badday" < "garden-biodynamic-leaf").
+        assertEquals(List.of("garden-biodynamic-badday", "garden-biodynamic-leaf", "garden-biodynamic-fruit"),
+                sortedIds(List.of(newFruit, ongoingLeaf, badDay)));
     }
 
     @Test
