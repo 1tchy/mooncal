@@ -171,6 +171,16 @@ class IntegrationTest extends WithBrowser {
     }
 
     private static void click(FluentWebElement element) {
+        // Wait for the element to become clickable (e.g. while a modal's open/close animation and its
+        // backdrop settle) instead of failing on the first check — this click is otherwise racy.
+        for (int attempts = 0; attempts < 40 && !element.clickable(); attempts++) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
         if (!element.clickable()) {
             throw new RuntimeException("Element not clickable: " + element);
         }

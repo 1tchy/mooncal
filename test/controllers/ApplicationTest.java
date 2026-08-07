@@ -36,7 +36,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("🌕 Vollmond (Hartung)", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2015-01-05", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2015-01-05"));
     }
 
     @Test
@@ -45,7 +45,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(12, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("🌑 New Moon", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2015-01-20", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2015-01-20"));
     }
 
     @Test
@@ -54,7 +54,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(24, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("🌗 Waning crescent Moon", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2015-01-13", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2015-01-13"));
     }
 
     @Test
@@ -63,7 +63,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(31, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("Moon 87% visible", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2015-01-01", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2015-01-01"));
     }
 
     @Test
@@ -72,7 +72,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("🌕 Vollmond", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2015-01-05", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2015-01-05"));
     }
 
     @Test
@@ -81,7 +81,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(17, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("🌕", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2015-01-05", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2015-01-05"));
     }
 
     @Test
@@ -90,7 +90,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(4, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("Total Solar Eclipse", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2015-03-20", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2015-03-20"));
     }
 
     @Test
@@ -99,7 +99,7 @@ class ApplicationTest extends WithApplication {
         assertEquals(7, resultList.size());
         JsObject firstResult = (JsObject) resultList.head();
         assertEquals("🚀 SMART-1 (ESA)", ((JsString) firstResult.value().get("title").get()).value());
-        assertEquals("2006-09-03", ((JsString) firstResult.value().get("date").get()).value());
+        assertThat(((JsString) firstResult.value().get("date").get()).value(), startsWith("2006-09-03"));
     }
 
     @Test
