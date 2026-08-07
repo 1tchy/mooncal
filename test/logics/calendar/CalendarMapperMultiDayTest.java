@@ -37,6 +37,22 @@ class CalendarMapperMultiDayTest {
     }
 
     @Test
+    void lateNightStartingGardenPeriodDropsItsFirstDayInIcs() {
+        // 2026-08-06: the Fruit->Root boundary is at 22:25, so the Root period only touches Aug 6 for
+        // ~1.5h. Like the PDF, the ICS must not mark Aug 6 as a root day — the period starts on Aug 7.
+        ZonedDateTime start = ZonedDateTime.of(2026, 8, 6, 22, 25, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime end   = ZonedDateTime.of(2026, 8, 9, 0, 20, 0, 0, ZoneOffset.UTC);
+        EventInstance root = new EventInstance(start, end,
+                "Root Day", "Root", "desc", ZoneOffset.UTC, "garden-biodynamic-root");
+
+        String ics = mapper().map(List.of(root), 0, Lang.forCode("en"));
+
+        assertTrue(ics.contains("DTSTART;VALUE=DATE:20260807"), "root should start Aug 7 (Aug 6 trimmed) in:\n" + ics);
+        // End 00:20 < 06:00 trims Aug 9 too; last covered day Aug 8 -> exclusive DTEND Aug 9.
+        assertTrue(ics.contains("DTEND;VALUE=DATE:20260809"), "expected DTEND 20260809 in:\n" + ics);
+    }
+
+    @Test
     void singleDayEventProducesNoDtend() {
         ZonedDateTime start = ZonedDateTime.of(2026, 3, 10, 8, 0, 0, 0, ZoneOffset.UTC);
         EventInstance event = new EventInstance(start,

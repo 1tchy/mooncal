@@ -54,10 +54,6 @@ public class PDFMapper {
     private static final int TABLE_OFFSET_FROM_TOP = 80;
     private static final int DAY_EVENT_TEXT_PADDING = 2;
     private static final int FONT_SIZE = 8;
-    // A multi-day garden period is dropped from its first day if it starts after this time,
-    // and from its last day if it ends before GARDEN_EDGE_EARLY_END, to avoid edge-day clutter.
-    private static final LocalTime GARDEN_EDGE_LATE_START = LocalTime.of(22, 0);
-    private static final LocalTime GARDEN_EDGE_EARLY_END = LocalTime.of(6, 0);
     // Garden events are shown in the grid as small icons rather than names.
     private static final float GARDEN_ICON_SIZE = 7f;
     private static final float GARDEN_ICON_GAP = 1.5f;
@@ -84,20 +80,11 @@ public class PDFMapper {
         int year = zonedDateTime.getYear();
         Map<LocalDate, List<EventInstance>> eventsByDate = new HashMap<>();
         for (EventInstance e : events) {
-            LocalDate start = e.getLocalDate();
-            LocalDate end = e.isMultiDay() ? e.getEndLocalDate() : start;
+            // getDisplayStart/EndLocalDate apply the shared garden edge-day trimming (so PDF and iCal agree).
+            LocalDate start = e.getDisplayStartLocalDate();
+            LocalDate end = e.isMultiDay() ? e.getDisplayEndLocalDate() : start;
             for (LocalDate d = start; !d.isAfter(end); d = d.plusDays(1)) {
                 if (d.getYear() == year) {
-                    if (e.isGardenEvent()) {
-                        // Don't clutter a day's cell with a garden period that only just touches it:
-                        // skip its first day if it starts late at night, and its last day if it ends early.
-                        if (d.equals(start) && e.getDateTime().toLocalTime().isAfter(GARDEN_EDGE_LATE_START)) {
-                            continue;
-                        }
-                        if (e.isMultiDay() && d.equals(end) && e.getEndDateTime().toLocalTime().isBefore(GARDEN_EDGE_EARLY_END)) {
-                            continue;
-                        }
-                    }
                     eventsByDate.computeIfAbsent(d, k -> new ArrayList<>()).add(e);
                 }
             }

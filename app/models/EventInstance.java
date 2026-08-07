@@ -5,12 +5,17 @@ import org.jetbrains.annotations.Nullable;
 import play.i18n.Lang;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class EventInstance implements Comparable<EventInstance> {
     private static final DateTimeFormatter LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    // A garden period that only just touches an edge day is not counted on that day: it is dropped from
+    // its first day when it starts after this time, and from its last day when it ends before the other.
+    private static final LocalTime GARDEN_EDGE_LATE_START = LocalTime.of(22, 0);
+    private static final LocalTime GARDEN_EDGE_EARLY_END = LocalTime.of(6, 0);
 
     @NotNull
     private final ZonedDateTime dateTime;
@@ -85,6 +90,37 @@ public class EventInstance implements Comparable<EventInstance> {
 
     public boolean isMultiDay() {
         return endDateTime != null && getEndLocalDate().isAfter(getLocalDate());
+    }
+
+    /**
+     * First local day on which this event should be shown. For a multi-day garden period that starts late
+     * at night (after 22:00) the first day is dropped, since the period barely touches it. Used by both the
+     * PDF and the iCal renderer so they agree on which days a period covers.
+     */
+    public LocalDate getDisplayStartLocalDate() {
+        if (isGardenEvent() && isMultiDay() && dateTime.toLocalTime().isAfter(GARDEN_EDGE_LATE_START)) {
+            LocalDate trimmed = getLocalDate().plusDays(1);
+            if (!trimmed.isAfter(getDisplayEndLocalDateRaw())) {
+                return trimmed;
+            }
+        }
+        return getLocalDate();
+    }
+
+    /**
+     * Last local day on which this event should be shown. For a multi-day garden period that ends early in
+     * the morning (before 06:00) the last day is dropped. Mirror of {@link #getDisplayStartLocalDate()}.
+     */
+    public LocalDate getDisplayEndLocalDate() {
+        LocalDate trimmed = getDisplayEndLocalDateRaw();
+        return trimmed.isBefore(getLocalDate()) ? getEndLocalDate() : trimmed;
+    }
+
+    private LocalDate getDisplayEndLocalDateRaw() {
+        if (isGardenEvent() && isMultiDay() && endDateTime.toLocalTime().isBefore(GARDEN_EDGE_EARLY_END)) {
+            return getEndLocalDate().minusDays(1);
+        }
+        return getEndLocalDate();
     }
 
     @Nullable

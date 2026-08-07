@@ -63,7 +63,7 @@ public class CalendarMapper {
 
     private void addEvent(Calendar calendar, EventInstance event, Url thankUrl) {
         final VEvent calEvent = event.isMultiDay()
-                ? new VEvent(event.getDateTime().toLocalDate(), event.getEndLocalDate().plusDays(1), event.getTitle())
+                ? new VEvent(event.getDisplayStartLocalDate(), event.getDisplayEndLocalDate().plusDays(1), event.getTitle())
                 : new VEvent(event.getDateTime().toLocalDate(), event.getTitle());
         if (event.getDescription() != null) {
             calEvent.add(new Description(event.getDescription()));

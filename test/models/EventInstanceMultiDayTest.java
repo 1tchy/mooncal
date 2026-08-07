@@ -108,4 +108,36 @@ class EventInstanceMultiDayTest {
         assertFalse(e.isMultiDay());
         assertNull(e.getEndDateTime());
     }
+
+    private EventInstance garden(ZonedDateTime start, ZonedDateTime end, String type) {
+        return new EventInstance(start, end, "t", "t", "d", UTC, type);
+    }
+
+    @Test
+    void gardenPeriodStartingLateAtNightDropsItsFirstDisplayDay() {
+        // Fruit->Root boundary at 2026-08-06 22:25: the root period only just touches Aug 6.
+        EventInstance root = garden(
+                ZonedDateTime.of(2026, 8, 6, 22, 25, 0, 0, UTC),
+                ZonedDateTime.of(2026, 8, 9, 0, 20, 0, 0, UTC), "garden-biodynamic-root");
+        assertEquals(LocalDate.of(2026, 8, 7), root.getDisplayStartLocalDate());
+        assertEquals(LocalDate.of(2026, 8, 8), root.getDisplayEndLocalDate()); // ends 00:20 < 06:00 -> Aug 8
+    }
+
+    @Test
+    void gardenPeriodEndingLateEveningKeepsItsLastDisplayDay() {
+        EventInstance fruit = garden(
+                ZonedDateTime.of(2026, 8, 4, 18, 25, 0, 0, UTC),
+                ZonedDateTime.of(2026, 8, 6, 22, 25, 0, 0, UTC), "garden-biodynamic-fruit");
+        assertEquals(LocalDate.of(2026, 8, 4), fruit.getDisplayStartLocalDate());
+        assertEquals(LocalDate.of(2026, 8, 6), fruit.getDisplayEndLocalDate()); // ends 22:25 -> keeps Aug 6
+    }
+
+    @Test
+    void nonGardenMultiDayEventIsNotTrimmed() {
+        EventInstance e = garden(
+                ZonedDateTime.of(2026, 8, 6, 23, 0, 0, 0, UTC),
+                ZonedDateTime.of(2026, 8, 9, 5, 0, 0, 0, UTC), "fullmoon");
+        assertEquals(LocalDate.of(2026, 8, 6), e.getDisplayStartLocalDate());
+        assertEquals(LocalDate.of(2026, 8, 9), e.getDisplayEndLocalDate());
+    }
 }
