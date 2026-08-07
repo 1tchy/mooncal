@@ -7,14 +7,14 @@ version := "1.73-SNAPSHOT"
 lazy val root = (project in file(".")).enablePlugins(PlayJava, SbtWeb)
 	.settings(watchSources ++= (baseDirectory.value / "ui/src" ** "*").get)
 
-scalaVersion := "2.13.12"
+scalaVersion := "2.13.18"
 
 resolvers += "jitpack" at "https://jitpack.io"
 
 libraryDependencies ++= Seq(
 	guice,
 	//see latest version under: https://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
-	"org.mnode.ical4j" % "ical4j" % "4.2.5",
+	"org.mnode.ical4j" % "ical4j" % "4.3.0",
 	//see latest version under: https://mvnrepository.com/artifact/com.github.vandeseer/easytable
 	"com.github.vandeseer" % "easytable" % "1.0.2",
 	//see latest version under: https://mvnrepository.com/artifact/com.google.zxing/javase
@@ -26,9 +26,9 @@ libraryDependencies ++= Seq(
 	//see latest version under: https://mvnrepository.com/artifact/org.mockito/mockito-core
 	"org.mockito" % "mockito-core" % "5.23.0" % Test,
 	///see latest version under: https://mvnrepository.com/artifact/de.redsix/pdfcompare
-	"de.redsix" % "pdfcompare" % "1.2.8" % Test,
+	"de.redsix" % "pdfcompare" % "1.2.9" % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
-	"org.junit.jupiter" % "junit-jupiter" % "6.1.0" % Test,
+	"org.junit.jupiter" % "junit-jupiter" % "6.1.3" % Test,
 	"com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 	"org.hamcrest" % "hamcrest" % "3.0" % Test,
