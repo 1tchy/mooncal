@@ -11,6 +11,16 @@
 		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/calendar"/>
 	</url>
 	<url>
+		<loc>https://mooncal.ch/gartenkalender</loc>
+		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/gartenkalender"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/garden-calendar"/>
+		<xhtml:link rel="alternate" hreflang="nl" href="https://mooncal.ch/nl/tuinkalender"/>
+		<xhtml:link rel="alternate" hreflang="es" href="https://mooncal.ch/es/calendario-de-jardin"/>
+		<xhtml:link rel="alternate" hreflang="fr" href="https://mooncal.ch/fr/calendrier-de-jardin"/>
+		<xhtml:link rel="alternate" hreflang="ro" href="https://mooncal.ch/ro/calendar-de-gradina"/>
+		<xhtml:link rel="alternate" hreflang="hi" href="https://mooncal.ch/hi/garden-calendar"/>
+	</url>
+	<url>
 		<loc>https://mooncal.ch/ueber</loc>
 		<xhtml:link rel="alternate" hreflang="de" href="https://mooncal.ch/ueber"/>
 		<xhtml:link rel="alternate" hreflang="en" href="https://mooncal.ch/en/about"/>

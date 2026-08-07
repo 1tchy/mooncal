@@ -20,8 +20,10 @@
       "about": "ro/despre",
       "donate": "ro/donează",
       "thank": "ro/multumesc",
-      "buymeacoffee": "ro/buymeacoffee"
-    }
+      "buymeacoffee": "ro/buymeacoffee",
+      "garden": "ro/calendar-de-gradina"
+    },
+    "garden": "Calendar de grădină"
   },
   "general": {
     "and": "și"
@@ -49,7 +51,7 @@
     "lunareclipse": "eclipă lunară",
     "solareclipse": "eclipsă solară",
     "moonlanding": "coborârea pe lună",
-    "garden-biodynamic": "Grădină: zodiac (biodinamic)"
+    "garden-biodynamic": "Calendar de grădină"
   },
   "time": {
     "title": "Interval",
@@ -208,7 +210,10 @@
     "thanksForFeedback": "Mulțumesc pentru feedback-ul dvs."
   },
   "garden": {
-    "disclaimer": "„Grădinăritul după Lună” este o practică tradițională prezentată aici din interes cultural și istoric. Studiile științifice controlate nu au găsit dovezi sigure că ciclurile lunare ar influența creșterea plantelor — clima, solul și anotimpul din zona ta contează mult mai mult. Bucură-te de ea ca de o curiozitate, nu ca de un sfat agronomic."
+    "title": "Calendar de grădină",
+    "pageTitle": "Calendar de grădină după Lună – zile biodinamice de plantare și recoltare",
+    "description": "Calendar de grădină personal după tradiția biodinamică: zile de rădăcină, frunză, floare, fruct și nod. Abonează-te prin iCalendar sau descarcă în PDF.",
+    "introduction": "„Îngrijirea grădinii după Lună” este o practică veche, transmisă prin tradiție. Acest calendar urmează tradiția biodinamică, ce atribuie fiecărei poziții a Lunii momente favorabile pentru plantat, îngrijit și recoltat. Ideea din spate: ritmurile Lunii se aseamănă cu anumite ritmuri din natură (de exemplu Luna ascendentă și descendentă). Se disting zile de rădăcină, frunză, floare, fruct și nod. Calendarul poate fi vizualizat mai jos și exportat în calendarul dvs. ca fișier iCalendar (ICS) sau descărcat și tipărit ca fișier PDF."
   },
   "error": {
     "title": "Eroare",

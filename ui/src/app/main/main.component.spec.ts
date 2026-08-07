@@ -52,6 +52,22 @@ describe('MainComponent', () => {
     expect(params).not.toContain('events[moonlanding]');
   });
 
+  it('home page shows moon landing and hides the garden checkbox', () => {
+    expect(component.isGarden).toBeFalse();
+    expect(component.visibleEvents).toEqual(['lunareclipse', 'solareclipse', 'moonlanding']);
+    expect(component.events['garden-biodynamic']).toBeFalse();
+  });
+
+  it('garden page shows the garden checkbox (on by default) and hides moon landing', () => {
+    component.routeData = {...component.routeData, id: 'garden'};
+    expect(component.isGarden).toBeTrue();
+    expect(component.visibleEvents).toEqual(['lunareclipse', 'solareclipse', 'garden-biodynamic']);
+    expect(component.events['garden-biodynamic']).toBeTrue();
+    expect(component.events['moonlanding']).toBeFalse();
+    expect(component.heading).toEqual(messages.garden.title);
+    expect(component.introduction).toEqual(messages.garden.introduction);
+  });
+
   it('formats a single-day event as one date (no range)', () => {
     const text = component.formatEventDateForGui({date: '2026-01-03T10:00', title: 't', description: 'd'});
     expect(text).not.toContain(' - ');

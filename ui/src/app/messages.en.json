@@ -20,8 +20,10 @@
       "about": "en/about",
       "donate": "en/donate",
       "thank": "en/thank",
-      "buymeacoffee": "en/buymeacoffee"
-    }
+      "buymeacoffee": "en/buymeacoffee",
+      "garden": "en/garden-calendar"
+    },
+    "garden": "Garden calendar"
   },
   "general": {
     "and": "and"
@@ -49,7 +51,7 @@
     "lunareclipse": "Lunar Eclipse",
     "solareclipse": "Solar Eclipse",
     "moonlanding": "Moon Landing",
-    "garden-biodynamic": "Garden: zodiac (biodynamic)"
+    "garden-biodynamic": "Garden calendar"
   },
   "time": {
     "title": "Interval",
@@ -208,7 +210,10 @@
     "thanksForFeedback": "Thank you for your feedback."
   },
   "garden": {
-    "disclaimer": "\"Gardening by the moon\" is a traditional practice offered here for cultural and historical interest. Controlled scientific studies have not found reliable evidence that lunar cycles affect plant growth — your local climate, soil and season matter far more. Enjoy it for fun, not as agronomic advice."
+    "title": "Garden calendar",
+    "pageTitle": "Garden calendar by the moon – biodynamic planting and harvest days",
+    "description": "Personal garden calendar in the biodynamic tradition: root, leaf, flower, fruit and node days. Subscribe via iCalendar or download as PDF.",
+    "introduction": "‘Garden care by the moon’ is an old, handed-down practice. This calendar follows the biodynamic tradition, which ascribes to particular positions of the Moon their own favourable times for planting, tending and harvesting. The idea behind it: the Moon’s rhythms resemble certain rhythms in nature (such as the ascending and descending Moon). It distinguishes root, leaf, flower, fruit and node days. The calendar can be viewed below and exported to your calendar as an iCalendar (ICS) file or downloaded and printed as a PDF file."
   },
   "error": {
     "title": "Error",

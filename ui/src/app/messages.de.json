@@ -20,8 +20,10 @@
       "about": "ueber",
       "donate": "spenden",
       "thank": "bedanken",
-      "buymeacoffee": "buymeacoffee"
-    }
+      "buymeacoffee": "buymeacoffee",
+      "garden": "gartenkalender"
+    },
+    "garden": "Gartenkalender"
   },
   "general": {
     "and": "und"
@@ -49,7 +51,7 @@
     "lunareclipse": "Mondfinsternis",
     "solareclipse": "Sonnenfinsternis",
     "moonlanding": "Mondlandung",
-    "garden-biodynamic": "Garten: Tierkreis (biodynamisch)"
+    "garden-biodynamic": "Gartenkalender"
   },
   "time": {
     "title": "Zeitspanne",
@@ -208,7 +210,10 @@
     "thanksForFeedback": "Vielen Dank für die Rückmeldung."
   },
   "garden": {
-    "disclaimer": "„Gärtnern nach dem Mond” ist eine traditionelle Praxis, die hier aus kulturellem und historischem Interesse angeboten wird. Kontrollierte wissenschaftliche Studien fanden keine verlässlichen Belege dafür, dass Mondzyklen das Pflanzenwachstum beeinflussen — Klima, Boden und Jahreszeit vor Ort sind weit wichtiger. Viel Freude damit, aber nicht als Anbau-Ratschlag."
+    "title": "Gartenkalender",
+    "pageTitle": "Gartenkalender nach dem Mond – biodynamische Pflanz- und Erntetage",
+    "description": "Persönlicher Gartenkalender nach der biodynamischen Tradition: Wurzel-, Blatt-, Blüten-, Frucht- und Knotentage. Als iCalendar abonnieren oder als PDF herunterladen.",
+    "introduction": "‚Gartenpflege nach dem Mond‘ ist eine alte, überlieferte Praxis. Dieser Kalender folgt der biodynamischen Tradition, die einzelnen Mondständen jeweils günstige Zeiten zum Pflanzen, Pflegen und Ernten zuschreibt. Die Idee dahinter: Die Rhythmen des Mondes ähneln gewissen Rhythmen in der Natur (etwa auf- und absteigender Mond). Unterschieden werden Wurzel-, Blatt-, Blüten-, Frucht- und Knotentage. Der Kalender lässt sich unten anzeigen und als iCalendar (ICS) Datei in deinen Kalender exportieren oder als PDF Datei herunterladen und ausdrucken."
   },
   "error": {
     "title": "Fehler",

@@ -15,6 +15,7 @@ import {ThankComponent} from "./thank/thank.component";
 function buildAllRoutes() {
   let allRoutes: Routes = [];
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.home, 'home', m => m.app.pageTitle, m => m.app.description)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.garden, 'garden', m => m.garden.pageTitle, m => m.garden.description)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, 'about', m => m.about.pageTitle, m => m.about.description)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.buymeacoffee, 'buymeacoffee', m => m.thank.pageTitle, m => m.thank.description)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.thank, 'thank', m => m.thank.pageTitle, m => m.thank.description)))
@@ -49,6 +50,7 @@ function buildRoute(messages: Messages, component: any, pathFunction: (messages:
     description: descriptionFunction(messages),
     home: messages.navigation.paths.home,
     about: messages.navigation.paths.about,
+    garden: messages.navigation.paths.garden,
     thank: messages.navigation.paths.thank
   };
   for (const otherLanguagesMessage of getAllLanguagesMessages()) {

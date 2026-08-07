@@ -56,7 +56,7 @@ pdf.month.11=Novembre
 pdf.month.12=Décembre
 pdf.timezone=fuseau horaire
 
-garden.disclaimer=Le « jardinage avec la Lune » est une pratique traditionnelle proposée ici par intérêt culturel et historique. Les études scientifiques contrôlées n'ont pas trouvé de preuves fiables que les cycles lunaires influencent la croissance des plantes — le climat, le sol et la saison de votre région comptent bien davantage. Profitez-en pour le plaisir, non comme un conseil de culture.
+garden.disclaimer=L’« entretien du jardin avec la Lune » est une pratique traditionnelle. Les jours affichés suivent la tradition biodynamique et reposent sur la position de la Lune devant les constellations du zodiaque (jours racine, feuille, fleur et fruit).
 
 garden.part.root=racine
 garden.part.leaf=feuille

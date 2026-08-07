@@ -41,8 +41,18 @@ export class MainComponent implements AfterViewInit {
   set style(v) { this.settings.style = v; }
   get hemisphere() { return this.settings.hemisphere; }
   set hemisphere(v) { this.settings.hemisphere = v; }
-  get events() { return this.settings.events; }
-  set events(v) { this.settings.events = v; }
+  get events() { return this.isGarden ? this.settings.gardenEvents : this.settings.events; }
+  set events(v) { if (this.isGarden) { this.settings.gardenEvents = v; } else { this.settings.events = v; } }
+
+  // The Garden-calendar page reuses this component; it is told apart by its route id.
+  get isGarden() { return this.routeData['id'] === 'garden'; }
+  get heading() { return this.isGarden ? this.messages.garden.title : this.messages.app.title; }
+  get introduction() { return this.isGarden ? this.messages.garden.introduction : this.messages.app.introduction; }
+  get visibleEvents() {
+    return this.isGarden
+      ? ['lunareclipse', 'solareclipse', 'garden-biodynamic']
+      : ['lunareclipse', 'solareclipse', 'moonlanding'];
+  }
   get from() { return this.settings.from; }
   set from(v) { this.settings.from = v; }
   get to() { return this.settings.to; }

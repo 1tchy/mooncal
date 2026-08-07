@@ -20,8 +20,10 @@
       "about": "es/acerca",
       "donate": "es/donar",
       "thank": "es/gracias",
-      "buymeacoffee": "es/buymeacoffee"
-    }
+      "buymeacoffee": "es/buymeacoffee",
+      "garden": "es/calendario-de-jardin"
+    },
+    "garden": "Calendario de jardín"
   },
   "general": {
     "and": "y"
@@ -49,7 +51,7 @@
     "lunareclipse": "Eclipse lunar",
     "solareclipse": "Eclipse solar",
     "moonlanding": "Aterrizaje lunar",
-    "garden-biodynamic": "Jardín: zodíaco (biodinámico)"
+    "garden-biodynamic": "Calendario de jardín"
   },
   "time": {
     "title": "Intervalo",
@@ -208,7 +210,10 @@
     "thanksForFeedback": "Gracias por tu retroalimentación."
   },
   "garden": {
-    "disclaimer": "„La jardinería según la luna” es una práctica tradicional que se ofrece aquí por interés cultural e histórico. Los estudios científicos controlados no han encontrado pruebas fiables de que los ciclos lunares influyan en el crecimiento de las plantas — el clima, el suelo y la estación de cada lugar importan mucho más. Disfrútala por placer, no como consejo agronómico."
+    "title": "Calendario de jardín",
+    "pageTitle": "Calendario de jardín según la Luna – días biodinámicos de siembra y cosecha",
+    "description": "Calendario de jardín personal según la tradición biodinámica: días de raíz, hoja, flor, fruto y nodo. Suscríbete por iCalendar o descárgalo en PDF.",
+    "introduction": "«El cuidado del jardín según la Luna» es una práctica antigua, transmitida por la tradición. Este calendario sigue la tradición biodinámica, que atribuye a cada posición de la Luna sus propios momentos favorables para plantar, cuidar y cosechar. La idea de fondo: los ritmos de la Luna se asemejan a ciertos ritmos de la naturaleza (por ejemplo, la Luna ascendente y descendente). Se distinguen días de raíz, hoja, flor, fruto y nodo. El calendario puede verse a continuación y exportarse a su calendario como un archivo iCalendar (ICS) o descargarse e imprimirse como un archivo PDF."
   },
   "error": {
     "title": "Error",

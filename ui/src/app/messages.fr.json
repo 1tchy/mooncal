@@ -20,8 +20,10 @@
       "about": "fr/a-propos",
       "donate": "fr/faire-un-don",
       "thank": "fr/merci",
-      "buymeacoffee": "fr/buymeacoffee"
-    }
+      "buymeacoffee": "fr/buymeacoffee",
+      "garden": "fr/calendrier-de-jardin"
+    },
+    "garden": "Calendrier de jardin"
   },
   "general": {
     "and": "et"
@@ -49,7 +51,7 @@
     "lunareclipse": "éclipse lunaire",
     "solareclipse": "éclipse solaire",
     "moonlanding": "atterrissage sur la lune",
-    "garden-biodynamic": "Jardin : zodiaque (biodynamique)"
+    "garden-biodynamic": "Calendrier de jardin"
   },
   "time": {
     "title": "Intervalle",
@@ -208,7 +210,10 @@
     "thanksForFeedback": "Merci pour vos retours."
   },
   "garden": {
-    "disclaimer": "Le « jardinage avec la Lune » est une pratique traditionnelle proposée ici par intérêt culturel et historique. Les études scientifiques contrôlées n'ont pas trouvé de preuves fiables que les cycles lunaires influencent la croissance des plantes — le climat, le sol et la saison de votre région comptent bien davantage. Profitez-en pour le plaisir, non comme un conseil de culture."
+    "title": "Calendrier de jardin",
+    "pageTitle": "Calendrier de jardin selon la Lune – jours biodynamiques de plantation et de récolte",
+    "description": "Calendrier de jardin personnel selon la tradition biodynamique : jours racine, feuille, fleur, fruit et nœud. À abonner via iCalendar ou à télécharger en PDF.",
+    "introduction": "« Le jardinage selon la Lune » est une pratique ancienne, transmise par la tradition. Ce calendrier suit la tradition biodynamique, qui attribue à chaque position de la Lune ses propres moments favorables pour planter, entretenir et récolter. L’idée sous-jacente : les rythmes de la Lune ressemblent à certains rythmes de la nature (par exemple la Lune montante et descendante). On distingue les jours racine, feuille, fleur, fruit et nœud. Le calendrier peut être consulté ci-dessous et exporté vers votre calendrier sous forme de fichier iCalendar (ICS) ou téléchargé et imprimé sous forme de fichier PDF."
   },
   "error": {
     "title": "Erreur",

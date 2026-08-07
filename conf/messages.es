@@ -56,7 +56,7 @@ pdf.month.11=Noviembre
 pdf.month.12=Diciembre
 pdf.timezone=Zona horaria
 
-garden.disclaimer="La jardinería según la luna" es una práctica tradicional que se ofrece aquí por interés cultural e histórico. Los estudios científicos controlados no han encontrado pruebas fiables de que los ciclos lunares influyan en el crecimiento de las plantas — el clima, el suelo y la estación de cada lugar importan mucho más. Disfrútala por placer, no como consejo agronómico.
+garden.disclaimer="El cuidado del jardín según la luna" es una práctica tradicional. Los días que se muestran siguen la tradición biodinámica y se basan en la posición de la Luna ante las constelaciones del zodíaco (días de raíz, hoja, flor y fruto).
 
 garden.part.root=raíz
 garden.part.leaf=hoja

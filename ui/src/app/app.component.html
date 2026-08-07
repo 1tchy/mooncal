@@ -16,6 +16,10 @@
                (click)="isNavbarCollapsed=true;">{{ messages.navigation.home }}</a>
           </li>
           <li class="nav-item">
+            <a [routerLink]="routeData['garden']" ngClass="{active:routePath===routeData['garden']}" class="nav-link"
+               (click)="isNavbarCollapsed=true;">{{ messages.navigation.garden }}</a>
+          </li>
+          <li class="nav-item">
             <a [routerLink]="routeData['about']" ngClass="{active:routePath===routeData['about']}" class="nav-link"
                (click)="isNavbarCollapsed=true;">{{ messages.navigation.about }}</a>
           </li>

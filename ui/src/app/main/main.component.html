@@ -1,7 +1,7 @@
 <img src="/images/mond.png" alt='{{messages.app.moon}}' id="mond"/>
-<h1>{{ messages.app.title }}</h1>
+<h1>{{ heading }}</h1>
 
-<p>{{ messages.app.introduction }}</p>
+<p>{{ introduction }}</p>
 
 <form class="row" #optionsForm="ngForm">
   <div class="col-lg-6">
@@ -55,15 +55,11 @@
     <div class="card" id="events">
       <h5 class="card-header">{{ messages.events.title }}</h5>
       <div class="card-body">
-        @for (event of ['lunareclipse','solareclipse','moonlanding','garden-biodynamic']; track event) {
+        @for (event of visibleEvents; track event) {
           <div class="form-check">
             <input class="form-check-input" type="checkbox" [(ngModel)]="events[event]" [id]="event+'-checkbox'"
                    [name]="event+'-checkbox'">
             <label class="form-check-label" [for]="event+'-checkbox'">{{ messages.events[event] }}</label>
-            @if (event === 'garden-biodynamic') {
-              <span class="ms-1 text-primary garden-info" style="cursor: help;" tabindex="0" role="button"
-                    aria-label="info" [ngbTooltip]="messages.garden.disclaimer" tooltipClass="garden-disclaimer-tooltip">ⓘ</span>
-            }
           </div>
         }
       </div>

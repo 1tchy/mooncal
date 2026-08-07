@@ -20,8 +20,10 @@
       "about": "nl/over",
       "donate": "nl/doneren",
       "thank": "nl/bedankt",
-      "buymeacoffee": "nl/buymeacoffee"
-    }
+      "buymeacoffee": "nl/buymeacoffee",
+      "garden": "nl/tuinkalender"
+    },
+    "garden": "Tuinkalender"
   },
   "general": {
     "and": "en"
@@ -49,7 +51,7 @@
     "lunareclipse": "Maansverduistering",
     "solareclipse": "Zonsverduistering",
     "moonlanding": "Maanlanding",
-    "garden-biodynamic": "Tuin: dierenriem (biodynamisch)"
+    "garden-biodynamic": "Tuinkalender"
   },
   "time": {
     "title": "Datum",
@@ -208,7 +210,10 @@
     "thanksForFeedback": "Bedankt voor uw feedback."
   },
   "garden": {
-    "disclaimer": "„Tuinieren op het ritme van de maan” is een traditionele praktijk die hier wordt aangeboden vanwege de culturele en historische interesse. Gecontroleerde wetenschappelijke studies hebben geen betrouwbaar bewijs gevonden dat maancycli de plantengroei beïnvloeden — het lokale klimaat, de bodem en het seizoen zijn veel belangrijker. Beleef er plezier aan, maar niet als teeltadvies."
+    "title": "Tuinkalender",
+    "pageTitle": "Tuinkalender volgens de maan – biodynamische plant- en oogstdagen",
+    "description": "Persoonlijke tuinkalender volgens de biodynamische traditie: wortel-, blad-, bloem-, vrucht- en knoopdagen. Abonneer via iCalendar of download als PDF.",
+    "introduction": "‘Tuinieren volgens de maan’ is een oude, overgeleverde praktijk. Deze kalender volgt de biodynamische traditie, die aan afzonderlijke maanstanden telkens gunstige tijden voor planten, verzorgen en oogsten toeschrijft. De achterliggende gedachte: de ritmes van de maan lijken op bepaalde ritmes in de natuur (zoals de opgaande en neergaande maan). Er worden wortel-, blad-, bloem-, vrucht- en knoopdagen onderscheiden. De kalender kunt u hieronder bekijken en als iCalendar (ICS) bestand naar uw agenda exporteren of downloaden en afdrukken als PDF-bestand."
   },
   "error": {
     "title": "Fout",

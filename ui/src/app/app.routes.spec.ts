@@ -40,10 +40,11 @@ describe('Routes', () => {
         expect(r.title!.length).withContext(r.path!).toBeGreaterThan(0)
       });
   });
-  it('all components have all languages', () => {
-    for (const component of new Set(routesWithoutRedirect().filter(r => r.path !== '**').map(r => r.component!))) {
+  it('all pages have all languages', () => {
+    // Grouped by page id (not component): Home and the Garden calendar both use MainComponent.
+    for (const id of new Set(routesWithoutRedirect().filter(r => r.path !== '**').map(r => r.data!['id']))) {
       for (const language of getAllLanguages()) {
-        expect(routesWithoutRedirect().filter(r => !r.path!.endsWith('buymeacoffee')).filter(r => r.component === component && getMessages(r).lang.current === language).length).withContext(component + ' in ' + language).toBe(1);
+        expect(routesWithoutRedirect().filter(r => r.path !== '**' && r.data?.['id'] === id && getMessages(r).lang.current === language).length).withContext(id + ' in ' + language).toBe(1);
       }
     }
   });

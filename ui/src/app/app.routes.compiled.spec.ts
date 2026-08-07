@@ -42,6 +42,48 @@ export const compiledRoute = [
     data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
   },
   {
+    path: 'gartenkalender',
+    title: 'Gartenkalender nach dem Mond – biodynamische Pflanz- und Erntetage',
+    component: 'MainComponent',
+    data: {messages: 'de', home: '', about: 'ueber'}
+  },
+  {
+    path: 'en/garden-calendar',
+    title: 'Garden calendar by the moon – biodynamic planting and harvest days',
+    component: 'MainComponent',
+    data: {messages: 'en', home: 'en/calendar', about: 'en/about'}
+  },
+  {
+    path: 'nl/tuinkalender',
+    title: 'Tuinkalender volgens de maan – biodynamische plant- en oogstdagen',
+    component: 'MainComponent',
+    data: {messages: 'nl', home: 'nl/maankalender', about: 'nl/over'}
+  },
+  {
+    path: 'es/calendario-de-jardin',
+    title: 'Calendario de jardín según la Luna – días biodinámicos de siembra y cosecha',
+    component: 'MainComponent',
+    data: {messages: 'es', home: 'es/calendario-lunar', about: 'es/acerca'}
+  },
+  {
+    path: 'fr/calendrier-de-jardin',
+    title: 'Calendrier de jardin selon la Lune – jours biodynamiques de plantation et de récolte',
+    component: 'MainComponent',
+    data: {messages: 'fr', home: 'fr/calendrier-lune', about: 'fr/a-propos'}
+  },
+  {
+    path: 'ro/calendar-de-gradina',
+    title: 'Calendar de grădină după Lună – zile biodinamice de plantare și recoltare',
+    component: 'MainComponent',
+    data: {messages: 'ro', home: 'ro/calendar-lunar', about: 'ro/despre'}
+  },
+  {
+    path: 'hi/garden-calendar',
+    title: 'चंद्रमा के अनुसार बागवानी कैलेंडर – बायोडायनामिक रोपाई और कटाई के दिन',
+    component: 'MainComponent',
+    data: {messages: 'hi', home: 'hi/calendar', about: 'hi/about'}
+  },
+  {
     path: 'ueber',
     title: 'Über den Mondkalender - Hintergrund, Quellen und Daten',
     component: 'AboutComponent',

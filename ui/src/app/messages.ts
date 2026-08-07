@@ -32,6 +32,7 @@ export interface Lang {
 
 export interface Navigation {
   home: string
+  garden: string
   about: string
   toggle: string
   paths: Paths
@@ -39,6 +40,7 @@ export interface Navigation {
 
 export interface Paths {
   home: string
+  garden: string
   about: string
   donate: string
   thank: string
@@ -84,7 +86,10 @@ export interface Events {
 }
 
 export interface Garden {
-  disclaimer: string
+  title: string
+  pageTitle: string
+  description: string
+  introduction: string
 }
 
 export interface Time {

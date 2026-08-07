@@ -12,7 +12,11 @@ export class MainSettingsService {
   };
   style = "withDescription";
   hemisphere: 'northern' | 'southern' = 'northern';
+  // The Home page and the Garden-calendar page keep independent event selections, each with its own
+  // defaults, so that events hidden on one page (garden on Home, moonlanding on Garden) can never leak
+  // into the other page's calendar.
   events: options = {lunareclipse: true, solareclipse: true, moonlanding: true, 'garden-biodynamic': false};
+  gardenEvents: options = {lunareclipse: true, solareclipse: true, moonlanding: false, 'garden-biodynamic': true};
   from = MainSettingsService.initialFrom();
   to = MainSettingsService.initialTo();
   zone = MainSettingsService.detectTimezone();

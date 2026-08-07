@@ -56,7 +56,7 @@ pdf.month.11=November
 pdf.month.12=December
 pdf.timezone=Tijdzone
 
-garden.disclaimer="Tuinieren op het ritme van de maan" is een traditionele praktijk die hier wordt aangeboden vanwege de culturele en historische interesse. Gecontroleerde wetenschappelijke studies hebben geen betrouwbaar bewijs gevonden dat maancycli de plantengroei beïnvloeden — het lokale klimaat, de bodem en het seizoen zijn veel belangrijker. Beleef er plezier aan, maar niet als teeltadvies.
+garden.disclaimer=„Tuinverzorging volgens de maan" is een overgeleverde praktijk. De weergegeven dagen volgen de biodynamische traditie en zijn gebaseerd op de stand van de maan voor de dierenriemsterrenbeelden (wortel-, blad-, bloem- en vruchtdagen).
 
 garden.part.root=Wortel
 garden.part.leaf=Blad
