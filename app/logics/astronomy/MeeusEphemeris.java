@@ -194,32 +194,42 @@ public class MeeusEphemeris implements Ephemeris {
 
     @Override
     public Apsis nextApsis(Instant from, Instant until) {
-        double prevDist = earthMoonDistanceKm(from);
-        double curDist = earthMoonDistanceKm(from.plus(STEP));
-        double prevSlope = curDist - prevDist;
+        Extreme e = nextExtreme(from, until, this::earthMoonDistanceKm);
+        return e == null ? null : new Apsis(e.when(), e.minimum()); // perigee = closest = minimum distance
+    }
+
+    @Override
+    public Instant nextDeclinationExtreme(Instant from, Instant until) {
+        Extreme e = nextExtreme(from, until, this::moonDeclination);
+        return e == null ? null : e.when();
+    }
+
+    private record Extreme(Instant when, boolean minimum) {}
+
+    /** Next local extremum of {@code series} in (from, until], refined to ~1 minute, or null. */
+    private Extreme nextExtreme(Instant from, Instant until, java.util.function.Function<Instant, Double> series) {
+        double curr = series.apply(from.plus(STEP));
+        double prevSlope = curr - series.apply(from);
         Instant lo = from.plus(STEP);
         for (Instant hi = lo.plus(STEP); !hi.isAfter(until); hi = hi.plus(STEP)) {
-            prevDist = curDist;
-            curDist = earthMoonDistanceKm(hi);
-            double slope = curDist - prevDist;
+            double prev = curr;
+            curr = series.apply(hi);
+            double slope = curr - prev;
             if (Math.signum(slope) != Math.signum(prevSlope)) {
-                boolean perigee = prevSlope < 0; // distance was decreasing, now increasing -> perigee
-                // Refine the bracket [lo, hi] to ~1-minute precision by bisecting on the
-                // slope sign: at the midpoint, compare distance just before vs just after
-                // to determine which half contains the extremum.
+                boolean minimum = prevSlope < 0; // value was decreasing, now increasing -> minimum
+                // Bisect [lo, hi] on the slope sign until the bracket is under a minute wide.
                 final Duration DELTA = Duration.ofMinutes(1);
-                Instant apsisLo = lo, apsisHi = hi;
-                while (Duration.between(apsisLo, apsisHi).toSeconds() > 60) {
-                    Instant mid = midpoint(apsisLo, apsisHi);
-                    double slopeMid = earthMoonDistanceKm(mid) - earthMoonDistanceKm(mid.minus(DELTA));
-                    // slope at mid has same sign as prevSlope -> extremum is in [mid, apsisHi]
+                Instant elo = lo, ehi = hi;
+                while (Duration.between(elo, ehi).toSeconds() > 60) {
+                    Instant mid = midpoint(elo, ehi);
+                    double slopeMid = series.apply(mid) - series.apply(mid.minus(DELTA));
                     if (Math.signum(slopeMid) == Math.signum(prevSlope)) {
-                        apsisLo = mid;
+                        elo = mid;
                     } else {
-                        apsisHi = mid;
+                        ehi = mid;
                     }
                 }
-                return new Apsis(midpoint(apsisLo, apsisHi), perigee);
+                return new Extreme(midpoint(elo, ehi), minimum);
             }
             prevSlope = slope;
             lo = hi;

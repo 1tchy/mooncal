@@ -11,6 +11,7 @@ public interface Ephemeris {
 
     Instant nextSignBoundaryCrossing(Instant from, Instant until);
     Instant nextNodeCrossing(Instant from, Instant until);
+    Instant nextDeclinationExtreme(Instant from, Instant until);
     Apsis nextApsis(Instant from, Instant until);
 
     record Apsis(Instant when, boolean perigee) {}

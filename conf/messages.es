@@ -79,3 +79,5 @@ garden.pdf.legend.leaf=Días de hoja: la Luna se sitúa ante una constelación d
 garden.pdf.legend.flower=Días de flor: la Luna se sitúa ante una constelación de aire. En la tradición popular estos días convienen a las flores y plantas florales como el brócoli, las flores ornamentales y las hierbas recogidas en flor — para sembrar y cuidar lo que florece.
 garden.pdf.legend.fruit=Días de fruto: la Luna se sitúa ante una constelación de fuego. En la tradición popular estos días convienen a los cultivos de fruto y semilla como tomates, judías, pimientos, calabazas y cereales — para sembrar y cosechar fruto o semilla.
 garden.pdf.legend.badday=Día de jardín desfavorable: la Luna cruza un nodo, o cae un eclipse en el periodo. En la tradición popular un día para descansar — ni sembrar ni plantar.
+garden.pdf.legend.ascending=Luna ascendente: la Luna sube un poco cada día. En la tradición, favorable para las partes aéreas de la planta: sembrar, injertar y cosechar plantas de hoja, flor y fruto.
+garden.pdf.legend.descending=Luna descendente: la Luna desciende un poco cada día. En la tradición, favorable para trasplantar, trabajar la raíz y compostar.

@@ -79,3 +79,5 @@ garden.pdf.legend.leaf=Bladdagen: de maan staat voor een water-sterrenbeeld. In 
 garden.pdf.legend.flower=Bloemdagen: de maan staat voor een lucht-sterrenbeeld. In de overlevering passen deze dagen bij bloemen en bloeiende planten zoals broccoli, sierbloemen en in bloei geoogste kruiden — om te zaaien en te verzorgen wat bloeit.
 garden.pdf.legend.fruit=Vruchtdagen: de maan staat voor een vuur-sterrenbeeld. In de overlevering passen deze dagen bij vrucht- en zaadgewassen zoals tomaten, bonen, paprika's, pompoen en granen — om vrucht of zaad te zaaien en te oogsten.
 garden.pdf.legend.badday=Ongunstige tuindag: de maan kruist een maansknoop of er valt een verduistering in de periode. In de overlevering een rustdag – niet zaaien en niet planten.
+garden.pdf.legend.ascending=Opgaande maan: de maan klimt elke dag iets hoger. In de overlevering gunstig voor de bovengrondse plantendelen — zaaien, enten en oogsten van blad-, bloem- en vruchtgewassen.
+garden.pdf.legend.descending=Neergaande maan: de maan zakt elke dag iets lager. In de overlevering gunstig voor verplanten, wortelwerk en composteren.

@@ -5,7 +5,6 @@ import jakarta.inject.Singleton;
 import logics.astronomy.Element;
 import logics.astronomy.Ephemeris;
 import models.*;
-import org.jetbrains.annotations.NotNull;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
@@ -20,6 +19,11 @@ import java.util.TreeSet;
 // (the class holds no per-request state after construction).
 @Singleton
 public class GardenBiodynamicCalculation extends Calculation {
+
+    // Appended after the plant emoji to mark the Moon's declination phase: 🔼 ascending, 🔽 descending.
+    // Public so the PDF renderer can recognise the phase of an event from its title.
+    public static final String ASCENDING_MOON_MARKER = "🔼";
+    public static final String DESCENDING_MOON_MARKER = "🔽";
 
     private final Ephemeris ephemeris;
     private final TreeSet<ZonedDateTime> eclipses = new TreeSet<>();
@@ -46,7 +50,6 @@ public class GardenBiodynamicCalculation extends Calculation {
         }
         ZoneId zone = requestForm.getFrom().getZone();
         Lang lang = requestForm.getLang();
-        Hemisphere hemisphere = requestForm.getHemisphere();
 
         Instant from = requestForm.getFrom().toInstant();
         Instant to = requestForm.getTo().toInstant();
@@ -55,23 +58,48 @@ public class GardenBiodynamicCalculation extends Calculation {
         // In the Maria Thun tradition these override the plant-part classification entirely.
         SortedSet<LocalDate> badDays = collectBadDays(from, to, zone);
 
-        // Plant-part periods, split so that none of them covers a bad garden day.
-        Instant firstBoundary = ephemeris.nextSignBoundaryCrossing(from, to);
-        Element startElement = Element.forSiderealLongitude(ephemeris.moonSiderealLongitude(from));
-        emitPlantPartPeriod(from, firstBoundary != null ? firstBoundary : to, startElement, badDays, zone, lang, hemisphere, eventCollection);
-        Instant boundary = firstBoundary;
-        while (boundary != null) {
-            Element entered = Element.forSiderealLongitude(
-                    ephemeris.moonSiderealLongitude(boundary.plusSeconds(120)));
-            Instant nextBoundary = ephemeris.nextSignBoundaryCrossing(boundary.plusSeconds(120), to);
-            emitPlantPartPeriod(boundary, nextBoundary != null ? nextBoundary : to, entered, badDays, zone, lang, hemisphere, eventCollection);
-            boundary = nextBoundary;
+        // Split the timeline both at sidereal sign boundaries (which change the plant part) and at the
+        // Moon's declination turning points (which flip ascending<->descending), so that within each
+        // segment both the plant part and the ascending/descending phase are constant.
+        TreeSet<Instant> splits = new TreeSet<>();
+        for (Instant b = ephemeris.nextSignBoundaryCrossing(from, to); b != null;
+             b = ephemeris.nextSignBoundaryCrossing(b.plusSeconds(120), to)) {
+            splits.add(b);
         }
+        for (Instant e = ephemeris.nextDeclinationExtreme(from, to); e != null;
+             e = ephemeris.nextDeclinationExtreme(e.plusSeconds(120), to)) {
+            splits.add(e);
+        }
+
+        Instant segmentStart = from;
+        for (Instant boundary : splits) {
+            emitSegment(segmentStart, boundary, badDays, zone, lang, eventCollection);
+            segmentStart = boundary;
+        }
+        emitSegment(segmentStart, to, badDays, zone, lang, eventCollection);
 
         // One all-day "unfavourable garden day" event per bad garden day.
         for (LocalDate bad : badDays) {
             eventCollection.add(buildBadDayEvent(bad, zone, lang));
         }
+    }
+
+    /** Classify a constant-part, constant-phase segment and emit its plant-part events (carving bad days). */
+    private void emitSegment(Instant start, Instant end, SortedSet<LocalDate> badDays, ZoneId zone, Lang lang,
+                             Collection<EventInstance> out) {
+        if (!start.isBefore(end)) {
+            return;
+        }
+        // Sample just inside the segment so we are clear of the boundary instant.
+        Instant probe = start.plusSeconds(120).isBefore(end) ? start.plusSeconds(120) : start;
+        Element element = Element.forSiderealLongitude(ephemeris.moonSiderealLongitude(probe));
+        boolean ascending = isDeclinationRising(probe);
+        emitPlantPartPeriod(start, end, element, ascending, badDays, zone, lang, out);
+    }
+
+    /** Ascending Moon: its declination is rising (moving toward its northernmost point). Same worldwide. */
+    private boolean isDeclinationRising(Instant t) {
+        return ephemeris.moonDeclination(t.plusSeconds(3600)) - ephemeris.moonDeclination(t) > 0;
     }
 
     /** Local calendar days (in {@code zone}) blacked out by a lunar node crossing or an eclipse within [from, to). */
@@ -97,8 +125,8 @@ public class GardenBiodynamicCalculation extends Calculation {
      * no plant-part event covers one. A node day inside a sign period therefore splits it into the segments
      * before and after that day.
      */
-    private void emitPlantPartPeriod(Instant start, Instant periodEnd, Element element, SortedSet<LocalDate> badDays,
-                                     ZoneId zone, Lang lang, Hemisphere hemisphere, Collection<EventInstance> out) {
+    private void emitPlantPartPeriod(Instant start, Instant periodEnd, Element element, boolean ascending,
+                                     SortedSet<LocalDate> badDays, ZoneId zone, Lang lang, Collection<EventInstance> out) {
         LocalDate firstDay = start.atZone(zone).toLocalDate();
         LocalDate lastDay = periodEnd.atZone(zone).toLocalDate();
         Instant segStart = start;
@@ -111,14 +139,14 @@ public class GardenBiodynamicCalculation extends Calculation {
             if (segStart.isBefore(badStart)) {
                 // End one second before midnight so the segment's last local day is the day before
                 // the bad day (an end at exactly 00:00 would otherwise render on the bad day itself).
-                out.add(buildEvent(segStart, badStart.minusSeconds(1), element, zone, lang, hemisphere));
+                out.add(buildEvent(segStart, badStart.minusSeconds(1), element, ascending, zone, lang));
             }
             if (segStart.isBefore(badEnd)) {
                 segStart = badEnd;
             }
         }
         if (segStart.isBefore(periodEnd)) {
-            out.add(buildEvent(segStart, periodEnd, element, zone, lang, hemisphere));
+            out.add(buildEvent(segStart, periodEnd, element, ascending, zone, lang));
         }
     }
 
@@ -130,16 +158,16 @@ public class GardenBiodynamicCalculation extends Calculation {
         return a.isBefore(b) ? a : b;
     }
 
-    private EventInstance buildEvent(Instant start, Instant periodEnd, Element element, ZoneId zone,
-                                     Lang lang, Hemisphere hemisphere) {
+    private EventInstance buildEvent(Instant start, Instant periodEnd, Element element, boolean ascending,
+                                     ZoneId zone, Lang lang) {
         ZonedDateTime startZ = start.atZone(zone);
         ZonedDateTime endZ = periodEnd.atZone(zone);
         String part = messagesApi.get(lang, element.plantPartKey());
-        String title = element.emoji() + " " + part;
+        // Mark the declination phase with a second emoji after the plant emoji.
+        String title = element.emoji() + (ascending ? ASCENDING_MOON_MARKER : DESCENDING_MOON_MARKER) + " " + part;
 
         StringBuilder d = new StringBuilder();
         d.append(messagesApi.get(lang, "garden.biodynamic." + element.name().toLowerCase() + ".guidance"));
-        boolean ascending = isAscending(start, hemisphere);
         d.append("\n").append(messagesApi.get(lang,
                 ascending ? "garden.biodynamic.ascending" : "garden.biodynamic.descending"));
         // perigee/apogee rest-period notes (node and eclipse days are handled as bad garden days instead)
@@ -157,14 +185,5 @@ public class GardenBiodynamicCalculation extends Calculation {
         String pdfTitle = messagesApi.get(lang, "garden.biodynamic.badday.pdf");
         String description = messagesApi.get(lang, "garden.biodynamic.badday.description");
         return new EventInstance(startZ, title, pdfTitle, description, zone, "garden-biodynamic-badday");
-    }
-
-    private boolean isAscending(@NotNull Instant t, Hemisphere hemisphere) {
-        double slope = ephemeris.moonDeclination(t.plusSeconds(3600)) - ephemeris.moonDeclination(t);
-        boolean ascending = slope > 0;
-        if (hemisphere == Hemisphere.SOUTHERN) {
-            ascending = !ascending;
-        }
-        return ascending;
     }
 }

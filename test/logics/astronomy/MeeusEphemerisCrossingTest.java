@@ -37,6 +37,20 @@ class MeeusEphemerisCrossingTest {
     }
 
     @Test
+    void declinationExtremeIsATurningPoint() {
+        Instant from = utc(2025, 1, 1);
+        Instant until = from.plus(Duration.ofDays(16)); // at least one extreme within half a tropical month
+        Instant ext = e.nextDeclinationExtreme(from, until);
+        assertNotNull(ext);
+        double at = e.moonDeclination(ext);
+        double before = e.moonDeclination(ext.minus(Duration.ofHours(6)));
+        double after = e.moonDeclination(ext.plus(Duration.ofHours(6)));
+        // local maximum (declination stops rising) or minimum (stops falling)
+        assertTrue((at >= before && at >= after) || (at <= before && at <= after),
+                "not a turning point: before=" + before + " at=" + at + " after=" + after);
+    }
+
+    @Test
     void apsisIsDistanceExtremum() {
         Instant from = utc(2025, 1, 1);
         Instant until = from.plus(Duration.ofDays(16)); // at least one perigee/apogee within half an anomalistic month

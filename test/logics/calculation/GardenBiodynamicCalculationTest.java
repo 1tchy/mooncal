@@ -231,4 +231,38 @@ class GardenBiodynamicCalculationTest extends WithApplication {
                 assertTrue(e.getEndLocalDate().isAfter(e.getLocalDate()),
                         "endLocalDate must be after localDate for: " + e));
     }
+
+    @Test
+    void everyPlantPartSegmentCarriesItsDeclinationPhaseMarker() {
+        GardenBiodynamicCalculation calc = new GardenBiodynamicCalculation(new MeeusEphemeris(), messages);
+        Collection<EventInstance> out = new TreeSet<>();
+        calc.calculate(form(), out);
+        var plantPart = out.stream()
+                .filter(e -> e.getEventTypeId().startsWith("garden-biodynamic-")
+                        && !e.getEventTypeId().equals("garden-biodynamic-badday"))
+                .toList();
+        long descending = plantPart.stream().filter(e -> e.getTitle().contains("🔽")).count();
+        long ascending = plantPart.stream().filter(e -> e.getTitle().contains("🔼")).count();
+        // Each plant-part title carries exactly one of the two phase markers (🔼 ascending / 🔽 descending),
+        // and a ~1 month window crosses declination turning points, so both phases occur.
+        plantPart.forEach(e -> assertTrue(e.getTitle().contains("🔼") ^ e.getTitle().contains("🔽"),
+                "expected exactly one phase marker in: " + e.getTitle()));
+        assertTrue(descending >= 1, "expected some descending (🔽) segments, got " + descending);
+        assertTrue(ascending >= 1, "expected some ascending (🔼) segments, got " + ascending);
+    }
+
+    @Test
+    void ascendingDescendingIsHemisphereIndependent() {
+        GardenBiodynamicCalculation calc = new GardenBiodynamicCalculation(new MeeusEphemeris(), messages);
+        Collection<EventInstance> north = new TreeSet<>();
+        calc.calculate(form(), north);
+        RequestForm south = form();
+        south.setHemisphere("southern");
+        Collection<EventInstance> southOut = new TreeSet<>();
+        calc.calculate(south, southOut);
+        // Ascending/descending is a global declination cycle: titles (incl. the 🔽 marker) must match.
+        List<String> nt = north.stream().map(e -> e.getDateTime().toInstant() + "|" + e.getTitle()).sorted().toList();
+        List<String> st = southOut.stream().map(e -> e.getDateTime().toInstant() + "|" + e.getTitle()).sorted().toList();
+        assertEquals(nt, st);
+    }
 }

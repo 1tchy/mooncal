@@ -7,6 +7,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import jakarta.inject.Inject;
+import logics.calculation.GardenBiodynamicCalculation;
 import logics.calculation.MoonPhasesCalculation;
 import models.EventInstance;
 import models.Hemisphere;
@@ -158,10 +159,29 @@ public class PDFMapper {
 
                         // Garden events are shown as icons (drawn on top of the table afterwards); everything
                         // else keeps its text. The text cell reserves left padding so the two never overlap.
-                        List<String> dayIcons = eventInstancesAtDay.stream()
-                                .map(e -> gardenIconResource(e.getEventTypeId()))
-                                .filter(Objects::nonNull)
-                                .toList();
+                        List<String> dayIcons = new ArrayList<>();
+                        boolean ascending = false;
+                        boolean descending = false;
+                        for (EventInstance e : eventInstancesAtDay) {
+                            String icon = gardenIconResource(e.getEventTypeId());
+                            if (icon == null) {
+                                continue;
+                            }
+                            // Show each day symbol (root/leaf/flower/... ) at most once per day.
+                            if (!dayIcons.contains(icon)) {
+                                dayIcons.add(icon);
+                            }
+                            ascending |= e.getTitle().contains(GardenBiodynamicCalculation.ASCENDING_MOON_MARKER);
+                            descending |= e.getTitle().contains(GardenBiodynamicCalculation.DESCENDING_MOON_MARKER);
+                        }
+                        // The declination phase is the same for all plant-part events on a day, so append its
+                        // marker once after the day symbols rather than repeating it behind each one.
+                        if (ascending) {
+                            dayIcons.add("/public/emoji/ascending.png");
+                        }
+                        if (descending) {
+                            dayIcons.add("/public/emoji/descending.png");
+                        }
                         if (!dayIcons.isEmpty()) {
                             iconPlacements.add(new IconPlacement(day, month, dayIcons));
                         }
@@ -234,6 +254,8 @@ public class PDFMapper {
                         entries.add(new String[]{"/public/emoji/" + part + ".png", "garden.pdf.legend." + part});
                     }
                     entries.add(new String[]{"/public/emoji/badday.png", "garden.pdf.legend.badday"});
+                    entries.add(new String[]{"/public/emoji/ascending.png", "garden.pdf.legend.ascending"});
+                    entries.add(new String[]{"/public/emoji/descending.png", "garden.pdf.legend.descending"});
 
                     // Flatten to lines; the first line of each entry carries its icon. Entries follow one
                     // another without a blank line — the icon on each first line separates them — to keep the
