@@ -58,11 +58,10 @@ pdf.timezone=Zona horaria
 
 garden.disclaimer="El cuidado del jardín según la luna" es una práctica tradicional. Los días que se muestran siguen la tradición biodinámica y se basan en la posición de la Luna ante las constelaciones del zodíaco (días de raíz, hoja, flor y fruto).
 
-garden.part.root=raíz
-garden.part.leaf=hoja
-garden.part.flower=flor
-garden.part.fruit=fruto
-garden.biodynamic.title=Luna en un signo de {0}
+garden.part.root=Días de raíz
+garden.part.leaf=Días de hoja
+garden.part.flower=Días de flor
+garden.part.fruit=Días de fruto
 garden.biodynamic.ascending=Luna ascendente — la tradición favorece sembrar, injertar y cosechar cultivos aéreos.
 garden.biodynamic.descending=Luna descendente — la tradición favorece el trasplante, el trabajo de raíz y el compostaje.
 garden.biodynamic.root.guidance=Un día de raíz tradicional: asociado con cultivos de raíz como zanahorias, remolachas, cebollas y patatas.

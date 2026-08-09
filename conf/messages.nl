@@ -58,11 +58,10 @@ pdf.timezone=Tijdzone
 
 garden.disclaimer=„Tuinverzorging volgens de maan" is een overgeleverde praktijk. De weergegeven dagen volgen de biodynamische traditie en zijn gebaseerd op de stand van de maan voor de dierenriemsterrenbeelden (wortel-, blad-, bloem- en vruchtdagen).
 
-garden.part.root=Wortel
-garden.part.leaf=Blad
-garden.part.flower=Bloem
-garden.part.fruit=Vrucht
-garden.biodynamic.title=Maan in een {0}-teken
+garden.part.root=Worteldagen
+garden.part.leaf=Bladdagen
+garden.part.flower=Bloemdagen
+garden.part.fruit=Vruchtdagen
 garden.biodynamic.ascending=Opgaande maan — traditioneel gunstig voor het zaaien, enten en oogsten van bovengrondse gewassen.
 garden.biodynamic.descending=Neergaande maan — traditioneel gunstig voor verplanten, wortelwerk en composteren.
 garden.biodynamic.root.guidance=Een traditionele worteldag: verbonden met wortelgewassen zoals wortelen, rode bieten, uien en aardappelen.

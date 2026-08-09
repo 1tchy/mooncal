@@ -58,11 +58,10 @@ pdf.timezone=fuseau horaire
 
 garden.disclaimer=L’« entretien du jardin avec la Lune » est une pratique traditionnelle. Les jours affichés suivent la tradition biodynamique et reposent sur la position de la Lune devant les constellations du zodiaque (jours racine, feuille, fleur et fruit).
 
-garden.part.root=racine
-garden.part.leaf=feuille
-garden.part.flower=fleur
-garden.part.fruit=fruit
-garden.biodynamic.title=Lune dans un signe de {0}
+garden.part.root=Jours racine
+garden.part.leaf=Jours feuille
+garden.part.flower=Jours fleur
+garden.part.fruit=Jours fruit
 garden.biodynamic.ascending=Lune montante — la tradition favorise le semis, le greffage et la récolte des cultures aériennes.
 garden.biodynamic.descending=Lune descendante — la tradition favorise le repiquage, le travail des racines et le compostage.
 garden.biodynamic.root.guidance=Un jour racine traditionnel : associé aux légumes-racines comme les carottes, les betteraves, les oignons et les pommes de terre.

@@ -58,11 +58,10 @@ pdf.timezone=Fus orar
 
 garden.disclaimer=„Îngrijirea grădinii după Lună" este o practică tradițională. Zilele afișate urmează tradiția biodinamică și se bazează pe poziția Lunii în dreptul constelațiilor zodiacale (zile de rădăcină, frunză, floare și fruct).
 
-garden.part.root=rădăcină
-garden.part.leaf=frunză
-garden.part.flower=floare
-garden.part.fruit=fruct
-garden.biodynamic.title=Lună într-un semn de {0}
+garden.part.root=Zile de rădăcină
+garden.part.leaf=Zile de frunză
+garden.part.flower=Zile de floare
+garden.part.fruit=Zile de fruct
 garden.biodynamic.ascending=Lună ascendentă — tradiția o consideră prielnică pentru semănat, altoit și recoltarea culturilor de suprafață.
 garden.biodynamic.descending=Lună descendentă — tradiția o consideră prielnică pentru transplantare, lucrări la rădăcini și compostare.
 garden.biodynamic.root.guidance=O zi de rădăcină în tradiție: asociată cu legumele-rădăcină precum morcovii, sfecla, ceapa și cartofii.

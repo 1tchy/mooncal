@@ -135,7 +135,7 @@ public class GardenBiodynamicCalculation extends Calculation {
         ZonedDateTime startZ = start.atZone(zone);
         ZonedDateTime endZ = periodEnd.atZone(zone);
         String part = messagesApi.get(lang, element.plantPartKey());
-        String title = element.emoji() + " " + messagesApi.get(lang, "garden.biodynamic.title", part);
+        String title = element.emoji() + " " + part;
 
         StringBuilder d = new StringBuilder();
         d.append(messagesApi.get(lang, "garden.biodynamic." + element.name().toLowerCase() + ".guidance"));

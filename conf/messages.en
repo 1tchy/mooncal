@@ -58,11 +58,10 @@ pdf.timezone=Timezone
 
 garden.disclaimer="Garden care by the moon" is a traditional practice. The days shown follow the biodynamic tradition and are based on the Moon’s position before the zodiac constellations (root, leaf, flower and fruit days).
 
-garden.part.root=root
-garden.part.leaf=leaf
-garden.part.flower=flower
-garden.part.fruit=fruit
-garden.biodynamic.title=Moon in a {0} sign
+garden.part.root=Root days
+garden.part.leaf=Leaf days
+garden.part.flower=Flower days
+garden.part.fruit=Fruit days
 garden.biodynamic.ascending=Ascending moon — tradition favours sowing, grafting and harvesting above-ground crops.
 garden.biodynamic.descending=Descending moon — tradition favours transplanting, root work and composting.
 garden.biodynamic.root.guidance=A traditional root day: associated with root crops such as carrots, beets, onions and potatoes.

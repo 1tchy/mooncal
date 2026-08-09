@@ -58,11 +58,10 @@ pdf.timezone=समय क्षेत्र
 
 garden.disclaimer="चंद्रमा के अनुसार बगीचे की देखभाल" एक पारंपरिक प्रथा है। दर्शाए गए दिन बायोडायनामिक परंपरा का अनुसरण करते हैं और राशिचक्र नक्षत्रों के सामने चंद्रमा की स्थिति पर आधारित होते हैं (जड़, पत्ती, फूल और फल दिवस)।
 
-garden.part.root=जड़
-garden.part.leaf=पत्ती
-garden.part.flower=फूल
-garden.part.fruit=फल
-garden.biodynamic.title={0} राशि में चंद्रमा
+garden.part.root=जड़ दिवस
+garden.part.leaf=पत्ती दिवस
+garden.part.flower=फूल दिवस
+garden.part.fruit=फल दिवस
 garden.biodynamic.ascending=आरोही चंद्रमा — परंपरा में भूमि के ऊपर उगने वाली फसलों की बुवाई, कलम बाँधने और कटाई के लिए अनुकूल।
 garden.biodynamic.descending=अवरोही चंद्रमा — परंपरा में पौधों को दूसरी जगह लगाने, जड़ के काम और खाद बनाने के लिए अनुकूल।
 garden.biodynamic.root.guidance=एक पारंपरिक जड़ दिवस: गाजर, चुकंदर, प्याज और आलू जैसी जड़ वाली फसलों से संबंधित।

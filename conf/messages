@@ -58,11 +58,10 @@ pdf.timezone=Zeitzone
 
 garden.disclaimer=„Gartenpflege nach dem Mond" ist eine überlieferte Praxis. Die angezeigten Tage folgen der biodynamischen Tradition und richten sich nach der Stellung des Mondes vor den Tierkreis-Sternbildern (Wurzel-, Blatt-, Blüte- und Fruchttage).
 
-garden.part.root=Wurzel
-garden.part.leaf=Blatt
-garden.part.flower=Blüte
-garden.part.fruit=Frucht
-garden.biodynamic.title=Mond in einem {0}-Zeichen
+garden.part.root=Wurzeltage
+garden.part.leaf=Blatttage
+garden.part.flower=Blütentage
+garden.part.fruit=Fruchttage
 garden.biodynamic.ascending=Aufsteigender Mond — traditionell günstig zum Säen, Veredeln und Ernten oberirdischer Kulturen.
 garden.biodynamic.descending=Absteigender Mond — traditionell günstig für Umpflanzen, Wurzelarbeit und Kompostieren.
 garden.biodynamic.root.guidance=Ein traditioneller Wurzeltag: verbunden mit Wurzelgemüse wie Möhren, Roten Beten, Zwiebeln und Kartoffeln.
