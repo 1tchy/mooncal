@@ -81,3 +81,6 @@ garden.pdf.legend.fruit=Zile de fruct: Luna se află în dreptul unei constelaț
 garden.pdf.legend.badday=Zi de grădină nefavorabilă: Luna traversează un nod lunar sau o eclipsă cade în această perioadă. În tradiția populară o zi de repaus — nici de semănat, nici de plantat.
 garden.pdf.legend.ascending=Lună ascendentă: Luna urcă puțin în fiecare zi. În tradiție, prielnică pentru părțile aeriene ale plantei — semănat, altoit și recoltarea plantelor de frunze, flori și fructe.
 garden.pdf.legend.descending=Lună descendentă: Luna coboară puțin în fiecare zi. În tradiție, prielnică pentru transplantare, lucrări la rădăcini și compostare.
+garden.ics.period=Perioada exactă: {0} – {1}
+garden.ics.starttime=Început: {0}
+garden.ics.endtime=Sfârșit: {0}

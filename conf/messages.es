@@ -81,3 +81,6 @@ garden.pdf.legend.fruit=Días de fruto: la Luna se sitúa ante una constelación
 garden.pdf.legend.badday=Día de jardín desfavorable: la Luna cruza un nodo, o cae un eclipse en el periodo. En la tradición popular un día para descansar — ni sembrar ni plantar.
 garden.pdf.legend.ascending=Luna ascendente: la Luna sube un poco cada día. En la tradición, favorable para las partes aéreas de la planta: sembrar, injertar y cosechar plantas de hoja, flor y fruto.
 garden.pdf.legend.descending=Luna descendente: la Luna desciende un poco cada día. En la tradición, favorable para trasplantar, trabajar la raíz y compostar.
+garden.ics.period=Periodo exacto: {0} – {1}
+garden.ics.starttime=Comienzo: {0}
+garden.ics.endtime=Fin: {0}

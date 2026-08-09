@@ -81,3 +81,6 @@ garden.pdf.legend.fruit=Jours fruit : la Lune se trouve devant une constellation
 garden.pdf.legend.badday=Jour de jardinage défavorable : la Lune croise un nœud, ou une éclipse survient durant la période. Dans la tradition populaire, un jour de repos — ne rien semer ni planter.
 garden.pdf.legend.ascending=Lune montante : la Lune monte un peu plus chaque jour. Dans la tradition, favorable aux parties aériennes de la plante : semis, greffe et récolte des plantes à feuilles, à fleurs et à fruits.
 garden.pdf.legend.descending=Lune descendante : la Lune descend un peu plus chaque jour. Dans la tradition, favorable au repiquage, au travail des racines et au compostage.
+garden.ics.period=Période exacte : {0} – {1}
+garden.ics.starttime=Début : {0}
+garden.ics.endtime=Fin : {0}

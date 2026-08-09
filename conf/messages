@@ -81,3 +81,6 @@ garden.pdf.legend.fruit=Fruchttage: Der Mond steht vor einem Feuer-Sternbild. In
 garden.pdf.legend.badday=Ungünstiger Gartentag: der Mond kreuzt einen Mondknoten oder es fällt eine Finsternis hinein. In der Überlieferung ein Ruhetag – weder säen noch pflanzen.
 garden.pdf.legend.ascending=Aufsteigender Mond: Der Mond steigt Tag für Tag höher. In der Überlieferung günstig für die oberirdischen Pflanzenteile – Aussaat, Pfropfen und Ernten von Blatt-, Blüten- und Fruchtpflanzen.
 garden.pdf.legend.descending=Absteigender Mond: Der Mond sinkt Tag für Tag tiefer. In der Überlieferung günstig für Umpflanzen, Wurzelarbeit und Kompostieren.
+garden.ics.period=Genauer Zeitraum: {0} – {1}
+garden.ics.starttime=Beginn: {0}
+garden.ics.endtime=Ende: {0}

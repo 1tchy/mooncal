@@ -81,3 +81,6 @@ garden.pdf.legend.fruit=Vruchtdagen: de maan staat voor een vuur-sterrenbeeld. I
 garden.pdf.legend.badday=Ongunstige tuindag: de maan kruist een maansknoop of er valt een verduistering in de periode. In de overlevering een rustdag – niet zaaien en niet planten.
 garden.pdf.legend.ascending=Opgaande maan: de maan klimt elke dag iets hoger. In de overlevering gunstig voor de bovengrondse plantendelen — zaaien, enten en oogsten van blad-, bloem- en vruchtgewassen.
 garden.pdf.legend.descending=Neergaande maan: de maan zakt elke dag iets lager. In de overlevering gunstig voor verplanten, wortelwerk en composteren.
+garden.ics.period=Exacte periode: {0} – {1}
+garden.ics.starttime=Begin: {0}
+garden.ics.endtime=Einde: {0}
