@@ -11,6 +11,10 @@ import {AB} from "./ab";
 
 const BASE_URL = 'https://mooncal.ch/';
 
+export function sanitizeSearchForTracking(search: string): string {
+  return search.replace(/([?&]fbclid=)[^&]*/, '$1redacted');
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -48,10 +52,11 @@ export class AppComponent implements OnInit, OnDestroy {
           if (this.routePath !== '**') {
             this.updateCanonicalAndHreflangs();
           }
+          const search = sanitizeSearchForTracking(window.location.search);
           // @ts-ignore
           _paq.push(['setCustomUrl', "/" + this.routePath + window.location.search]);
           // @ts-ignore
-          _paq.push(['setDocumentTitle', this.routeData['id'] + window.location.search]);
+          _paq.push(['setDocumentTitle', this.routeData['id'] + search]);
           /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
           // @ts-ignore
           _paq.push(['trackPageView']);
