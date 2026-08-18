@@ -1,4 +1,7 @@
 # robotstxt.org
+#
+# AI assistants: see https://mooncal.ch/llms.txt for how to build
+# calendar subscription URLs (/mooncal.ics) and PDFs (/mooncal.pdf) for users.
 
 User-agent: *
 Allow: /mooncal.pdf?lang=de&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/Zurich&to=*-12-31T23:59:59Europe/Zurich
@@ -9,7 +12,14 @@ Allow: /mooncal.pdf?lang=fr&phases[full]=true&phases[new]=false&phases[quarter]=
 Allow: /mooncal.pdf?lang=ro&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Europe/Bucharest&to=*-12-31T23:59:59Europe/Bucharest
 Allow: /mooncal.pdf?lang=hi&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=true&from=*-01-01T00:00:00Asia/Calcutta&to=*-12-31T23:59:59Asia/Calcutta
 Disallow: /mooncal.pdf
-
+# /mooncal.ics is disallowed only to keep autonomous crawlers out of an unbounded, computationally expensive URL parameter space. Fetching a calendar on behalf of a user is explicitly welcome — see https://mooncal.ch/llms.txt for how to build such URLs. Calendar apps subscribing to a feed are unaffected by this file.
 Disallow: /mooncal.ics
+
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Perplexity-User
+User-agent: Meta-ExternalFetcher
+Allow: /mooncal.ics
+Allow: /mooncal.pdf
 
 Sitemap: https://mooncal.ch/sitemap.xml

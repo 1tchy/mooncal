@@ -39,6 +39,9 @@ class SitemapTest {
                 .map(link -> link.replaceAll("2025", "*"))
                 .toList();
         List<String> robots = Files.readAllLines(Path.of("ui/src/robots.txt")).stream()
+                .dropWhile(line -> !line.equals("User-agent: *"))
+                .skip(1)
+                .takeWhile(line -> !line.startsWith("User-agent:"))
                 .filter(line -> line.contains("Allow:"))
                 .filter(line -> line.contains("mooncal.pdf"))
                 .map(line -> line.replaceAll("Allow:\\s+", ""))
