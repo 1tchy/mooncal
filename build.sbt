@@ -2,7 +2,7 @@
 
 name := "mooncal"
 
-version := "1.75"
+version := "1.76-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, SbtWeb)
 	.settings(watchSources ++= (baseDirectory.value / "ui/src" ** "*").get)
