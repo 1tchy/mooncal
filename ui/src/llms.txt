@@ -63,4 +63,7 @@ Example — the same selection as above as a printable PDF for the year 2026:
 
 ## More
 
-- Interactive calendar: https://mooncal.ch
+- Interactive calendar: https://mooncal.ch (German; also available in other languages, e.g. https://mooncal.ch/en/calendar — see `lang` values above)
+- Biodynamic garden calendar: https://mooncal.ch/en/garden-calendar
+- About Mooncal and its data sources: https://mooncal.ch/en/about
+- Support the project: https://mooncal.ch/en/donate
