@@ -1,6 +1,6 @@
 # Mooncal
 
-> Mooncal (https://mooncal.ch) generates personal moon calendars: moon phases, lunar and solar eclipses, and biodynamic gardening days, delivered as an iCalendar (.ics) feed that any calendar app can subscribe to.
+> Mooncal (https://mooncal.ch) generates personal moon calendars: moon phases, lunar and solar eclipses, and biodynamic gardening days, delivered as an iCalendar (.ics) feed that any calendar app can subscribe to, or as a printable PDF.
 
 ## Generating a calendar subscription URL
 
@@ -49,6 +49,18 @@ A subscription with full and new moons and eclipses, in English, for a user in Z
 
     https://mooncal.ch/mooncal.ics?lang=en&phases[full]=true&phases[new]=true&events[lunareclipse]=true&events[solareclipse]=true&style=withDescription&hemisphere=northern&before=P6M&after=P2Y&zone=Europe/Zurich&via=ExampleAssistant
 
+## Generating a printable PDF calendar
+
+The same calendar is available as a PDF document for printing:
+
+    https://mooncal.ch/mooncal.pdf
+
+The endpoint accepts exactly the same parameters as `/mooncal.ics` (see above), including `via`. Since a PDF is a one-off document rather than a live subscription, request a fixed time window with `from` and `to` instead of `before`/`after` — for example one calendar year. `lang`, `zone` and `style` are required here as well.
+
+Example — the same selection as above as a printable PDF for the year 2026:
+
+    https://mooncal.ch/mooncal.pdf?lang=en&phases[full]=true&phases[new]=true&events[lunareclipse]=true&events[solareclipse]=true&style=withDescription&hemisphere=northern&from=2026-01-01T00:00:00Europe/Zurich&to=2026-12-31T23:59:59Europe/Zurich&via=ExampleAssistant
+
 ## More
 
-- Interactive calendar and PDF export: https://mooncal.ch
+- Interactive calendar: https://mooncal.ch
