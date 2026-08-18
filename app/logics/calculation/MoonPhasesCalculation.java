@@ -1,6 +1,6 @@
 package logics.calculation;
 
-import com.bradsbrain.simpleastronomy.MoonPhaseFinder;
+import org.simpleastronomy.lib.MoonPhaseFinder;
 import models.*;
 import org.jetbrains.annotations.NotNull;
 import play.i18n.Lang;
