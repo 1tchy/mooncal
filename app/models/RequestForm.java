@@ -28,6 +28,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
     @Constraints.Required
     private Lang lang;
     private Long created;
+    private String via;
 
     public Map<MoonPhaseType, Boolean> getPhases() {
         return phases;
@@ -105,6 +106,14 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
 
     public void setCreated(Long created) {
         this.created = created;
+    }
+
+    public String getVia() {
+        return via;
+    }
+
+    public void setVia(String via) {
+        this.via = via;
     }
 
     /**
@@ -199,6 +208,10 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         if (created != null) {
             sb.append(" #");
             sb.append(created);
+        }
+        if (via != null) {
+            sb.append(" via:");
+            sb.append(via);
         }
         return sb.toString();
     }

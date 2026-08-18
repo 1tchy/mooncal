@@ -26,6 +26,7 @@
             "assets": [
               "src/browserconfig.xml",
               "src/robots.txt",
+              "src/llms.txt",
               "src/site.webmanifest",
               "src/favicon.ico",
               "src/favicon.svg",
@@ -95,6 +96,7 @@
             "assets": [
               "src/browserconfig.xml",
               "src/robots.txt",
+              "src/llms.txt",
               "src/site.webmanifest",
               "src/favicon.ico",
               "src/favicon.svg",
