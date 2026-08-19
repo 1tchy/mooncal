@@ -1,6 +1,5 @@
 import {Route, Routes} from '@angular/router';
 import {MainComponent} from "./main/main.component";
-import {AboutComponent} from "./about/about.component";
 import messagesDE from "./messages.de.json";
 import messagesEN from "./messages.en.json";
 import messagesNL from "./messages.nl.json";
@@ -8,17 +7,23 @@ import messagesES from "./messages.es.json";
 import messagesFR from "./messages.fr.json";
 import messagesRO from "./messages.ro.json";
 import messagesHI from "./messages.hi.json";
-import {NotFoundComponent} from "./not-found/not-found.component";
 import {Messages} from "./messages";
-import {ThankComponent} from "./thank/thank.component";
+
+// Only the landing pages (MainComponent) ship in the initial bundle; everything else
+// is split into lazy chunks that the router loads on demand.
+type ComponentRoute = Pick<Route, 'component' | 'loadComponent'>;
+const main: ComponentRoute = {component: MainComponent};
+const about: ComponentRoute = {loadComponent: () => import('./about/about.component').then(m => m.AboutComponent)};
+const thank: ComponentRoute = {loadComponent: () => import('./thank/thank.component').then(m => m.ThankComponent)};
+const notFound: ComponentRoute = {loadComponent: () => import('./not-found/not-found.component').then(m => m.NotFoundComponent)};
 
 function buildAllRoutes() {
   let allRoutes: Routes = [];
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.home, 'home', m => m.app.pageTitle, m => m.app.description)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, MainComponent, m => m.navigation.paths.garden, 'garden', m => m.garden.pageTitle, m => m.garden.description)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, AboutComponent, m => m.navigation.paths.about, 'about', m => m.about.pageTitle, m => m.about.description)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.buymeacoffee, 'buymeacoffee', m => m.thank.pageTitle, m => m.thank.description)))
-  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, ThankComponent, m => m.navigation.paths.thank, 'thank', m => m.thank.pageTitle, m => m.thank.description)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, main, m => m.navigation.paths.home, 'home', m => m.app.pageTitle, m => m.app.description)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, main, m => m.navigation.paths.garden, 'garden', m => m.garden.pageTitle, m => m.garden.description)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, about, m => m.navigation.paths.about, 'about', m => m.about.pageTitle, m => m.about.description)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, thank, m => m.navigation.paths.buymeacoffee, 'buymeacoffee', m => m.thank.pageTitle, m => m.thank.description)))
+  getAllLanguagesMessages().forEach(messages => allRoutes.push(buildRoute(messages, thank, m => m.navigation.paths.thank, 'thank', m => m.thank.pageTitle, m => m.thank.description)))
   getAllLanguagesMessages().forEach(messages => allRoutes.push({
     path: messages.navigation.paths.donate,
     redirectTo: messages.navigation.paths.thank,
@@ -36,13 +41,13 @@ function buildAllRoutes() {
   allRoutes.push({path: 'ro/about', redirectTo: messagesRO.navigation.paths.about, pathMatch: 'full'})
   allRoutes.push({
     path: '**',
-    component: NotFoundComponent,
+    ...notFound,
     data: allRoutes[0].data
   })
   return allRoutes;
 }
 
-function buildRoute(messages: Messages, component: any, pathFunction: (messages: Messages) => string, id: string, titleFunction: (messages: Messages) => string, descriptionFunction: (messages: Messages) => string): Route {
+function buildRoute(messages: Messages, componentRoute: ComponentRoute, pathFunction: (messages: Messages) => string, id: string, titleFunction: (messages: Messages) => string, descriptionFunction: (messages: Messages) => string): Route {
   let language = messages.lang.current;
   let data: { [key: string]: any } = {
     messages: messages,
@@ -59,7 +64,7 @@ function buildRoute(messages: Messages, component: any, pathFunction: (messages:
   return {
     path: data[language],
     title: titleFunction(messages),
-    component: component,
+    ...componentRoute,
     data: data
   };
 }

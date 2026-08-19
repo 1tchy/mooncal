@@ -27,6 +27,19 @@ describe('Routes', () => {
       }
     }
   });
+  it('about, thank and not-found pages are lazy loaded, the landing pages are not', async () => {
+    for (const route of routesWithoutRedirect()) {
+      const context = String(route.path);
+      if (['home', 'garden'].includes(route.data!['id']) && route.path !== '**') {
+        expect(route.component).withContext(context).toBeDefined();
+        expect(route.loadComponent).withContext(context).toBeUndefined();
+      } else {
+        expect(route.component).withContext(context).toBeUndefined();
+        expect(route.loadComponent).withContext(context).toBeDefined();
+        expect(((await route.loadComponent!()) as any).name).withContext(context).toMatch(/^(AboutComponent|ThankComponent|NotFoundComponent)$/);
+      }
+    }
+  });
   it('all paths are unique', () => {
     let allPaths = routes.map(r => r.path!);
     let uniquePaths = new Set(allPaths);
@@ -48,8 +61,8 @@ describe('Routes', () => {
       }
     }
   });
-  it('all routes do not accidentally change', () => {
-    const routesFormatted = routes.map(r => {
+  it('all routes do not accidentally change', async () => {
+    const routesFormatted = await Promise.all(routes.map(async r => {
       if (r.redirectTo) {
         return {
           redirectFrom: r.path,
@@ -59,14 +72,14 @@ describe('Routes', () => {
       return {
         path: r.path,
         title: r.title,
-        component: r.component?.name,
+        component: r.component?.name ?? ((await r.loadComponent!()) as any).name,
         data: {
           messages: r.data?.['messages'].lang.current,
           home: r.data?.['home'],
           about: r.data?.['about'],
         }
       }
-    });
+    }));
     expect(routesFormatted).toEqual(compiledRoute);
   });
 
