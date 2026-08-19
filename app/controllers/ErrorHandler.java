@@ -1,6 +1,7 @@
 package controllers;
 
 import play.Environment;
+import play.Logger;
 import play.http.DefaultHttpErrorHandler;
 import play.http.HttpErrorHandler;
 import play.i18n.MessagesApi;
@@ -19,6 +20,7 @@ public class ErrorHandler implements HttpErrorHandler {
     private final DefaultHttpErrorHandler defaultErrorHandler;
     private final Environment environment;
     private final MessagesApi messagesApi;
+    private final Logger.ALogger logger = Logger.of(getClass());
 
     @Inject
     public ErrorHandler(DefaultHttpErrorHandler defaultErrorHandler, Environment environment, MessagesApi messagesApi) {
@@ -47,6 +49,10 @@ public class ErrorHandler implements HttpErrorHandler {
      */
     @Override
     public CompletionStage<Result> onServerError(Http.RequestHeader request, Throwable exception) {
-        return environment.isProd() ? CompletableFuture.completedFuture(internalServerError("Server Error")) : defaultErrorHandler.onServerError(request, exception);
+        if (environment.isProd()) {
+            logger.error("Internal server error for (" + request.method() + ") [" + request.uri() + "]", exception);
+            return CompletableFuture.completedFuture(internalServerError("Server Error"));
+        }
+        return defaultErrorHandler.onServerError(request, exception);
     }
 }
