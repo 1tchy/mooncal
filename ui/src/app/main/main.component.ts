@@ -1,7 +1,7 @@
-import {AfterViewInit, ChangeDetectorRef, Component, inject, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, inject, PLATFORM_ID, TemplateRef, ViewChild} from '@angular/core';
 import {Messages} from '../messages';
 import {Event} from "./event";
-import {NgClass} from "@angular/common";
+import {isPlatformBrowser, NgClass} from "@angular/common";
 import {FormsModule, NgForm} from "@angular/forms";
 import {ActivatedRoute, Data, Router, RouterLink, Routes} from "@angular/router";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
@@ -29,6 +29,8 @@ export class MainComponent implements AfterViewInit {
   private modalService = inject(NgbModal);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private settings = inject(MainSettingsService);
+  // During prerendering there is no real browser: skip everything that needs window/navigator/cookies.
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   messages: Messages;
   routeData: Data = []
@@ -114,7 +116,9 @@ export class MainComponent implements AfterViewInit {
     })
     this.initialSubscriptionDescriptionOS = this.guessInitialSubscriptionDescriptionOS();
     this.activeSubscriptionDescriptionOS = this.initialSubscriptionDescriptionOS;
-    this.redirectIfUserNotUnderstands(navigator.languages, router);
+    if (this.isBrowser) {
+      this.redirectIfUserNotUnderstands(navigator.languages, router);
+    }
   }
 
   private redirectIfUserNotUnderstands(usersLanguages: ReadonlyArray<string>, router: Router) {
@@ -255,6 +259,9 @@ export class MainComponent implements AfterViewInit {
   }
 
   public fetchCalendar(track: boolean = true) {
+    if (!this.isBrowser) {
+      return;
+    }
     let requestPath = this.paramsAsString(true);
     if (!Number.isNaN(this.fromDebounced.getTime()) && !Number.isNaN(this.toDebounced.getTime())) {
       if (this.requestPath !== requestPath) {
@@ -351,6 +358,9 @@ export class MainComponent implements AfterViewInit {
   }
 
   private guessInitialSubscriptionDescriptionOS() {
+    if (!this.isBrowser) {
+      return this.SUBSCRIPTION_DESCRIPTION_IOS;
+    }
     const agent = window.navigator.userAgent.toLowerCase()
     switch (true) {
       case agent.indexOf('iphone') > -1:

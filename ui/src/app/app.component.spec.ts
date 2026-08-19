@@ -3,6 +3,7 @@ import {AppComponent, sanitizeSearchForTracking} from './app.component';
 import messages from "./messages.en.json";
 import {ActivatedRoute} from "@angular/router";
 import {of} from "rxjs";
+import {PLATFORM_ID} from "@angular/core";
 
 // @ts-ignore
 window._paq = [];
@@ -31,6 +32,33 @@ describe('AppComponent', () => {
 
   it('should create the app', () => {
     expect(component).toBeTruthy();
+  });
+});
+
+describe('AppComponent rendered on the server', () => {
+  it('does not push tracking events during server-side rendering', async () => {
+    // @ts-ignore
+    window._paq = [];
+    const route = {data: {messages: messages}};
+    await TestBed.configureTestingModule({
+      imports: [AppComponent],
+      providers: [
+        {provide: PLATFORM_ID, useValue: 'server'},
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: route,
+            data: of(route.data)
+          }
+        }
+      ]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+
+    // @ts-ignore
+    expect(window._paq.length).toBe(0);
   });
 });
 

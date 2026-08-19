@@ -1,9 +1,9 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute, Data, NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {Messages} from './messages';
 import messagesDE from "./messages.de.json";
 import {NgbCollapseModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
-import {DOCUMENT, KeyValuePipe, NgClass} from "@angular/common";
+import {DOCUMENT, isPlatformBrowser, KeyValuePipe, NgClass} from "@angular/common";
 import {Meta} from "@angular/platform-browser";
 import {Subscription} from "rxjs";
 import {getAllLanguages, getAllLanguagesAndItsNames} from "./app.routes";
@@ -28,10 +28,15 @@ export class AppComponent implements OnInit, OnDestroy {
   routeData: Data = []
   messages: Messages = messagesDE;
   routerSub$: Subscription | undefined;
+  // Matomo (_paq) only exists in the browser: skip all tracking while prerendering on the server.
+  private readonly isBrowser: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private meta: Meta, @Inject(DOCUMENT) private document: Document, ab: AB) {
-    // @ts-ignore
-    _paq.push(['setCustomDimension', 1, ab.isA ? 'A' : 'B']);
+  constructor(private route: ActivatedRoute, private router: Router, private meta: Meta, @Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) platformId: Object, ab: AB) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
+      // @ts-ignore
+      _paq.push(['setCustomDimension', 1, ab.isA ? 'A' : 'B']);
+    }
   }
 
   ngOnInit() {
@@ -52,14 +57,16 @@ export class AppComponent implements OnInit, OnDestroy {
           if (this.routePath !== '**') {
             this.updateCanonicalAndHreflangs();
           }
-          const search = sanitizeSearchForTracking(window.location.search);
-          // @ts-ignore
-          _paq.push(['setCustomUrl', "/" + this.routePath + window.location.search]);
-          // @ts-ignore
-          _paq.push(['setDocumentTitle', this.routeData['id'] + search]);
-          /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-          // @ts-ignore
-          _paq.push(['trackPageView']);
+          if (this.isBrowser) {
+            const search = sanitizeSearchForTracking(window.location.search);
+            // @ts-ignore
+            _paq.push(['setCustomUrl', "/" + this.routePath + window.location.search]);
+            // @ts-ignore
+            _paq.push(['setDocumentTitle', this.routeData['id'] + search]);
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            // @ts-ignore
+            _paq.push(['trackPageView']);
+          }
         }
       }
     })

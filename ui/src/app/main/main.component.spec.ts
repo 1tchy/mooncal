@@ -4,6 +4,7 @@ import {MainComponent} from './main.component';
 import messages from "../messages.en.json";
 import {ActivatedRoute} from "@angular/router";
 import {of} from "rxjs";
+import {PLATFORM_ID} from "@angular/core";
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -79,5 +80,41 @@ describe('MainComponent', () => {
     const text = component.formatEventDateForGui(event);
     expect(text).toContain(' - ');
     expect(text).toEqual(component.formatDateTimeForGui('2026-01-03T08:30') + ' - ' + component.formatDateTimeForGui('2026-01-05T22:00'));
+  });
+});
+
+describe('MainComponent rendered on the server', () => {
+  let component: MainComponent;
+  let fixture: ComponentFixture<MainComponent>;
+
+  beforeEach(async () => {
+    const route = {data: {messages: messages}};
+    await TestBed.configureTestingModule({
+      imports: [MainComponent],
+      providers: [
+        {provide: PLATFORM_ID, useValue: 'server'},
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: route,
+            data: of(route.data)
+          }
+        }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(MainComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('does not fetch the calendar during server-side rendering', () => {
+    const fetchSpy = spyOn(window, 'fetch').and.resolveTo(new Response('[]'));
+    component.fetchCalendar();
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it('keeps the default subscription tab instead of reading the user agent', () => {
+    expect(component.initialSubscriptionDescriptionOS).toBe(component.SUBSCRIPTION_DESCRIPTION_IOS);
   });
 });

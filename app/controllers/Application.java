@@ -40,6 +40,7 @@ public class Application extends Controller {
     private final PDFMapper pdfMapper;
     private final Environment environment;
     private final FormFactory formFactory;
+    private final Assets assets;
     private final Action<AnyContent> indexHtml;
     private final MessagesApi messagesApi;
     private final Logger.ALogger logger = Logger.of(getClass());
@@ -52,6 +53,7 @@ public class Application extends Controller {
         this.environment = environment;
         this.formFactory = formFactory;
         this.messagesApi = messagesApi;
+        this.assets = assets;
         this.indexHtml = assets.at("/public", "index.html", false);
     }
 
@@ -140,6 +142,13 @@ public class Application extends Controller {
     }
 
     public Action<AnyContent> indexHtml(String path) {
+        // The UI build prerenders one index.html per route; serve it so users get server-rendered
+        // pages. Unknown paths fall back to the root page (client-side router shows "not found").
+        final String normalized = path.endsWith("/") ? path.substring(0, path.length() - 1) : path;
+        if (!normalized.isEmpty() && !normalized.contains("..")
+                && environment.classLoader().getResource("public/" + normalized + "/index.html") != null) {
+            return assets.at("/public", normalized + "/index.html", false);
+        }
         return indexHtml;
     }
 }
