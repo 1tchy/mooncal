@@ -6,7 +6,7 @@ import {FormsModule, NgForm} from "@angular/forms";
 import {ActivatedRoute, Data, Router, RouterLink, Routes} from "@angular/router";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap/modal";
-import {NgbModule, NgbNavChangeEvent} from "@ng-bootstrap/ng-bootstrap";
+import {NgbNavChangeEvent, NgbNavModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {getAllLanguages} from "../app.routes";
 import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
@@ -18,7 +18,7 @@ import {MainSettingsService} from "./main-settings.service";
   imports: [
     FormsModule,
     NgClass,
-    NgbModule,
+    NgbNavModule,
     RouterLink,
     ButtonWithStyledTooltip
   ],
