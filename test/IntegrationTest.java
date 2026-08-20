@@ -77,13 +77,13 @@ class IntegrationTest extends WithBrowser {
             assertEquals(load("IntegrationTest_newmoon_body.txt"), getText("#calendar"));
 
             assertTrue(browser.$("button", withText("iCalendar-Feed abonnieren")).isEmpty());
-            click(browser.$("button", withText("Zum Kalender hinzufügen")).first());
+            click(() -> browser.$("button", withText("Zum Kalender hinzufügen")).first());
             String iCalSubscribeLink = browser.$("#icalLink").first().value();
             assertThat(iCalSubscribeLink, matchesPattern("http.*/mooncal.ics\\?created=\\d+&lang=de&phases\\[new]=true&style=withDescription&hemisphere=northern&before=P6M&after=P2Y&zone=Europe/Zurich"));
             assertThat(getText("body"), containsString("Wähle dein Kalenderprogramm aus, um dafür eine Kurzanleitung zu sehen"));
             assertIcsEquals(load("IntegrationTest_newmoon_subscribe.ics"), download(iCalSubscribeLink));
-            click(browser.$("button", new AttributeFilter("aria-label", "Close")).first());
-            click(browser.$("button", withText("Zum Kalender hinzufügen")).first());
+            click(() -> browser.$("button", new AttributeFilter("aria-label", "Close")).first());
+            click(() -> browser.$("button", withText("Zum Kalender hinzufügen")).first());
             awaitClickable(() -> browser.$("a", withText("Datei herunterladen")).first());
             String iCalDownloadLink = browser.$("a", withText("Datei herunterladen")).attributes("href").getFirst();
             assertThat(iCalDownloadLink, endsWith("&from=2024-02-01T00:00:00Europe/Zurich&to=2024-07-31T23:59:59Europe/Zurich&manualDownload"));
@@ -93,7 +93,7 @@ class IntegrationTest extends WithBrowser {
                     iCalDownloadLink
                             .replaceFirst("&from=.*", ""));
             assertIcsEquals(load("IntegrationTest_newmoon_download.ics"), download(iCalDownloadLink));
-            click(browser.$("button", new AttributeFilter("aria-label", "Close")).first());
+            click(() -> browser.$("button", new AttributeFilter("aria-label", "Close")).first());
         });
     }
 
@@ -101,10 +101,14 @@ class IntegrationTest extends WithBrowser {
     void changeLanguage() throws InterruptedException {
         wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
             assertThat(getText("body"), not(containsString("English")));
-            click(browser.$("a", containingText("Sprache ändern")).first());
-            click(browser.$("a", withText("English")).first());
+            click(() -> browser.$("a", containingText("Sprache ändern")).first());
+            click(() -> browser.$("a", withText("English")).first());
+            // Navigation is asynchronous (the target page's chunk and messages are lazy-loaded),
+            // so wait for the new page instead of asserting immediately after the click.
+            browser.waitUntil(webDriver -> "Moon Calendar".equals(getText("h1")));
             assertEquals("Moon Calendar", getText("h1"));
-            click(browser.$("a", withText("About")).first());
+            click(() -> browser.$("a", withText("About")).first());
+            browser.waitUntil(webDriver -> "About this site".equals(getText("h1")));
             assertEquals("About this site", getText("h1"));
         });
     }
@@ -113,7 +117,7 @@ class IntegrationTest extends WithBrowser {
     void translation() throws InterruptedException {
         List<String> configuredLangs = app.config().getStringList("play.i18n.langs");
         wrapTestExecution(Thread.currentThread().getStackTrace()[1].getMethodName(), () -> {
-            click(browser.$("a", containingText("Sprache ändern")).first());
+            click(() -> browser.$("a", containingText("Sprache ändern")).first());
             Map<String, String> links = browser
                     .$("ul", new AttributeFilter("aria-labelledby", "languagesDropdown"))
                     .$("a")
@@ -170,9 +174,12 @@ class IntegrationTest extends WithBrowser {
         }
     }
 
-    private static void click(FluentWebElement element) {
+    private static void click(Supplier<FluentWebElement> elementSupplier) {
         // Wait for the element to become clickable (e.g. while a modal's open/close animation and its
         // backdrop settle) instead of failing on the first check — this click is otherwise racy.
+        // Re-locate the element on every attempt: FluentLenium caches the underlying WebElement, so a
+        // lookup that raced a closing modal turns stale and would otherwise never become clickable again.
+        FluentWebElement element = elementSupplier.get();
         for (int attempts = 0; attempts < 40 && !element.clickable(); attempts++) {
             try {
                 Thread.sleep(50);
@@ -180,6 +187,7 @@ class IntegrationTest extends WithBrowser {
                 Thread.currentThread().interrupt();
                 break;
             }
+            element = elementSupplier.get();
         }
         if (!element.clickable()) {
             throw new RuntimeException("Element not clickable: " + element);
