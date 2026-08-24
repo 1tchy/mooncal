@@ -50,7 +50,7 @@
     "title": "Événements",
     "lunareclipse": "éclipse lunaire",
     "solareclipse": "éclipse solaire",
-    "moonlanding": "atterrissage sur la lune",
+    "moonlanding": "alunissage",
     "garden-biodynamic": "Calendrier de jardin"
   },
   "time": {
@@ -170,7 +170,7 @@
         "title": "éclipse solaire"
       },
       "moonlanding": {
-        "title": "atterrissage sur la lune"
+        "title": "alunissage"
       },
       "various": "diverses sources",
       "mainly": "principalement",
