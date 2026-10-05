@@ -1,19 +1,22 @@
-//$body-bg: black;
-//$body-color: white;
 $darkerGrey: hsl(0, 0%, 20%);
 //$darkerGrey: #343a40;
 $brightGrey: hsl(0, 0%, 80%);
-//$card-bg: $darkerGrey;
-$card-cap-color: $darkerGrey;
-$card-cap-bg: rgba(#fff, .9);
-$card-bg: $darkerGrey;
-//$navbar-light-icon-color: $darkerGrey;
-$table-dark-bg: $darkerGrey;
-$modal-content-bg: $darkerGrey;
 
-$card-color: white;
-$modal-content-color: white;
-$body-secondary-color: rgba(192, 192, 192, 0.75);
+@use "bootstrap/scss/bootstrap" with (
+  //$body-bg: black,
+  //$body-color: white,
+  $card-cap-color: $darkerGrey,
+  $card-cap-bg: rgba(#fff, .9),
+  $card-bg: $darkerGrey,
+  //$navbar-light-icon-color: $darkerGrey,
+  $modal-content-bg: $darkerGrey,
+  $card-color: white,
+  $modal-content-color: white,
+  $body-secondary-color: rgba(192, 192, 192, 0.75),
+  $font-family-sans-serif: ('Quicksand', sans-serif),
+  //$font-family-sans-serif: ('Helvetica Neue', Helvetica, 'Trebuchet MS', 'Lucida Grande', Arial, sans-serif),
+  $headings-font-weight: 700
+);
 
 body {
   background-color: black !important;
@@ -35,39 +38,6 @@ body {
   src: url(images/quicksand-latin-ext.woff2) format('woff2');
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
-$font-family-sans-serif: 'Quicksand', sans-serif;
-//$font-family-sans-serif: 'Helvetica Neue', Helvetica, 'Trebuchet MS', 'Lucida Grande', Arial, sans-serif;
-$headings-font-weight: 700;
-
-// Bootstrap: only the parts the templates actually use
-// (was previously the full bootstrap.scss import).
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
-@import "bootstrap/scss/root";
-@import "bootstrap/scss/reboot";
-@import "bootstrap/scss/type";
-@import "bootstrap/scss/containers";
-@import "bootstrap/scss/grid";
-@import "bootstrap/scss/tables";
-@import "bootstrap/scss/forms";
-@import "bootstrap/scss/buttons";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/dropdown";
-@import "bootstrap/scss/nav";
-@import "bootstrap/scss/navbar";
-@import "bootstrap/scss/card";
-@import "bootstrap/scss/progress";
-@import "bootstrap/scss/close";
-@import "bootstrap/scss/modal";
-@import "bootstrap/scss/tooltip";
-@import "bootstrap/scss/spinners";
-@import "bootstrap/scss/helpers";
-@import "bootstrap/scss/utilities/api";
 
 #mond {
   position: absolute;
