@@ -13,8 +13,7 @@ export default defineConfig({
   expect: {toHaveScreenshot: {threshold: 0, maxDiffPixels: 0}},
   use: {
     baseURL: process.env.BASE_URL ?? 'http://localhost:9123',
-    // German-speaking browser: with a non-German locale the app redirects German pages back to English
-    locale: 'de-CH',
+    locale: 'en-US',
     timezoneId: 'Europe/Zurich',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',

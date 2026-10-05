@@ -2,7 +2,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MainComponent} from './main.component';
 import messages from "../messages.en.json";
-import {ActivatedRoute} from "@angular/router";
+import messagesDE from "../messages.de.json";
+import {ActivatedRoute, Router} from "@angular/router";
 import {of} from "rxjs";
 import {PLATFORM_ID} from "@angular/core";
 
@@ -116,5 +117,40 @@ describe('MainComponent rendered on the server', () => {
 
   it('keeps the default subscription tab instead of reading the user agent', () => {
     expect(component.initialSubscriptionDescriptionOS).toBe(component.SUBSCRIPTION_DESCRIPTION_IOS);
+  });
+});
+
+describe('MainComponent on a German page with an English-speaking browser', () => {
+  let component: MainComponent;
+  let router: Router;
+
+  const clearRedirectCookie = () => document.cookie = 'redirectedFromGerman=; max-age=0';
+  const redirectIfUserNotUnderstands = () => (component as any).redirectIfUserNotUnderstands(['en-US', 'en'], router);
+
+  beforeEach(async () => {
+    const route = {data: {messages: messagesDE}};
+    await TestBed.configureTestingModule({
+      imports: [MainComponent],
+      providers: [{provide: ActivatedRoute, useValue: {snapshot: route, data: of(route.data)}}]
+    }).compileComponents();
+    router = TestBed.inject(Router);
+    spyOn(router, 'navigate').and.resolveTo(true);
+    clearRedirectCookie();
+    component = TestBed.createComponent(MainComponent).componentInstance;
+    (router.navigate as jasmine.Spy).calls.reset();
+    clearRedirectCookie();
+  });
+
+  afterEach(clearRedirectCookie);
+
+  it('redirects to English when the German page is the landing page', () => {
+    redirectIfUserNotUnderstands();
+    expect(router.navigate).toHaveBeenCalledWith(['/en']);
+  });
+
+  it('does not redirect when the user navigated to German within the app', () => {
+    router.navigated = true;
+    redirectIfUserNotUnderstands();
+    expect(router.navigate).not.toHaveBeenCalled();
   });
 });

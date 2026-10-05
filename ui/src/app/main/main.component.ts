@@ -125,6 +125,10 @@ export class MainComponent implements AfterViewInit {
     if (this.messages.lang.current !== 'de') {
       return;
     }
+    if (router.navigated) {
+      // Only redirect on the landing page, not when the user chose German within the app
+      return;
+    }
     if (document.cookie.indexOf('redirectedFromGerman') >= 0) {
       return;
     }
