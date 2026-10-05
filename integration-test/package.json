@@ -1,0 +1,11 @@
+{
+  "name": "mooncal-integration-test",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

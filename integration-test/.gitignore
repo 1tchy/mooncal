@@ -1,0 +1,5 @@
+node_modules/
+screenshots/
+report/
+test-results/
+server.log
