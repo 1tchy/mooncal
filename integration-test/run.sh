@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 #
 # Browser integration test: builds the app, starts the production server,
-# runs a Playwright user journey (10 clicks, 5 screenshots) and stops the server again.
+# runs a Playwright user journey (clicks, checks, screenshot comparisons) and stops the server again.
 #
-# Usage: integration-test/run.sh [--skip-build]
+# Usage: integration-test/run.sh [--skip-build] [--update-screenshots]
+#   --skip-build          reuse the last build
+#   --update-screenshots  rewrite the reference screenshots instead of comparing against them
 #   PORT=9123  port the server is started on
 #
-# Screenshots: integration-test/screenshots/   HTML report: integration-test/report/
+# Reference screenshots: integration-test/screenshots/   HTML report with diffs: integration-test/report/
 # Server log:  integration-test/server.log
 
 set -euo pipefail
@@ -18,6 +20,15 @@ BASE_URL="http://localhost:${PORT}"
 SERVER_BIN="$ROOT_DIR/target/universal/stage/bin/mooncal"
 SERVER_LOG="$TEST_DIR/server.log"
 SERVER_PID=""
+SKIP_BUILD=false
+PLAYWRIGHT_ARGS=()
+for arg in "$@"; do
+  case "$arg" in
+    --skip-build) SKIP_BUILD=true ;;
+    --update-screenshots) PLAYWRIGHT_ARGS+=(--update-snapshots) ;;
+    *) echo "Unknown argument: $arg" >&2; exit 1 ;;
+  esac
+done
 
 log() { printf '\n=== %s ===\n' "$*"; }
 
@@ -40,7 +51,7 @@ if curl -s -o /dev/null "$BASE_URL"; then
   exit 1
 fi
 
-if [[ "${1:-}" != "--skip-build" ]]; then
+if [[ "$SKIP_BUILD" != true ]]; then
   log "Building application (sbt stage, includes the Angular production build)"
   (cd "$ROOT_DIR" && sbt -batch stage)
 fi
@@ -75,9 +86,6 @@ for i in {1..60}; do
 done
 
 log "Running browser tests"
-rm -rf screenshots && mkdir -p screenshots
-BASE_URL="$BASE_URL" npx playwright test
+BASE_URL="$BASE_URL" npx playwright test ${PLAYWRIGHT_ARGS[@]+"${PLAYWRIGHT_ARGS[@]}"}
 
 log "Integration test passed"
-echo "Screenshots:"
-ls -1 "$TEST_DIR"/screenshots/*.png

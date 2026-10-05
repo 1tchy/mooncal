@@ -8,6 +8,9 @@ export default defineConfig({
   workers: 1,
   reporter: [['list'], ['html', {open: 'never', outputFolder: 'report'}]],
   outputDir: 'test-results',
+  // Committed reference screenshots; any difference fails the test (update with run.sh --update-screenshots)
+  snapshotPathTemplate: '{testDir}/screenshots/{arg}{ext}',
+  expect: {toHaveScreenshot: {threshold: 0, maxDiffPixels: 0}},
   use: {
     baseURL: process.env.BASE_URL ?? 'http://localhost:9123',
     // German-speaking browser: with a non-German locale the app redirects German pages back to English
