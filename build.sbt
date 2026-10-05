@@ -14,7 +14,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies ++= Seq(
 	guice,
 	//see latest version under: https://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
-	"org.mnode.ical4j" % "ical4j" % "4.3.0",
+	"org.mnode.ical4j" % "ical4j" % "4.4.0",
 	//see latest version under: https://mvnrepository.com/artifact/com.github.vandeseer/easytable
 	"com.github.vandeseer" % "easytable" % "1.0.2",
 	//see latest version under: https://mvnrepository.com/artifact/com.google.zxing/javase
@@ -24,9 +24,9 @@ libraryDependencies ++= Seq(
 	//see latest version under: https://jitpack.io/#SimpleAstronomy/simple-astronomy-lib or https://github.com/SimpleAstronomy/simple-astronomy-lib
 	"com.github.SimpleAstronomy" % "simple-astronomy-lib" % "6f0b684551",
 	//see latest version under: https://mvnrepository.com/artifact/org.mockito/mockito-core
-	"org.mockito" % "mockito-core" % "5.23.0" % Test,
+	"org.mockito" % "mockito-core" % "5.24.0" % Test,
 	///see latest version under: https://mvnrepository.com/artifact/de.redsix/pdfcompare
-	"de.redsix" % "pdfcompare" % "1.2.9" % Test,
+	"de.redsix" % "pdfcompare" % "1.2.11" % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
 	"org.junit.jupiter" % "junit-jupiter" % "6.1.3" % Test,
 	"com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test,
