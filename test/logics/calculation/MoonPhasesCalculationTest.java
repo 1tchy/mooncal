@@ -180,6 +180,22 @@ class MoonPhasesCalculationTest extends WithApplication {
     }
 
     @Test
+    void testDailyEventsFollowDaylightSavingTime() {
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put(MoonPhaseType.DAILY, true);
+        requestForm.setFrom(ZonedDateTime.of(2026, 1, 1, 0, 0, 0, 0, CH_ZONE));
+        requestForm.setTo(ZonedDateTime.of(2026, 7, 1, 23, 59, 0, 0, CH_ZONE));
+
+        final Collection<EventInstance> actual = calculate(requestForm);
+
+        final ZonedDateTime summerEvent = actual.stream()
+                .map(EventInstance::getDateTime)
+                .filter(dateTime -> dateTime.toLocalDate().equals(LocalDate.of(2026, 7, 1)))
+                .findFirst().orElseThrow();
+        assertEquals(ZonedDateTime.of(2026, 7, 1, 12, 0, 0, 0, CH_ZONE).toInstant(), summerEvent.toInstant());
+    }
+
+    @Test
     void testCalculatedAndCsvFullMoons() {
         requestForm.getPhases().clear();
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);

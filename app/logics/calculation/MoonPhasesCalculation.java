@@ -82,7 +82,7 @@ public class MoonPhasesCalculation extends Calculation {
             load(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), hemisphere, LAST_QUARTER_EVENT_TYPE_ID);
         }
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
-            calculateDailyEvents(requestForm.getLang(), requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getFrom().getOffset(), eventCollection);
+            calculateDailyEvents(requestForm.getLang(), requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getZone(), eventCollection);
         }
     }
 
