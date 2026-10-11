@@ -56,6 +56,14 @@ class PDFMapperTest extends WithApplication {
         assertEquals("mooncal_ro_daily.pdf", actual);
     }
 
+    // http://localhost:9000/mooncal.pdf?lang=de&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=true&lat=47.4&lon=8.5&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=false&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
+    @Test
+    void deDailyWithLocation() throws IOException {
+        var events = calculateEvents(LANG_DE, Map.of(MoonPhaseType.FULLMOON, true, MoonPhaseType.DAILY, true), 47.4, 8.5);
+        byte[] actual = cut.map(events, LANG_DE, Hemisphere.NORTHERN);
+        assertEquals("mooncal_de_daily_location.pdf", actual);
+    }
+
     // http://localhost:9000/mooncal.pdf?lang=hi&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=false&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
     @Test
     void hi() throws IOException {
@@ -65,7 +73,13 @@ class PDFMapperTest extends WithApplication {
     }
 
     private Collection<EventInstance> calculateEvents(Lang lang, Map<MoonPhaseType, Boolean> phases) {
+        return calculateEvents(lang, phases, null, null);
+    }
+
+    private Collection<EventInstance> calculateEvents(Lang lang, Map<MoonPhaseType, Boolean> phases, Double lat, Double lon) {
         RequestForm requestForm = new RequestForm();
+        requestForm.setLat(lat);
+        requestForm.setLon(lon);
         requestForm.setFrom(ZonedDateTime.of(LocalDateTime.of(2025, 1, 1, 0, 0), ZoneId.of("Europe/Zurich")));
         requestForm.setTo(ZonedDateTime.of(LocalDateTime.of(2025, 12, 31, 23, 59), ZoneId.of("Europe/Zurich")));
         requestForm.setPhases(phases);

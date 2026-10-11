@@ -192,6 +192,7 @@ public class PDFMapper {
                         TextWithSize textWithSize = calculateOptimalTextWithSize(textEvents, font,
                                 DAY_EVENT_TEXT_WIDTH - 2 * DAY_EVENT_TEXT_PADDING - iconArea);
                         row.add(TextCell.builder().text(textWithSize.text())
+                                .drawer(new ArrowTextCellDrawer())
                                 .fontSize(textWithSize.size())
                                 .backgroundColor(backgroundColor)
                                 .borderWidthLeft(0)

@@ -23,6 +23,9 @@ public class MoonPhasesCalculation extends Calculation {
     public static final String NEWMOON_EVENT_TYPE_ID = "newmoon";
     public static final String FIRST_QUARTER_EVENT_TYPE_ID = "first-quarter";
     public static final String LAST_QUARTER_EVENT_TYPE_ID = "last-quarter";
+    // Public so the PDF renderer can draw them: its fonts have no arrow glyphs.
+    public static final char MOONRISE_SYMBOL = '↑';
+    public static final char MOONSET_SYMBOL = '↓';
     private final EnumMap<Hemisphere, EnumMap<EventStyle, ArrayList<EventTemplate>>> moonPhases1700to2100 = new EnumMap<>(Arrays.stream(Hemisphere.values()).collect(Collectors.toMap(
             Function.identity(),
             hemisphere -> new EnumMap<>(Arrays.stream(EventStyle.values()).collect(Collectors.toMap(
@@ -162,7 +165,7 @@ public class MoonPhasesCalculation extends Calculation {
     private record RiseSetTexts(String titleSuffix, String description) {
     }
 
-    private record HorizonCrossing(Instant when, String symbol, String messageKey) {
+    private record HorizonCrossing(Instant when, char symbol, String messageKey) {
     }
 
     private RiseSetTexts calculateRiseSet(RequestForm requestForm, LocalDate day) {
@@ -172,8 +175,8 @@ public class MoonPhasesCalculation extends Calculation {
                 day.atStartOfDay(zone).toInstant(), day.plusDays(1).atStartOfDay(zone).toInstant(),
                 requestForm.getLat(), requestForm.getLon());
         List<HorizonCrossing> crossings = new ArrayList<>();
-        riseSet.rise().ifPresent(rise -> crossings.add(new HorizonCrossing(rise, "↑", "phases.daily.moonrise")));
-        riseSet.set().ifPresent(set -> crossings.add(new HorizonCrossing(set, "↓", "phases.daily.moonset")));
+        riseSet.rise().ifPresent(rise -> crossings.add(new HorizonCrossing(rise, MOONRISE_SYMBOL, "phases.daily.moonrise")));
+        riseSet.set().ifPresent(set -> crossings.add(new HorizonCrossing(set, MOONSET_SYMBOL, "phases.daily.moonset")));
         crossings.sort(Comparator.comparing(HorizonCrossing::when));
         StringJoiner titleSuffix = new StringJoiner(" ");
         StringJoiner description = new StringJoiner("\n");
