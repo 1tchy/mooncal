@@ -33,11 +33,19 @@
     "full": "pleine lune",
     "new": "nouvelle lune",
     "quarter": "quartier",
-    "daily": "phases quotidiennes de la lune",
+    "daily": "phases quotidiennes de la lune, lever et coucher",
     "hemisphere": {
       "title": "Hémisphère",
       "northern": "Nord",
       "southern": "Sud"
+    },
+    "location": {
+      "title": "Emplacement",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "useMine": "Ma position",
+      "yourLocation": "Votre position",
+      "error": "Votre position n'a pas pu être déterminée."
     }
   },
   "styles": {

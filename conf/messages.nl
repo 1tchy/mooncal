@@ -26,6 +26,13 @@ phases.daily.visibility.morning6=Om 6 uur s''ochtends is de maan {0}% zichtbaar
 phases.daily.visibility.noon12=Om 12 uur s''middags is de maan {0}% zichtbaar
 phases.daily.visibility.evening6=Om 6 uur s''avonds is de maan {0}% zichtbaar
 phases.daily.visibility.midnight=Om middernacht is de maan {0}% zichtbaar
+phases.daily.moonrise=Maanopkomst om {0}
+phases.daily.moonset=Maanondergang om {0}
+phases.daily.noMoonrise=Geen maanopkomst op deze dag
+phases.daily.noMoonset=Geen maanondergang op deze dag
+phases.daily.alwaysUp=De maan staat de hele dag boven de horizon
+phases.daily.alwaysDown=De maan staat de hele dag onder de horizon
+phases.daily.location=Opkomst en ondergang berekend voor {0}
 
 events.lunareclipse.total=Totale maansverduistering
 events.lunareclipse.partial=Gedeeltelijke maansverduistering
@@ -40,6 +47,7 @@ error.notfound.lead=Sorry, de gevraagde pagina bestaat niet.
 error.notfound.problem=Het probleem zou kunnen zijn:
 error.notfound.problem.typo=een fout getypt adres
 error.notfound.problem.link=een verouderde link
+error.location=Ongeldige locatie
 
 pdf.title=Maankalender
 pdf.month.1=Januari

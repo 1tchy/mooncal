@@ -33,11 +33,19 @@
     "full": "Full Moon",
     "new": "New Moon",
     "quarter": "Quarter",
-    "daily": "Daily Moon Phases",
+    "daily": "Daily Moon Phases, Moonrise & Moonset",
     "hemisphere": {
       "title": "Hemisphere",
       "northern": "Northern",
       "southern": "Southern"
+    },
+    "location": {
+      "title": "Location",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "useMine": "My location",
+      "yourLocation": "Your location",
+      "error": "Your location could not be determined."
     }
   },
   "styles": {

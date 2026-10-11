@@ -3,6 +3,7 @@ package logics.astronomy;
 import jakarta.inject.Singleton;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Singleton
@@ -117,34 +118,96 @@ public class MeeusEphemeris implements Ephemeris {
              -  115 * Math.sin((Lp + Mp) * DEG);
     }
 
+    private double eclipticLongitude(double[] f) {
+        return norm360(f[0] + (sumSeries(LON, f, true) + additionalLon(f)) / 1_000_000.0);
+    }
+
+    private double eclipticLatitude(double[] f) {
+        return (sumSeries(LAT, f, true) + additionalLat(f)) / 1_000_000.0;
+    }
+
+    private double distanceKm(double[] f) {
+        return 385000.56 + sumSeries(DIST, f, false) / 1000.0;
+    }
+
+    /** Declination in radians for ecliptic longitude/latitude and obliquity in radians. */
+    private static double declination(double lon, double lat, double eps) {
+        return Math.asin(Math.sin(lat) * Math.cos(eps) + Math.cos(lat) * Math.sin(eps) * Math.sin(lon));
+    }
+
     @Override
     public double moonEclipticLongitude(Instant t) {
-        double[] f = fundamentals(julianDay(t));
-        double lon = f[0] + (sumSeries(LON, f, true) + additionalLon(f)) / 1_000_000.0;
-        return norm360(lon);
+        return eclipticLongitude(fundamentals(julianDay(t)));
     }
 
     @Override
     public double moonEclipticLatitude(Instant t) {
-        double[] f = fundamentals(julianDay(t));
-        return (sumSeries(LAT, f, true) + additionalLat(f)) / 1_000_000.0;
+        return eclipticLatitude(fundamentals(julianDay(t)));
     }
 
     @Override
     public double earthMoonDistanceKm(Instant t) {
-        double[] f = fundamentals(julianDay(t));
-        return 385000.56 + sumSeries(DIST, f, false) / 1000.0;
+        return distanceKm(fundamentals(julianDay(t)));
     }
 
     @Override
     public double moonDeclination(Instant t) {
-        double lon = moonEclipticLongitude(t) * DEG;
-        double lat = moonEclipticLatitude(t) * DEG;
-        double jd = julianDay(t);
+        double[] f = fundamentals(julianDay(t));
+        return declination(eclipticLongitude(f) * DEG, eclipticLatitude(f) * DEG, obliquity(julianDay(t))) / DEG;
+    }
+
+    /** Obliquity of the ecliptic in radians. */
+    private static double obliquity(double jd) {
         double tc = (jd - 2451545.0) / 36525.0;
-        double eps = (23.4392911 - 0.0130042 * tc) * DEG; // obliquity of the ecliptic
-        double dec = Math.asin(Math.sin(lat) * Math.cos(eps) + Math.cos(lat) * Math.sin(eps) * Math.sin(lon));
-        return dec / DEG;
+        return (23.4392911 - 0.0130042 * tc) * DEG;
+    }
+
+    /**
+     * Altitude of the moon relative to its rise/set altitude in degrees, as seen from the given place:
+     * positive while the moon is above the horizon (parallax, refraction and its semi-diameter included).
+     */
+    private double moonAltitudeAboveHorizon(Instant t, double latitude, double longitude) {
+        double jd = julianDay(t);
+        double[] f = fundamentals(jd);
+        double lon = eclipticLongitude(f) * DEG;
+        double lat = eclipticLatitude(f) * DEG;
+        double eps = obliquity(jd);
+        double ra = Math.atan2(Math.sin(lon) * Math.cos(eps) - Math.tan(lat) * Math.sin(eps), Math.cos(lon));
+        double dec = declination(lon, lat, eps);
+        double tc = f[5];
+        double siderealTime = norm360(280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * tc * tc - tc * tc * tc / 38710000);
+        double hourAngle = siderealTime * DEG + longitude * DEG - ra;
+        double phi = latitude * DEG;
+        double altitude = Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(hourAngle)) / DEG;
+        // Meeus ch.15: h0 = 0.7275 * parallax - 0°34' (refraction); 0.7275 also covers the semi-diameter
+        double parallax = Math.asin(6378.14 / distanceKm(f)) / DEG;
+        return altitude - (0.7275 * parallax - 34.0 / 60);
+    }
+
+    /** Scan step; the moon only rises and sets within one step when it grazes the horizon near the poles. */
+    private static final Duration RISE_SET_STEP = Duration.ofMinutes(30);
+    /** Precise enough to round rise and set to the minute. */
+    private static final Duration RISE_SET_PRECISION = Duration.ofSeconds(10);
+
+    @Override
+    public RiseSet moonRiseSet(Instant from, Instant until, double latitude, double longitude) {
+        Instant rise = null;
+        Instant set = null;
+        double previous = moonAltitudeAboveHorizon(from, latitude, longitude);
+        boolean upAtStart = previous > 0;
+        Instant lo = from;
+        while (lo.isBefore(until) && (rise == null || set == null)) {
+            Instant hi = lo.plus(RISE_SET_STEP).isAfter(until) ? until : lo.plus(RISE_SET_STEP);
+            double current = moonAltitudeAboveHorizon(hi, latitude, longitude);
+            if (previous <= 0 && current > 0 && rise == null) {
+                rise = refine(lo, hi, t -> moonAltitudeAboveHorizon(t, latitude, longitude) > 0, RISE_SET_PRECISION);
+            } else if (previous > 0 && current <= 0 && set == null) {
+                set = refine(lo, hi, t -> moonAltitudeAboveHorizon(t, latitude, longitude) <= 0, RISE_SET_PRECISION);
+            }
+            previous = current;
+            lo = hi;
+        }
+        return new RiseSet(Optional.ofNullable(rise), Optional.ofNullable(set), upAtStart);
     }
 
     /** Lahiri ayanamsha in degrees: linear precession anchored at J2000.0 (~50.29"/yr). */
@@ -238,8 +301,12 @@ public class MeeusEphemeris implements Ephemeris {
     }
 
     private Instant refine(Instant lo, Instant hi, Predicate<Instant> hiCondition) {
-        // bisection: invariant lo=false, hi=true, until <1 min apart
-        while (Duration.between(lo, hi).toSeconds() > 60) {
+        return refine(lo, hi, hiCondition, Duration.ofMinutes(1));
+    }
+
+    private Instant refine(Instant lo, Instant hi, Predicate<Instant> hiCondition, Duration precision) {
+        // bisection: invariant lo=false, hi=true, until less than precision apart
+        while (Duration.between(lo, hi).toSeconds() > precision.toSeconds()) {
             Instant mid = midpoint(lo, hi);
             if (hiCondition.test(mid)) {
                 hi = mid;

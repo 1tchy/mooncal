@@ -27,4 +27,58 @@ class RequestFormTest {
         RequestForm f = newMinimalForm();
         assertFalse(f.getForLog().contains("via:"), f.getForLog());
     }
+
+    @Test
+    void locationIsRoundedToATenthOfADegree() {
+        RequestForm f = newMinimalForm();
+        f.setLat(47.3769);
+        f.setLon(-8.5417);
+        assertEquals(47.4, f.getLat());
+        assertEquals(-8.5, f.getLon());
+    }
+
+    @Test
+    void getForLogDoesNotContainTheLocation() {
+        RequestForm f = newMinimalForm();
+        f.setLat(47.3769);
+        f.setLon(8.5417);
+        assertFalse(f.getForLog().contains("47"), f.getForLog());
+        assertTrue(f.getForLog().contains("with location"), f.getForLog());
+    }
+
+    @Test
+    void eTagDependsOnTheLocation() {
+        RequestForm withoutLocation = newMinimalForm();
+        RequestForm zurich = newMinimalForm();
+        zurich.setLat(47.4);
+        zurich.setLon(8.5);
+        RequestForm geneva = newMinimalForm();
+        geneva.setLat(46.2);
+        geneva.setLon(6.1);
+        assertNotEquals(withoutLocation.calculateETag(), zurich.calculateETag());
+        assertNotEquals(zurich.calculateETag(), geneva.calculateETag());
+    }
+
+    @Test
+    void validLocationIsAccepted() {
+        RequestForm f = newMinimalForm();
+        f.setLat(-90.0);
+        f.setLon(180.0);
+        assertNull(f.validate());
+    }
+
+    @Test
+    void locationOutOfRangeIsRejected() {
+        RequestForm f = newMinimalForm();
+        f.setLat(91.0);
+        f.setLon(8.5);
+        assertEquals("error.location", f.validate().message());
+    }
+
+    @Test
+    void locationWithOnlyLatitudeIsRejected() {
+        RequestForm f = newMinimalForm();
+        f.setLat(47.4);
+        assertEquals("error.location", f.validate().message());
+    }
 }

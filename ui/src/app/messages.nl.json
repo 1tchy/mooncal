@@ -33,11 +33,19 @@
     "full": "Volle maan",
     "new": "Nieuwe maan",
     "quarter": "Halve maan",
-    "daily": "Dagelijkse gegevens van de maan",
+    "daily": "Dagelijkse gegevens van de maan, maanopkomst en maanondergang",
     "hemisphere": {
       "title": "Halfrond",
       "northern": "Noordelijk",
       "southern": "Zuidelijk"
+    },
+    "location": {
+      "title": "Locatie",
+      "latitude": "Breedtegraad",
+      "longitude": "Lengtegraad",
+      "useMine": "Mijn locatie",
+      "yourLocation": "Jouw locatie",
+      "error": "Je locatie kon niet worden bepaald."
     }
   },
   "styles": {

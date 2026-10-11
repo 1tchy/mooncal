@@ -26,6 +26,13 @@ phases.daily.visibility.morning6=The moon is {0}% visible at 6am
 phases.daily.visibility.noon12=The moon is {0}% visible at noon
 phases.daily.visibility.evening6=The moon is {0}% visible at 6pm
 phases.daily.visibility.midnight=The moon is {0}% visible at midnight
+phases.daily.moonrise=Moonrise at {0}
+phases.daily.moonset=Moonset at {0}
+phases.daily.noMoonrise=No moonrise on this day
+phases.daily.noMoonset=No moonset on this day
+phases.daily.alwaysUp=The moon is above the horizon all day
+phases.daily.alwaysDown=The moon is below the horizon all day
+phases.daily.location=Rise and set calculated for {0}
 
 events.lunareclipse.total=Total Lunar Eclipse
 events.lunareclipse.partial=Partial Lunar Eclipse
@@ -40,6 +47,7 @@ error.notfound.lead=Sorry, but the page you were trying to view does not exist.
 error.notfound.problem=It looks like this was the result of either:
 error.notfound.problem.typo=a mistyped address
 error.notfound.problem.link=an out-of-date link
+error.location=Invalid location
 
 pdf.title=Moon Calendar
 pdf.month.1=January

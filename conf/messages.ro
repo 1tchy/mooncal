@@ -26,6 +26,13 @@ phases.daily.visibility.morning6=Luna este vizibilă la {0}% la ora 6 dimineața
 phases.daily.visibility.noon12=Luna este vizibilă la {0}% la amiază
 phases.daily.visibility.evening6=Luna este vizibilă la {0}% la ora 6 seara
 phases.daily.visibility.midnight=Luna este vizibilă cu {0}% la miezul nopții
+phases.daily.moonrise=Răsăritul lunii la {0}
+phases.daily.moonset=Apusul lunii la {0}
+phases.daily.noMoonrise=Fără răsărit de lună în această zi
+phases.daily.noMoonset=Fără apus de lună în această zi
+phases.daily.alwaysUp=Luna este deasupra orizontului toată ziua
+phases.daily.alwaysDown=Luna este sub orizont toată ziua
+phases.daily.location=Răsăritul și apusul calculate pentru {0}
 
 events.lunareclipse.total=eclipsă totală lunară
 events.lunareclipse.partial=eclipsă parțială lunară
@@ -40,6 +47,7 @@ error.notfound.lead=Îmi pare rău, dar pagina pe care încercați să o vizita�
 error.notfound.problem=Apare că acest lucru a fost cauzat de:
 error.notfound.problem.typo=o adresă greșită scrisă
 error.notfound.problem.link=un link depășit de dată
+error.location=Locație nevalidă
 
 pdf.title=Calendar lunar
 pdf.month.1=Ianuarie

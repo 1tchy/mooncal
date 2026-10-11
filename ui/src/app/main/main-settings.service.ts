@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {referenceLocation} from "./location";
 
 type options = { [key: string]: boolean };
 
@@ -20,6 +21,13 @@ export class MainSettingsService {
   from = MainSettingsService.initialFrom();
   to = MainSettingsService.initialTo();
   zone = MainSettingsService.detectTimezone();
+  // Location for moonrise/-set, defaults to the reference city of the time zone
+  lat: number | null = referenceLocation(this.zone).lat;
+  lon: number | null = referenceLocation(this.zone).lon;
+  // A time zone chosen by the user is never replaced by the one nearest to the location
+  zoneChosenByUser = false;
+  // A location from the browser (already rounded) is never replaced by the reference city of a time zone chosen afterwards
+  browserLocation: { lat: number, lon: number } | null = null;
 
   static initialFrom() {
     return new Date().getFullYear() + "-01-01";

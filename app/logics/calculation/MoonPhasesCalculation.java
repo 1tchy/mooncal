@@ -1,5 +1,6 @@
 package logics.calculation;
 
+import logics.astronomy.Ephemeris;
 import org.simpleastronomy.lib.MoonPhaseFinder;
 import models.*;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +11,7 @@ import javax.inject.Inject;
 import java.text.DecimalFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,9 +31,12 @@ public class MoonPhasesCalculation extends Calculation {
             )))
     )));
 
+    private final Ephemeris ephemeris;
+
     @Inject
-    public MoonPhasesCalculation(MessagesApi messagesApi) {
+    public MoonPhasesCalculation(MessagesApi messagesApi, Ephemeris ephemeris) {
         super(messagesApi);
+        this.ephemeris = ephemeris;
         initializeMoonPhases();
     }
 
@@ -82,7 +87,7 @@ public class MoonPhasesCalculation extends Calculation {
             load(fromMorning, toNight, MoonPhaseFinder::findLastQuarterFollowing, MoonPhase.LAST_QUARTER, eventCollection, requestForm.getLang(), requestForm.getStyle(), hemisphere, LAST_QUARTER_EVENT_TYPE_ID);
         }
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
-            calculateDailyEvents(requestForm.getLang(), requestForm.getFrom().toLocalDate(), requestForm.getTo().toLocalDate(), requestForm.getZone(), eventCollection);
+            calculateDailyEvents(requestForm, eventCollection);
         }
     }
 
@@ -123,16 +128,18 @@ public class MoonPhasesCalculation extends Calculation {
         }
     }
 
-    private void calculateDailyEvents(Lang lang, LocalDate from, LocalDate to, ZoneId at, Collection<EventInstance> eventCollection) {
-        while (!from.isAfter(to)) {
-            eventCollection.add(calculateDailyEvent(lang, from, at));
-            from = from.plusDays(1);
+    private void calculateDailyEvents(RequestForm requestForm, Collection<EventInstance> eventCollection) {
+        ZoneId at = requestForm.getZone();
+        LocalDate to = requestForm.getTo().toLocalDate();
+        for (LocalDate day = requestForm.getFrom().toLocalDate(); !day.isAfter(to); day = day.plusDays(1)) {
+            eventCollection.add(calculateDailyEvent(requestForm, day, at));
         }
     }
 
     @NotNull
-    private EventInstance calculateDailyEvent(Lang lang, LocalDate day, ZoneId at) {
-        final String title = messagesApi.get(lang, "phases.daily.visibility", getMoonVisiblePercent(day.atTime(12, 0).atZone(at), new DecimalFormat("0")));
+    private EventInstance calculateDailyEvent(RequestForm requestForm, LocalDate day, ZoneId at) {
+        Lang lang = requestForm.getLang();
+        String title = messagesApi.get(lang, "phases.daily.visibility", getMoonVisiblePercent(day.atTime(12, 0).atZone(at), new DecimalFormat("0")));
         final DecimalFormat precise = new DecimalFormat("0.0");
         final String moonVisiblePercentMorning = getMoonVisiblePercent(day.atTime(6, 0).atZone(at), precise);
         final String moonVisiblePercentAtNoon = getMoonVisiblePercent(day.atTime(12, 0).atZone(at), precise);
@@ -142,7 +149,57 @@ public class MoonPhasesCalculation extends Calculation {
                 messagesApi.get(lang, "phases.daily.visibility.noon12", moonVisiblePercentAtNoon) + "\n" +
                 messagesApi.get(lang, "phases.daily.visibility.evening6", moonVisiblePercentEvening) + "\n" +
                 messagesApi.get(lang, "phases.daily.visibility.midnight", moonVisiblePercentMidnight);
+        if (requestForm.hasLocation()) {
+            RiseSetTexts riseSet = calculateRiseSet(requestForm, day);
+            if (!riseSet.titleSuffix().isEmpty()) {
+                title += " " + riseSet.titleSuffix();
+            }
+            description += "\n\n" + riseSet.description();
+        }
         return new EventInstance(day.atTime(12, 0).atZone(at), title, title, description, at, "daily");
+    }
+
+    private record RiseSetTexts(String titleSuffix, String description) {
+    }
+
+    private record HorizonCrossing(Instant when, String symbol, String messageKey) {
+    }
+
+    private RiseSetTexts calculateRiseSet(RequestForm requestForm, LocalDate day) {
+        Lang lang = requestForm.getLang();
+        ZoneId zone = requestForm.getZone();
+        Ephemeris.RiseSet riseSet = ephemeris.moonRiseSet(
+                day.atStartOfDay(zone).toInstant(), day.plusDays(1).atStartOfDay(zone).toInstant(),
+                requestForm.getLat(), requestForm.getLon());
+        List<HorizonCrossing> crossings = new ArrayList<>();
+        riseSet.rise().ifPresent(rise -> crossings.add(new HorizonCrossing(rise, "↑", "phases.daily.moonrise")));
+        riseSet.set().ifPresent(set -> crossings.add(new HorizonCrossing(set, "↓", "phases.daily.moonset")));
+        crossings.sort(Comparator.comparing(HorizonCrossing::when));
+        StringJoiner titleSuffix = new StringJoiner(" ");
+        StringJoiner description = new StringJoiner("\n");
+        for (HorizonCrossing crossing : crossings) {
+            String time = formatToMinute(crossing.when(), zone);
+            titleSuffix.add(crossing.symbol() + time);
+            description.add(messagesApi.get(lang, crossing.messageKey(), time));
+        }
+        if (crossings.isEmpty()) {
+            String key = riseSet.upAtStart() ? "phases.daily.alwaysUp" : "phases.daily.alwaysDown";
+            description.add(messagesApi.get(lang, key));
+        } else if (riseSet.rise().isEmpty()) {
+            description.add(messagesApi.get(lang, "phases.daily.noMoonrise"));
+        } else if (riseSet.set().isEmpty()) {
+            description.add(messagesApi.get(lang, "phases.daily.noMoonset"));
+        }
+        description.add(messagesApi.get(lang, "phases.daily.location", formatLocation(requestForm.getLat(), requestForm.getLon())));
+        return new RiseSetTexts(titleSuffix.toString(), description.toString());
+    }
+
+    private static String formatToMinute(Instant instant, ZoneId zone) {
+        return instant.plusSeconds(30).truncatedTo(ChronoUnit.MINUTES).atZone(zone).format(TIME_FORMATTER);
+    }
+
+    private static String formatLocation(double lat, double lon) {
+        return String.format(Locale.ROOT, "%.1f° %s, %.1f° %s", Math.abs(lat), lat < 0 ? "S" : "N", Math.abs(lon), lon < 0 ? "W" : "E");
     }
 
     private String getMoonVisiblePercent(ZonedDateTime dateTime, DecimalFormat format) {

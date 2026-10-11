@@ -11,6 +11,12 @@ import {NgbNavChangeEvent, NgbNavModule} from "@ng-bootstrap/ng-bootstrap";
 import {getAllLanguages} from "../app.routes";
 import {ButtonWithStyledTooltip} from "../button-with-styled-tooltip/button-with-styled-tooltip.component";
 import {MainSettingsService} from "./main-settings.service";
+import {ZONE_LOCATIONS} from "./zone-locations";
+import {isValidLocation, nearCity, nearestZoneWithSameTimes, referenceLocation, roundLocation} from "./location";
+
+// Time frame of subscriptions around today
+const SUBSCRIPTION_MONTHS_BEFORE = 6;
+const SUBSCRIPTION_YEARS_AFTER = 2;
 
 @Component({
   selector: 'app-main',
@@ -61,6 +67,19 @@ export class MainComponent implements AfterViewInit {
   set to(v) { this.settings.to = v; }
   get zone() { return this.settings.zone; }
   set zone(v) { this.settings.zone = v; }
+  get lat() { return this.settings.lat; }
+  set lat(v) { this.settings.lat = v; }
+  get lon() { return this.settings.lon; }
+  set lon(v) { this.settings.lon = v; }
+  /** "Your location" for the browser's location, else the reference city near the location, if any. */
+  get locationName() {
+    const browserLocation = this.settings.browserLocation;
+    if (browserLocation && browserLocation.lat === this.lat && browserLocation.lon === this.lon) {
+      return this.messages.phases.location.yourLocation;
+    }
+    return isValidLocation(this.lat, this.lon) ? nearCity(this.lat!, this.lon!) : null;
+  }
+  locationError = false;
 
   from$ = new Subject<Date>();
   fromDebounced = this.toDate(this.from, true);
@@ -178,6 +197,7 @@ export class MainComponent implements AfterViewInit {
       + this.flagParam("phases[new]", this.phases["new"])
       + this.flagParam("phases[quarter]", this.phases["quarter"])
       + this.flagParam("phases[daily]", this.phases["daily"])
+      + (this.phases["daily"] && isValidLocation(this.lat, this.lon) ? "&lat=" + this.lat + "&lon=" + this.lon : "")
       + "&style=" + this.style
       + "&hemisphere=" + this.hemisphere
       + this.flagParam("events[lunareclipse]", this.events["lunareclipse"])
@@ -187,7 +207,7 @@ export class MainComponent implements AfterViewInit {
     if (useFromTo) {
       options += "&from=" + this.formatDate(this.fromDebounced) + "&to=" + this.formatDate(this.toDebounced);
     } else {
-      options += "&before=P6M&after=P2Y&zone=" + this.zone;
+      options += "&before=P" + SUBSCRIPTION_MONTHS_BEFORE + "M&after=P" + SUBSCRIPTION_YEARS_AFTER + "Y&zone=" + this.zone;
     }
     return options;
   }
@@ -356,9 +376,63 @@ export class MainComponent implements AfterViewInit {
     this.oldZone = this.zone;
   }
 
-  public getSupportedTimezones() {
-    //see SupportedTimeZoneTest
-    return ["Etc/GMT+12", "Pacific/Midway", "Pacific/Niue", "Pacific/Pago_Pago", "Pacific/Samoa", "US/Samoa", "Pacific/Honolulu", "Pacific/Johnston", "Pacific/Rarotonga", "Pacific/Tahiti", "US/Hawaii", "America/Adak", "America/Atka", "Pacific/Marquesas", "US/Aleutian", "Pacific/Gambier", "America/Anchorage", "America/Juneau", "America/Metlakatla", "America/Nome", "America/Sitka", "America/Yakutat", "US/Alaska", "Pacific/Pitcairn", "America/Dawson", "America/Ensenada", "America/Los_Angeles", "America/Santa_Isabel", "America/Tijuana", "America/Vancouver", "America/Whitehorse", "Canada/Pacific", "Canada/Yukon", "Mexico/BajaNorte", "PST8PDT", "US/Pacific", "America/Creston", "America/Dawson_Creek", "America/Fort_Nelson", "America/Hermosillo", "America/Phoenix", "US/Arizona", "America/Boise", "America/Cambridge_Bay", "America/Chihuahua", "America/Ciudad_Juarez", "America/Denver", "America/Edmonton", "America/Inuvik", "America/Mazatlan", "America/Ojinaga", "America/Shiprock", "America/Yellowknife", "Canada/Mountain", "MST7MDT", "Mexico/BajaSur", "Navajo", "US/Mountain", "America/Belize", "America/Costa_Rica", "America/El_Salvador", "America/Guatemala", "America/Managua", "America/Regina", "America/Swift_Current", "America/Tegucigalpa", "Canada/Saskatchewan", "Pacific/Galapagos", "America/Bahia_Banderas", "America/Chicago", "America/Indiana/Knox", "America/Indiana/Tell_City", "America/Knox_IN", "America/Matamoros", "America/Menominee", "America/Merida", "America/Mexico_City", "America/Monterrey", "America/North_Dakota/Beulah", "America/North_Dakota/Center", "America/North_Dakota/New_Salem", "America/Rainy_River", "America/Rankin_Inlet", "America/Resolute", "America/Winnipeg", "CST6CDT", "Canada/Central", "Mexico/General", "US/Central", "US/Indiana-Starke", "America/Atikokan", "America/Bogota", "America/Cancun", "America/Cayman", "America/Coral_Harbour", "America/Eirunepe", "America/Guayaquil", "America/Jamaica", "America/Lima", "America/Panama", "America/Porto_Acre", "America/Rio_Branco", "Brazil/Acre", "Chile/EasterIsland", "Jamaica", "Pacific/Easter", "America/Caracas", "America/Detroit", "America/Fort_Wayne", "America/Havana", "America/Indiana/Indianapolis", "America/Indiana/Marengo", "America/Indiana/Petersburg", "America/Indiana/Vevay", "America/Indiana/Vincennes", "America/Indiana/Winamac", "America/Indianapolis", "America/Iqaluit", "America/Kentucky/Louisville", "America/Kentucky/Monticello", "America/Louisville", "America/Montreal", "America/Nassau", "America/New_York", "America/Nipigon", "America/Pangnirtung", "America/Port-au-Prince", "America/Thunder_Bay", "America/Toronto", "Canada/Eastern", "Cuba", "EST5EDT", "US/East-Indiana", "US/Eastern", "US/Michigan", "America/Anguilla", "America/Antigua", "America/Aruba", "America/Barbados", "America/Blanc-Sablon", "America/Boa_Vista", "America/Curacao", "America/Dominica", "America/Grand_Turk", "America/Grenada", "America/Guadeloupe", "America/Guyana", "America/Kralendijk", "America/La_Paz", "America/Lower_Princes", "America/Manaus", "America/Marigot", "America/Martinique", "America/Montserrat", "America/Port_of_Spain", "America/Porto_Velho", "America/Puerto_Rico", "America/Santo_Domingo", "America/St_Barthelemy", "America/St_Kitts", "America/St_Lucia", "America/St_Thomas", "America/St_Vincent", "America/Tortola", "America/Virgin", "Brazil/West", "America/Asuncion", "America/Campo_Grande", "America/Cuiaba", "America/Glace_Bay", "America/Goose_Bay", "America/Halifax", "America/Moncton", "America/Thule", "Atlantic/Bermuda", "Canada/Atlantic", "America/Araguaina", "America/Argentina/Buenos_Aires", "America/Argentina/Catamarca", "America/Argentina/ComodRivadavia", "America/Argentina/Cordoba", "America/Argentina/Jujuy", "America/Argentina/La_Rioja", "America/Argentina/Mendoza", "America/Argentina/Rio_Gallegos", "America/Argentina/Salta", "America/Argentina/San_Juan", "America/Argentina/San_Luis", "America/Argentina/Tucuman", "America/Argentina/Ushuaia", "America/Bahia", "America/Belem", "America/Buenos_Aires", "America/Catamarca", "America/Cayenne", "America/Cordoba", "America/Fortaleza", "America/Jujuy", "America/Maceio", "America/Mendoza", "America/Montevideo", "America/Paramaribo", "America/Punta_Arenas", "America/Recife", "America/Rosario", "America/Santarem", "America/Santiago", "America/St_Johns", "Antarctica/Palmer", "Antarctica/Rothera", "Atlantic/Stanley", "Canada/Newfoundland", "Chile/Continental", "America/Godthab", "America/Miquelon", "America/Nuuk", "America/Sao_Paulo", "Brazil/East", "America/Noronha", "Atlantic/South_Georgia", "Brazil/DeNoronha", "Atlantic/Cape_Verde", "America/Scoresbysund", "Atlantic/Azores", "Africa/Abidjan", "Africa/Accra", "Africa/Bamako", "Africa/Banjul", "Africa/Bissau", "Africa/Casablanca", "Africa/Conakry", "Africa/Dakar", "Africa/El_Aaiun", "Africa/Freetown", "Africa/Lome", "Africa/Monrovia", "Africa/Nouakchott", "Africa/Ouagadougou", "Africa/Sao_Tome", "Africa/Timbuktu", "America/Danmarkshavn", "Atlantic/Reykjavik", "Atlantic/St_Helena", "GMT", "GMT0", "Greenwich", "Iceland", "UCT", "UTC", "Universal", "Zulu", "Atlantic/Canary", "Atlantic/Faeroe", "Atlantic/Faroe", "Atlantic/Madeira", "Eire", "Europe/Belfast", "Europe/Dublin", "Europe/Guernsey", "Europe/Isle_of_Man", "Europe/Jersey", "Europe/Lisbon", "Europe/London", "GB", "GB-Eire", "Portugal", "WET", "Africa/Algiers", "Africa/Bangui", "Africa/Brazzaville", "Africa/Douala", "Africa/Kinshasa", "Africa/Lagos", "Africa/Libreville", "Africa/Luanda", "Africa/Malabo", "Africa/Ndjamena", "Africa/Niamey", "Africa/Porto-Novo", "Africa/Tunis", "Antarctica/Troll", "Africa/Ceuta", "Africa/Windhoek", "Arctic/Longyearbyen", "Atlantic/Jan_Mayen", "CET", "Europe/Amsterdam", "Europe/Andorra", "Europe/Belgrade", "Europe/Berlin", "Europe/Bratislava", "Europe/Brussels", "Europe/Budapest", "Europe/Busingen", "Europe/Copenhagen", "Europe/Gibraltar", "Europe/Ljubljana", "Europe/Luxembourg", "Europe/Madrid", "Europe/Malta", "Europe/Monaco", "Europe/Oslo", "Europe/Paris", "Europe/Podgorica", "Europe/Prague", "Europe/Rome", "Europe/San_Marino", "Europe/Sarajevo", "Europe/Skopje", "Europe/Stockholm", "Europe/Tirane", "Europe/Vaduz", "Europe/Vatican", "Europe/Vienna", "Europe/Warsaw", "Europe/Zagreb", "Europe/Zurich", "MET", "Poland", "Africa/Blantyre", "Africa/Bujumbura", "Africa/Cairo", "Africa/Gaborone", "Africa/Harare", "Africa/Johannesburg", "Africa/Kigali", "Africa/Lubumbashi", "Africa/Lusaka", "Africa/Maputo", "Africa/Maseru", "Africa/Mbabane", "Africa/Tripoli", "Egypt", "Europe/Kaliningrad", "Libya", "Asia/Amman", "Asia/Beirut", "Asia/Damascus", "Asia/Famagusta", "Asia/Gaza", "Asia/Hebron", "Asia/Istanbul", "Asia/Jerusalem", "Asia/Nicosia", "Asia/Tel_Aviv", "EET", "Europe/Athens", "Europe/Bucharest", "Europe/Chisinau", "Europe/Helsinki", "Europe/Istanbul", "Europe/Kiev", "Europe/Kyiv", "Europe/Mariehamn", "Europe/Nicosia", "Europe/Riga", "Europe/Sofia", "Europe/Tallinn", "Europe/Tiraspol", "Europe/Uzhgorod", "Europe/Vilnius", "Europe/Zaporozhye", "Israel", "Turkey", "Africa/Addis_Ababa", "Africa/Asmara", "Africa/Asmera", "Africa/Dar_es_Salaam", "Africa/Djibouti", "Africa/Juba", "Africa/Kampala", "Africa/Khartoum", "Africa/Mogadishu", "Africa/Nairobi", "Antarctica/Syowa", "Asia/Aden", "Asia/Baghdad", "Asia/Bahrain", "Asia/Kuwait", "Asia/Qatar", "Asia/Riyadh", "Europe/Astrakhan", "Europe/Kirov", "Europe/Minsk", "Europe/Moscow", "Europe/Saratov", "Europe/Simferopol", "Europe/Ulyanovsk", "Europe/Volgograd", "Indian/Antananarivo", "Indian/Comoro", "Indian/Mayotte", "W-SU", "Asia/Dubai", "Asia/Muscat", "Asia/Tbilisi", "Asia/Tehran", "Asia/Yerevan", "Europe/Samara", "Indian/Mahe", "Indian/Mauritius", "Indian/Reunion", "Iran", "Asia/Baku", "Asia/Kabul", "Antarctica/Mawson", "Asia/Aqtau", "Asia/Aqtobe", "Asia/Ashgabat", "Asia/Ashkhabad", "Asia/Atyrau", "Asia/Dushanbe", "Asia/Karachi", "Asia/Oral", "Asia/Samarkand", "Asia/Tashkent", "Asia/Yekaterinburg", "Indian/Kerguelen", "Indian/Maldives", "Asia/Calcutta", "Asia/Colombo", "Asia/Kolkata", "Asia/Kathmandu", "Asia/Katmandu", "Antarctica/Vostok", "Asia/Almaty", "Asia/Barnaul", "Asia/Bishkek", "Asia/Dacca", "Asia/Dhaka", "Asia/Kashgar", "Asia/Novosibirsk", "Asia/Omsk", "Asia/Qostanay", "Asia/Qyzylorda", "Asia/Thimbu", "Asia/Thimphu", "Asia/Tomsk", "Asia/Urumqi", "Indian/Chagos", "Asia/Rangoon", "Asia/Yangon", "Indian/Cocos", "Antarctica/Davis", "Asia/Bangkok", "Asia/Ho_Chi_Minh", "Asia/Jakarta", "Asia/Krasnoyarsk", "Asia/Novokuznetsk", "Asia/Phnom_Penh", "Asia/Pontianak", "Asia/Saigon", "Asia/Vientiane", "Indian/Christmas", "Asia/Hovd", "Antarctica/Casey", "Asia/Brunei", "Asia/Chita", "Asia/Chongqing", "Asia/Chungking", "Asia/Harbin", "Asia/Hong_Kong", "Asia/Irkutsk", "Asia/Kuala_Lumpur", "Asia/Kuching", "Asia/Macao", "Asia/Macau", "Asia/Makassar", "Asia/Manila", "Asia/Shanghai", "Asia/Singapore", "Asia/Taipei", "Asia/Ujung_Pandang", "Australia/Perth", "Australia/West", "Hongkong", "PRC", "Singapore", "Asia/Choibalsan", "Asia/Ulaanbaatar", "Asia/Ulan_Bator", "Asia/Pyongyang", "Australia/Eucla", "Asia/Dili", "Asia/Jayapura", "Asia/Khandyga", "Asia/Seoul", "Asia/Tokyo", "Asia/Yakutsk", "Japan", "Pacific/Palau", "ROK", "Australia/Darwin", "Australia/North", "Antarctica/DumontDUrville", "Asia/Magadan", "Asia/Sakhalin", "Asia/Ust-Nera", "Asia/Vladivostok", "Australia/Adelaide", "Australia/Brisbane", "Australia/Broken_Hill", "Australia/Lindeman", "Australia/Queensland", "Australia/South", "Australia/Yancowinna", "Pacific/Chuuk", "Pacific/Guam", "Pacific/Port_Moresby", "Pacific/Saipan", "Pacific/Truk", "Pacific/Yap", "Antarctica/Macquarie", "Australia/ACT", "Australia/Canberra", "Australia/Currie", "Australia/Hobart", "Australia/Melbourne", "Australia/NSW", "Australia/Sydney", "Australia/Tasmania", "Australia/Victoria", "Australia/LHI", "Australia/Lord_Howe", "Asia/Srednekolymsk", "Pacific/Bougainville", "Pacific/Efate", "Pacific/Guadalcanal", "Pacific/Kosrae", "Pacific/Noumea", "Pacific/Pohnpei", "Pacific/Ponape", "Pacific/Norfolk", "Asia/Anadyr", "Asia/Kamchatka", "Kwajalein", "Pacific/Funafuti", "Pacific/Kwajalein", "Pacific/Majuro", "Pacific/Nauru", "Pacific/Tarawa", "Pacific/Wake", "Pacific/Wallis", "Antarctica/McMurdo", "Antarctica/South_Pole", "NZ", "Pacific/Auckland", "Pacific/Fiji", "Pacific/Enderbury", "Pacific/Fakaofo", "Pacific/Kanton", "Pacific/Tongatapu", "NZ-CHAT", "Pacific/Chatham", "Pacific/Apia", "Pacific/Kiritimati"]
+  //see SupportedTimeZoneTest
+  readonly supportedTimezones = Object.keys(ZONE_LOCATIONS);
+
+  /** A manually chosen time zone moves the location to the zone's reference city, unless it's the browser's location. */
+  public zoneSelected() {
+    this.settings.zoneChosenByUser = true;
+    if (!this.settings.browserLocation) {
+      ({lat: this.lat, lon: this.lon} = referenceLocation(this.zone));
+    }
+    this.trackTimezoneChange();
+    this.fetchCalendar(false);
+  }
+
+  public locationEdited() {
+    this.locationError = false;
+    this.lat = roundLocation(this.lat);
+    this.lon = roundLocation(this.lon);
+    this.locationProvided();
+  }
+
+  public useMyLocation() {
+    this.locationError = false;
+    navigator.geolocation.getCurrentPosition(position => {
+      // rounded right away, the precise position is never used or sent anywhere
+      const browserLocation = {lat: roundLocation(position.coords.latitude), lon: roundLocation(position.coords.longitude)};
+      this.settings.browserLocation = browserLocation;
+      ({lat: this.lat, lon: this.lon} = browserLocation);
+      this.locationProvided();
+      this.changeDetectorRef.markForCheck();
+    }, () => {
+      this.locationError = true;
+      this.changeDetectorRef.markForCheck();
+    }, {enableHighAccuracy: false, maximumAge: 3600000, timeout: 30000});
+  }
+
+  private locationProvided() {
+    if (isValidLocation(this.lat, this.lon)) {
+      this.hemisphere = this.lat! < 0 ? 'southern' : 'northern';
+    }
+    this.adoptNearestZone();
+    this.fetchCalendar(false);
+  }
+
+  /**
+   * Shows the time zone of the nearest reference city, without changing any of the displayed times.
+   * Only as long as the user did not choose the time zone.
+   */
+  private adoptNearestZone() {
+    if (this.settings.zoneChosenByUser || !isValidLocation(this.lat, this.lon) || Number.isNaN(this.fromDebounced.getTime()) || Number.isNaN(this.toDebounced.getTime())) {
+      return;
+    }
+    const today = new Date();
+    // also cover the time frame of subscriptions
+    const from = new Date(Math.min(this.fromDebounced.getTime(), new Date(today.getFullYear(), today.getMonth() - SUBSCRIPTION_MONTHS_BEFORE, today.getDate()).getTime()));
+    const to = new Date(Math.max(this.toDebounced.getTime(), new Date(today.getFullYear() + SUBSCRIPTION_YEARS_AFTER, today.getMonth(), today.getDate() + 1).getTime()));
+    this.zone = nearestZoneWithSameTimes(this.zone, this.lat!, this.lon!, from, to);
+    this.oldZone = this.zone;
   }
 
   private guessInitialSubscriptionDescriptionOS() {

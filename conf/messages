@@ -26,6 +26,13 @@ phases.daily.visibility.morning6=Morgens um 6:00 ist der Mond {0}% sichtbar
 phases.daily.visibility.noon12=Mittags um 12:00 ist der Mond {0}% sichtbar
 phases.daily.visibility.evening6=Abends um 18:00 ist der Mond {0}% sichtbar
 phases.daily.visibility.midnight=Um Mitternacht ist der Mond {0}% sichtbar
+phases.daily.moonrise=Mondaufgang um {0}
+phases.daily.moonset=Monduntergang um {0}
+phases.daily.noMoonrise=Kein Mondaufgang an diesem Tag
+phases.daily.noMoonset=Kein Monduntergang an diesem Tag
+phases.daily.alwaysUp=Der Mond ist den ganzen Tag über dem Horizont
+phases.daily.alwaysDown=Der Mond ist den ganzen Tag unter dem Horizont
+phases.daily.location=Auf- und Untergang berechnet für {0}
 
 events.lunareclipse.total=Totale Mondfinsternis
 events.lunareclipse.partial=Partielle Mondfinsternis
@@ -40,6 +47,7 @@ error.notfound.lead=Sorry, die angeforderte Seite existiert nicht.
 error.notfound.problem=Das Problem könnte sein:
 error.notfound.problem.typo=Tippfehler in der Adresse
 error.notfound.problem.link=nicht mehr aktueller Link
+error.location=Ungültiger Standort
 
 pdf.title=Mondkalender
 pdf.month.1=Januar

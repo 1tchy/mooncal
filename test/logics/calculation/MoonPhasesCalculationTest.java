@@ -1,5 +1,6 @@
 package logics.calculation;
 
+import logics.astronomy.MeeusEphemeris;
 import models.EventInstance;
 import models.EventStyle;
 import models.Hemisphere;
@@ -44,7 +45,7 @@ class MoonPhasesCalculationTest extends WithApplication {
             final Object[] arguments = invocation.getArguments();
             return arguments[arguments.length - 1];
         });
-        cut = new MoonPhasesCalculation(messagesApi);
+        cut = new MoonPhasesCalculation(messagesApi, new MeeusEphemeris());
         requestForm = new RequestForm();
         requestForm.getPhases().put(MoonPhaseType.FULLMOON, true);
         requestForm.getPhases().put(MoonPhaseType.NEWMOON, true);
@@ -177,6 +178,68 @@ class MoonPhasesCalculationTest extends WithApplication {
         final Collection<EventInstance> actual = calculate(requestForm);
 
         assertThat(actual.stream().map(EventInstance::getTitle).collect(Collectors.toList()), containsInAnyOrder("55", "64"));
+    }
+
+    private EventInstance calculateSingleDailyEvent(LocalDate day, ZoneId zone, Double lat, Double lon) {
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put(MoonPhaseType.DAILY, true);
+        requestForm.setFrom(day.atStartOfDay(zone));
+        requestForm.setTo(day.atTime(23, 59).atZone(zone));
+        requestForm.setLat(lat);
+        requestForm.setLon(lon);
+        Collection<EventInstance> actual = calculate(requestForm);
+        assertThat(actual, hasSize(1));
+        return actual.iterator().next();
+    }
+
+    @Test
+    void testDailyEventWithoutLocationHasNoRiseAndSet() {
+        EventInstance actual = calculateSingleDailyEvent(LocalDate.of(2026, 1, 15), CH_ZONE, null, null);
+
+        assertThat(actual.getTitle(), not(containsString("↑")));
+        assertThat(actual.getDescription(), not(containsString("phases.daily.moonrise")));
+    }
+
+    @Test
+    void testDailyEventWithRiseAndSetInLocalTime() {
+        // USNO: rise 04:57 UTC, set 12:31 UTC (CET = UTC+1)
+        EventInstance actual = calculateSingleDailyEvent(LocalDate.of(2026, 1, 15), CH_ZONE, 47.38, 8.54);
+
+        assertThat(actual.getTitle(), matchesPattern("\\d+ ↑5:5[678] ↓13:3[012]"));
+        assertThat(actual.getDescription(), containsString("47.4° N, 8.5° E"));
+    }
+
+    @Test
+    void testDailyEventWithRiseAndSetDuringDaylightSavingTime() {
+        // USNO: rise 00:10 UTC, set 15:03 UTC (CEST = UTC+2)
+        EventInstance actual = calculateSingleDailyEvent(LocalDate.of(2025, 6, 21), CH_ZONE, 47.38, 8.54);
+
+        assertThat(actual.getTitle(), matchesPattern("\\d+ ↑2:(09|10|11) ↓17:0[234]"));
+    }
+
+    @Test
+    void testDailyEventWithSetBeforeRiseIsChronological() {
+        // USNO: set 02:10 UTC, rise 11:53 UTC (AEDT = UTC+11)
+        EventInstance actual = calculateSingleDailyEvent(LocalDate.of(2026, 3, 10), ZoneId.of("Australia/Sydney"), -33.87, 151.21);
+
+        assertThat(actual.getTitle(), matchesPattern("\\d+ ↓13:(09|10|11) ↑22:5[234]"));
+        assertThat(actual.getDescription(), containsString("33.9° S, 151.2° E"));
+    }
+
+    @Test
+    void testDailyEventWithoutMoonrise() {
+        EventInstance actual = calculateSingleDailyEvent(LocalDate.of(2026, 10, 5), ZoneOffset.UTC, 47.38, 8.54);
+
+        assertThat(actual.getTitle(), matchesPattern("\\d+ ↓14:(47|48|49)"));
+        assertThat(actual.getDescription(), containsString("phases.daily.noMoonrise"));
+    }
+
+    @Test
+    void testDailyEventWithMoonAboveHorizonAllDay() {
+        EventInstance actual = calculateSingleDailyEvent(LocalDate.of(2026, 1, 2), ZoneOffset.UTC, 69.65, 18.96);
+
+        assertThat(actual.getTitle(), matchesPattern("\\d+"));
+        assertThat(actual.getDescription(), containsString("phases.daily.alwaysUp"));
     }
 
     @Test

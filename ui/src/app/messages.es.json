@@ -33,11 +33,19 @@
     "full": "Luna llena",
     "new": "Luna nueva",
     "quarter": "Cuarto",
-    "daily": "Fases diarias de la Luna",
+    "daily": "Fases diarias de la Luna, salida y puesta",
     "hemisphere": {
       "title": "Hemisferio",
       "northern": "Norte",
       "southern": "Sur"
+    },
+    "location": {
+      "title": "Ubicación",
+      "latitude": "Latitud",
+      "longitude": "Longitud",
+      "useMine": "Mi ubicación",
+      "yourLocation": "Tu ubicación",
+      "error": "No se pudo determinar tu ubicación."
     }
   },
   "styles": {

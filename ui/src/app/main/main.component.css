@@ -8,3 +8,6 @@ button.btn-close {
   padding-top: calc(0.1875rem + var(--bs-border-width));
   padding-bottom: calc(0.1875rem + var(--bs-border-width));
 }
+.location-input {
+  width: 6.5em;
+}

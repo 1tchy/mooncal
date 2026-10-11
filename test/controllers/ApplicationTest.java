@@ -121,6 +121,22 @@ class ApplicationTest extends WithApplication {
         assertThat(result, containsString("Nieuwe maan"));
     }
 
+    @Test
+    void testICalendarDailyWithLocation() {
+        String result = queryAsICalendar("de", false, false, false, true, false, false, false, "from=2026-01-15T00:00:00Europe/Zurich", "to=2026-01-15T23:59:59Europe/Zurich", "lat=47.38", "lon=8.54");
+        assertThat(result, containsString("↑5:5"));
+        assertThat(result, containsString("Mondaufgang um 5:5"));
+        assertThat(result, containsString("47.4° N"));
+    }
+
+    @Test
+    void testQueryWithInvalidLocationIsRejected() {
+        Call query = routes.Application.query();
+        Result result = paramQuery("GET", query.url() + "?", "de", false, false, false, true, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2026-01-15T00:00:00Europe/Zurich", "to=2026-01-15T23:59:59Europe/Zurich", "lat=95", "lon=8.5");
+        assertEquals(400, result.status());
+        assertThat(contentAsString(result), containsString("Ungültiger Standort"));
+    }
+
     private String queryAsICalendar(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
         final Call query = routes.Application.queryAsICalendar();
         final Result result = paramQuery(query.method(), query.url() + "?", lang, fullPhases, newPhases, quarterQuases, dailyPhases, EventStyle.WITH_DESCRIPTION, lunarEclipses, solarEclipses, moonLandings, extraParams);

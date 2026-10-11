@@ -8,7 +8,8 @@
     <div class="card" id="phases">
       <h5 class="card-header">{{ messages.phases.title }}</h5>
       <div class="card-body row g-0">
-        <div class="col-auto">
+        <!-- takes the remaining width, so long labels wrap instead of pushing style and hemisphere below -->
+        <div class="col me-3">
           @for (phase of ['full', 'new', 'quarter', 'daily']; track phase) {
             <div class="form-check">
               <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
@@ -17,7 +18,6 @@
             </div>
           }
         </div>
-        <div class="col-auto flex-grow-1"></div>
         <div class="col-auto">
           <div class="row g-0 align-items-center">
             <div class="col-auto">
@@ -47,7 +47,36 @@
             </div>
           </div>
         </div>
-        <div class="col-auto flex-grow-1"></div>
+        @if (phases['daily']) {
+          <div class="col-12 mt-3" id="location">
+            <div class="row g-2 align-items-center">
+              <div class="col-auto">
+                <label for="lat" class="col-form-label-in-sm">{{ messages.phases.location.title }}:</label>
+              </div>
+              <div class="col-auto">
+                <input type="number" class="form-control form-control-sm location-input" [(ngModel)]="lat" name="lat" id="lat"
+                       step="0.1" min="-90" max="90" [placeholder]="messages.phases.location.latitude"
+                       [title]="messages.phases.location.latitude" (change)="locationEdited()">
+              </div>
+              <div class="col-auto">
+                <input type="number" class="form-control form-control-sm location-input" [(ngModel)]="lon" name="lon" id="lon"
+                       step="0.1" min="-180" max="180" [placeholder]="messages.phases.location.longitude"
+                       [title]="messages.phases.location.longitude" (change)="locationEdited()">
+              </div>
+              @if (locationName) {
+                <div class="col-auto text-body-secondary" id="location-city">≈ {{ locationName }}</div>
+              }
+              <div class="col-auto">
+                <button type="button" class="btn btn-light btn-sm" id="use-my-location" (click)="useMyLocation()">
+                  📍 {{ messages.phases.location.useMine }}
+                </button>
+              </div>
+            </div>
+            @if (locationError) {
+              <small class="text-danger">{{ messages.phases.location.error }}</small>
+            }
+          </div>
+        }
       </div>
     </div>
   </div>
@@ -101,8 +130,8 @@
           <label class="col-auto" for="zone">{{ messages.time.fromTo.inTimezone }}</label>
           <div class="col-auto">
             <select class="form-control form-select" [(ngModel)]="zone" name="zone" id="zone"
-                    (change)="trackTimezoneChange(); fetchCalendar(false)">
-              @for (tz of getSupportedTimezones(); track tz) {
+                    (change)="zoneSelected()">
+              @for (tz of supportedTimezones; track tz) {
                 <option [ngValue]="tz">{{ tz }}</option>
               }
             </select>

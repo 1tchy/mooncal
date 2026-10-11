@@ -29,6 +29,11 @@ describe('MainComponent', () => {
     fixture.detectChanges();
   });
 
+  function mockGeolocation(latitude: number, longitude: number) {
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((success: PositionCallback) =>
+      success({coords: {latitude, longitude}} as GeolocationPosition));
+  }
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -52,6 +57,141 @@ describe('MainComponent', () => {
     component.events['moonlanding'] = false;
     const params = component.paramsAsString(true);
     expect(params).not.toContain('events[moonlanding]');
+  });
+
+  it('paramsAsString omits the location when daily phases are off', () => {
+    component.phases['daily'] = false;
+    component.lat = 47.4;
+    component.lon = 8.5;
+    expect(component.paramsAsString(true)).not.toContain('lat=');
+    expect(component.paramsAsString(false)).not.toContain('lon=');
+  });
+
+  it('paramsAsString includes the location for daily phases', () => {
+    component.phases['daily'] = true;
+    component.lat = 47.4;
+    component.lon = 8.5;
+    expect(component.paramsAsString(true)).toContain('&lat=47.4&lon=8.5');
+    expect(component.paramsAsString(false)).toContain('&lat=47.4&lon=8.5');
+  });
+
+  it('tracking never contains the location', () => {
+    component.phases['daily'] = true;
+    component.lat = 47.4;
+    component.lon = 8.5;
+    expect(component.paramsForTracking(true)).not.toContain('47.4');
+  });
+
+  it('selecting a time zone moves the location to its reference city', () => {
+    component.zone = 'America/New_York';
+    component.zoneSelected();
+    expect(component.lat).toBe(40.7);
+    expect(component.lon).toBe(-74);
+    expect(component.locationName).toBe('New York');
+  });
+
+  it('uses the rounded browser location and the nearest time zone with the same times', () => {
+    component.zone = 'Europe/Zurich';
+    mockGeolocation(48.39123, -4.48654);
+    component.useMyLocation();
+    expect(component.lat).toBe(48.4);
+    expect(component.lon).toBe(-4.5);
+    expect(component.zone).toBe('Europe/Paris');
+    expect(component.locationName).toBe('Your location');
+  });
+
+  it('keeps a time zone chosen by the user when the location changes', () => {
+    component.zone = 'Europe/Zurich';
+    component.zoneSelected();
+    mockGeolocation(48.39123, -4.48654);
+    component.useMyLocation();
+    expect(component.lat).toBe(48.4);
+    expect(component.lon).toBe(-4.5);
+    expect(component.zone).toBe('Europe/Zurich');
+  });
+
+  it('keeps the browser location when the user chooses a time zone afterwards', () => {
+    mockGeolocation(48.39123, -4.48654);
+    component.useMyLocation();
+    component.zone = 'America/New_York';
+    component.zoneSelected();
+    expect(component.lat).toBe(48.4);
+    expect(component.lon).toBe(-4.5);
+  });
+
+  it('sets the southern hemisphere for a browser location south of the equator', () => {
+    component.hemisphere = 'northern';
+    mockGeolocation(-33.86785, 151.20732);
+    component.useMyLocation();
+    expect(component.hemisphere).toBe('southern');
+  });
+
+  it('sets the hemisphere for manually entered coordinates', () => {
+    component.hemisphere = 'southern';
+    component.lat = 47.4;
+    component.lon = 8.5;
+    component.locationEdited();
+    expect(component.hemisphere).toBe('northern');
+    component.lat = -0.1;
+    component.locationEdited();
+    expect(component.hemisphere).toBe('southern');
+  });
+
+  it('does not change the hemisphere when a time zone is chosen', () => {
+    component.hemisphere = 'northern';
+    component.zone = 'Australia/Sydney';
+    component.zoneSelected();
+    expect(component.hemisphere).toBe('northern');
+  });
+
+  it('names the nearest reference city, not the one of the time zone', () => {
+    component.zone = 'Europe/Zurich';
+    component.zoneSelected();
+    // the time zone chosen by the user stays Zurich, but the location is in Paris
+    component.lat = 48.9;
+    component.lon = 2.3;
+    component.locationEdited();
+    expect(component.locationName).toBe('Paris');
+    expect(component.zone).toBe('Europe/Zurich');
+  });
+
+  it('names no city when none is near', () => {
+    component.lat = 46.2;
+    component.lon = 6.1;
+    component.locationEdited();
+    expect(component.locationName).toBeNull();
+  });
+
+  it('names the browser location until the coordinates are changed', () => {
+    mockGeolocation(47.3769, 8.5417);
+    component.useMyLocation();
+    expect(component.locationName).toBe('Your location');
+    component.lon = 8.6;
+    component.locationEdited();
+    expect(component.locationName).toBe('Zurich');
+  });
+
+  it('shows an error when the browser location is not available', () => {
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((_: PositionCallback, error?: PositionErrorCallback | null) =>
+      error!({code: 1} as GeolocationPositionError));
+    component.useMyLocation();
+    expect(component.locationError).toBeTrue();
+  });
+
+  it('rounds manually entered coordinates', () => {
+    component.lat = 47.3769;
+    component.lon = 8.5417;
+    component.locationEdited();
+    expect(component.lat).toBe(47.4);
+    expect(component.lon).toBe(8.5);
+  });
+
+  it('shows the location fields only for daily phases', async () => {
+    expect(fixture.nativeElement.querySelector('#location')).toBeNull();
+    fixture.nativeElement.querySelector('#daily-checkbox').click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#location-city').textContent).toContain(component.locationName);
   });
 
   it('home page shows moon landing and hides the garden checkbox', () => {

@@ -33,6 +33,7 @@ All selection flags are off unless explicitly set to `true`:
 - `phases[new]=true` — new moons
 - `phases[quarter]=true` — first and last quarters
 - `phases[daily]=true` — daily moon phase entries
+- `lat=47.4&lon=8.5` — optional location (decimal degrees, rounded to 0.1°) for daily entries: adds moonrise and moonset times
 - `events[lunareclipse]=true` — lunar eclipses
 - `events[solareclipse]=true` — solar eclipses
 - `events[moonlanding]=true` — moon landings

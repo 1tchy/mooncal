@@ -60,6 +60,16 @@ export interface Phases {
   quarter: string
   daily: string
   hemisphere: Hemisphere
+  location: PhaseLocation
+}
+
+export interface PhaseLocation {
+  title: string
+  latitude: string
+  longitude: string
+  useMine: string
+  yourLocation: string
+  error: string
 }
 
 export interface Hemisphere {

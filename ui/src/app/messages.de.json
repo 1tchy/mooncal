@@ -33,11 +33,19 @@
     "full": "Vollmond",
     "new": "Neumond",
     "quarter": "Halbmond",
-    "daily": "tägliche Phasen",
+    "daily": "tägliche Phasen, Mondauf- und Monduntergang",
     "hemisphere": {
       "title": "Hemisphäre",
       "northern": "Nördlich",
       "southern": "Südlich"
+    },
+    "location": {
+      "title": "Standort",
+      "latitude": "Breitengrad",
+      "longitude": "Längengrad",
+      "useMine": "Mein Standort",
+      "yourLocation": "Dein Standort",
+      "error": "Standort konnte nicht ermittelt werden."
     }
   },
   "styles": {

@@ -26,6 +26,13 @@ phases.daily.visibility.morning6=La luna es {0}% visible a las 6 am
 phases.daily.visibility.noon12=La luna es {0}% visible al mediodía
 phases.daily.visibility.evening6=La luna es {0}% visible a las 6 pm
 phases.daily.visibility.midnight=La luna es {0}% visible a medianoche
+phases.daily.moonrise=Salida de la luna a las {0}
+phases.daily.moonset=Puesta de la luna a las {0}
+phases.daily.noMoonrise=No hay salida de la luna este día
+phases.daily.noMoonset=No hay puesta de la luna este día
+phases.daily.alwaysUp=La luna está sobre el horizonte todo el día
+phases.daily.alwaysDown=La luna está bajo el horizonte todo el día
+phases.daily.location=Salida y puesta calculadas para {0}
 
 events.lunareclipse.total=eclipse lunar total
 events.lunareclipse.partial=eclipse lunar parcial
@@ -40,6 +47,7 @@ error.notfound.lead=Lamento, pero la página que intentabas ver no existe.
 error.notfound.problem=parece que esto fue el resultado de:
 error.notfound.problem.typo=dirección mal escrita
 error.notfound.problem.link=enlace desactualizado
+error.location=Ubicación no válida
 
 pdf.title=Calendario Lunar
 pdf.month.1=Enero

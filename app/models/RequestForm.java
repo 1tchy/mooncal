@@ -14,6 +14,11 @@ import java.util.Map;
 public class RequestForm implements Constraints.Validatable<ValidationError> {
 
     private static final int MAX_YEARS_FOR_DAILY_PHASES = 200;
+    /**
+     * Coordinates are rounded to 0.1° (~11 km): precise enough for moonrise/-set to the minute,
+     * coarse enough not to reveal the user's address.
+     */
+    private static final double LOCATION_PRECISION = 10;
 
     private Map<MoonPhaseType, Boolean> phases = new HashMap<>();
     private EventStyle style;
@@ -27,6 +32,8 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
     private ZoneId zone;
     @Constraints.Required
     private Lang lang;
+    private Double lat;
+    private Double lon;
     private Long created;
     private String via;
 
@@ -100,6 +107,30 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         this.lang = lang;
     }
 
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = roundLocation(lat);
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = roundLocation(lon);
+    }
+
+    private static Double roundLocation(Double degrees) {
+        return degrees == null ? null : Math.round(degrees * LOCATION_PRECISION) / LOCATION_PRECISION;
+    }
+
+    public boolean hasLocation() {
+        return lat != null && lon != null;
+    }
+
     public Long getCreated() {
         return created;
     }
@@ -150,6 +181,9 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         if (includePhase(MoonPhaseType.DAILY) && from.until(to, ChronoUnit.YEARS) > MAX_YEARS_FOR_DAILY_PHASES) {
             return new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily");
         }
+        if ((lat == null) != (lon == null) || (lat != null && (Math.abs(lat) > 90 || Math.abs(lon) > 180))) {
+            return new ValidationError("lat", "error.location");
+        }
         return null;//form is fine
     }
 
@@ -176,6 +210,9 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         }
         sb.append("x");
         sb.append(lang.code());
+        if (hasLocation()) {
+            sb.append("x").append(lat).append("x").append(lon);
+        }
         return sb.toString();
     }
 
@@ -201,6 +238,10 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         if (zone != null) {
             sb.append(" ");
             sb.append(zone.getId());
+        }
+        if (hasLocation()) {
+            // the coordinates themselves are not logged for privacy reasons
+            sb.append(" with location");
         }
         sb.append(" (");
         sb.append(lang.code());

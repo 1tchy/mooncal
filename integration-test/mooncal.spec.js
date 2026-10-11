@@ -126,4 +126,32 @@ test('moon calendar user journey', async ({page}) => {
     await expect(page).toHaveTitle(/Über den Mondkalender/);
     await expect(page).toHaveScreenshot('about.png');
   });
+
+  await test.step('enable daily phases with moonrise and moonset', async () => {
+    const initial = nextCalendarResponse(page);
+    await page.goto('/en/calendar');
+    await initial;
+    const response = nextCalendarResponse(page);
+    await page.locator('#daily-checkbox').click();
+    // defaults to the reference city of the browser's time zone
+    expect(await response).toContain('&lat=47.4&lon=8.5');
+    await expect(page.locator('#location-city')).toHaveText('≈ Zurich');
+    await expect(calendarRows(page).first()).toContainText('↑');
+  });
+
+  await test.step('use the browser location', async () => {
+    // Brest (France): same times as Zurich, Paris is the nearest reference city
+    await page.context().grantPermissions(['geolocation']);
+    await page.context().setGeolocation({latitude: 48.39123, longitude: -4.48654});
+    const response = nextCalendarResponse(page);
+    await page.locator('#use-my-location').click();
+    const url = await response;
+    expect(url).toContain('&lat=48.4&lon=-4.5');
+    expect(url).not.toContain('48.39');
+    expect(url).toContain('Europe/Paris');
+    await expect(page.locator('#zone')).toHaveValue(/Europe\/Paris/);
+    await expect(page.locator('#location-city')).toHaveText('≈ Your location');
+    expect(JSON.stringify(await page.evaluate(() => window.matomoMockCalls))).not.toContain('48.4');
+    await expect(page).toHaveScreenshot('daily-with-location.png');
+  });
 });

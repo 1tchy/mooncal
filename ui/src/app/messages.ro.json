@@ -33,11 +33,19 @@
     "full": "Lună plină",
     "new": "Lună nouă",
     "quarter": "sfert",
-    "daily": "faze zilnice ale lunii",
+    "daily": "faze zilnice ale lunii, răsăritul și apusul lunii",
     "hemisphere": {
       "title": "Emisferă",
       "northern": "Nordică",
       "southern": "Sudică"
+    },
+    "location": {
+      "title": "Locație",
+      "latitude": "Latitudine",
+      "longitude": "Longitudine",
+      "useMine": "Locația mea",
+      "yourLocation": "Locația ta",
+      "error": "Locația ta nu a putut fi determinată."
     }
   },
   "styles": {
