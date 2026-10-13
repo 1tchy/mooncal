@@ -130,10 +130,10 @@ describe('MainComponent', () => {
     component.hemisphere = 'southern';
     component.lat = 47.4;
     component.lon = 8.5;
-    component.locationEdited();
+    component.locationEdited('longitude');
     expect(component.hemisphere).toBe('northern');
     component.lat = -0.1;
-    component.locationEdited();
+    component.locationEdited('latitude');
     expect(component.hemisphere).toBe('southern');
   });
 
@@ -150,7 +150,7 @@ describe('MainComponent', () => {
     // the time zone chosen by the user stays Zurich, but the location is in Paris
     component.lat = 48.9;
     component.lon = 2.3;
-    component.locationEdited();
+    component.locationEdited('longitude');
     expect(component.locationName).toBe('Paris');
     expect(component.zone).toBe('Europe/Zurich');
   });
@@ -158,7 +158,7 @@ describe('MainComponent', () => {
   it('names no city when none is near', () => {
     component.lat = 46.2;
     component.lon = 6.1;
-    component.locationEdited();
+    component.locationEdited('longitude');
     expect(component.locationName).toBeNull();
   });
 
@@ -167,7 +167,7 @@ describe('MainComponent', () => {
     component.useMyLocation();
     expect(component.locationName).toBe('Your location');
     component.lon = 8.6;
-    component.locationEdited();
+    component.locationEdited('longitude');
     expect(component.locationName).toBe('Zurich');
   });
 
@@ -181,9 +181,48 @@ describe('MainComponent', () => {
   it('rounds manually entered coordinates', () => {
     component.lat = 47.3769;
     component.lon = 8.5417;
-    component.locationEdited();
+    component.locationEdited('longitude');
     expect(component.lat).toBe(47.4);
     expect(component.lon).toBe(8.5);
+  });
+
+  it('tracks which location field was edited, but not the coordinates', () => {
+    // @ts-ignore
+    window._paq = [];
+    component.lat = 47.3769;
+    component.locationEdited('latitude');
+    component.lon = 8.5417;
+    component.locationEdited('longitude');
+    // @ts-ignore
+    expect(window._paq).toEqual([
+      ['trackEvent', 'Settings', 'locationEdit', 'latitude'],
+      ['trackEvent', 'Settings', 'locationEdit', 'longitude'],
+    ]);
+  });
+
+  it('tracks the use of the browser location, but not the coordinates', () => {
+    // @ts-ignore
+    window._paq = [];
+    mockGeolocation(47.3769, 8.5417);
+    component.useMyLocation();
+    // @ts-ignore
+    expect(window._paq).toEqual([
+      ['trackEvent', 'Settings', 'useMyLocation', 'request'],
+      ['trackEvent', 'Settings', 'useMyLocation', 'success'],
+    ]);
+  });
+
+  it('tracks why the browser location is not available', () => {
+    // @ts-ignore
+    window._paq = [];
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((_: PositionCallback, error?: PositionErrorCallback | null) =>
+      error!({code: 1} as GeolocationPositionError));
+    component.useMyLocation();
+    // @ts-ignore
+    expect(window._paq).toEqual([
+      ['trackEvent', 'Settings', 'useMyLocation', 'request'],
+      ['trackEvent', 'Settings', 'useMyLocation', 'denied'],
+    ]);
   });
 
   it('shows the location fields only for daily phases', async () => {

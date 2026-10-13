@@ -18,6 +18,9 @@ import {isValidLocation, nearCity, nearestZoneWithSameTimes, referenceLocation, 
 const SUBSCRIPTION_MONTHS_BEFORE = 6;
 const SUBSCRIPTION_YEARS_AFTER = 2;
 
+// GeolocationPositionError codes, for tracking why the browser location is not available
+const GEOLOCATION_ERRORS: Record<number, string> = {1: 'denied', 2: 'unavailable', 3: 'timeout'};
+
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -389,26 +392,42 @@ export class MainComponent implements AfterViewInit {
     this.fetchCalendar(false);
   }
 
-  public locationEdited() {
+  public locationEdited(field: 'latitude' | 'longitude') {
     this.locationError = false;
     this.lat = roundLocation(this.lat);
     this.lon = roundLocation(this.lon);
+    this.trackLocationEdit(field);
     this.locationProvided();
   }
 
   public useMyLocation() {
     this.locationError = false;
+    this.trackUseMyLocation('request');
     navigator.geolocation.getCurrentPosition(position => {
       // rounded right away, the precise position is never used or sent anywhere
       const browserLocation = {lat: roundLocation(position.coords.latitude), lon: roundLocation(position.coords.longitude)};
       this.settings.browserLocation = browserLocation;
       ({lat: this.lat, lon: this.lon} = browserLocation);
+      this.trackUseMyLocation('success');
       this.locationProvided();
       this.changeDetectorRef.markForCheck();
-    }, () => {
+    }, error => {
+      this.trackUseMyLocation(GEOLOCATION_ERRORS[error.code] ?? 'error');
       this.locationError = true;
       this.changeDetectorRef.markForCheck();
     }, {enableHighAccuracy: false, maximumAge: 3600000, timeout: 30000});
+  }
+
+  // The coordinates are never tracked, only which field was edited.
+  private trackLocationEdit(field: 'latitude' | 'longitude') {
+    // @ts-ignore
+    _paq.push(['trackEvent', 'Settings', 'locationEdit', field]);
+  }
+
+  // The coordinates are never tracked, only whether the browser provided them.
+  private trackUseMyLocation(outcome: string) {
+    // @ts-ignore
+    _paq.push(['trackEvent', 'Settings', 'useMyLocation', outcome]);
   }
 
   private locationProvided() {
