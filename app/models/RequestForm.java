@@ -178,6 +178,9 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
 
     @SuppressWarnings("unused") //used by Play
     public ValidationError validate() {
+        if (from == null || to == null) {
+            return null; // already reported by @Constraints.Required
+        }
         if (includePhase(MoonPhaseType.DAILY) && from.until(to, ChronoUnit.YEARS) > MAX_YEARS_FOR_DAILY_PHASES) {
             return new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily");
         }

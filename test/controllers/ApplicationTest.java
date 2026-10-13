@@ -137,6 +137,12 @@ class ApplicationTest extends WithApplication {
         assertThat(contentAsString(result), containsString("Ungültiger Standort"));
     }
 
+    @Test
+    void testTruncatedDailyICalendarQueryIsRejected() {
+        Result result = route(app, new Http.RequestBuilder().method("GET").uri("/mooncal.ics?created=20077059936&lang=en&phases%5Bfull%5D=false&phases%5Bnew%5D=false&phases%5Bquarter%5D=false&phases%5Bdaily%5D=true&style=withDescription&events%5Blunareclipse]"));
+        assertEquals(400, result.status());
+    }
+
     private String queryAsICalendar(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
         final Call query = routes.Application.queryAsICalendar();
         final Result result = paramQuery(query.method(), query.url() + "?", lang, fullPhases, newPhases, quarterQuases, dailyPhases, EventStyle.WITH_DESCRIPTION, lunarEclipses, solarEclipses, moonLandings, extraParams);

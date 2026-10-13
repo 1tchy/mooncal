@@ -76,6 +76,13 @@ class RequestFormTest {
     }
 
     @Test
+    void dailyPhasesWithoutTimeframeDoNotCrashValidation() {
+        RequestForm f = new RequestForm();
+        f.setPhases(java.util.Map.of(MoonPhaseType.DAILY, true));
+        assertNull(f.validate()); // missing from/to is reported by @Constraints.Required
+    }
+
+    @Test
     void locationWithOnlyLatitudeIsRejected() {
         RequestForm f = newMinimalForm();
         f.setLat(47.4);
