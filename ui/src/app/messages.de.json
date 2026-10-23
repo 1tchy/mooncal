@@ -34,6 +34,7 @@
     "new": "Neumond",
     "quarter": "Halbmond",
     "daily": "tägliche Phasen, Mondauf- und Monduntergang",
+    "sun": "Sonnenauf- und Sonnenuntergang",
     "hemisphere": {
       "title": "Hemisphäre",
       "northern": "Nördlich",

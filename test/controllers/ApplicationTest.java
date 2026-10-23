@@ -130,6 +130,14 @@ class ApplicationTest extends WithApplication {
     }
 
     @Test
+    void testICalendarSunWithLocation() {
+        String result = queryAsICalendar("de", false, false, false, false, false, false, false, "phases[sun]=true", "from=2026-01-15T00:00:00Europe/Zurich", "to=2026-01-15T23:59:59Europe/Zurich", "lat=47.38", "lon=8.54");
+        assertThat(result, containsString("Sonne ↑8:"));
+        assertThat(result, containsString("Sonnenuntergang um 17:0"));
+        assertThat(result, containsString("47.4° N"));
+    }
+
+    @Test
     void testQueryWithInvalidLocationIsRejected() {
         Call query = routes.Application.query();
         Result result = paramQuery("GET", query.url() + "?", "de", false, false, false, true, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2026-01-15T00:00:00Europe/Zurich", "to=2026-01-15T23:59:59Europe/Zurich", "lat=95", "lon=8.5");

@@ -33,6 +33,13 @@ phases.daily.noMoonset=Geen maanondergang op deze dag
 phases.daily.alwaysUp=De maan staat de hele dag boven de horizon
 phases.daily.alwaysDown=De maan staat de hele dag onder de horizon
 phases.daily.location=Opkomst en ondergang berekend voor {0}
+phases.sun=Zon
+phases.sun.sunrise=Zonsopkomst om {0}
+phases.sun.sunset=Zonsondergang om {0}
+phases.sun.noSunrise=Geen zonsopkomst op deze dag
+phases.sun.noSunset=Geen zonsondergang op deze dag
+phases.sun.alwaysUp=De zon staat de hele dag boven de horizon (middernachtzon)
+phases.sun.alwaysDown=De zon staat de hele dag onder de horizon (poolnacht)
 
 events.lunareclipse.total=Totale maansverduistering
 events.lunareclipse.partial=Gedeeltelijke maansverduistering

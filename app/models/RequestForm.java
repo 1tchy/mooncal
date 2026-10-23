@@ -15,7 +15,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
 
     private static final int MAX_YEARS_FOR_DAILY_PHASES = 200;
     /**
-     * Coordinates are rounded to 0.1° (~11 km): precise enough for moonrise/-set to the minute,
+     * Coordinates are rounded to 0.1° (~11 km): precise enough for moon- and sunrise/-set to the minute,
      * coarse enough not to reveal the user's address.
      */
     private static final double LOCATION_PRECISION = 10;
@@ -181,7 +181,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         if (from == null || to == null) {
             return null; // already reported by @Constraints.Required
         }
-        if (includePhase(MoonPhaseType.DAILY) && from.until(to, ChronoUnit.YEARS) > MAX_YEARS_FOR_DAILY_PHASES) {
+        if ((includePhase(MoonPhaseType.DAILY) || includePhase(MoonPhaseType.SUN)) && from.until(to, ChronoUnit.YEARS) > MAX_YEARS_FOR_DAILY_PHASES) {
             return new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily");
         }
         if ((lat == null) != (lon == null) || (lat != null && (Math.abs(lat) > 90 || Math.abs(lon) > 180))) {

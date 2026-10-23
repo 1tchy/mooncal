@@ -33,6 +33,13 @@ phases.daily.noMoonset=इस दिन चंद्रास्त नहीं
 phases.daily.alwaysUp=चंद्रमा पूरे दिन क्षितिज के ऊपर है
 phases.daily.alwaysDown=चंद्रमा पूरे दिन क्षितिज के नीचे है
 phases.daily.location=उदय और अस्त {0} के लिए गणना किए गए
+phases.sun=सूर्य
+phases.sun.sunrise=सूर्योदय {0} बजे
+phases.sun.sunset=सूर्यास्त {0} बजे
+phases.sun.noSunrise=इस दिन सूर्योदय नहीं
+phases.sun.noSunset=इस दिन सूर्यास्त नहीं
+phases.sun.alwaysUp=सूर्य पूरे दिन क्षितिज के ऊपर है (मध्यरात्रि सूर्य)
+phases.sun.alwaysDown=सूर्य पूरे दिन क्षितिज के नीचे है (ध्रुवीय रात्रि)
 
 events.lunareclipse.total=पूर्ण चंद्र ग्रहण
 events.lunareclipse.partial=आंशिक चंद्र ग्रहण

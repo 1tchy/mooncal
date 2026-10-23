@@ -33,6 +33,13 @@ phases.daily.noMoonset=No hay puesta de la luna este día
 phases.daily.alwaysUp=La luna está sobre el horizonte todo el día
 phases.daily.alwaysDown=La luna está bajo el horizonte todo el día
 phases.daily.location=Salida y puesta calculadas para {0}
+phases.sun=sol
+phases.sun.sunrise=Salida del sol a las {0}
+phases.sun.sunset=Puesta del sol a las {0}
+phases.sun.noSunrise=No hay salida del sol este día
+phases.sun.noSunset=No hay puesta del sol este día
+phases.sun.alwaysUp=El sol está sobre el horizonte todo el día (sol de medianoche)
+phases.sun.alwaysDown=El sol está bajo el horizonte todo el día (noche polar)
 
 events.lunareclipse.total=eclipse lunar total
 events.lunareclipse.partial=eclipse lunar parcial

@@ -10,7 +10,7 @@
       <div class="card-body row g-0">
         <!-- takes the remaining width, so long labels wrap instead of pushing style and hemisphere below -->
         <div class="col me-3">
-          @for (phase of ['full', 'new', 'quarter', 'daily']; track phase) {
+          @for (phase of ['full', 'new', 'quarter', 'daily', 'sun']; track phase) {
             <div class="form-check">
               <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
                      [name]="phase+'-checkbox'">
@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        @if (phases['daily']) {
+        @if (usesLocation) {
           <div class="col-12 mt-3" id="location">
             <div class="row g-2 align-items-center">
               <div class="col-auto">

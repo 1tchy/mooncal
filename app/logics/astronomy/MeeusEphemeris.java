@@ -4,6 +4,7 @@ import jakarta.inject.Singleton;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 @Singleton
@@ -174,35 +175,71 @@ public class MeeusEphemeris implements Ephemeris {
         double eps = obliquity(jd);
         double ra = Math.atan2(Math.sin(lon) * Math.cos(eps) - Math.tan(lat) * Math.sin(eps), Math.cos(lon));
         double dec = declination(lon, lat, eps);
-        double tc = f[5];
-        double siderealTime = norm360(280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * tc * tc - tc * tc * tc / 38710000);
-        double hourAngle = siderealTime * DEG + longitude * DEG - ra;
-        double phi = latitude * DEG;
-        double altitude = Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(hourAngle)) / DEG;
+        double altitude = altitude(jd, ra, dec, latitude, longitude);
         // Meeus ch.15: h0 = 0.7275 * parallax - 0°34' (refraction); 0.7275 also covers the semi-diameter
         double parallax = Math.asin(6378.14 / distanceKm(f)) / DEG;
         return altitude - (0.7275 * parallax - 34.0 / 60);
     }
 
-    /** Scan step; the moon only rises and sets within one step when it grazes the horizon near the poles. */
+    /**
+     * Altitude of the sun's upper limb relative to the horizon in degrees, as seen from the given place:
+     * positive while the sun is above the horizon (refraction and its semi-diameter included).
+     */
+    private double sunAltitudeAboveHorizon(Instant t, double latitude, double longitude) {
+        double jd = julianDay(t);
+        double tc = (jd - 2451545.0) / 36525.0;
+        // Meeus ch.25, low accuracy (~0.01°): apparent longitude of the sun
+        double l0 = 280.46646 + 36000.76983 * tc + 0.0003032 * tc * tc;
+        double m = (357.52911 + 35999.05029 * tc - 0.0001537 * tc * tc) * DEG;
+        double center = (1.914602 - 0.004817 * tc - 0.000014 * tc * tc) * Math.sin(m)
+                + (0.019993 - 0.000101 * tc) * Math.sin(2 * m)
+                + 0.000289 * Math.sin(3 * m);
+        double omega = (125.04 - 1934.136 * tc) * DEG;
+        double lon = (l0 + center - 0.00569 - 0.00478 * Math.sin(omega)) * DEG;
+        double eps = obliquity(jd) + 0.00256 * Math.cos(omega) * DEG;
+        double ra = Math.atan2(Math.cos(eps) * Math.sin(lon), Math.cos(lon));
+        double dec = declination(lon, 0, eps);
+        // Meeus ch.15: h0 = -0°50' (refraction and semi-diameter)
+        return altitude(jd, ra, dec, latitude, longitude) - (-50.0 / 60);
+    }
+
+    /** Geometric altitude in degrees for right ascension and declination in radians. */
+    private static double altitude(double jd, double ra, double dec, double latitude, double longitude) {
+        double tc = (jd - 2451545.0) / 36525.0;
+        double siderealTime = norm360(280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * tc * tc - tc * tc * tc / 38710000);
+        double hourAngle = siderealTime * DEG + longitude * DEG - ra;
+        double phi = latitude * DEG;
+        return Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(hourAngle)) / DEG;
+    }
+
+    /** Scan step; a body only rises and sets within one step when it grazes the horizon near the poles. */
     private static final Duration RISE_SET_STEP = Duration.ofMinutes(30);
     /** Precise enough to round rise and set to the minute. */
     private static final Duration RISE_SET_PRECISION = Duration.ofSeconds(10);
 
     @Override
     public RiseSet moonRiseSet(Instant from, Instant until, double latitude, double longitude) {
+        return riseSet(from, until, t -> moonAltitudeAboveHorizon(t, latitude, longitude));
+    }
+
+    @Override
+    public RiseSet sunRiseSet(Instant from, Instant until, double latitude, double longitude) {
+        return riseSet(from, until, t -> sunAltitudeAboveHorizon(t, latitude, longitude));
+    }
+
+    private RiseSet riseSet(Instant from, Instant until, Function<Instant, Double> altitudeAboveHorizon) {
         Instant rise = null;
         Instant set = null;
-        double previous = moonAltitudeAboveHorizon(from, latitude, longitude);
+        double previous = altitudeAboveHorizon.apply(from);
         boolean upAtStart = previous > 0;
         Instant lo = from;
         while (lo.isBefore(until) && (rise == null || set == null)) {
             Instant hi = lo.plus(RISE_SET_STEP).isAfter(until) ? until : lo.plus(RISE_SET_STEP);
-            double current = moonAltitudeAboveHorizon(hi, latitude, longitude);
+            double current = altitudeAboveHorizon.apply(hi);
             if (previous <= 0 && current > 0 && rise == null) {
-                rise = refine(lo, hi, t -> moonAltitudeAboveHorizon(t, latitude, longitude) > 0, RISE_SET_PRECISION);
+                rise = refine(lo, hi, t -> altitudeAboveHorizon.apply(t) > 0, RISE_SET_PRECISION);
             } else if (previous > 0 && current <= 0 && set == null) {
-                set = refine(lo, hi, t -> moonAltitudeAboveHorizon(t, latitude, longitude) <= 0, RISE_SET_PRECISION);
+                set = refine(lo, hi, t -> altitudeAboveHorizon.apply(t) <= 0, RISE_SET_PRECISION);
             }
             previous = current;
             lo = hi;

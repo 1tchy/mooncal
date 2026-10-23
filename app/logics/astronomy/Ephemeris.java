@@ -18,10 +18,13 @@ public interface Ephemeris {
     /** First moonrise and first moonset in [from, until); empty where there is none. */
     RiseSet moonRiseSet(Instant from, Instant until, double latitude, double longitude);
 
+    /** First sunrise and first sunset in [from, until); empty where there is none. */
+    RiseSet sunRiseSet(Instant from, Instant until, double latitude, double longitude);
+
     record Apsis(Instant when, boolean perigee) {}
 
     /**
-     * @param upAtStart whether the moon is above the horizon at the start of the interval, which tells
+     * @param upAtStart whether the moon or sun is above the horizon at the start of the interval, which tells
      *                  "up all the time" from "down all the time" when there is neither rise nor set
      */
     record RiseSet(Optional<Instant> rise, Optional<Instant> set, boolean upAtStart) {}

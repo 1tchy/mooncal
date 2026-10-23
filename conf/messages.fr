@@ -33,6 +33,13 @@ phases.daily.noMoonset=Pas de coucher de lune ce jour
 phases.daily.alwaysUp=La lune est au-dessus de l''horizon toute la journée
 phases.daily.alwaysDown=La lune est sous l''horizon toute la journée
 phases.daily.location=Lever et coucher calculés pour {0}
+phases.sun=soleil
+phases.sun.sunrise=Lever du soleil à {0}
+phases.sun.sunset=Coucher du soleil à {0}
+phases.sun.noSunrise=Pas de lever du soleil ce jour
+phases.sun.noSunset=Pas de coucher du soleil ce jour
+phases.sun.alwaysUp=Le soleil est au-dessus de l''horizon toute la journée (soleil de minuit)
+phases.sun.alwaysDown=Le soleil est sous l''horizon toute la journée (nuit polaire)
 
 events.lunareclipse.total=éclipse lunaire totale
 events.lunareclipse.partial=éclipse lunaire partielle

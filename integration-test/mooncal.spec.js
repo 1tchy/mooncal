@@ -154,4 +154,15 @@ test('moon calendar user journey', async ({page}) => {
     expect(JSON.stringify(await page.evaluate(() => window.matomoMockCalls))).not.toContain('48.4');
     await expect(page).toHaveScreenshot('daily-with-location.png');
   });
+
+  await test.step('enable sunrise and sunset', async () => {
+    const response = nextCalendarResponse(page);
+    await page.locator('#sun-checkbox').click();
+    const url = await response;
+    expect(url).toContain('&phases[sun]=true');
+    expect(url).toContain('&lat=48.4&lon=-4.5');
+    // each day has the moon entry first, then the sun entry
+    await expect(calendarRows(page).nth(1)).toContainText('Sun ↑');
+    await expect(page).toHaveScreenshot('daily-and-sun-with-location.png');
+  });
 });

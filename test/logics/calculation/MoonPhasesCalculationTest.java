@@ -242,6 +242,64 @@ class MoonPhasesCalculationTest extends WithApplication {
         assertThat(actual.getDescription(), containsString("phases.daily.alwaysUp"));
     }
 
+    private Collection<EventInstance> calculateSunEvents(LocalDate day, ZoneId zone, Double lat, Double lon) {
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put(MoonPhaseType.SUN, true);
+        requestForm.setFrom(day.atStartOfDay(zone));
+        requestForm.setTo(day.atTime(23, 59).atZone(zone));
+        requestForm.setLat(lat);
+        requestForm.setLon(lon);
+        return calculate(requestForm);
+    }
+
+    @Test
+    void testSunEventWithRiseAndSetInLocalTime() {
+        // USNO: rise 07:09 UTC, set 16:02 UTC (CET = UTC+1)
+        Collection<EventInstance> actual = calculateSunEvents(LocalDate.of(2026, 1, 15), CH_ZONE, 47.38, 8.54);
+
+        assertThat(actual, hasSize(1));
+        EventInstance sun = actual.iterator().next();
+        assertEquals(MoonPhasesCalculation.SUN_EVENT_TYPE_ID, sun.getEventTypeId());
+        assertThat(sun.getTitle(), matchesPattern("phases.sun ↑8:(08|09|10) ↓17:0[123]"));
+        assertThat(sun.getDescription(), containsString("47.4° N, 8.5° E"));
+    }
+
+    @Test
+    void testSunEventInTheSouthernHemisphere() {
+        // USNO: set 08:20 UTC on March 10, rise ~19:50 UTC on March 9 (AEDT = UTC+11)
+        Collection<EventInstance> actual = calculateSunEvents(LocalDate.of(2026, 3, 10), ZoneId.of("Australia/Sydney"), -33.87, 151.21);
+
+        assertThat(actual.iterator().next().getTitle(), matchesPattern("phases.sun ↑6:(48|49|50|51|52) ↓19:(19|20|21)"));
+    }
+
+    @Test
+    void testSunEventDuringPolarNight() {
+        Collection<EventInstance> actual = calculateSunEvents(LocalDate.of(2026, 12, 21), ZoneOffset.UTC, 69.65, 18.96);
+
+        EventInstance sun = actual.iterator().next();
+        assertEquals("phases.sun", sun.getTitle());
+        assertThat(sun.getDescription(), containsString("phases.sun.alwaysDown"));
+    }
+
+    @Test
+    void testSunEventsNeedALocation() {
+        assertThat(calculateSunEvents(LocalDate.of(2026, 1, 15), CH_ZONE, null, null), empty());
+    }
+
+    @Test
+    void testSunAndDailyEventsAreSeparateEntries() {
+        requestForm.getPhases().clear();
+        requestForm.getPhases().put(MoonPhaseType.DAILY, true);
+        requestForm.getPhases().put(MoonPhaseType.SUN, true);
+        requestForm.setFrom(LocalDate.of(2026, 1, 15).atStartOfDay(CH_ZONE));
+        requestForm.setTo(LocalDate.of(2026, 1, 16).atTime(23, 59).atZone(CH_ZONE));
+        requestForm.setLat(47.38);
+        requestForm.setLon(8.54);
+
+        assertThat(calculate(requestForm).stream().map(EventInstance::getEventTypeId).collect(Collectors.toList()),
+                contains("daily", "sun", "daily", "sun"));
+    }
+
     @Test
     void testDailyEventsFollowDaylightSavingTime() {
         requestForm.getPhases().clear();

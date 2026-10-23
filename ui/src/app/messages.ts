@@ -59,6 +59,7 @@ export interface Phases {
   new: string
   quarter: string
   daily: string
+  sun: string
   hemisphere: Hemisphere
   location: PhaseLocation
 }

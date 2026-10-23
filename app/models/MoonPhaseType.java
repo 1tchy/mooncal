@@ -2,7 +2,9 @@ package models;
 
 public enum MoonPhaseType {
 
-    NEWMOON("new"), QUARTER("quarter"), FULLMOON("full"), DAILY("daily");
+    NEWMOON("new"), QUARTER("quarter"), FULLMOON("full"), DAILY("daily"),
+    /** Daily sunrise and sunset, which need a location. */
+    SUN("sun");
 
     private final String key;
 

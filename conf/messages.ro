@@ -33,6 +33,13 @@ phases.daily.noMoonset=Fără apus de lună în această zi
 phases.daily.alwaysUp=Luna este deasupra orizontului toată ziua
 phases.daily.alwaysDown=Luna este sub orizont toată ziua
 phases.daily.location=Răsăritul și apusul calculate pentru {0}
+phases.sun=Soare
+phases.sun.sunrise=Răsăritul soarelui la {0}
+phases.sun.sunset=Apusul soarelui la {0}
+phases.sun.noSunrise=Fără răsărit de soare în această zi
+phases.sun.noSunset=Fără apus de soare în această zi
+phases.sun.alwaysUp=Soarele este deasupra orizontului toată ziua (soarele de la miezul nopții)
+phases.sun.alwaysDown=Soarele este sub orizont toată ziua (noapte polară)
 
 events.lunareclipse.total=eclipsă totală lunară
 events.lunareclipse.partial=eclipsă parțială lunară

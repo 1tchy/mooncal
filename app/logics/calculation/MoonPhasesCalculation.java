@@ -23,9 +23,11 @@ public class MoonPhasesCalculation extends Calculation {
     public static final String NEWMOON_EVENT_TYPE_ID = "newmoon";
     public static final String FIRST_QUARTER_EVENT_TYPE_ID = "first-quarter";
     public static final String LAST_QUARTER_EVENT_TYPE_ID = "last-quarter";
-    // Public so the PDF renderer can draw them: its fonts have no arrow glyphs.
-    public static final char MOONRISE_SYMBOL = '↑';
-    public static final char MOONSET_SYMBOL = '↓';
+    public static final String SUN_EVENT_TYPE_ID = "sun";
+    // Public so the PDF renderer can draw them: its fonts have no arrow or sun glyphs.
+    public static final char RISE_SYMBOL = '↑';
+    public static final char SET_SYMBOL = '↓';
+    public static final char SUN_SYMBOL = '☀';
     private final EnumMap<Hemisphere, EnumMap<EventStyle, ArrayList<EventTemplate>>> moonPhases1700to2100 = new EnumMap<>(Arrays.stream(Hemisphere.values()).collect(Collectors.toMap(
             Function.identity(),
             hemisphere -> new EnumMap<>(Arrays.stream(EventStyle.values()).collect(Collectors.toMap(
@@ -92,6 +94,9 @@ public class MoonPhasesCalculation extends Calculation {
         if (requestForm.includePhase(MoonPhaseType.DAILY)) {
             calculateDailyEvents(requestForm, eventCollection);
         }
+        if (requestForm.includePhase(MoonPhaseType.SUN) && requestForm.hasLocation()) {
+            calculateSunEvents(requestForm, eventCollection);
+        }
     }
 
     private void load(ZonedDateTime from, ZonedDateTime to, Function<ZonedDateTime, ZonedDateTime> moonCalculation, MoonPhase phase, Collection<EventInstance> eventCollection, Lang lang, EventStyle style, Hemisphere hemisphere, String eventTypeId) {
@@ -153,7 +158,7 @@ public class MoonPhasesCalculation extends Calculation {
                 messagesApi.get(lang, "phases.daily.visibility.evening6", moonVisiblePercentEvening) + "\n" +
                 messagesApi.get(lang, "phases.daily.visibility.midnight", moonVisiblePercentMidnight);
         if (requestForm.hasLocation()) {
-            RiseSetTexts riseSet = calculateRiseSet(requestForm, day);
+            RiseSetTexts riseSet = calculateRiseSet(requestForm, day, MOON_RISE_SET);
             if (!riseSet.titleSuffix().isEmpty()) {
                 title += " " + riseSet.titleSuffix();
             }
@@ -162,21 +167,54 @@ public class MoonPhasesCalculation extends Calculation {
         return new EventInstance(day.atTime(12, 0).atZone(at), title, title, description, at, "daily");
     }
 
+    private void calculateSunEvents(RequestForm requestForm, Collection<EventInstance> eventCollection) {
+        ZoneId at = requestForm.getZone();
+        LocalDate to = requestForm.getTo().toLocalDate();
+        for (LocalDate day = requestForm.getFrom().toLocalDate(); !day.isAfter(to); day = day.plusDays(1)) {
+            RiseSetTexts riseSet = calculateRiseSet(requestForm, day, SUN_RISE_SET);
+            String title = messagesApi.get(requestForm.getLang(), "phases.sun");
+            // the PDF's day cells are narrow, so the sun is a symbol there
+            String pdfTitle = title;
+            if (!riseSet.titleSuffix().isEmpty()) {
+                title += " " + riseSet.titleSuffix();
+                pdfTitle = SUN_SYMBOL + riseSet.titleSuffix();
+            }
+            eventCollection.add(new EventInstance(day.atTime(12, 0).atZone(at), title, pdfTitle, riseSet.description(), at, SUN_EVENT_TYPE_ID));
+        }
+    }
+
     private record RiseSetTexts(String titleSuffix, String description) {
     }
 
     private record HorizonCrossing(Instant when, char symbol, String messageKey) {
     }
 
-    private RiseSetTexts calculateRiseSet(RequestForm requestForm, LocalDate day) {
+    /** What differs between the rise and set of the moon and those of the sun. */
+    private record RiseSetBody(RiseSetFunction riseSet, String riseKey, String setKey, String noRiseKey,
+                               String noSetKey, String alwaysUpKey, String alwaysDownKey) {
+    }
+
+    @FunctionalInterface
+    private interface RiseSetFunction {
+        Ephemeris.RiseSet calculate(Ephemeris ephemeris, Instant from, Instant until, double latitude, double longitude);
+    }
+
+    private static final RiseSetBody MOON_RISE_SET = new RiseSetBody(Ephemeris::moonRiseSet,
+            "phases.daily.moonrise", "phases.daily.moonset", "phases.daily.noMoonrise", "phases.daily.noMoonset",
+            "phases.daily.alwaysUp", "phases.daily.alwaysDown");
+    private static final RiseSetBody SUN_RISE_SET = new RiseSetBody(Ephemeris::sunRiseSet,
+            "phases.sun.sunrise", "phases.sun.sunset", "phases.sun.noSunrise", "phases.sun.noSunset",
+            "phases.sun.alwaysUp", "phases.sun.alwaysDown");
+
+    private RiseSetTexts calculateRiseSet(RequestForm requestForm, LocalDate day, RiseSetBody body) {
         Lang lang = requestForm.getLang();
         ZoneId zone = requestForm.getZone();
-        Ephemeris.RiseSet riseSet = ephemeris.moonRiseSet(
+        Ephemeris.RiseSet riseSet = body.riseSet().calculate(ephemeris,
                 day.atStartOfDay(zone).toInstant(), day.plusDays(1).atStartOfDay(zone).toInstant(),
                 requestForm.getLat(), requestForm.getLon());
         List<HorizonCrossing> crossings = new ArrayList<>();
-        riseSet.rise().ifPresent(rise -> crossings.add(new HorizonCrossing(rise, MOONRISE_SYMBOL, "phases.daily.moonrise")));
-        riseSet.set().ifPresent(set -> crossings.add(new HorizonCrossing(set, MOONSET_SYMBOL, "phases.daily.moonset")));
+        riseSet.rise().ifPresent(rise -> crossings.add(new HorizonCrossing(rise, RISE_SYMBOL, body.riseKey())));
+        riseSet.set().ifPresent(set -> crossings.add(new HorizonCrossing(set, SET_SYMBOL, body.setKey())));
         crossings.sort(Comparator.comparing(HorizonCrossing::when));
         StringJoiner titleSuffix = new StringJoiner(" ");
         StringJoiner description = new StringJoiner("\n");
@@ -186,12 +224,11 @@ public class MoonPhasesCalculation extends Calculation {
             description.add(messagesApi.get(lang, crossing.messageKey(), time));
         }
         if (crossings.isEmpty()) {
-            String key = riseSet.upAtStart() ? "phases.daily.alwaysUp" : "phases.daily.alwaysDown";
-            description.add(messagesApi.get(lang, key));
+            description.add(messagesApi.get(lang, riseSet.upAtStart() ? body.alwaysUpKey() : body.alwaysDownKey()));
         } else if (riseSet.rise().isEmpty()) {
-            description.add(messagesApi.get(lang, "phases.daily.noMoonrise"));
+            description.add(messagesApi.get(lang, body.noRiseKey()));
         } else if (riseSet.set().isEmpty()) {
-            description.add(messagesApi.get(lang, "phases.daily.noMoonset"));
+            description.add(messagesApi.get(lang, body.noSetKey()));
         }
         description.add(messagesApi.get(lang, "phases.daily.location", formatLocation(requestForm.getLat(), requestForm.getLon())));
         return new RiseSetTexts(titleSuffix.toString(), description.toString());

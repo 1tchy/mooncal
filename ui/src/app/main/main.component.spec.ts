@@ -75,6 +75,17 @@ describe('MainComponent', () => {
     expect(component.paramsAsString(false)).toContain('&lat=47.4&lon=8.5');
   });
 
+  it('paramsAsString includes the sun flag and the location for sunrise and sunset', () => {
+    component.phases['daily'] = false;
+    component.phases['sun'] = true;
+    component.lat = 47.4;
+    component.lon = 8.5;
+    const params = component.paramsAsString(false);
+    expect(params).toContain('&phases[sun]=true');
+    expect(params).toContain('&lat=47.4&lon=8.5');
+    expect(component.paramsForTracking(false)).toContain('sun');
+  });
+
   it('tracking never contains the location', () => {
     component.phases['daily'] = true;
     component.lat = 47.4;
@@ -231,6 +242,19 @@ describe('MainComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('#location-city').textContent).toContain(component.locationName);
+  });
+
+  it('shows the location fields also for sunrise and sunset alone', async () => {
+    expect(fixture.nativeElement.querySelector('#location')).toBeNull();
+    fixture.nativeElement.querySelector('#sun-checkbox').click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(component.phases['sun']).toBeTrue();
+    expect(fixture.nativeElement.querySelector('#location')).not.toBeNull();
+    fixture.nativeElement.querySelector('#sun-checkbox').click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#location')).toBeNull();
   });
 
   it('home page shows moon landing and hides the garden checkbox', () => {

@@ -83,6 +83,8 @@ export class MainComponent implements AfterViewInit {
     return isValidLocation(this.lat, this.lon) ? nearCity(this.lat!, this.lon!) : null;
   }
   locationError = false;
+  /** Moonrise/-set of the daily phases and sunrise/-set are calculated for the location. */
+  get usesLocation() { return this.phases['daily'] || this.phases['sun']; }
 
   from$ = new Subject<Date>();
   fromDebounced = this.toDate(this.from, true);
@@ -200,7 +202,8 @@ export class MainComponent implements AfterViewInit {
       + this.flagParam("phases[new]", this.phases["new"])
       + this.flagParam("phases[quarter]", this.phases["quarter"])
       + this.flagParam("phases[daily]", this.phases["daily"])
-      + (this.phases["daily"] && isValidLocation(this.lat, this.lon) ? "&lat=" + this.lat + "&lon=" + this.lon : "")
+      + this.flagParam("phases[sun]", this.phases["sun"])
+      + (this.usesLocation && isValidLocation(this.lat, this.lon) ? "&lat=" + this.lat + "&lon=" + this.lon : "")
       + "&style=" + this.style
       + "&hemisphere=" + this.hemisphere
       + this.flagParam("events[lunareclipse]", this.events["lunareclipse"])
@@ -224,6 +227,7 @@ export class MainComponent implements AfterViewInit {
       + (this.phases["new"] ? "new," : "")
       + (this.phases["quarter"] ? "quarter," : "")
       + (this.phases["daily"] ? "daily," : "")
+      + (this.phases["sun"] ? "sun," : "")
       + this.style + ","
       + (this.hemisphere === "southern" ? "southern," : "")
       + (this.events["lunareclipse"] ? "lunareclipse," : "")

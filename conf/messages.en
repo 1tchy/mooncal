@@ -33,6 +33,13 @@ phases.daily.noMoonset=No moonset on this day
 phases.daily.alwaysUp=The moon is above the horizon all day
 phases.daily.alwaysDown=The moon is below the horizon all day
 phases.daily.location=Rise and set calculated for {0}
+phases.sun=Sun
+phases.sun.sunrise=Sunrise at {0}
+phases.sun.sunset=Sunset at {0}
+phases.sun.noSunrise=No sunrise on this day
+phases.sun.noSunset=No sunset on this day
+phases.sun.alwaysUp=The sun is above the horizon all day (midnight sun)
+phases.sun.alwaysDown=The sun is below the horizon all day (polar night)
 
 events.lunareclipse.total=Total Lunar Eclipse
 events.lunareclipse.partial=Partial Lunar Eclipse

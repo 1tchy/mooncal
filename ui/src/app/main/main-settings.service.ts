@@ -9,7 +9,8 @@ export class MainSettingsService {
     full: true,
     'new': false,
     quarter: false,
-    daily: false
+    daily: false,
+    sun: false
   };
   style = "withDescription";
   hemisphere: 'northern' | 'southern' = 'northern';
@@ -21,7 +22,7 @@ export class MainSettingsService {
   from = MainSettingsService.initialFrom();
   to = MainSettingsService.initialTo();
   zone = MainSettingsService.detectTimezone();
-  // Location for moonrise/-set, defaults to the reference city of the time zone
+  // Location for moon- and sunrise/-set, defaults to the reference city of the time zone
   lat: number | null = referenceLocation(this.zone).lat;
   lon: number | null = referenceLocation(this.zone).lon;
   // A time zone chosen by the user is never replaced by the one nearest to the location

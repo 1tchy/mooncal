@@ -33,6 +33,13 @@ phases.daily.noMoonset=Kein Monduntergang an diesem Tag
 phases.daily.alwaysUp=Der Mond ist den ganzen Tag über dem Horizont
 phases.daily.alwaysDown=Der Mond ist den ganzen Tag unter dem Horizont
 phases.daily.location=Auf- und Untergang berechnet für {0}
+phases.sun=Sonne
+phases.sun.sunrise=Sonnenaufgang um {0}
+phases.sun.sunset=Sonnenuntergang um {0}
+phases.sun.noSunrise=Kein Sonnenaufgang an diesem Tag
+phases.sun.noSunset=Kein Sonnenuntergang an diesem Tag
+phases.sun.alwaysUp=Die Sonne ist den ganzen Tag über dem Horizont (Mitternachtssonne)
+phases.sun.alwaysDown=Die Sonne ist den ganzen Tag unter dem Horizont (Polarnacht)
 
 events.lunareclipse.total=Totale Mondfinsternis
 events.lunareclipse.partial=Partielle Mondfinsternis

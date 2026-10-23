@@ -34,6 +34,7 @@
     "new": "nouvelle lune",
     "quarter": "quartier",
     "daily": "phases quotidiennes de la lune, lever et coucher",
+    "sun": "lever et coucher du soleil",
     "hemisphere": {
       "title": "Hémisphère",
       "northern": "Nord",
