@@ -43,16 +43,18 @@ public class Application extends Controller {
     private final Assets assets;
     private final Action<AnyContent> indexHtml;
     private final MessagesApi messagesApi;
+    private final CalculationExecutionContext calculationExecutionContext;
     private final Logger.ALogger logger = Logger.of(getClass());
 
     @Inject
-    public Application(TotalCalculation calculation, CalendarMapper calendarMapper, PDFMapper pdfMapper, Environment environment, FormFactory formFactory, Assets assets, MessagesApi messagesApi) {
+    public Application(TotalCalculation calculation, CalendarMapper calendarMapper, PDFMapper pdfMapper, Environment environment, FormFactory formFactory, Assets assets, MessagesApi messagesApi, CalculationExecutionContext calculationExecutionContext) {
         this.calculation = calculation;
         this.calendarMapper = calendarMapper;
         this.pdfMapper = pdfMapper;
         this.environment = environment;
         this.formFactory = formFactory;
         this.messagesApi = messagesApi;
+        this.calculationExecutionContext = calculationExecutionContext;
         this.assets = assets;
         this.indexHtml = assets.at("/public", "index.html", false);
     }
@@ -84,7 +86,7 @@ public class Application extends Controller {
         return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, request, CompletableFuture.supplyAsync(() -> {
             //noinspection CodeBlock2Expr
             return goodRequest.apply(calculation.calculate(requestForm), requestForm);
-        })), request);
+        }, calculationExecutionContext)), request);
     }
 
     private CompletionStage<Result> handleETag(RequestForm requestForm, Http.Request request, CompletionStage<Result> requestResult) {
