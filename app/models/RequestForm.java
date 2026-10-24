@@ -6,14 +6,16 @@ import play.data.validation.ValidationError;
 import play.i18n.Lang;
 
 import java.time.*;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
 @Constraints.Validate
 public class RequestForm implements Constraints.Validatable<ValidationError> {
 
-    private static final int MAX_YEARS_FOR_DAILY_PHASES = 200;
+    /** The limit told to the user. */
+    private static final int MAX_YEARS_FOR_DAILY_PHASES = 100;
+    /** The limit enforced, with some slack above the announced one. Each day is an event, which takes a lot of memory. */
+    private static final int HARD_CAP_YEARS_FOR_DAILY_PHASES = 102;
     /**
      * Coordinates are rounded to 0.1° (~11 km): precise enough for moon- and sunrise/-set to the minute,
      * coarse enough not to reveal the user's address.
@@ -181,7 +183,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         if (from == null || to == null) {
             return null; // already reported by @Constraints.Required
         }
-        if ((includePhase(MoonPhaseType.DAILY) || includePhase(MoonPhaseType.SUN)) && from.until(to, ChronoUnit.YEARS) > MAX_YEARS_FOR_DAILY_PHASES) {
+        if ((includePhase(MoonPhaseType.DAILY) || includePhase(MoonPhaseType.SUN)) && from.plusYears(HARD_CAP_YEARS_FOR_DAILY_PHASES).isBefore(to)) {
             return new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily");
         }
         if ((lat == null) != (lon == null) || (lat != null && (Math.abs(lat) > 90 || Math.abs(lon) > 180))) {

@@ -92,6 +92,34 @@ class RequestFormTest {
     }
 
     @Test
+    void dailyWithUpTo102YearsIsAccepted() {
+        RequestForm f = newMinimalForm();
+        f.setPhases(java.util.Map.of(MoonPhaseType.DAILY, true));
+        f.setFrom(java.time.ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        f.setTo(java.time.ZonedDateTime.of(2102, 1, 1, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        assertNull(f.validate());
+    }
+
+    @Test
+    void dailyWithMoreThan102YearsIsRejectedAnnouncing100Years() {
+        RequestForm f = newMinimalForm();
+        f.setPhases(java.util.Map.of(MoonPhaseType.DAILY, true));
+        f.setFrom(java.time.ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        f.setTo(java.time.ZonedDateTime.of(2102, 1, 2, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        assertEquals("error.fromTo.tolargefordaily", f.validate().message());
+        assertEquals("100", f.validate().key());
+    }
+
+    @Test
+    void phasesWithoutDailyAreNotLimited() {
+        RequestForm f = newMinimalForm();
+        f.setPhases(java.util.Map.of(MoonPhaseType.FULLMOON, true));
+        f.setFrom(java.time.ZonedDateTime.of(1000, 1, 1, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        f.setTo(java.time.ZonedDateTime.of(3000, 12, 31, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        assertNull(f.validate());
+    }
+
+    @Test
     void locationWithOnlyLatitudeIsRejected() {
         RequestForm f = newMinimalForm();
         f.setLat(47.4);
