@@ -7,6 +7,7 @@ import play.i18n.Lang;
 
 import java.time.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Constraints.Validate
@@ -184,7 +185,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
             return null; // already reported by @Constraints.Required
         }
         if ((includePhase(MoonPhaseType.DAILY) || includePhase(MoonPhaseType.SUN)) && from.plusYears(HARD_CAP_YEARS_FOR_DAILY_PHASES).isBefore(to)) {
-            return new ValidationError(MAX_YEARS_FOR_DAILY_PHASES + "", "error.fromTo.tolargefordaily");
+            return new ValidationError("to", "error.fromTo.tolargefordaily", List.of(MAX_YEARS_FOR_DAILY_PHASES));
         }
         if ((lat == null) != (lon == null) || (lat != null && (Math.abs(lat) > 90 || Math.abs(lon) > 180))) {
             return new ValidationError("lat", "error.location");

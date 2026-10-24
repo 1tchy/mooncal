@@ -107,7 +107,7 @@ class RequestFormTest {
         f.setFrom(java.time.ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
         f.setTo(java.time.ZonedDateTime.of(2102, 1, 2, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
         assertEquals("error.fromTo.tolargefordaily", f.validate().message());
-        assertEquals("100", f.validate().key());
+        assertEquals(java.util.List.of(100), f.validate().arguments());
     }
 
     @Test

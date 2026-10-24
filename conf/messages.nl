@@ -55,6 +55,7 @@ error.notfound.problem=Het probleem zou kunnen zijn:
 error.notfound.problem.typo=een fout getypt adres
 error.notfound.problem.link=een verouderde link
 error.location=Ongeldige locatie
+error.fromTo.tolargefordaily=Maximaal {0} dagelijkse standen mogelijk.
 
 pdf.title=Maankalender
 pdf.month.1=Januari

@@ -55,6 +55,7 @@ error.notfound.problem=Das Problem könnte sein:
 error.notfound.problem.typo=Tippfehler in der Adresse
 error.notfound.problem.link=nicht mehr aktueller Link
 error.location=Ungültiger Standort
+error.fromTo.tolargefordaily=Bei der Anzeige von täglichen Phasen sind maximal {0} Jahre möglich.
 
 pdf.title=Mondkalender
 pdf.month.1=Januar

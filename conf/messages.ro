@@ -55,6 +55,7 @@ error.notfound.problem=Apare că acest lucru a fost cauzat de:
 error.notfound.problem.typo=o adresă greșită scrisă
 error.notfound.problem.link=un link depășit de dată
 error.location=Locație nevalidă
+error.fromTo.tolargefordaily=Atunci când se selectează faze zilnice, doar {0} ani pot fi afișați.
 
 pdf.title=Calendar lunar
 pdf.month.1=Ianuarie

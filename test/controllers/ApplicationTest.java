@@ -146,6 +146,14 @@ class ApplicationTest extends WithApplication {
     }
 
     @Test
+    void testDailyQueryWithTooLargeTimeframeIsRejected() {
+        Call query = routes.Application.query();
+        Result result = paramQuery("GET", query.url() + "?", "de", false, false, false, true, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2026-01-01T00:00:00Europe/Zurich", "to=2198-03-31T23:59:59Europe/Zurich");
+        assertEquals(400, result.status());
+        assertEquals("Bei der Anzeige von täglichen Phasen sind maximal 100 Jahre möglich.", contentAsString(result));
+    }
+
+    @Test
     void testTruncatedDailyICalendarQueryIsRejected() {
         Result result = route(app, new Http.RequestBuilder().method("GET").uri("/mooncal.ics?created=20077059936&lang=en&phases%5Bfull%5D=false&phases%5Bnew%5D=false&phases%5Bquarter%5D=false&phases%5Bdaily%5D=true&style=withDescription&events%5Blunareclipse]"));
         assertEquals(400, result.status());

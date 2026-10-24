@@ -55,6 +55,7 @@ error.notfound.problem=parece que esto fue el resultado de:
 error.notfound.problem.typo=dirección mal escrita
 error.notfound.problem.link=enlace desactualizado
 error.location=Ubicación no válida
+error.fromTo.tolargefordaily=Al seleccionar fases diarias solo pueden mostrarse {0} años.
 
 pdf.title=Calendario Lunar
 pdf.month.1=Enero

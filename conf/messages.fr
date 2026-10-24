@@ -55,6 +55,7 @@ error.notfound.problem=Il semble que cela soit dû à :
 error.notfound.problem.typo=adresse mal tapée
 error.notfound.problem.link=lien obsolète
 error.location=Emplacement invalide
+error.fromTo.tolargefordaily=Lorsque vous sélectionnez des phases quotidiennes, seules {0} années peuvent être affichées.
 
 pdf.title=Calendrier de la Lune
 pdf.month.1=Janvier

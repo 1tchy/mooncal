@@ -114,7 +114,7 @@ public class Application extends Controller {
     private Result renderError(Form<RequestForm> form, Http.Request request) {
         return badRequest(
                 form.errors().stream()
-                        .map(error -> messagesApi.preferred(request).at(error.message(), error.key()))
+                        .map(error -> messagesApi.preferred(request).at(error.message(), error.arguments().toArray()))
                         .collect(Collectors.joining(", "))
         );
     }

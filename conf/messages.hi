@@ -55,6 +55,7 @@ error.notfound.problem=यह लगता है कि यह:
 error.notfound.problem.typo=पता लिखने में गलती
 error.notfound.problem.link=समय पर अपडेट न होने वाला लिंक
 error.location=अमान्य स्थान
+error.fromTo.tolargefordaily=दैनिक चरणों को चुनते समय केवल {0} वर्ष दिखाए जा सकते हैं।
 
 pdf.title=चंद्र कैलेंडर
 pdf.month.1=जनवरी

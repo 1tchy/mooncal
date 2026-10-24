@@ -55,6 +55,7 @@ error.notfound.problem=It looks like this was the result of either:
 error.notfound.problem.typo=a mistyped address
 error.notfound.problem.link=an out-of-date link
 error.location=Invalid location
+error.fromTo.tolargefordaily=When selecting daily phases only {0} years can be displayed.
 
 pdf.title=Moon Calendar
 pdf.month.1=January
