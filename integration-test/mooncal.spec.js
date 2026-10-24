@@ -165,4 +165,12 @@ test('moon calendar user journey', async ({page}) => {
     await expect(calendarRows(page).nth(1)).toContainText('Sun ↑');
     await expect(page).toHaveScreenshot('daily-and-sun-with-location.png');
   });
+
+  await test.step('show the error of a too large timeframe', async () => {
+    const response = page.waitForResponse(r => new URL(r.url()).pathname === '/mooncal');
+    await page.locator('#to').fill('2200-12-31');
+    await page.locator('#to').blur();
+    expect((await response).status()).toBe(400);
+    await expect(page.locator('.card.bg-danger')).toContainText('When selecting daily phases only 100 years can be displayed.');
+  });
 });

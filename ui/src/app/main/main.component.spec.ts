@@ -38,6 +38,24 @@ describe('MainComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('shows the error message from the server', async () => {
+    spyOn(window, 'fetch').and.resolveTo(new Response('When selecting daily phases only 100 years can be displayed.', {status: 400, statusText: 'Bad Request'}));
+    component.requestPath = '';
+    component.fetchCalendar(false);
+    for (let i = 0; i < 50 && !component.error; i++) {
+      await new Promise(resolve => setTimeout(resolve, 10));
+    }
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('When selecting daily phases only 100 years can be displayed.');
+  });
+
+  it('asks the server for error messages in the language of the page', () => {
+    const fetchSpy = spyOn(window, 'fetch').and.resolveTo(new Response('[]'));
+    component.requestPath = '';
+    component.fetchCalendar(false);
+    expect(fetchSpy.calls.mostRecent().args[1]).toEqual(jasmine.objectContaining({headers: {'Accept-Language': 'en'}}));
+  });
+
   it(`should have the a field`, () => {
     expect(component.events['lunareclipse']).toEqual(true);
   });

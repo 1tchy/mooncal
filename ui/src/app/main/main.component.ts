@@ -299,7 +299,8 @@ export class MainComponent implements AfterViewInit {
         this.requestPath = requestPath;
         this.requestOngoing = true;
         let url = this.getApiUrl(false, null) + "?" + requestPath;
-        fetch(url)
+        // the server translates its error messages by Accept-Language, which may differ from the language of the page
+        fetch(url, {headers: {'Accept-Language': this.messages.lang.current}})
           .then(response => {
             if (!response.ok) {
               throw response;
@@ -311,10 +312,15 @@ export class MainComponent implements AfterViewInit {
             this.updateCalendar(data);
             this.requestOngoing = false;
           })
-          .catch((response) => {
-            this.error = response;
+          .catch(async (response) => {
+            this.error = {
+              status: response.status,
+              statusText: response.statusText,
+              message: response instanceof Response ? await response.text() : String(response)
+            };
             this.calendar = [];
             this.requestOngoing = false;
+            this.changeDetectorRef.markForCheck();
           });
         if (track) {
           // @ts-ignore
