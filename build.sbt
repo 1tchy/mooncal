@@ -23,6 +23,8 @@ libraryDependencies ++= Seq(
 	"org.jetbrains" % "annotations" % "26.1.0",
 	//see latest version under: https://jitpack.io/#SimpleAstronomy/simple-astronomy-lib or https://github.com/SimpleAstronomy/simple-astronomy-lib
 	"com.github.SimpleAstronomy" % "simple-astronomy-lib" % "6f0b684551",
+	//see latest version under: https://jitpack.io/#1tchy/slackwater (fork of https://github.com/openwatersio/slackwater)
+	"com.github.1tchy" % "slackwater" % "1c9601a27e",
 	//see latest version under: https://mvnrepository.com/artifact/org.mockito/mockito-core
 	"org.mockito" % "mockito-core" % "5.24.0" % Test,
 	///see latest version under: https://mvnrepository.com/artifact/de.redsix/pdfcompare
