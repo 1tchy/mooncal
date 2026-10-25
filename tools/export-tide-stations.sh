@@ -2,12 +2,15 @@
 #
 # Exports the tide stations of the Slackwater database into conf/logics/calculation/tides/tide-stations.json.gz
 # Run from the repository root when updating the data: tools/export-tide-stations.sh
+#   VERBOSE=1  lists the duplicate gauges left out
 # Needs npm and node, as only the database's own module reads its FlatBuffers file, and jq.
 
 set -euo pipefail
 
 DATABASE='@slackwater/database@1.0.0-beta.20261017'
 MIN_MEAN_RANGE_METRES=0.3
+# Some gauges are in the database twice (from different sources); the better one is kept
+DUPLICATE_DISTANCE_KM=1
 TARGET='conf/logics/calculation/tides/tide-stations.json.gz'
 
 DIR="$(mktemp -d "${TMPDIR:-/tmp}/slackwater-XXXXXX")"
@@ -19,14 +22,21 @@ node --input-type=module -e '
 const {stations} = await import(process.argv[1]);
 console.log(JSON.stringify(stations.map(s => ({
   id: s.id, name: s.name, locality: s.locality, kind: s.kind, type: s.type, latitude: s.latitude, longitude: s.longitude,
-  attribution: s.attribution, commercialUse: s.license?.commercial_use, offsets: s.offsets,
+  attribution: s.attribution, commercialUse: s.license?.commercial_use, score: s.quality?.score, offsets: s.offsets,
   ...(s.type === "reference" && {constituents: s.harmonic_constituents, datums: s.datums}),
 }))));
 ' "$DIR/node_modules/@slackwater/database/dist/node/index.js" > "$DIR/stations.json"
 
-jq -r --arg database "$DATABASE" --argjson minMeanRange "$MIN_MEAN_RANGE_METRES" '
+jq -r --arg database "$DATABASE" --argjson minMeanRange "$MIN_MEAN_RANGE_METRES" --argjson duplicateKm "$DUPLICATE_DISTANCE_KM" \
+  --arg verbose "${VERBOSE:-}" '
 def round($decimals): pow(10; $decimals) as $factor | (. * $factor + 0.5 | floor) / $factor;
 def present: . != null and . != "";
+def distanceKm($a; $b):
+  def rad: . * 3.141592653589793 / 180;
+  ((($b.latitude - $a.latitude) | rad) / 2 | sin) as $sinLat
+  | ((($b.longitude - $a.longitude) | rad) / 2 | sin) as $sinLon
+  | ($sinLat * $sinLat + ($a.latitude | rad | cos) * ($b.latitude | rad | cos) * $sinLon * $sinLon) as $h
+  | 2 * 6371 * ([1, ($h | sqrt)] | min | asin);
 def ownMeanRange:
   if .datums.MHW != null and .datums.MLW != null then .datums.MHW - .datums.MLW
   else ((.constituents // []) | map(select(.name == "M2")) | first | if . then 2 * .amplitude else 0 end)
@@ -87,7 +97,18 @@ folds as $folds
 | ($candidates | map(select(predictable)) | map(. + {meanRange: meanRange})) as $predictable
 | ($predictable | map(select(.meanRange < $minMeanRange)) | length) as $barelyAnyTide
 | ($predictable | map(select(.meanRange >= $minMeanRange) | del(.meanRange))) as $tidal
-| (reduce $tidal[] as $s ({attributions: [], stations: []};
+| ($tidal | map(select(.type == "subordinate") | {key: .offsets.reference, value: true}) | from_entries) as $references
+  # the best ones first; the kept ones by 0.01° of latitude (> 1 km), so only neighbouring rows need to be compared
+| (reduce ($tidal | sort_by(-(.score // 0)) | .[]) as $s ({kept: {}, keptIds: {}, count: 0, duplicates: []};
+    ($s.latitude * 100 | floor) as $row
+    | ([.kept[($row - 1, $row, $row + 1) | tostring] // [] | .[] | select(distanceKm(.; $s) < $duplicateKm)] | min_by(.index)) as $duplicate
+    | if $duplicate and ($references[$s.id] | not) then
+        .duplicates += ["duplicate \($s.id) (\($s.score)) of \($duplicate.id) (\($duplicate.score))"]
+      else
+        .kept[$row | tostring] += [{index: .count, id: $s.id, score: $s.score, latitude: $s.latitude, longitude: $s.longitude}]
+        | .keptIds[$s.id] = true | .count += 1
+      end)) as $deduplicated
+| (reduce ($tidal[] | select($deduplicated.keptIds[.id])) as $s ({attributions: [], stations: []};
     (.attributions | index([$s.attribution])) as $known
     | (if $known then . else .attributions += [$s.attribution] end)
     | ({id: $s.id, label: ($s | stationLabel($folds)), lat: ($s.latitude | round(5)), lon: ($s.longitude | round(5)),
@@ -104,9 +125,10 @@ folds as $folds
 | ($export.stations | map(select(.reference == null or $exported[.reference]))) as $result
 | ({database: $database, attributions: $export.attributions, stations: $result} | tojson),
   "exported \($result | length) stations (\($result | map(select(.reference == null)) | length) reference, \($result | map(select(.reference != null)) | length) subordinate)",
-  "removed: not tide \($notTide), non-commercial \($nonCommercial), not predictable \($notPredictableAtFirst + ($export.stations | length) - ($result | length)), barely any tide \($barelyAnyTide)",
+  "removed: not tide \($notTide), non-commercial \($nonCommercial), not predictable \($notPredictableAtFirst + ($export.stations | length) - ($result | length)), barely any tide \($barelyAnyTide), duplicate \($deduplicated.duplicates | length)",
   "attributions:",
-  ($export.attributions[] | "  \(.)")
+  ($export.attributions[] | "  \(.)"),
+  (if $verbose != "" then $deduplicated.duplicates[] else empty end)
 ' "$DIR/stations.json" > "$DIR/export.txt"
 
 mkdir -p "$(dirname "$TARGET")"

@@ -83,6 +83,13 @@ class TideStationsTest {
     }
 
     @Test
+    void duplicateOfABetterGaugeIsLeftOut() {
+        // TICON's Fort Point (data from 1858-1877) is 300 m from NOAA's Golden Gate gauge and 25 minutes off
+        assertTrue(STATIONS.byId("ticon/sanfrancisco_fort_point-9414920-usa-da_sat").isEmpty());
+        assertTrue(STATIONS.byId("noaa/9414290").isPresent());
+    }
+
+    @Test
     void nearestWorksAcrossTheAntimeridian() {
         TideStation east = new TideStation("east", "East", -17.0, -179.9, "A", (from, until) -> List.of());
         TideStation west = new TideStation("west", "West", -17.0, 170.0, "A", (from, until) -> List.of());
