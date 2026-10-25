@@ -67,6 +67,20 @@ class TideCalculationTest {
     }
 
     @Test
+    void cuxhavenTimesLikeBsh() {
+        // BSH (Bundesamt für Seeschifffahrt und Hydrographie) astronomical prediction for Cuxhaven Steubenhöft, 2026-10-26 MEZ:
+        // H 0:41, L 7:26, H 12:53, L 19:47; low waters in the shallow estuary are less precise
+        List<EventInstance> events = calculate(LocalDate.of(2026, 10, 26), LocalDate.of(2026, 10, 26), BERLIN, 53.9, 8.7);
+        assertThat(events, hasSize(1));
+        List<LocalTime> times = times(events.get(0).getDescription());
+        assertThat(times, hasSize(4));
+        assertContainsAbout(times, LocalTime.of(0, 41), 8);
+        assertContainsAbout(times, LocalTime.of(7, 26), 8);
+        assertContainsAbout(times, LocalTime.of(12, 53), 8);
+        assertContainsAbout(times, LocalTime.of(19, 47), 8);
+    }
+
+    @Test
     void everyEventEndsWithTheAttribution() {
         List<EventInstance> events = calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 3), BERLIN, 53.9, 8.7);
         String attribution = STATIONS.nearestWithin(53.9, 8.7, 50).orElseThrow().station().attribution();
@@ -153,7 +167,11 @@ class TideCalculationTest {
     }
 
     private static void assertContainsAbout(List<LocalTime> times, LocalTime expected) {
-        assertTrue(times.stream().anyMatch(time -> Math.abs(Duration.between(expected, time).toMinutes()) <= 5), () -> expected + " not in " + times);
+        assertContainsAbout(times, expected, 5);
+    }
+
+    private static void assertContainsAbout(List<LocalTime> times, LocalTime expected, int toleranceMinutes) {
+        assertTrue(times.stream().anyMatch(time -> Math.abs(Duration.between(expected, time).toMinutes()) <= toleranceMinutes), () -> expected + " not in " + times);
     }
 
     private List<EventInstance> calculate(LocalDate from, LocalDate to, ZoneId zone, Double lat, Double lon) {
