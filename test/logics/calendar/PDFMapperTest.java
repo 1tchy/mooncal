@@ -72,6 +72,13 @@ class PDFMapperTest extends WithApplication {
         assertEquals("mooncal_de_daily_sun_location.pdf", actual);
     }
 
+    @Test
+    void deDailySunAndTideWithLocation() throws IOException {
+        var events = calculateEvents(LANG_DE, Map.of(MoonPhaseType.FULLMOON, true, MoonPhaseType.DAILY, true, MoonPhaseType.SUN, true, MoonPhaseType.TIDE, true), 53.9, 8.7);
+        byte[] actual = cut.map(events, LANG_DE, Hemisphere.NORTHERN);
+        assertEquals("mooncal_de_daily_sun_tide_location.pdf", actual);
+    }
+
     // http://localhost:9000/mooncal.pdf?lang=hi&phases[full]=true&phases[new]=false&phases[quarter]=false&phases[daily]=false&style=withDescription&events[lunareclipse]=true&events[solareclipse]=true&events[moonlanding]=false&from=2025-01-01T00:00:00Europe/Zurich&to=2025-12-31T23:59:59Europe/Zurich
     @Test
     void hi() throws IOException {

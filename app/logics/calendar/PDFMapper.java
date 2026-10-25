@@ -58,6 +58,7 @@ public class PDFMapper {
     // Garden events are shown in the grid as small icons rather than names.
     private static final float GARDEN_ICON_SIZE = 7f;
     private static final float GARDEN_ICON_GAP = 1.5f;
+    private static final int ATTRIBUTION_FONT_SIZE = FONT_SIZE - 3;
     private static final PDRectangle A4_QUER = new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth());
     private static final float MONTH_ROW_WIDTH = A4_QUER.getWidth() / 13;
     private static final float DAY_OF_MONTH_WIDTH = 17.5f;
@@ -241,6 +242,30 @@ public class PDFMapper {
 
                 float footerY = tableDrawer.getFinalY() - (THANK_QR_CODE_SIZE + FONT_SIZE - 2) / 2f;
 
+                // The licences of the tide data require their attribution wherever the tides are shown.
+                float bottomTextY = page.getMediaBox().getLowerLeftY() + 10;
+                List<String> attributionLines = events.stream()
+                        .filter(e -> e.getDateTime().getYear() == year)
+                        .map(EventInstance::getAttribution)
+                        .filter(Objects::nonNull)
+                        .distinct()
+                        .flatMap(attribution -> PdfUtil.getOptimalTextBreakLines(attribution, font, ATTRIBUTION_FONT_SIZE, 12 * MONTH_ROW_WIDTH).stream())
+                        .toList();
+                if (!attributionLines.isEmpty()) {
+                    float attributionLeading = ATTRIBUTION_FONT_SIZE + 1f;
+                    contentStream.beginText();
+                    contentStream.setFont(font, ATTRIBUTION_FONT_SIZE);
+                    contentStream.newLineAtOffset(startX, bottomTextY + (attributionLines.size() - 1) * attributionLeading);
+                    for (int i = 0; i < attributionLines.size(); i++) {
+                        if (i > 0) {
+                            contentStream.newLineAtOffset(0, -attributionLeading);
+                        }
+                        contentStream.showText(attributionLines.get(i));
+                    }
+                    contentStream.endText();
+                    bottomTextY += attributionLines.size() * attributionLeading + 3;
+                }
+
                 // Explain the garden icons shown in the grid, one wrapped paragraph per icon.
                 // No moon-gardening disclaimer in the PDF (it lives in the .ics description and the web UI).
                 boolean hasBiodynamic = events.stream().anyMatch(e -> e.getEventTypeId().startsWith("garden-biodynamic-"));
@@ -272,7 +297,7 @@ public class PDFMapper {
                         }
                     }
 
-                    float legendBaselineY = page.getMediaBox().getLowerLeftY() + 10;
+                    float legendBaselineY = bottomTextY;
                     float firstLineY = legendBaselineY + (legendLines.size() - 1) * legendLeading;
                     contentStream.beginText();
                     contentStream.setFont(font, legendFontSize);
