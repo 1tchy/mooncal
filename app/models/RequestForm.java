@@ -126,7 +126,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         this.lon = roundLocation(lon);
     }
 
-    private static Double roundLocation(Double degrees) {
+    public static Double roundLocation(Double degrees) {
         return degrees == null ? null : Math.round(degrees * LOCATION_PRECISION) / LOCATION_PRECISION;
     }
 

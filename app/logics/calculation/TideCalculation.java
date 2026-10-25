@@ -11,6 +11,7 @@ import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -21,6 +22,7 @@ import static logics.calculation.MoonPhasesCalculation.SET_SYMBOL;
 /**
  * One entry per day with the high and low tides at the nearest tide station.
  */
+@Singleton
 public class TideCalculation extends Calculation {
 
     public static final String TIDE_EVENT_TYPE_ID = "tide";
@@ -34,11 +36,14 @@ public class TideCalculation extends Calculation {
     private static final Duration CHUNK_MARGIN = Duration.ofHours(1);
 
     private final TideStations tideStations;
+    // the one shown at each rounded position, as another station at the same rounded position hides a station
+    private final List<TideStation> shownStations;
 
     @Inject
     public TideCalculation(MessagesApi messagesApi, TideStations tideStations) {
         super(messagesApi);
         this.tideStations = tideStations;
+        this.shownStations = shownStations(tideStations);
     }
 
     @Override
@@ -46,8 +51,8 @@ public class TideCalculation extends Calculation {
         if (!requestForm.includePhase(MoonPhaseType.TIDE) || !requestForm.hasLocation()) {
             return;
         }
-        tideStations.nearestWithin(requestForm.getLat(), requestForm.getLon(), MAX_STATION_DISTANCE_KM).ifPresent(nearest -> {
-            String stationText = messagesApi.get(requestForm.getLang(), "phases.tide.station", nearest.station().label(), Math.round(nearest.km()));
+        station(requestForm.getLat(), requestForm.getLon()).ifPresent(nearest -> {
+            String stationText = stationText(requestForm, nearest);
             LocalDate from = max(requestForm.getFrom().toLocalDate(), LocalDate.of(FIRST_YEAR, 1, 1));
             LocalDate to = min(requestForm.getTo().toLocalDate(), LocalDate.of(LAST_YEAR, 12, 31));
             // a year at a time, so the extremes of a long time frame are never all in memory at once
@@ -56,6 +61,57 @@ public class TideCalculation extends Calculation {
                 calculateChunk(requestForm, chunkStart, chunkEnd, nearest.station(), stationText, eventCollection);
             }
         });
+    }
+
+    /**
+     * @return the station whose tides are shown at a location: one at the location if there is one, so that a station chosen
+     * in the hint is the one shown, even when another one is nearer to its rounded position
+     */
+    public Optional<TideStations.StationDistance> station(double lat, double lon) {
+        double roundedLat = RequestForm.roundLocation(lat);
+        double roundedLon = RequestForm.roundLocation(lon);
+        return tideStations.nearest(roundedLat, roundedLon, station -> isAtLocation(station, roundedLat, roundedLon))
+                .or(() -> tideStations.nearestWithin(roundedLat, roundedLon, MAX_STATION_DISTANCE_KM));
+    }
+
+    /**
+     * @return the nearest stations whose tides are shown at their own position, to choose from in the hint
+     */
+    public List<TideStations.StationDistance> stationsToChoose(double lat, double lon, int count) {
+        double roundedLat = RequestForm.roundLocation(lat);
+        double roundedLon = RequestForm.roundLocation(lon);
+        return shownStations.stream()
+                .map(station -> new TideStations.StationDistance(station, TideStations.distanceKm(roundedLat, roundedLon, station.lat(), station.lon())))
+                .sorted(Comparator.comparingDouble(TideStations.StationDistance::km))
+                .limit(count)
+                .toList();
+    }
+
+    /**
+     * @return at each rounded position, the station that {@link #station(double, double)} shows there
+     */
+    private static List<TideStation> shownStations(TideStations tideStations) {
+        Map<List<Double>, TideStation> shown = new LinkedHashMap<>();
+        for (TideStation station : tideStations.stations()) {
+            double lat = RequestForm.roundLocation(station.lat());
+            double lon = RequestForm.roundLocation(station.lon());
+            shown.merge(List.of(lat, lon), station, (kept, other) ->
+                    TideStations.distanceKm(lat, lon, other.lat(), other.lon()) < TideStations.distanceKm(lat, lon, kept.lat(), kept.lon()) ? other : kept);
+        }
+        return List.copyOf(shown.values());
+    }
+
+    private static boolean isAtLocation(TideStation station, double lat, double lon) {
+        return RequestForm.roundLocation(station.lat()) == lat && RequestForm.roundLocation(station.lon()) == lon;
+    }
+
+    private String stationText(RequestForm requestForm, TideStations.StationDistance nearest) {
+        TideStation station = nearest.station();
+        // its distance would only be that of the rounding
+        if (isAtLocation(station, requestForm.getLat(), requestForm.getLon())) {
+            return messagesApi.get(requestForm.getLang(), "phases.tide.stationAtLocation", station.label());
+        }
+        return messagesApi.get(requestForm.getLang(), "phases.tide.station", station.label(), Math.round(nearest.km()));
     }
 
     private void calculateChunk(RequestForm requestForm, LocalDate from, LocalDate to, TideStation station, String stationText, Collection<EventInstance> eventCollection) {

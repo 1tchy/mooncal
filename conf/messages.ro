@@ -45,6 +45,7 @@ phases.tide.low=Reflux
 phases.tide.highAt=Apă mare la {0}
 phases.tide.lowAt=Apă mică la {0}
 phases.tide.station=Mareele stației {0}, la {1} km de locație
+phases.tide.stationAtLocation=Mareele stației {0} de la locație
 phases.tide.disclaimer=Prognoză astronomică fără influența vremii și a vântului, nu pentru navigație.
 
 events.lunareclipse.total=eclipsă totală lunară

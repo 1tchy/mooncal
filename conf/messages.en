@@ -45,6 +45,7 @@ phases.tide.low=Low tide
 phases.tide.highAt=High water at {0}
 phases.tide.lowAt=Low water at {0}
 phases.tide.station=Tides of the station {0}, {1} km from the location
+phases.tide.stationAtLocation=Tides of the station {0} at the location
 phases.tide.disclaimer=Astronomical prediction without the influence of weather and wind, not for navigation.
 
 events.lunareclipse.total=Total Lunar Eclipse

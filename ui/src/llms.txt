@@ -70,7 +70,7 @@ Tides are only calculated when a tide station lies within 50 km of the location.
 
     https://mooncal.ch/tideStations?lat=47.4&lon=8.5
 
-returns JSON like `{"maxDistanceKm": 50, "withinMaxDistance": false, "nearest": [{"label": "Venezia, Punta Sabbioni", "lat": 45.4, "lon": 12.4, "km": 373}, ...]}` with the 3 nearest stations; `withinMaxDistance` tells whether tides are calculated for the location, and a station's `lat`/`lon` can be used as the location.
+returns JSON like `{"maxDistanceKm": 50, "withinMaxDistance": false, "nearest": [{"label": "Venezia, Punta Sabbioni", "lat": 45.4, "lon": 12.4, "km": 373}, ...]}` with the 3 nearest stations; `withinMaxDistance` tells whether tides are calculated for the location, and a station's `lat`/`lon` can be used as the location to get the tides of exactly that station.
 
 ## More
 
