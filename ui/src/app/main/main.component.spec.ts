@@ -275,7 +275,7 @@ describe('MainComponent', () => {
     expect(fixture.nativeElement.querySelector('#location')).toBeNull();
   });
 
-  const STATIONS_FAR_AWAY = {maxDistanceKm: 50, nearest: [
+  const STATIONS_FAR_AWAY = {maxDistanceKm: 50, withinMaxDistance: false, nearest: [
     {label: 'Genova', lat: 44.4, lon: 8.9, km: 334},
     {label: 'Venezia', lat: 45.4, lon: 12.4, km: 350},
     {label: 'Marseille', lat: 43.3, lon: 5.4, km: 420}]};
@@ -333,13 +333,20 @@ describe('MainComponent', () => {
   });
 
   it('shows no station hint when a station is near', async () => {
-    const fetchSpy = mockFetch({maxDistanceKm: 50, nearest: [{label: 'Cuxhaven', lat: 53.9, lon: 8.7, km: 3}]});
+    const fetchSpy = mockFetch({maxDistanceKm: 50, withinMaxDistance: true, nearest: [{label: 'Cuxhaven', lat: 53.9, lon: 8.7, km: 3}]});
     tickTideAt(53.9, 8.7);
     await until(() => fetchSpy.calls.count() >= 2);
     await new Promise(resolve => setTimeout(resolve, 20));
     fixture.detectChanges();
     expect(component.tideStationHint).toBeNull();
     expect(fixture.nativeElement.querySelector('#tide-station-hint')).toBeNull();
+  });
+
+  it('shows the hint for a station just beyond the limit, though its rounded distance is the limit', async () => {
+    mockFetch({maxDistanceKm: 50, withinMaxDistance: false, nearest: [{label: 'Rimini', lat: 44.1, lon: 12.6, km: 50}]});
+    tickTideAt(43.7, 12.6);
+    await until(() => component.tideStationHint !== null);
+    expect(component.tideStationHint).not.toBeNull();
   });
 
   it('fetches the stations when the location changes, but not when the calendar is updated', async () => {

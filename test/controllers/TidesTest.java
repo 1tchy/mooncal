@@ -53,6 +53,17 @@ class TidesTest extends WithApplication {
     }
 
     @Test
+    void tellsWhetherTheNearestStationIsWithinTheLimit() {
+        assertEquals(true, Json.parse(contentAsString(get("/tideStations?lat=53.9&lon=8.7"))).get("withinMaxDistance").asBoolean());
+        assertEquals(false, Json.parse(contentAsString(get("/tideStations?lat=47.4&lon=8.5"))).get("withinMaxDistance").asBoolean());
+    }
+
+    @Test
+    void locationIsRoundedLikeTheCalendar() {
+        assertEquals(contentAsString(get("/tideStations?lat=53.9&lon=8.7")), contentAsString(get("/tideStations?lat=53.94&lon=8.66")));
+    }
+
+    @Test
     void invalidLocationIsRejected() {
         assertEquals(400, get("/tideStations?lat=95&lon=8").status());
         assertEquals(400, get("/tideStations?lat=47&lon=181").status());

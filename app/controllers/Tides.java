@@ -9,6 +9,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * The nearest tide stations, for the hint shown when none is close enough to a location. The location is not logged.
@@ -27,10 +28,14 @@ public class Tides extends Controller {
         if (!Double.isFinite(lat) || !Double.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) {
             return badRequest();
         }
+        // rounded like the location of the calendar, so that both find the same stations
+        List<TideStations.StationDistance> stations = tideStations.nearest(roundLocation(lat), roundLocation(lon), NEAREST_STATIONS);
         ObjectNode result = Json.newObject();
         result.put("maxDistanceKm", Math.round(TideCalculation.MAX_STATION_DISTANCE_KM));
+        // the rounded distances can't tell, e.g. for a station 50.3 km away
+        result.put("withinMaxDistance", !stations.isEmpty() && stations.getFirst().km() <= TideCalculation.MAX_STATION_DISTANCE_KM);
         ArrayNode nearest = result.putArray("nearest");
-        tideStations.nearest(lat, lon, NEAREST_STATIONS).forEach(station -> nearest.addObject()
+        stations.forEach(station -> nearest.addObject()
                 .put("label", station.station().label())
                 .put("lat", roundLocation(station.station().lat()))
                 .put("lon", roundLocation(station.station().lon()))

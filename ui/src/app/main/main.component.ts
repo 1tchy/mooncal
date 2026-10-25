@@ -34,6 +34,7 @@ export interface TideStation {
 
 export interface TideStations {
   maxDistanceKm: number
+  withinMaxDistance: boolean
   nearest: TideStation[]
 }
 
@@ -390,7 +391,7 @@ export class MainComponent implements AfterViewInit {
       .then((stations: TideStations) => {
         // an answer for a location that was changed meanwhile is ignored
         if (this.tideStationsRequestPath === requestPath) {
-          this.tideStationHint = stations.nearest.length > 0 && stations.nearest[0].km > stations.maxDistanceKm ? stations : null;
+          this.tideStationHint = stations.withinMaxDistance ? null : stations;
           this.changeDetectorRef.markForCheck();
         }
       })
