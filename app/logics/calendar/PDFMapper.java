@@ -118,6 +118,32 @@ public class PDFMapper {
                         (float) (page.getMediaBox().getUpperRightY() - ((TABLE_OFFSET_FROM_TOP - MOON_IMAGE_SIZE) / 2. + MOON_IMAGE_SIZE)),
                         MOON_IMAGE_SIZE, MOON_IMAGE_SIZE);
 
+                // The licences of the tide data require their attribution wherever the tides are shown. It goes between
+                // the title and the moon, ending on the title's baseline: below the calendar, the footer and the garden
+                // legend leave no room for it.
+                float attributionX = startX + PdfUtil.getStringWidth(title, fontBold, 18) + 20;
+                float attributionWidth = page.getMediaBox().getUpperRightX() - startX - MOON_IMAGE_SIZE - 10 - attributionX;
+                List<String> attributionLines = events.stream()
+                        .filter(e -> e.getDateTime().getYear() == year)
+                        .map(EventInstance::getAttribution)
+                        .filter(Objects::nonNull)
+                        .distinct()
+                        .flatMap(attribution -> PdfUtil.getOptimalTextBreakLines(attribution, font, ATTRIBUTION_FONT_SIZE, attributionWidth).stream())
+                        .toList();
+                if (!attributionLines.isEmpty()) {
+                    float attributionLeading = ATTRIBUTION_FONT_SIZE + 1f;
+                    contentStream.beginText();
+                    contentStream.setFont(font, ATTRIBUTION_FONT_SIZE);
+                    contentStream.newLineAtOffset(attributionX, page.getMediaBox().getUpperRightY() - 50 + (attributionLines.size() - 1) * attributionLeading);
+                    for (int i = 0; i < attributionLines.size(); i++) {
+                        if (i > 0) {
+                            contentStream.newLineAtOffset(0, -attributionLeading);
+                        }
+                        contentStream.showText(attributionLines.get(i));
+                    }
+                    contentStream.endText();
+                }
+
                 Table.TableBuilder table = Table.builder()
                         .font(font).fontSize(FONT_SIZE)
                         .borderWidth(0.5f);
@@ -242,29 +268,6 @@ public class PDFMapper {
 
                 float footerY = tableDrawer.getFinalY() - (THANK_QR_CODE_SIZE + FONT_SIZE - 2) / 2f;
 
-                // The licences of the tide data require their attribution wherever the tides are shown.
-                float bottomTextY = page.getMediaBox().getLowerLeftY() + 10;
-                List<String> attributionLines = events.stream()
-                        .filter(e -> e.getDateTime().getYear() == year)
-                        .map(EventInstance::getAttribution)
-                        .filter(Objects::nonNull)
-                        .distinct()
-                        .flatMap(attribution -> PdfUtil.getOptimalTextBreakLines(attribution, font, ATTRIBUTION_FONT_SIZE, 12 * MONTH_ROW_WIDTH).stream())
-                        .toList();
-                if (!attributionLines.isEmpty()) {
-                    float attributionLeading = ATTRIBUTION_FONT_SIZE + 1f;
-                    contentStream.beginText();
-                    contentStream.setFont(font, ATTRIBUTION_FONT_SIZE);
-                    contentStream.newLineAtOffset(startX, bottomTextY + (attributionLines.size() - 1) * attributionLeading);
-                    for (int i = 0; i < attributionLines.size(); i++) {
-                        if (i > 0) {
-                            contentStream.newLineAtOffset(0, -attributionLeading);
-                        }
-                        contentStream.showText(attributionLines.get(i));
-                    }
-                    contentStream.endText();
-                    bottomTextY += attributionLines.size() * attributionLeading + 3;
-                }
 
                 // Explain the garden icons shown in the grid, one wrapped paragraph per icon.
                 // No moon-gardening disclaimer in the PDF (it lives in the .ics description and the web UI).
@@ -297,7 +300,7 @@ public class PDFMapper {
                         }
                     }
 
-                    float legendBaselineY = bottomTextY;
+                    float legendBaselineY = page.getMediaBox().getLowerLeftY() + 10;
                     float firstLineY = legendBaselineY + (legendLines.size() - 1) * legendLeading;
                     contentStream.beginText();
                     contentStream.setFont(font, legendFontSize);

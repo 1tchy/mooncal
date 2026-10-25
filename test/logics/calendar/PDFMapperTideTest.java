@@ -7,7 +7,6 @@ import models.Hemisphere;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.text.TextPosition;
 import org.junit.jupiter.api.Test;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
@@ -82,18 +81,6 @@ class PDFMapperTideTest {
         }
     }
 
-    @Test
-    void attributionAndGardenLegendDoNotOverlap() throws IOException {
-        EventInstance garden = new EventInstance(dt, "Leaf", "leaf", null, ZoneOffset.UTC, "garden-biodynamic-leaf");
-        Map<String, Float> topOfLine = linePositions(map(garden, tide(dt, "ATTRIBUTION_UNIQUE")));
-        Float legendLastLine = topOfLine.get("garden.pdf.legend.descending");
-        Float attributionFirstLine = topOfLine.get("ATTRIBUTION_UNIQUE");
-        assertNotNull(legendLastLine, topOfLine::toString);
-        assertNotNull(attributionFirstLine, topOfLine::toString);
-        // y grows downwards; the attribution's top must be below the legend's baseline
-        assertTrue(attributionFirstLine - 5 > legendLastLine, () -> "attribution at " + attributionFirstLine + ", legend at " + legendLastLine);
-    }
-
     private static EventInstance tide(ZonedDateTime at, String attribution) {
         return new EventInstance(at, "Flut ↑6:12", "≈↑6:12", "Hochwasser um 6:12", ZoneOffset.UTC, TideCalculation.TIDE_EVENT_TYPE_ID, attribution);
     }
@@ -106,20 +93,5 @@ class PDFMapperTideTest {
         try (PDDocument doc = Loader.loadPDF(pdf)) {
             return new PDFTextStripper().getText(doc);
         }
-    }
-
-    /** @return the y (from the top, of the baseline) of each line of text */
-    private static Map<String, Float> linePositions(byte[] pdf) throws IOException {
-        Map<String, Float> positions = new HashMap<>();
-        try (PDDocument doc = Loader.loadPDF(pdf)) {
-            PDFTextStripper stripper = new PDFTextStripper() {
-                @Override
-                protected void writeString(String text, List<TextPosition> textPositions) {
-                    positions.put(text.trim(), textPositions.get(0).getYDirAdj());
-                }
-            };
-            stripper.getText(doc);
-        }
-        return positions;
     }
 }
