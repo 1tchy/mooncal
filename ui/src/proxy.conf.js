@@ -3,7 +3,7 @@ const PROXY_CONFIG = {
     "target": "http://localhost:9000",
     "secure": false,
     "bypass": function (req) {
-      if (req && !(req.url.startsWith("/mooncal") || req.url.startsWith("/suggestBetterTranslation"))) {
+      if (req && !(req.url.startsWith("/mooncal") || req.url.startsWith("/suggestBetterTranslation") || req.url.startsWith("/tideStations"))) {
         console.log("Serving " + req.url + " from UI");
         return req.url;
       }
