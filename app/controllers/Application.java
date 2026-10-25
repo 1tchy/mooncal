@@ -1,11 +1,16 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.ObjectWriter;
 import logics.calculation.TotalCalculation;
 import logics.calendar.CalendarMapper;
 import logics.calendar.PDFMapper;
 import models.BetterTranslationForm;
 import models.EventInstance;
 import models.RequestForm;
+import org.apache.pekko.NotUsed;
+import org.apache.pekko.stream.javadsl.Source;
+import org.apache.pekko.util.ByteString;
+import org.apache.pekko.util.ByteStringBuilder;
 import play.Environment;
 import play.Logger;
 import play.api.mvc.Action;
@@ -35,6 +40,8 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused") //used by routes
 public class Application extends Controller {
 
+    // a chunk of the JSON is some 10 to 100 KB
+    private static final int EVENTS_PER_JSON_CHUNK = 100;
     private final TotalCalculation calculation;
     private final CalendarMapper calendarMapper;
     private final PDFMapper pdfMapper;
@@ -60,7 +67,28 @@ public class Application extends Controller {
     }
 
     public CompletionStage<Result> query(Http.Request request) {
-        return handleQueryRequest(form -> renderError(form, request), (result, goodForm) -> ok(Json.toJson(result)), request);
+        return handleQueryRequest(form -> renderError(form, request), (result, goodForm) -> ok().chunked(toJson(result)).as(Http.MimeTypes.JSON), request);
+    }
+
+    /**
+     * Streamed a few events at a time, as the client reads them, without a JSON tree in between: in a tree or in one piece,
+     * a large calendar is held at once, and the descriptions of tide events are long because of their attribution.
+     */
+    static Source<ByteString, NotUsed> toJson(Collection<EventInstance> events) {
+        ObjectWriter writer = Json.mapper().writer();
+        return Source.from(events)
+                .grouped(EVENTS_PER_JSON_CHUNK)
+                .map(chunk -> {
+                    ByteStringBuilder json = new ByteStringBuilder();
+                    for (EventInstance event : chunk) {
+                        if (json.length() > 0) {
+                            json.putByte((byte) ',');
+                        }
+                        json.putBytes(writer.writeValueAsBytes(event));
+                    }
+                    return json.result();
+                })
+                .intersperse(ByteString.fromString("["), ByteString.fromString(","), ByteString.fromString("]"));
     }
 
     public CompletionStage<Result> queryAsICalendar(Http.Request request) {

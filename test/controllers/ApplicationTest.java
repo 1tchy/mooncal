@@ -1,6 +1,7 @@
 package controllers;
 
 import models.EventStyle;
+import org.apache.pekko.stream.Materializer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -184,7 +185,8 @@ class ApplicationTest extends WithApplication {
 
     private Seq<JsValue> query(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, EventStyle style, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
         final Result result = paramQuery("GET", routes.Application.query().url() + "?", lang, fullPhases, newPhases, quarterQuases, dailyPhases, style, lunarEclipses, solarEclipses, moonLandings, extraParams);
-        return ((JsArray) Json.parse(contentAsString(result))).value();
+        // the JSON is streamed
+        return ((JsArray) Json.parse(contentAsString(result, app.injector().instanceOf(Materializer.class)))).value();
     }
 
     @SuppressWarnings("StringConcatenationInLoop") //it's just in the tests
