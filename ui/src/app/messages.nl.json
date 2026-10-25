@@ -35,6 +35,11 @@
     "quarter": "Halve maan",
     "daily": "Dagelijkse gegevens van de maan, maanopkomst en maanondergang",
     "sun": "Zonsopkomst en zonsondergang",
+    "tide": "Eb en vloed",
+    "tideHint": {
+      "noStation": "Geen station met noemenswaardig getij binnen {km} km. Dichtstbijzijnde stations:",
+      "years": "Eb en vloed zijn alleen beschikbaar voor 1900 tot 2100."
+    },
     "hemisphere": {
       "title": "Halfrond",
       "northern": "Noordelijk",
@@ -180,6 +185,9 @@
       },
       "moonlanding": {
         "title": "Maanlanding"
+      },
+      "tides": {
+        "title": "Eb en vloed"
       },
       "various": "verschillende bronnen",
       "mainly": "primair",

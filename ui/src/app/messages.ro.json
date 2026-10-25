@@ -35,6 +35,11 @@
     "quarter": "sfert",
     "daily": "faze zilnice ale lunii, răsăritul și apusul lunii",
     "sun": "răsăritul și apusul soarelui",
+    "tide": "Flux și reflux",
+    "tideHint": {
+      "noStation": "Nicio stație cu maree semnificative pe o rază de {km} km. Cele mai apropiate stații:",
+      "years": "Fluxul și refluxul sunt disponibile doar pentru 1900–2100."
+    },
     "hemisphere": {
       "title": "Emisferă",
       "northern": "Nordică",
@@ -180,6 +185,9 @@
       },
       "moonlanding": {
         "title": "aselenizare"
+      },
+      "tides": {
+        "title": "Flux și reflux"
       },
       "various": "varii surse",
       "mainly": "în principiu",

@@ -10,10 +10,10 @@
       <div class="card-body row g-0">
         <!-- takes the remaining width, so long labels wrap instead of pushing style and hemisphere below -->
         <div class="col me-3">
-          @for (phase of ['full', 'new', 'quarter', 'daily', 'sun']; track phase) {
+          @for (phase of ['full', 'new', 'quarter', 'daily', 'sun', 'tide']; track phase) {
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" [(ngModel)]="phases[phase]" [id]="phase+'-checkbox'"
-                     [name]="phase+'-checkbox'">
+              <input class="form-check-input" type="checkbox" [ngModel]="phases[phase]" (ngModelChange)="phaseChanged(phase, $event)"
+                     [id]="phase+'-checkbox'" [name]="phase+'-checkbox'">
               <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
             </div>
           }
@@ -74,6 +74,17 @@
             </div>
             @if (locationError) {
               <small class="text-danger">{{ messages.phases.location.error }}</small>
+            }
+            @if (tideStationHint) {
+              <small class="d-block text-body-secondary" id="tide-station-hint">{{ tideStationHintText }}
+                @for (station of tideStationHint.nearest; track station.lat + ',' + station.lon; let last = $last) {
+                  <button type="button" class="btn btn-link btn-sm p-0 align-baseline tide-station"
+                          (click)="tideStationSelected(station)">{{ station.label }} ({{ station.km }} km)</button>@if (!last) {,}
+                }
+              </small>
+            }
+            @if (tideOutsideYears) {
+              <small class="d-block text-body-secondary" id="tide-years-hint">{{ messages.phases.tideHint.years }}</small>
             }
           </div>
         }

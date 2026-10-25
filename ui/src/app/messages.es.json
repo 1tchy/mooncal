@@ -35,6 +35,11 @@
     "quarter": "Cuarto",
     "daily": "Fases diarias de la Luna, salida y puesta",
     "sun": "Salida y puesta del sol",
+    "tide": "Pleamar y bajamar",
+    "tideHint": {
+      "noStation": "No hay ninguna estación con mareas apreciables en un radio de {km} km. Estaciones más cercanas:",
+      "years": "Las mareas solo están disponibles de 1900 a 2100."
+    },
     "hemisphere": {
       "title": "Hemisferio",
       "northern": "Norte",
@@ -180,6 +185,9 @@
       },
       "moonlanding": {
         "title": "desembarco lunar"
+      },
+      "tides": {
+        "title": "Pleamar y bajamar"
       },
       "various": "varias fuentes",
       "mainly": "principalmente",

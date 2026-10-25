@@ -35,6 +35,11 @@
     "quarter": "Quarter",
     "daily": "Daily Moon Phases, Moonrise & Moonset",
     "sun": "Sunrise & Sunset",
+    "tide": "High and low tide",
+    "tideHint": {
+      "noStation": "No station with noticeable tides within {km} km. Nearest stations:",
+      "years": "High and low tides are only available for 1900 to 2100."
+    },
     "hemisphere": {
       "title": "Hemisphere",
       "northern": "Northern",
@@ -180,6 +185,9 @@
       },
       "moonlanding": {
         "title": "Moon Landing"
+      },
+      "tides": {
+        "title": "High and low tide"
       },
       "various": "Various Sources",
       "mainly": "mainly",

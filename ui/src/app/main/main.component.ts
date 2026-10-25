@@ -21,6 +21,22 @@ const SUBSCRIPTION_YEARS_AFTER = 2;
 // GeolocationPositionError codes, for tracking why the browser location is not available
 const GEOLOCATION_ERRORS: Record<number, string> = {1: 'denied', 2: 'unavailable', 3: 'timeout'};
 
+// Tides are only calculated for these years (see TideCalculation)
+const TIDE_FIRST_YEAR = 1900;
+const TIDE_LAST_YEAR = 2100;
+
+export interface TideStation {
+  label: string
+  lat: number
+  lon: number
+  km: number
+}
+
+export interface TideStations {
+  maxDistanceKm: number
+  nearest: TideStation[]
+}
+
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -83,8 +99,17 @@ export class MainComponent implements AfterViewInit {
     return isValidLocation(this.lat, this.lon) ? nearCity(this.lat!, this.lon!) : null;
   }
   locationError = false;
-  /** Moonrise/-set of the daily phases and sunrise/-set are calculated for the location. */
-  get usesLocation() { return this.phases['daily'] || this.phases['sun']; }
+  /** Moonrise/-set of the daily phases, sunrise/-set and tides are calculated for the location. */
+  get usesLocation() { return this.phases['daily'] || this.phases['sun'] || this.phases['tide']; }
+  /** The nearest tide stations, when tides are wanted but none is close enough to the location. */
+  tideStationHint: TideStations | null = null;
+  private tideStationsRequestPath = "";
+  get tideStationHintText() {
+    return this.messages.phases.tideHint.noStation.replace('{km}', String(this.tideStationHint?.maxDistanceKm));
+  }
+  get tideOutsideYears() {
+    return this.phases['tide'] && (this.toDate(this.from, true).getFullYear() < TIDE_FIRST_YEAR || this.toDate(this.to, false).getFullYear() > TIDE_LAST_YEAR);
+  }
 
   from$ = new Subject<Date>();
   fromDebounced = this.toDate(this.from, true);
@@ -175,6 +200,8 @@ export class MainComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // tides may already be ticked when coming back from another page
+    this.fetchTideStationHint();
     this.optionsForm.form.valueChanges.subscribe(() => {
       setTimeout(() => {//timeout so that Angular can update the components fields
         this.fetchCalendar(false);
@@ -203,6 +230,7 @@ export class MainComponent implements AfterViewInit {
       + this.flagParam("phases[quarter]", this.phases["quarter"])
       + this.flagParam("phases[daily]", this.phases["daily"])
       + this.flagParam("phases[sun]", this.phases["sun"])
+      + this.flagParam("phases[tide]", this.phases["tide"])
       + (this.usesLocation && isValidLocation(this.lat, this.lon) ? "&lat=" + this.lat + "&lon=" + this.lon : "")
       + "&style=" + this.style
       + "&hemisphere=" + this.hemisphere
@@ -228,6 +256,7 @@ export class MainComponent implements AfterViewInit {
       + (this.phases["quarter"] ? "quarter," : "")
       + (this.phases["daily"] ? "daily," : "")
       + (this.phases["sun"] ? "sun," : "")
+      + (this.phases["tide"] ? "tide," : "")
       + this.style + ","
       + (this.hemisphere === "southern" ? "southern," : "")
       + (this.events["lunareclipse"] ? "lunareclipse," : "")
@@ -332,6 +361,59 @@ export class MainComponent implements AfterViewInit {
     }
   }
 
+  public phaseChanged(phase: string, checked: boolean) {
+    this.phases[phase] = checked;
+    if (phase === 'tide') {
+      this.fetchTideStationHint();
+    }
+  }
+
+  /** Only when tides are ticked or the location changes, as the stations depend on nothing else. */
+  private fetchTideStationHint() {
+    if (!this.isBrowser || !this.phases['tide'] || !isValidLocation(this.lat, this.lon)) {
+      this.tideStationHint = null;
+      this.tideStationsRequestPath = "";
+      return;
+    }
+    const requestPath = "/tideStations?lat=" + this.lat + "&lon=" + this.lon;
+    if (this.tideStationsRequestPath === requestPath) {
+      return;
+    }
+    this.tideStationsRequestPath = requestPath;
+    fetch(requestPath)
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        return response.json();
+      })
+      .then((stations: TideStations) => {
+        // an answer for a location that was changed meanwhile is ignored
+        if (this.tideStationsRequestPath === requestPath) {
+          this.tideStationHint = stations.nearest.length > 0 && stations.nearest[0].km > stations.maxDistanceKm ? stations : null;
+          this.changeDetectorRef.markForCheck();
+        }
+      })
+      .catch(() => {
+        // as above, and the location is asked again next time
+        if (this.tideStationsRequestPath === requestPath) {
+          this.tideStationHint = null;
+          this.tideStationsRequestPath = "";
+          this.changeDetectorRef.markForCheck();
+        }
+      });
+  }
+
+  /** Moves the location to a tide station of the hint. */
+  public tideStationSelected(station: TideStation) {
+    this.lat = roundLocation(station.lat);
+    this.lon = roundLocation(station.lon);
+    // neither the coordinates nor the station are tracked
+    // @ts-ignore
+    _paq.push(['trackEvent', 'Settings', 'tideStationSelected']);
+    this.locationProvided();
+  }
+
   public updateCalendar(newCalendar: Event[]) {
     this.calendar = newCalendar;
     this.changeDetectorRef.markForCheck();
@@ -399,6 +481,7 @@ export class MainComponent implements AfterViewInit {
       ({lat: this.lat, lon: this.lon} = referenceLocation(this.zone));
     }
     this.trackTimezoneChange();
+    this.fetchTideStationHint();
     this.fetchCalendar(false);
   }
 
@@ -445,6 +528,7 @@ export class MainComponent implements AfterViewInit {
       this.hemisphere = this.lat! < 0 ? 'southern' : 'northern';
     }
     this.adoptNearestZone();
+    this.fetchTideStationHint();
     this.fetchCalendar(false);
   }
 

@@ -35,6 +35,11 @@
     "quarter": "Halbmond",
     "daily": "tägliche Phasen, Mondauf- und Monduntergang",
     "sun": "Sonnenauf- und Sonnenuntergang",
+    "tide": "Ebbe und Flut",
+    "tideHint": {
+      "noStation": "Keine Station mit nennenswerten Gezeiten im Umkreis von {km} km. Nächste Stationen:",
+      "years": "Ebbe und Flut gibt es nur für 1900 bis 2100."
+    },
     "hemisphere": {
       "title": "Hemisphäre",
       "northern": "Nördlich",
@@ -180,6 +185,9 @@
       },
       "moonlanding": {
         "title": "Mondlandungen"
+      },
+      "tides": {
+        "title": "Ebbe und Flut"
       },
       "various": "Verschiedene Quellen",
       "mainly": "primär",

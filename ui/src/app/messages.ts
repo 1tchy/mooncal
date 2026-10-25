@@ -60,8 +60,15 @@ export interface Phases {
   quarter: string
   daily: string
   sun: string
+  tide: string
+  tideHint: TideHint
   hemisphere: Hemisphere
   location: PhaseLocation
+}
+
+export interface TideHint {
+  noStation: string
+  years: string
 }
 
 export interface PhaseLocation {
@@ -200,10 +207,15 @@ export interface Sources {
   lunareclipse: Lunareclipse2
   solareclipse: Solareclipse2
   moonlanding: Moonlanding
+  tides: Tides
   various: string
   mainly: string
   space: Space
   developedWith: string
+}
+
+export interface Tides {
+  title: string
 }
 
 export interface Moonimage {

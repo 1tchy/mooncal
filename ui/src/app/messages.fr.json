@@ -35,6 +35,11 @@
     "quarter": "quartier",
     "daily": "phases quotidiennes de la lune, lever et coucher",
     "sun": "lever et coucher du soleil",
+    "tide": "Marées haute et basse",
+    "tideHint": {
+      "noStation": "Aucune station avec des marées notables dans un rayon de {km} km. Stations les plus proches :",
+      "years": "Les marées ne sont disponibles que de 1900 à 2100."
+    },
     "hemisphere": {
       "title": "Hémisphère",
       "northern": "Nord",
@@ -180,6 +185,9 @@
       },
       "moonlanding": {
         "title": "alunissage"
+      },
+      "tides": {
+        "title": "Marées haute et basse"
       },
       "various": "diverses sources",
       "mainly": "principalement",
