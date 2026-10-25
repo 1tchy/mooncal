@@ -166,6 +166,37 @@ test('moon calendar user journey', async ({page}) => {
     await expect(page).toHaveScreenshot('daily-and-sun-with-location.png');
   });
 
+  await test.step('enable tides', async () => {
+    // Brest has a tide station within 50 km
+    const response = nextCalendarResponse(page);
+    await page.locator('#tide-checkbox').click();
+    const url = await response;
+    expect(url).toContain('&phases[tide]=true');
+    expect(url).toContain('&lat=48.4&lon=-4.5');
+    // each day has the moon entry first, then the sun entry, then the tide entry
+    await expect(calendarRows(page).nth(2)).toContainText(/High tide ↑|Low tide ↓/);
+    await expect(page.locator('#tide-station-hint')).toHaveCount(0);
+    await expect(page).toHaveScreenshot('daily-sun-and-tide-with-location.png');
+  });
+
+  await test.step('show the nearest tide stations inland', async () => {
+    const stations = page.waitForResponse(r => new URL(r.url()).pathname === '/tideStations' && new URL(r.url()).searchParams.get('lon') === '8.5');
+    await page.locator('#lat').fill('47.4');
+    await page.locator('#lon').fill('8.5');
+    await page.locator('#lon').blur();
+    expect((await stations).ok()).toBeTruthy();
+    await expect(page.locator('#tide-station-hint .tide-station')).toHaveCount(3);
+    await expect(page.locator('#tide-station-hint')).toContainText('No station with noticeable tides within 50 km');
+    const first = await (await stations).json().then(answer => answer.nearest[0]);
+    const response = nextCalendarResponse(page);
+    await page.locator('#tide-station-hint .tide-station').first().click();
+    expect(await response).toContain('&lat=' + first.lat + '&lon=' + first.lon);
+    await expect(page.locator('#tide-station-hint')).toHaveCount(0);
+    await expect(calendarRows(page).nth(2)).toContainText(/High tide ↑|Low tide ↓/);
+    expect(JSON.stringify(await page.evaluate(() => window.matomoMockCalls))).not.toContain(first.label);
+    expect(await trackedEvents(page)).toContain('Settings/tideStationSelected');
+  });
+
   await test.step('show the error of a too large timeframe', async () => {
     const response = page.waitForResponse(r => new URL(r.url()).pathname === '/mooncal');
     await page.locator('#to').fill('2200-12-31');
