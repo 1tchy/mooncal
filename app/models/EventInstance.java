@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import play.i18n.Lang;
@@ -29,6 +30,9 @@ public class EventInstance implements Comparable<EventInstance> {
     private final String description;
     @NotNull
     private final String eventTypeId;
+    // Shared among the events instead of being copied into each description: it is long and a calendar has many events.
+    @Nullable
+    private final String attribution;
 
     public EventInstance(@NotNull EventTemplate eventTemplate, @NotNull ZoneId timezone, Lang lang) {
         this(eventTemplate.getDateTime(), eventTemplate.getTitle(timezone, lang), eventTemplate.getPdfTitle(timezone, lang), eventTemplate.getDescription(timezone, lang), timezone, eventTemplate.getEventTypeId());
@@ -39,12 +43,24 @@ public class EventInstance implements Comparable<EventInstance> {
     }
 
     public EventInstance(@NotNull ZonedDateTime dateTime, @Nullable ZonedDateTime endDateTime, @NotNull String title, @NotNull String pdfTitle, @Nullable String description, @NotNull ZoneId timezone, @NotNull String eventTypeId) {
+        this(dateTime, endDateTime, title, pdfTitle, description, timezone, eventTypeId, null);
+    }
+
+    /**
+     * @param attribution required by the licence of the event's data, appended to the description
+     */
+    public EventInstance(@NotNull ZonedDateTime dateTime, @NotNull String title, @NotNull String pdfTitle, @Nullable String description, @NotNull ZoneId timezone, @NotNull String eventTypeId, @Nullable String attribution) {
+        this(dateTime, null, title, pdfTitle, description, timezone, eventTypeId, attribution);
+    }
+
+    private EventInstance(@NotNull ZonedDateTime dateTime, @Nullable ZonedDateTime endDateTime, @NotNull String title, @NotNull String pdfTitle, @Nullable String description, @NotNull ZoneId timezone, @NotNull String eventTypeId, @Nullable String attribution) {
         this.dateTime = dateTime.withZoneSameInstant(timezone);
         this.endDateTime = endDateTime == null ? null : endDateTime.withZoneSameInstant(timezone);
         this.title = title;
         this.pdfTitle = pdfTitle;
         this.description = description;
         this.eventTypeId = eventTypeId;
+        this.attribution = attribution;
     }
 
     @NotNull
@@ -125,7 +141,16 @@ public class EventInstance implements Comparable<EventInstance> {
 
     @Nullable
     public String getDescription() {
-        return description;
+        if (attribution == null) {
+            return description;
+        }
+        return description == null ? attribution : description + "\n" + attribution;
+    }
+
+    @JsonIgnore
+    @Nullable
+    public String getAttribution() {
+        return attribution;
     }
 
     @NotNull

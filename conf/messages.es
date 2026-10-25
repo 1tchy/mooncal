@@ -40,6 +40,12 @@ phases.sun.noSunrise=No hay salida del sol este día
 phases.sun.noSunset=No hay puesta del sol este día
 phases.sun.alwaysUp=El sol está sobre el horizonte todo el día (sol de medianoche)
 phases.sun.alwaysDown=El sol está bajo el horizonte todo el día (noche polar)
+phases.tide.high=Pleamar
+phases.tide.low=Bajamar
+phases.tide.highAt=Pleamar a las {0}
+phases.tide.lowAt=Bajamar a las {0}
+phases.tide.station=Mareas de la estación {0}, a {1} km de la ubicación
+phases.tide.disclaimer=Predicción astronómica sin la influencia del tiempo ni del viento, no apta para la navegación.
 
 events.lunareclipse.total=eclipse lunar total
 events.lunareclipse.partial=eclipse lunar parcial

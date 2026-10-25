@@ -40,6 +40,12 @@ phases.sun.noSunrise=Fără răsărit de soare în această zi
 phases.sun.noSunset=Fără apus de soare în această zi
 phases.sun.alwaysUp=Soarele este deasupra orizontului toată ziua (soarele de la miezul nopții)
 phases.sun.alwaysDown=Soarele este sub orizont toată ziua (noapte polară)
+phases.tide.high=Flux
+phases.tide.low=Reflux
+phases.tide.highAt=Apă mare la {0}
+phases.tide.lowAt=Apă mică la {0}
+phases.tide.station=Mareele stației {0}, la {1} km de locație
+phases.tide.disclaimer=Prognoză astronomică fără influența vremii și a vântului, nu pentru navigație.
 
 events.lunareclipse.total=eclipsă totală lunară
 events.lunareclipse.partial=eclipsă parțială lunară

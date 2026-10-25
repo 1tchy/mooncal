@@ -40,6 +40,12 @@ phases.sun.noSunrise=इस दिन सूर्योदय नहीं
 phases.sun.noSunset=इस दिन सूर्यास्त नहीं
 phases.sun.alwaysUp=सूर्य पूरे दिन क्षितिज के ऊपर है (मध्यरात्रि सूर्य)
 phases.sun.alwaysDown=सूर्य पूरे दिन क्षितिज के नीचे है (ध्रुवीय रात्रि)
+phases.tide.high=ज्वार
+phases.tide.low=भाटा
+phases.tide.highAt=उच्च ज्वार {0} बजे
+phases.tide.lowAt=निम्न ज्वार {0} बजे
+phases.tide.station=स्टेशन {0} का ज्वार-भाटा, स्थान से {1} किमी दूर
+phases.tide.disclaimer=मौसम और हवा के प्रभाव के बिना खगोलीय पूर्वानुमान, नौवहन के लिए नहीं।
 
 events.lunareclipse.total=पूर्ण चंद्र ग्रहण
 events.lunareclipse.partial=आंशिक चंद्र ग्रहण

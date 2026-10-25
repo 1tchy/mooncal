@@ -138,6 +138,23 @@ class ApplicationTest extends WithApplication {
     }
 
     @Test
+    void testTideQueryAtTheCoast() {
+        final Seq<JsValue> resultList = query("de", false, false, false, false, EventStyle.WITH_DESCRIPTION, false, false, false, "phases[tide]=true", "from=2026-01-15T00:00:00Europe/Berlin", "to=2026-01-15T23:59:59Europe/Berlin", "lat=53.9", "lon=8.7");
+        assertEquals(1, resultList.size());
+        JsObject result = (JsObject) resultList.head();
+        assertThat(((JsString) result.value().get("title").get()).value(), allOf(containsString("Flut ↑"), containsString("Ebbe ↓")));
+        assertThat(((JsString) result.value().get("description").get()).value(), allOf(containsString("Hochwasser um"), containsString("TICON-4")));
+    }
+
+    @Test
+    void testICalendarTide() {
+        // long lines are folded in iCal
+        String result = queryAsICalendar("de", false, false, false, false, false, false, false, "phases[tide]=true", "from=2026-01-15T00:00:00Europe/Berlin", "to=2026-01-15T23:59:59Europe/Berlin", "lat=53.9", "lon=8.7").replace("\r\n ", "");
+        assertThat(result, containsString("Hochwasser um"));
+        assertThat(result, containsString("CC BY 4.0"));
+    }
+
+    @Test
     void testQueryWithInvalidLocationIsRejected() {
         Call query = routes.Application.query();
         Result result = paramQuery("GET", query.url() + "?", "de", false, false, false, true, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2026-01-15T00:00:00Europe/Zurich", "to=2026-01-15T23:59:59Europe/Zurich", "lat=95", "lon=8.5");

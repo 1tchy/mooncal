@@ -184,7 +184,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         if (from == null || to == null) {
             return null; // already reported by @Constraints.Required
         }
-        if ((includePhase(MoonPhaseType.DAILY) || includePhase(MoonPhaseType.SUN)) && from.plusYears(HARD_CAP_YEARS_FOR_DAILY_PHASES).isBefore(to)) {
+        if ((includePhase(MoonPhaseType.DAILY) || includePhase(MoonPhaseType.SUN) || includePhase(MoonPhaseType.TIDE)) && from.plusYears(HARD_CAP_YEARS_FOR_DAILY_PHASES).isBefore(to)) {
             return new ValidationError("to", "error.fromTo.tolargefordaily", List.of(MAX_YEARS_FOR_DAILY_PHASES));
         }
         if ((lat == null) != (lon == null) || (lat != null && (Math.abs(lat) > 90 || Math.abs(lon) > 180))) {

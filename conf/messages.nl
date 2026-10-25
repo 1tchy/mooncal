@@ -40,6 +40,12 @@ phases.sun.noSunrise=Geen zonsopkomst op deze dag
 phases.sun.noSunset=Geen zonsondergang op deze dag
 phases.sun.alwaysUp=De zon staat de hele dag boven de horizon (middernachtzon)
 phases.sun.alwaysDown=De zon staat de hele dag onder de horizon (poolnacht)
+phases.tide.high=Vloed
+phases.tide.low=Eb
+phases.tide.highAt=Hoogwater om {0}
+phases.tide.lowAt=Laagwater om {0}
+phases.tide.station=Getijden van station {0}, {1} km van de locatie
+phases.tide.disclaimer=Astronomische voorspelling zonder invloed van weer en wind, niet voor navigatie.
 
 events.lunareclipse.total=Totale maansverduistering
 events.lunareclipse.partial=Gedeeltelijke maansverduistering

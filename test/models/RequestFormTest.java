@@ -92,6 +92,15 @@ class RequestFormTest {
     }
 
     @Test
+    void tideWithTooLargeTimeframeIsRejected() {
+        RequestForm f = newMinimalForm();
+        f.setPhases(java.util.Map.of(MoonPhaseType.TIDE, true));
+        f.setFrom(java.time.ZonedDateTime.of(1800, 1, 1, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        f.setTo(java.time.ZonedDateTime.of(2100, 1, 1, 0, 0, 0, 0, java.time.ZoneOffset.UTC));
+        assertEquals("error.fromTo.tolargefordaily", f.validate().message());
+    }
+
+    @Test
     void dailyWithUpTo102YearsIsAccepted() {
         RequestForm f = newMinimalForm();
         f.setPhases(java.util.Map.of(MoonPhaseType.DAILY, true));

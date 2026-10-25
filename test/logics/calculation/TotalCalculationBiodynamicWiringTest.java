@@ -19,7 +19,7 @@ class TotalCalculationBiodynamicWiringTest {
         MoonPhasesCalculation phases = mock(MoonPhasesCalculation.class);
         MoonEventCalculation events = mock(MoonEventCalculation.class);
         GardenBiodynamicCalculation biodynamic = new GardenBiodynamicCalculation(new logics.astronomy.MeeusEphemeris(), messages);
-        TotalCalculation total = new TotalCalculation(phases, events, biodynamic, messages);
+        TotalCalculation total = new TotalCalculation(phases, events, biodynamic, mock(TideCalculation.class), messages);
 
         RequestForm f = new RequestForm();
         f.setLang(Lang.forCode("en"));

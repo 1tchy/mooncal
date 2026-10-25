@@ -4,7 +4,9 @@ public enum MoonPhaseType {
 
     NEWMOON("new"), QUARTER("quarter"), FULLMOON("full"), DAILY("daily"),
     /** Daily sunrise and sunset, which need a location. */
-    SUN("sun");
+    SUN("sun"),
+    /** Daily high and low tides at the nearest tide station, which need a location. */
+    TIDE("tide");
 
     private final String key;
 
