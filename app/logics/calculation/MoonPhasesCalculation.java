@@ -23,6 +23,7 @@ public class MoonPhasesCalculation extends Calculation {
     public static final String NEWMOON_EVENT_TYPE_ID = "newmoon";
     public static final String FIRST_QUARTER_EVENT_TYPE_ID = "first-quarter";
     public static final String LAST_QUARTER_EVENT_TYPE_ID = "last-quarter";
+    public static final String DAILY_EVENT_TYPE_ID = "daily";
     public static final String SUN_EVENT_TYPE_ID = "sun";
     // Public so the PDF renderer can draw them: its fonts have no arrow or sun glyphs.
     public static final char RISE_SYMBOL = '↑';
@@ -164,7 +165,7 @@ public class MoonPhasesCalculation extends Calculation {
             }
             description += "\n\n" + riseSet.description();
         }
-        return new EventInstance(day.atTime(12, 0).atZone(at), title, title, description, at, "daily");
+        return new EventInstance(day.atTime(12, 0).atZone(at), title, title, description, at, DAILY_EVENT_TYPE_ID);
     }
 
     private void calculateSunEvents(RequestForm requestForm, Collection<EventInstance> eventCollection) {

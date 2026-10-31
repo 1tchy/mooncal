@@ -2,6 +2,8 @@ package logics.calendar;
 
 import jakarta.inject.Inject;
 import logics.Randomizer;
+import logics.calculation.MoonPhasesCalculation;
+import logics.calculation.TideCalculation;
 import models.EventInstance;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
@@ -24,12 +26,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Collection;
+import java.util.Set;
 
 public class CalendarMapper {
 
     // A single-day garden period trimmed against a bad day ends one second before midnight (see
     // GardenBiodynamicCalculation); that edge is an artefact, not a meaningful time.
     private static final LocalTime SEGMENT_DAY_END = LocalTime.of(23, 59, 59);
+    // At noon of each day: 12 or more hours from UTC, the noons of two days are on the same day in UTC when summer time begins.
+    private static final Set<String> DAY_EVENT_TYPE_IDS = Set.of(MoonPhasesCalculation.DAILY_EVENT_TYPE_ID, MoonPhasesCalculation.SUN_EVENT_TYPE_ID, TideCalculation.TIDE_EVENT_TYPE_ID);
 
     private final CalendarOutputter calendarOutputter = new CalendarOutputter();
     private final MessagesApi messagesApi;
@@ -144,6 +149,10 @@ public class CalendarMapper {
 
     @NotNull
     private String getStandardDate(EventInstance event) {
+        if (DAY_EVENT_TYPE_IDS.contains(event.getEventTypeId())) {
+            // its own day, followed by a Z all the same: nearer to UTC, that is the day of its noon in UTC, so its UID stays as it was
+            return event.getLocalDate().format(DateTimeFormatter.BASIC_ISO_DATE) + "Z";
+        }
         return event.getDateTime().withZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.BASIC_ISO_DATE);
     }
 
