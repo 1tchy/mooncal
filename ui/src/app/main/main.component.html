@@ -47,6 +47,15 @@
             </div>
           </div>
         </div>
+        <!-- over the whole width, near its checkbox -->
+        @if (tideStationHint) {
+          <small class="col-12 text-body-secondary" id="tide-station-hint">{{ tideStationHintText }}
+            @for (station of tideStationHint.nearest; track station.id; let last = $last) {
+              <button type="button" class="btn btn-link btn-sm p-0 align-baseline tide-station" [class.fw-bold]="station.id === tideStation"
+                      [attr.aria-pressed]="station.id === tideStation" (click)="tideStationSelected(station)">@if (station.id === tideStation) {✓ }{{ station.label }} ({{ station.km }} km)</button>@if (!last) {, }
+            }
+          </small>
+        }
         @if (usesLocation) {
           <div class="col-12 mt-3" id="location">
             <div class="row g-2 align-items-center">
@@ -74,14 +83,6 @@
             </div>
             @if (locationError) {
               <small class="text-danger">{{ messages.phases.location.error }}</small>
-            }
-            @if (tideStationHint) {
-              <small class="d-block text-body-secondary" id="tide-station-hint">{{ tideStationHintText }}
-                @for (station of tideStationHint.nearest; track station.id; let last = $last) {
-                  <button type="button" class="btn btn-link btn-sm p-0 align-baseline tide-station" [class.fw-bold]="station.id === tideStation"
-                          [attr.aria-pressed]="station.id === tideStation" (click)="tideStationSelected(station)">@if (station.id === tideStation) {✓ }{{ station.label }} ({{ station.km }} km)</button>@if (!last) {,}
-                }
-              </small>
             }
             @if (tideOutsideYears) {
               <small class="d-block text-body-secondary" id="tide-years-hint">{{ messages.phases.tideHint.years }}</small>

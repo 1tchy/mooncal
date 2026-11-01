@@ -318,6 +318,10 @@ describe('MainComponent', () => {
     expect(hint.textContent).toContain('50 km');
     expect(hint.textContent).toContain('Genova (334 km)');
     expect(hint.querySelectorAll('.tide-station').length).toBe(3);
+    // over the whole width of the card, above the location
+    expect(hint.parentElement).toBe(fixture.nativeElement.querySelector('#phases .card-body'));
+    expect(hint.classList).toContain('col-12');
+    expect(hint.nextElementSibling.id).toBe('location');
   });
 
   it('shows stations of the same name', async () => {
