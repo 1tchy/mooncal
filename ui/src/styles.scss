@@ -13,6 +13,9 @@ $brightGrey: hsl(0, 0%, 80%);
   $card-color: white,
   $modal-content-color: white,
   $body-secondary-color: rgba(192, 192, 192, 0.75),
+  // Bootstrap's link colors of its dark mode, as the default blue is hard to read on black and the dark grey of cards and dialogs
+  $link-color: #6ea8fe,
+  $link-hover-color: #8bb9fe,
   $font-family-sans-serif: ('Quicksand', sans-serif),
   //$font-family-sans-serif: ('Helvetica Neue', Helvetica, 'Trebuchet MS', 'Lucida Grande', Arial, sans-serif),
   $headings-font-weight: 700
