@@ -93,14 +93,24 @@ class TideCalculationTest {
     @Test
     void chosenStationFarFromTheLocation() {
         // chosen in the hint, as none is within the limit: the location stays as it is, e.g. for the sunrise
-        TideStations.StationDistance chosen = STATIONS.nearest(47.4, 8.5, 3).get(2);
-        List<EventInstance> events = calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 3), BERLIN, 47.4, 8.5, chosen.station().id());
+        TideStation chosen = STATIONS.nearest(47.4, 8.5, 3).get(2).station();
+        List<EventInstance> events = calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 3), BERLIN, 47.4, 8.5, chosen.id());
         assertThat(events, hasSize(3));
         for (EventInstance event : events) {
-            // the messages are their last argument, here the distance
-            assertThat(event.getDescription(), containsString("\n" + Math.round(chosen.km()) + "\n"));
-            assertThat(event.getDescription(), endsWith("\n" + chosen.station().attribution()));
+            // the messages are their last argument, here the label, without the distance, as the location is not always known
+            assertThat(event.getDescription(), containsString("\n" + chosen.label() + "\n"));
+            assertThat(event.getDescription(), endsWith("\n" + chosen.attribution()));
         }
+    }
+
+    @Test
+    void chosenStationWithoutLocation() {
+        // the location is not sent when nothing else needs it
+        TideStation chosen = STATIONS.nearest(47.4, 8.5, 1).getFirst().station();
+        List<EventInstance> events = calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 3), BERLIN, null, null, chosen.id());
+        assertThat(events, hasSize(3));
+        assertThat(events.getFirst().getDescription(), containsString("\n" + chosen.label() + "\n"));
+        assertThat(calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 3), BERLIN, null, null, "gone/1"), is(empty()));
     }
 
     @Test

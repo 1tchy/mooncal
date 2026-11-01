@@ -43,28 +43,28 @@ public class TideCalculation extends Calculation {
 
     @Override
     public void calculate(RequestForm requestForm, Collection<EventInstance> eventCollection) {
-        if (!requestForm.includePhase(MoonPhaseType.TIDE) || !requestForm.hasLocation()) {
+        if (!requestForm.includePhase(MoonPhaseType.TIDE)) {
             return;
         }
-        chosenStation(requestForm).or(() -> tideStations.nearestWithin(requestForm.getLat(), requestForm.getLon(), MAX_STATION_DISTANCE_KM)).ifPresent(nearest -> {
-            String stationText = messagesApi.get(requestForm.getLang(), "phases.tide.station", nearest.station().label(), Math.round(nearest.km()));
-            LocalDate from = max(requestForm.getFrom().toLocalDate(), LocalDate.of(FIRST_YEAR, 1, 1));
-            LocalDate to = min(requestForm.getTo().toLocalDate(), LocalDate.of(LAST_YEAR, 12, 31));
-            // a year at a time, so the extremes of a long time frame are never all in memory at once
-            for (LocalDate chunkStart = from; !chunkStart.isAfter(to); chunkStart = chunkStart.plusYears(1).withDayOfYear(1)) {
-                LocalDate chunkEnd = min(chunkStart.withMonth(12).withDayOfMonth(31), to);
-                calculateChunk(requestForm, chunkStart, chunkEnd, nearest.station(), stationText, eventCollection);
-            }
-        });
+        // unless it is no longer in the data, e.g. for a subscription
+        Optional<TideStation> chosen = Optional.ofNullable(requestForm.getTideStation()).flatMap(tideStations::byId);
+        if (chosen.isPresent()) {
+            // without its distance, as the location is only sent when other entries need it
+            calculate(requestForm, chosen.get(), messagesApi.get(requestForm.getLang(), "phases.tide.chosenStation", chosen.get().label()), eventCollection);
+        } else if (requestForm.hasLocation()) {
+            tideStations.nearestWithin(requestForm.getLat(), requestForm.getLon(), MAX_STATION_DISTANCE_KM).ifPresent(nearest ->
+                    calculate(requestForm, nearest.station(), messagesApi.get(requestForm.getLang(), "phases.tide.station", nearest.station().label(), Math.round(nearest.km())), eventCollection));
+        }
     }
 
-    /**
-     * @return the station chosen in the hint, unless it is no longer in the data, e.g. for a subscription
-     */
-    private Optional<TideStations.StationDistance> chosenStation(RequestForm requestForm) {
-        return Optional.ofNullable(requestForm.getTideStation())
-                .flatMap(tideStations::byId)
-                .map(station -> new TideStations.StationDistance(station, TideStations.distanceKm(requestForm.getLat(), requestForm.getLon(), station.lat(), station.lon())));
+    private void calculate(RequestForm requestForm, TideStation station, String stationText, Collection<EventInstance> eventCollection) {
+        LocalDate from = max(requestForm.getFrom().toLocalDate(), LocalDate.of(FIRST_YEAR, 1, 1));
+        LocalDate to = min(requestForm.getTo().toLocalDate(), LocalDate.of(LAST_YEAR, 12, 31));
+        // a year at a time, so the extremes of a long time frame are never all in memory at once
+        for (LocalDate chunkStart = from; !chunkStart.isAfter(to); chunkStart = chunkStart.plusYears(1).withDayOfYear(1)) {
+            LocalDate chunkEnd = min(chunkStart.withMonth(12).withDayOfMonth(31), to);
+            calculateChunk(requestForm, chunkStart, chunkEnd, station, stationText, eventCollection);
+        }
     }
 
     private void calculateChunk(RequestForm requestForm, LocalDate from, LocalDate to, TideStation station, String stationText, Collection<EventInstance> eventCollection) {

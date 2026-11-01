@@ -105,6 +105,8 @@ export class MainComponent implements AfterViewInit {
   locationError = false;
   /** Moonrise/-set of the daily phases, sunrise/-set and tides are calculated for the location. */
   get usesLocation() { return this.phases['daily'] || this.phases['sun'] || this.phases['tide']; }
+  /** Not for the tides of a station chosen in the hint alone: it tells the calendar enough. */
+  get sendsLocation() { return this.phases['daily'] || this.phases['sun'] || (this.phases['tide'] && !this.tideStation); }
   /** The nearest tide stations, when tides are wanted but none is close enough to the location. */
   tideStationHint: TideStations | null = null;
   private tideStationsRequestPath = "";
@@ -235,8 +237,8 @@ export class MainComponent implements AfterViewInit {
       + this.flagParam("phases[daily]", this.phases["daily"])
       + this.flagParam("phases[sun]", this.phases["sun"])
       + this.flagParam("phases[tide]", this.phases["tide"])
-      + (this.usesLocation && isValidLocation(this.lat, this.lon) ? "&lat=" + this.lat + "&lon=" + this.lon : "")
-      + (this.phases["tide"] && this.tideStation && isValidLocation(this.lat, this.lon) ? "&tideStation=" + encodeURIComponent(this.tideStation) : "")
+      + (this.sendsLocation && isValidLocation(this.lat, this.lon) ? "&lat=" + this.lat + "&lon=" + this.lon : "")
+      + (this.phases["tide"] && this.tideStation ? "&tideStation=" + encodeURIComponent(this.tideStation) : "")
       + "&style=" + this.style
       + "&hemisphere=" + this.hemisphere
       + this.flagParam("events[lunareclipse]", this.events["lunareclipse"])

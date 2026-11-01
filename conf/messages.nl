@@ -45,6 +45,7 @@ phases.tide.low=Eb
 phases.tide.highAt=Hoogwater om {0}
 phases.tide.lowAt=Laagwater om {0}
 phases.tide.station=Getijden van station {0}, {1} km van de locatie
+phases.tide.chosenStation=Getijden van station {0}
 phases.tide.disclaimer=Astronomische voorspelling zonder invloed van weer en wind, niet voor navigatie.
 
 events.lunareclipse.total=Totale maansverduistering

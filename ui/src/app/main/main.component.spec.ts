@@ -424,7 +424,8 @@ describe('MainComponent', () => {
     expect(component.lat).toBe(47.4);
     expect(component.lon).toBe(8.5);
     const request = lastCalendarRequest(fetchSpy);
-    expect(request).toContain('&lat=47.4&lon=8.5');
+    // nothing else needs the location
+    expect(request).not.toContain('&lat=');
     expect(request).toContain('&tideStation=ticon%2Fgenova-1');
     const chosen = fixture.nativeElement.querySelector('.tide-station');
     expect(chosen.getAttribute('aria-pressed')).toBe('true');
@@ -440,7 +441,16 @@ describe('MainComponent', () => {
     fixture.nativeElement.querySelector('.tide-station').click();
     fixture.detectChanges();
     expect(lastCalendarRequest(fetchSpy)).not.toContain('tideStation');
+    expect(lastCalendarRequest(fetchSpy)).toContain('&lat=47.4&lon=8.5');
     expect(fixture.nativeElement.querySelectorAll('.tide-station[aria-pressed="true"]').length).toBe(0);
+  });
+
+  it('sends the location with a chosen station when the sunrise needs it', async () => {
+    await chooseFirstStation();
+    component.phases['sun'] = true;
+    const params = component.paramsAsString(true);
+    expect(params).toContain('&lat=47.4&lon=8.5');
+    expect(params).toContain('&tideStation=ticon%2Fgenova-1');
   });
 
   it('forgets the chosen station when the location changes', async () => {

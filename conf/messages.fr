@@ -45,6 +45,7 @@ phases.tide.low=Marée basse
 phases.tide.highAt=Pleine mer à {0}
 phases.tide.lowAt=Basse mer à {0}
 phases.tide.station=Marées de la station {0}, à {1} km du lieu
+phases.tide.chosenStation=Marées de la station {0}
 phases.tide.disclaimer=Prévision astronomique sans l''influence de la météo et du vent, à ne pas utiliser pour la navigation.
 
 events.lunareclipse.total=éclipse lunaire totale
