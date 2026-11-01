@@ -11,3 +11,22 @@ button.btn-close {
 .location-input {
   width: 6.5em;
 }
+/* style and hemisphere next to the first checkboxes; the others, the tide hint and the location over the whole width */
+@media (min-width: 576px) {
+  .phases-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: 1rem;
+    align-content: start;
+  }
+  .phases-grid > * {
+    grid-column: 1 / -1;
+  }
+  .phases-grid > .next-to-style {
+    grid-column: 1;
+  }
+  #style-and-hemisphere {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}

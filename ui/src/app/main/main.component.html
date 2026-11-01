@@ -7,18 +7,25 @@
   <div class="col-lg-6">
     <div class="card" id="phases">
       <h5 class="card-header">{{ messages.phases.title }}</h5>
-      <div class="card-body row g-0">
-        <!-- takes the remaining width, so long labels wrap instead of pushing style and hemisphere below -->
-        <div class="col me-3">
-          @for (phase of ['full', 'new', 'quarter', 'daily', 'sun', 'tide']; track phase) {
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" [ngModel]="phases[phase]" (ngModelChange)="phaseChanged(phase, $event)"
-                     [id]="phase+'-checkbox'" [name]="phase+'-checkbox'">
-              <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
-            </div>
-          }
-        </div>
-        <div class="col-auto">
+      <div class="card-body phases-grid">
+        @for (phase of ['full', 'new', 'quarter', 'daily', 'sun', 'tide']; track phase) {
+          <div class="form-check" [class.next-to-style]="$index < 3">
+            <input class="form-check-input" type="checkbox" [ngModel]="phases[phase]" (ngModelChange)="phaseChanged(phase, $event)"
+                   [id]="phase+'-checkbox'" [name]="phase+'-checkbox'">
+            <label class="form-check-label" [for]="phase+'-checkbox'">{{ messages.phases[phase] }}</label>
+          </div>
+        }
+        <!-- over the whole width, near its checkbox -->
+        @if (tideStationHint) {
+          <small class="d-block text-body-secondary" id="tide-station-hint">{{ tideStationHintText }}
+            @for (station of tideStationHint.nearest; track station.id; let last = $last) {
+              <button type="button" class="btn btn-link btn-sm p-0 align-baseline tide-station" [class.fw-bold]="station.id === tideStation"
+                      [attr.aria-pressed]="station.id === tideStation" (click)="tideStationSelected(station)">@if (station.id === tideStation) {✓ }{{ station.label }} ({{ station.km }} km)</button>@if (!last) {, }
+            }
+          </small>
+        }
+        <!-- on phones below the checkboxes, otherwise next to the first ones -->
+        <div class="mt-2 mt-sm-0" id="style-and-hemisphere">
           <div class="row g-0 align-items-center">
             <div class="col-auto">
               <label for="style" class="col-form-label-in-sm me-2">{{ messages.styles.title }}:</label>
@@ -47,17 +54,8 @@
             </div>
           </div>
         </div>
-        <!-- over the whole width, near its checkbox -->
-        @if (tideStationHint) {
-          <small class="col-12 text-body-secondary" id="tide-station-hint">{{ tideStationHintText }}
-            @for (station of tideStationHint.nearest; track station.id; let last = $last) {
-              <button type="button" class="btn btn-link btn-sm p-0 align-baseline tide-station" [class.fw-bold]="station.id === tideStation"
-                      [attr.aria-pressed]="station.id === tideStation" (click)="tideStationSelected(station)">@if (station.id === tideStation) {✓ }{{ station.label }} ({{ station.km }} km)</button>@if (!last) {, }
-            }
-          </small>
-        }
         @if (usesLocation) {
-          <div class="col-12 mt-3" id="location">
+          <div class="mt-3" id="location">
             <div class="row g-2 align-items-center">
               <div class="col-auto">
                 <label for="lat" class="col-form-label-in-sm">{{ messages.phases.location.title }}:</label>
