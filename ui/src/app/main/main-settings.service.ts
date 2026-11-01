@@ -30,6 +30,8 @@ export class MainSettingsService {
   zoneChosenByUser = false;
   // A location from the browser (already rounded) is never replaced by the reference city of a time zone chosen afterwards
   browserLocation: { lat: number, lon: number } | null = null;
+  // The id of a tide station chosen in the hint, as none is near enough to the location; a new location forgets it
+  tideStation: string | null = null;
 
   static initialFrom() {
     return new Date().getFullYear() + "-01-01";

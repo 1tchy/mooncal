@@ -19,7 +19,7 @@ import static logics.calculation.MoonPhasesCalculation.RISE_SYMBOL;
 import static logics.calculation.MoonPhasesCalculation.SET_SYMBOL;
 
 /**
- * One entry per day with the high and low tides at the nearest tide station.
+ * One entry per day with the high and low tides at the nearest tide station, or at the one chosen when none is near.
  */
 public class TideCalculation extends Calculation {
 
@@ -46,7 +46,7 @@ public class TideCalculation extends Calculation {
         if (!requestForm.includePhase(MoonPhaseType.TIDE) || !requestForm.hasLocation()) {
             return;
         }
-        tideStations.nearestWithin(requestForm.getLat(), requestForm.getLon(), MAX_STATION_DISTANCE_KM).ifPresent(nearest -> {
+        chosenStation(requestForm).or(() -> tideStations.nearestWithin(requestForm.getLat(), requestForm.getLon(), MAX_STATION_DISTANCE_KM)).ifPresent(nearest -> {
             String stationText = messagesApi.get(requestForm.getLang(), "phases.tide.station", nearest.station().label(), Math.round(nearest.km()));
             LocalDate from = max(requestForm.getFrom().toLocalDate(), LocalDate.of(FIRST_YEAR, 1, 1));
             LocalDate to = min(requestForm.getTo().toLocalDate(), LocalDate.of(LAST_YEAR, 12, 31));
@@ -56,6 +56,15 @@ public class TideCalculation extends Calculation {
                 calculateChunk(requestForm, chunkStart, chunkEnd, nearest.station(), stationText, eventCollection);
             }
         });
+    }
+
+    /**
+     * @return the station chosen in the hint, unless it is no longer in the data, e.g. for a subscription
+     */
+    private Optional<TideStations.StationDistance> chosenStation(RequestForm requestForm) {
+        return Optional.ofNullable(requestForm.getTideStation())
+                .flatMap(tideStations::byId)
+                .map(station -> new TideStations.StationDistance(station, TideStations.distanceKm(requestForm.getLat(), requestForm.getLon(), station.lat(), station.lon())));
     }
 
     private void calculateChunk(RequestForm requestForm, LocalDate from, LocalDate to, TideStation station, String stationText, Collection<EventInstance> eventCollection) {

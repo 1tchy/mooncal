@@ -35,6 +35,7 @@ All selection flags are off unless explicitly set to `true`:
 - `phases[daily]=true` — daily moon phase entries
 - `phases[sun]=true` — daily sunrise and sunset entries (only with `lat`/`lon`)
 - `phases[tide]=true` — daily high and low tide times at the nearest tide station within 50 km (only with `lat`/`lon`, only 1900–2100)
+- `tideStation=ticon%2Fvenezia-ven-ita-ispra` — optional id of the tide station whose tides are shown instead of the nearest one's, e.g. when none is within 50 km (see below); the location stays the one of the other entries
 - `lat=47.4&lon=8.5` — optional location (decimal degrees, rounded to 0.1°) for daily entries: adds moonrise and moonset times; required for sunrise and sunset and for tides
 - `events[lunareclipse]=true` — lunar eclipses
 - `events[solareclipse]=true` — solar eclipses
@@ -70,7 +71,7 @@ Tides are only calculated when a tide station lies within 50 km of the location.
 
     https://mooncal.ch/tideStations?lat=47.4&lon=8.5
 
-returns JSON like `{"maxDistanceKm": 50, "withinMaxDistance": false, "nearest": [{"label": "Venezia, Punta Sabbioni", "lat": 45.4, "lon": 12.4, "km": 373}, ...]}` with the 3 nearest stations; `withinMaxDistance` tells whether tides are calculated for the location, and a station's `lat`/`lon` can be used as the location.
+returns JSON like `{"maxDistanceKm": 50, "withinMaxDistance": false, "nearest": [{"id": "ticon/venezia-ven-ita-ispra", "label": "Venezia, Punta Sabbioni", "lat": 45.4, "lon": 12.4, "km": 373}, ...]}` with the 3 nearest stations; `withinMaxDistance` tells whether tides are calculated for the location, and a station's `id` can be passed as `tideStation` to get its tides anyway.
 
 ## More
 

@@ -190,10 +190,15 @@ test('moon calendar user journey', async ({page}) => {
     const first = await (await stations).json().then(answer => answer.nearest[0]);
     const response = nextCalendarResponse(page);
     await page.locator('#tide-station-hint .tide-station').first().click();
-    expect(await response).toContain('&lat=' + first.lat + '&lon=' + first.lon);
-    await expect(page.locator('#tide-station-hint')).toHaveCount(0);
+    // the location stays, for the moonrise and the like
+    const url = await response;
+    expect(url).toContain('&lat=47.4&lon=8.5');
+    expect(url).toContain('&tideStation=' + first.id);
+    await expect(page.locator('#tide-station-hint .tide-station').first()).toHaveAttribute('aria-pressed', 'true');
     await expect(calendarRows(page).nth(2)).toContainText(/High tide ↑|Low tide ↓/);
-    expect(JSON.stringify(await page.evaluate(() => window.matomoMockCalls))).not.toContain(first.label);
+    const tracked = JSON.stringify(await page.evaluate(() => window.matomoMockCalls));
+    expect(tracked).not.toContain(first.label);
+    expect(tracked).not.toContain(first.id);
     expect(await trackedEvents(page)).toContain('Settings/tideStationSelected');
   });
 

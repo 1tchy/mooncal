@@ -41,6 +41,8 @@ class TidesTest extends WithApplication {
         assertThat(nearest.get(0).get("km").asInt(), lessThanOrEqualTo(nearest.get(1).get("km").asInt()));
         assertThat(nearest.get(1).get("km").asInt(), lessThanOrEqualTo(nearest.get(2).get("km").asInt()));
         assertThat(nearest.get(0).get("label").asText(), not(emptyString()));
+        // to choose it for the calendar
+        assertThat(nearest.get(0).get("id").asText(), not(emptyString()));
         // station coordinates are rounded like any location
         double lat = nearest.get(0).get("lat").asDouble();
         assertEquals(Math.round(lat * 10) / 10.0, lat);

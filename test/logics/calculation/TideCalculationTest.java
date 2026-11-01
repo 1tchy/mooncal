@@ -91,6 +91,27 @@ class TideCalculationTest {
     }
 
     @Test
+    void chosenStationFarFromTheLocation() {
+        // chosen in the hint, as none is within the limit: the location stays as it is, e.g. for the sunrise
+        TideStations.StationDistance chosen = STATIONS.nearest(47.4, 8.5, 3).get(2);
+        List<EventInstance> events = calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 3), BERLIN, 47.4, 8.5, chosen.station().id());
+        assertThat(events, hasSize(3));
+        for (EventInstance event : events) {
+            // the messages are their last argument, here the distance
+            assertThat(event.getDescription(), containsString("\n" + Math.round(chosen.km()) + "\n"));
+            assertThat(event.getDescription(), endsWith("\n" + chosen.station().attribution()));
+        }
+    }
+
+    @Test
+    void unknownChosenStationIsTheNearestOne() {
+        // e.g. in a subscription, after the station left the data
+        LocalDate day = LocalDate.of(2026, 1, 1);
+        assertEquals(descriptions(calculate(day, day, BERLIN, 53.9, 8.7)), descriptions(calculate(day, day, BERLIN, 53.9, 8.7, "gone/1")));
+        assertThat(calculate(day, day, BERLIN, 47.4, 8.5, "gone/1"), is(empty()));
+    }
+
+    @Test
     void noTideEventsFarFromTheSea() {
         assertThat(calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 31), BERLIN, 47.4, 8.5), is(empty()));
     }
@@ -174,7 +195,15 @@ class TideCalculationTest {
         assertTrue(times.stream().anyMatch(time -> Math.abs(Duration.between(expected, time).toMinutes()) <= toleranceMinutes), () -> expected + " not in " + times);
     }
 
+    private static List<String> descriptions(List<EventInstance> events) {
+        return events.stream().map(EventInstance::getDescription).toList();
+    }
+
     private List<EventInstance> calculate(LocalDate from, LocalDate to, ZoneId zone, Double lat, Double lon) {
+        return calculate(from, to, zone, lat, lon, null);
+    }
+
+    private List<EventInstance> calculate(LocalDate from, LocalDate to, ZoneId zone, Double lat, Double lon, String tideStation) {
         RequestForm requestForm = new RequestForm();
         requestForm.getPhases().put(MoonPhaseType.TIDE, true);
         requestForm.setFrom(from.atStartOfDay(zone));
@@ -182,6 +211,7 @@ class TideCalculationTest {
         requestForm.setLang(Lang.forCode("de"));
         requestForm.setLat(lat);
         requestForm.setLon(lon);
+        requestForm.setTideStation(tideStation);
         Collection<EventInstance> events = new TreeSet<>();
         cut.calculate(requestForm, events);
         return List.copyOf(events);

@@ -276,9 +276,9 @@ describe('MainComponent', () => {
   });
 
   const STATIONS_FAR_AWAY = {maxDistanceKm: 50, withinMaxDistance: false, nearest: [
-    {label: 'Genova', lat: 44.4, lon: 8.9, km: 334},
-    {label: 'Venezia', lat: 45.4, lon: 12.4, km: 350},
-    {label: 'Marseille', lat: 43.3, lon: 5.4, km: 420}]};
+    {id: 'ticon/genova-1', label: 'Genova', lat: 44.4, lon: 8.9, km: 334},
+    {id: 'ticon/venezia-2', label: 'Venezia', lat: 45.4, lon: 12.4, km: 350},
+    {id: 'ticon/marseille-3', label: 'Marseille', lat: 43.3, lon: 5.4, km: 420}]};
 
   function mockFetch(tideStations: object) {
     return spyOn(window, 'fetch').and.callFake((url: RequestInfo | URL) => Promise.resolve(new Response(
@@ -323,8 +323,8 @@ describe('MainComponent', () => {
   it('shows stations of the same name', async () => {
     const warnings = spyOn(console, 'warn').and.callThrough();
     mockFetch({maxDistanceKm: 50, withinMaxDistance: false, nearest: [
-      {label: 'Port', lat: 44.4, lon: 8.9, km: 334},
-      {label: 'Port', lat: 45.4, lon: 12.4, km: 350}]});
+      {id: 'ticon/port-1', label: 'Port', lat: 44.4, lon: 8.9, km: 334},
+      {id: 'ticon/port-2', label: 'Port', lat: 45.4, lon: 12.4, km: 350}]});
     tickTideAt(47.4, 8.5);
     await until(() => component.tideStationHint !== null);
     fixture.detectChanges();
@@ -333,7 +333,7 @@ describe('MainComponent', () => {
   });
 
   it('shows no station hint when a station is near', async () => {
-    const fetchSpy = mockFetch({maxDistanceKm: 50, withinMaxDistance: true, nearest: [{label: 'Cuxhaven', lat: 53.9, lon: 8.7, km: 3}]});
+    const fetchSpy = mockFetch({maxDistanceKm: 50, withinMaxDistance: true, nearest: [{id: 'ticon/cuxhaven-1', label: 'Cuxhaven', lat: 53.9, lon: 8.7, km: 3}]});
     tickTideAt(53.9, 8.7);
     await until(() => fetchSpy.calls.count() >= 2);
     await new Promise(resolve => setTimeout(resolve, 20));
@@ -343,7 +343,7 @@ describe('MainComponent', () => {
   });
 
   it('shows the hint for a station just beyond the limit, though its rounded distance is the limit', async () => {
-    mockFetch({maxDistanceKm: 50, withinMaxDistance: false, nearest: [{label: 'Rimini', lat: 44.1, lon: 12.6, km: 50}]});
+    mockFetch({maxDistanceKm: 50, withinMaxDistance: false, nearest: [{id: 'ticon/rimini-1', label: 'Rimini', lat: 44.1, lon: 12.6, km: 50}]});
     tickTideAt(43.7, 12.6);
     await until(() => component.tideStationHint !== null);
     expect(component.tideStationHint).not.toBeNull();
@@ -403,7 +403,7 @@ describe('MainComponent', () => {
     expect(component.tideStationHint).toBeNull();
   });
 
-  it('moves the location to a clicked station', async () => {
+  async function chooseFirstStation() {
     const fetchSpy = mockFetch(STATIONS_FAR_AWAY);
     tickTideAt(47.4, 8.5);
     await until(() => component.tideStationHint !== null);
@@ -411,12 +411,58 @@ describe('MainComponent', () => {
     // @ts-ignore
     window._paq = [];
     fixture.nativeElement.querySelector('.tide-station').click();
-    expect(component.lat).toBe(44.4);
-    expect(component.lon).toBe(8.9);
-    const urls = fetchSpy.calls.allArgs().map(args => String(args[0]));
-    expect(urls.some(url => url.startsWith('/mooncal?') && url.includes('&lat=44.4&lon=8.9'))).toBeTrue();
+    fixture.detectChanges();
+    return fetchSpy;
+  }
+
+  function lastCalendarRequest(fetchSpy: jasmine.Spy) {
+    return fetchSpy.calls.allArgs().map(args => String(args[0])).filter(url => url.startsWith('/mooncal?')).pop()!;
+  }
+
+  it('shows the tides of a clicked station without moving the location', async () => {
+    const fetchSpy = await chooseFirstStation();
+    expect(component.lat).toBe(47.4);
+    expect(component.lon).toBe(8.5);
+    const request = lastCalendarRequest(fetchSpy);
+    expect(request).toContain('&lat=47.4&lon=8.5');
+    expect(request).toContain('&tideStation=ticon%2Fgenova-1');
+    const chosen = fixture.nativeElement.querySelector('.tide-station');
+    expect(chosen.getAttribute('aria-pressed')).toBe('true');
+    expect(chosen.textContent).toContain('✓');
+    expect(fixture.nativeElement.querySelectorAll('.tide-station[aria-pressed="true"]').length).toBe(1);
     // @ts-ignore
     expect(window._paq).toEqual([['trackEvent', 'Settings', 'tideStationSelected']]);
+    expect(component.paramsForTracking(true)).not.toContain('genova');
+  });
+
+  it('shows no tides when the chosen station is clicked again', async () => {
+    const fetchSpy = await chooseFirstStation();
+    fixture.nativeElement.querySelector('.tide-station').click();
+    fixture.detectChanges();
+    expect(lastCalendarRequest(fetchSpy)).not.toContain('tideStation');
+    expect(fixture.nativeElement.querySelectorAll('.tide-station[aria-pressed="true"]').length).toBe(0);
+  });
+
+  it('forgets the chosen station when the location changes', async () => {
+    const fetchSpy = await chooseFirstStation();
+    component.lat = 46.2;
+    component.locationEdited('latitude');
+    expect(lastCalendarRequest(fetchSpy)).not.toContain('tideStation');
+  });
+
+  it('forgets the chosen station when the time zone moves the location', async () => {
+    await chooseFirstStation();
+    component.zone = 'Europe/Rome';
+    component.zoneSelected();
+    expect(component.tideStation).toBeNull();
+  });
+
+  it('keeps the chosen station while tides are unticked, but does not send it', async () => {
+    const fetchSpy = await chooseFirstStation();
+    fixture.nativeElement.querySelector('#tide-checkbox').click();
+    expect(component.paramsAsString(true)).not.toContain('tideStation');
+    fixture.nativeElement.querySelector('#tide-checkbox').click();
+    expect(component.paramsAsString(true)).toContain('&tideStation=ticon%2Fgenova-1');
   });
 
   it('shows the year hint outside 1900-2100', async () => {

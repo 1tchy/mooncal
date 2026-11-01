@@ -47,6 +47,24 @@ class RequestFormTest {
     }
 
     @Test
+    void getForLogDoesNotContainTheChosenTideStation() {
+        RequestForm f = newMinimalForm();
+        f.setTideStation("noaa/9414290");
+        assertFalse(f.getForLog().contains("9414290"), f.getForLog());
+    }
+
+    @Test
+    void eTagDependsOnTheChosenTideStation() {
+        RequestForm nearest = newMinimalForm();
+        RequestForm chosen = newMinimalForm();
+        chosen.setTideStation("noaa/9414290");
+        RequestForm other = newMinimalForm();
+        other.setTideStation("noaa/9414275");
+        assertNotEquals(nearest.calculateETag(), chosen.calculateETag());
+        assertNotEquals(chosen.calculateETag(), other.calculateETag());
+    }
+
+    @Test
     void eTagDependsOnTheLocation() {
         RequestForm withoutLocation = newMinimalForm();
         RequestForm zurich = newMinimalForm();

@@ -36,6 +36,7 @@ public class Tides extends Controller {
         result.put("withinMaxDistance", !stations.isEmpty() && stations.getFirst().km() <= TideCalculation.MAX_STATION_DISTANCE_KM);
         ArrayNode nearest = result.putArray("nearest");
         stations.forEach(station -> nearest.addObject()
+                .put("id", station.station().id())
                 .put("label", station.station().label())
                 .put("lat", roundLocation(station.station().lat()))
                 .put("lon", roundLocation(station.station().lon()))

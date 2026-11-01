@@ -26,6 +26,7 @@ const TIDE_FIRST_YEAR = 1900;
 const TIDE_LAST_YEAR = 2100;
 
 export interface TideStation {
+  id: string
   label: string
   lat: number
   lon: number
@@ -91,6 +92,8 @@ export class MainComponent implements AfterViewInit {
   set lat(v) { this.settings.lat = v; }
   get lon() { return this.settings.lon; }
   set lon(v) { this.settings.lon = v; }
+  get tideStation() { return this.settings.tideStation; }
+  set tideStation(v) { this.settings.tideStation = v; }
   /** "Your location" for the browser's location, else the reference city near the location, if any. */
   get locationName() {
     const browserLocation = this.settings.browserLocation;
@@ -233,6 +236,7 @@ export class MainComponent implements AfterViewInit {
       + this.flagParam("phases[sun]", this.phases["sun"])
       + this.flagParam("phases[tide]", this.phases["tide"])
       + (this.usesLocation && isValidLocation(this.lat, this.lon) ? "&lat=" + this.lat + "&lon=" + this.lon : "")
+      + (this.phases["tide"] && this.tideStation && isValidLocation(this.lat, this.lon) ? "&tideStation=" + encodeURIComponent(this.tideStation) : "")
       + "&style=" + this.style
       + "&hemisphere=" + this.hemisphere
       + this.flagParam("events[lunareclipse]", this.events["lunareclipse"])
@@ -405,14 +409,20 @@ export class MainComponent implements AfterViewInit {
       });
   }
 
-  /** Moves the location to a tide station of the hint. */
+  /**
+   * Shows the tides of a station of the hint, or none again when it was chosen already. The location stays as it is,
+   * as the moon- and sunrise are still wanted there.
+   */
   public tideStationSelected(station: TideStation) {
-    this.lat = roundLocation(station.lat);
-    this.lon = roundLocation(station.lon);
-    // neither the coordinates nor the station are tracked
-    // @ts-ignore
-    _paq.push(['trackEvent', 'Settings', 'tideStationSelected']);
-    this.locationProvided();
+    if (this.tideStation === station.id) {
+      this.tideStation = null;
+    } else {
+      this.tideStation = station.id;
+      // the station is not tracked, as it tells about the location
+      // @ts-ignore
+      _paq.push(['trackEvent', 'Settings', 'tideStationSelected']);
+    }
+    this.fetchCalendar(false);
   }
 
   public updateCalendar(newCalendar: Event[]) {
@@ -480,6 +490,7 @@ export class MainComponent implements AfterViewInit {
     this.settings.zoneChosenByUser = true;
     if (!this.settings.browserLocation) {
       ({lat: this.lat, lon: this.lon} = referenceLocation(this.zone));
+      this.tideStation = null;
     }
     this.trackTimezoneChange();
     this.fetchTideStationHint();
@@ -525,6 +536,8 @@ export class MainComponent implements AfterViewInit {
   }
 
   private locationProvided() {
+    // a station of the hint of another location
+    this.tideStation = null;
     if (isValidLocation(this.lat, this.lon)) {
       this.hemisphere = this.lat! < 0 ? 'southern' : 'northern';
     }

@@ -77,9 +77,9 @@
             }
             @if (tideStationHint) {
               <small class="d-block text-body-secondary" id="tide-station-hint">{{ tideStationHintText }}
-                @for (station of tideStationHint.nearest; track station.lat + ',' + station.lon; let last = $last) {
-                  <button type="button" class="btn btn-link btn-sm p-0 align-baseline tide-station"
-                          (click)="tideStationSelected(station)">{{ station.label }} ({{ station.km }} km)</button>@if (!last) {,}
+                @for (station of tideStationHint.nearest; track station.id; let last = $last) {
+                  <button type="button" class="btn btn-link btn-sm p-0 align-baseline tide-station" [class.fw-bold]="station.id === tideStation"
+                          [attr.aria-pressed]="station.id === tideStation" (click)="tideStationSelected(station)">@if (station.id === tideStation) {✓ }{{ station.label }} ({{ station.km }} km)</button>@if (!last) {,}
                 }
               </small>
             }

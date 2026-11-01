@@ -1,5 +1,7 @@
 package controllers;
 
+import logics.tides.TideStation;
+import logics.tides.TideStations;
 import models.EventStyle;
 import org.apache.pekko.stream.Materializer;
 import org.junit.jupiter.api.AfterEach;
@@ -11,6 +13,9 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.test.WithApplication;
 import scala.collection.Seq;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -145,6 +150,16 @@ class ApplicationTest extends WithApplication {
         JsObject result = (JsObject) resultList.head();
         assertThat(((JsString) result.value().get("title").get()).value(), allOf(containsString("Flut ↑"), containsString("Ebbe ↓")));
         assertThat(((JsString) result.value().get("description").get()).value(), allOf(containsString("Hochwasser um"), containsString("TICON-4")));
+    }
+
+    @Test
+    void testTideQueryAtAChosenStation() {
+        // none within the limit of Zurich, so the user chose one of the nearest in the hint
+        TideStation chosen = app.injector().instanceOf(TideStations.class).nearest(47.4, 8.5, 1).getFirst().station();
+        final Seq<JsValue> resultList = query("de", false, false, false, false, EventStyle.WITH_DESCRIPTION, false, false, false, "phases[tide]=true", "tideStation=" + URLEncoder.encode(chosen.id(), StandardCharsets.UTF_8), "from=2026-01-15T00:00:00Europe/Zurich", "to=2026-01-15T23:59:59Europe/Zurich", "lat=47.4", "lon=8.5");
+        assertEquals(1, resultList.size());
+        String description = ((JsString) ((JsObject) resultList.head()).value().get("description").get()).value();
+        assertThat(description, allOf(containsString("Hochwasser um"), containsString(chosen.label())));
     }
 
     @Test

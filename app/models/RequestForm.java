@@ -37,6 +37,8 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
     private Lang lang;
     private Double lat;
     private Double lon;
+    // the id of a station chosen in the hint, as none is near enough to the location
+    private String tideStation;
     private Long created;
     private String via;
 
@@ -130,6 +132,14 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         return degrees == null ? null : Math.round(degrees * LOCATION_PRECISION) / LOCATION_PRECISION;
     }
 
+    public String getTideStation() {
+        return tideStation;
+    }
+
+    public void setTideStation(String tideStation) {
+        this.tideStation = tideStation;
+    }
+
     public boolean hasLocation() {
         return lat != null && lon != null;
     }
@@ -218,6 +228,9 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
         sb.append(lang.code());
         if (hasLocation()) {
             sb.append("x").append(lat).append("x").append(lon);
+        }
+        if (tideStation != null) {
+            sb.append("x").append(tideStation);
         }
         return sb.toString();
     }
