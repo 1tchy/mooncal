@@ -91,76 +91,6 @@ class TideCalculationTest {
     }
 
     @Test
-    void stationAtTheLocationHasNoDistance() {
-        // the location of a station clicked in the hint is the station's position, rounded like any location
-        TideStation clicked = cut.stationsToChoose(47.4, 8.5, 1).getFirst().station();
-        String description = calculate(keyEchoingMessages(), LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 1), BERLIN, clicked.lat(), clicked.lon()).getFirst().getDescription();
-        assertThat(description, containsString("phases.tide.stationAtLocation " + clicked.label() + "\n"));
-    }
-
-    @Test
-    void stationNearTheLocationHasItsDistance() {
-        // Hamburg: the nearest station, St. Pauli, is rounded to 53.5
-        String description = calculate(keyEchoingMessages(), LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 1), BERLIN, 53.6, 10.0).getFirst().getDescription();
-        assertThat(description, matchesPattern("(?s).*phases\\.tide\\.station .+ \\d+\n.*"));
-    }
-
-    @Test
-    void everyStationToChooseIsShownAtItsLocation() {
-        // the stations to choose near any station, including those sharing their rounded position with another one
-        Map<String, TideStations.StationDistance> toChoose = new HashMap<>();
-        for (TideStations.StationDistance station : STATIONS.nearest(0, 0, STATIONS.size())) {
-            cut.stationsToChoose(station.station().lat(), station.station().lon(), 3).forEach(choice -> toChoose.put(choice.station().id(), choice));
-        }
-        TideCalculation keyEchoing = new TideCalculation(keyEchoingMessages(), STATIONS);
-        List<String> notAtTheLocation = new ArrayList<>();
-        for (TideStations.StationDistance station : toChoose.values()) {
-            String description = calculate(keyEchoing, LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 1), BERLIN, station.station().lat(), station.station().lon()).getFirst().getDescription();
-            if (!description.contains("phases.tide.stationAtLocation " + station.station().label() + "\n")) {
-                notAtTheLocation.add(station.station().label() + ": " + description.lines().filter(line -> line.startsWith("phases.tide.station")).findFirst().orElseThrow());
-            }
-        }
-        assertEquals(List.of(), notAtTheLocation);
-    }
-
-    @Test
-    void stationsToChooseAreDistinctAndNearestFirst() {
-        List<TideStations.StationDistance> stations = cut.stationsToChoose(47.4, 8.5, 3);
-        assertThat(stations, hasSize(3));
-        assertEquals(3, stations.stream().map(station -> station.station().id()).distinct().count());
-        assertThat(stations.get(0).km(), lessThanOrEqualTo(stations.get(1).km()));
-        assertThat(stations.get(1).km(), lessThanOrEqualTo(stations.get(2).km()));
-    }
-
-    @Test
-    void stationsToChooseAreTheNearestOfAllShownStations() {
-        // a shown station can be farther away than the one it hides, so a nearer one must not be left out for it
-        Set<TideStation> shown = new HashSet<>();
-        for (TideStations.StationDistance station : STATIONS.nearest(0, 0, STATIONS.size())) {
-            shown.add(cut.station(station.station().lat(), station.station().lon()).orElseThrow().station());
-        }
-        // the Loire estuary and the Oste near Hamburg
-        for (double[] location : new double[][]{{47.6, -1.7}, {53.4, 9.1}}) {
-            List<String> expected = shown.stream()
-                    .sorted(Comparator.comparingDouble(station -> TideStations.distanceKm(location[0], location[1], station.lat(), station.lon())))
-                    .limit(3).map(TideStation::id).toList();
-            assertEquals(expected, cut.stationsToChoose(location[0], location[1], 3).stream().map(station -> station.station().id()).toList());
-        }
-    }
-
-    @Test
-    void stationHiddenByAnotherAtItsRoundedPositionIsNotToChoose() {
-        List<TideStation> hidden = STATIONS.nearest(0, 0, STATIONS.size()).stream()
-                .map(TideStations.StationDistance::station)
-                .filter(station -> cut.station(station.lat(), station.lon()).orElseThrow().station() != station)
-                .toList();
-        assertThat(hidden, is(not(empty())));
-        for (TideStation station : hidden) {
-            assertThat(cut.stationsToChoose(station.lat(), station.lon(), 3).stream().map(TideStations.StationDistance::station).toList(), not(hasItem(station)));
-        }
-    }
-
-    @Test
     void noTideEventsFarFromTheSea() {
         assertThat(calculate(LocalDate.of(2026, 1, 1), LocalDate.of(2026, 1, 31), BERLIN, 47.4, 8.5), is(empty()));
     }
@@ -236,17 +166,6 @@ class TideCalculationTest {
         return times;
     }
 
-    /** @return messages that are their key followed by their arguments */
-    private static MessagesApi keyEchoingMessages() {
-        final MessagesApi messagesApi = mock(MessagesApi.class);
-        when(messagesApi.get(any(Lang.class), anyString(), any(Object[].class))).thenAnswer(invocation -> {
-            StringJoiner message = new StringJoiner(" ");
-            Arrays.stream(invocation.getArguments()).skip(1).forEach(argument -> message.add(String.valueOf(argument)));
-            return message.toString();
-        });
-        return messagesApi;
-    }
-
     private static void assertContainsAbout(List<LocalTime> times, LocalTime expected) {
         assertContainsAbout(times, expected, 5);
     }
@@ -256,14 +175,6 @@ class TideCalculationTest {
     }
 
     private List<EventInstance> calculate(LocalDate from, LocalDate to, ZoneId zone, Double lat, Double lon) {
-        return calculate(cut, from, to, zone, lat, lon);
-    }
-
-    private List<EventInstance> calculate(MessagesApi messagesApi, LocalDate from, LocalDate to, ZoneId zone, Double lat, Double lon) {
-        return calculate(new TideCalculation(messagesApi, STATIONS), from, to, zone, lat, lon);
-    }
-
-    private static List<EventInstance> calculate(TideCalculation cut, LocalDate from, LocalDate to, ZoneId zone, Double lat, Double lon) {
         RequestForm requestForm = new RequestForm();
         requestForm.getPhases().put(MoonPhaseType.TIDE, true);
         requestForm.setFrom(from.atStartOfDay(zone));

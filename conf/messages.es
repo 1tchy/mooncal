@@ -45,7 +45,6 @@ phases.tide.low=Bajamar
 phases.tide.highAt=Pleamar a las {0}
 phases.tide.lowAt=Bajamar a las {0}
 phases.tide.station=Mareas de la estación {0}, a {1} km de la ubicación
-phases.tide.stationAtLocation=Mareas de la estación {0} en la ubicación
 phases.tide.disclaimer=Predicción astronómica sin la influencia del tiempo ni del viento, no apta para la navegación.
 
 events.lunareclipse.total=eclipse lunar total

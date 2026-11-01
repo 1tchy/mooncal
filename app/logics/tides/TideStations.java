@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.time.Instant;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -48,17 +47,6 @@ public class TideStations {
         return nearest(lat, lon, 1).stream().filter(nearest -> nearest.km() <= maxKm).findFirst();
     }
 
-    public Optional<StationDistance> nearest(double lat, double lon, Predicate<TideStation> filter) {
-        return stations.stream()
-                .filter(filter)
-                .map(station -> new StationDistance(station, distanceKm(lat, lon, station.lat(), station.lon())))
-                .min(Comparator.comparingDouble(StationDistance::km));
-    }
-
-    public List<TideStation> stations() {
-        return stations;
-    }
-
     public int size() {
         return stations.size();
     }
@@ -67,7 +55,7 @@ public class TideStations {
         return stations.stream().filter(station -> station.id().equals(id)).findFirst();
     }
 
-    public static double distanceKm(double lat1, double lon1, double lat2, double lon2) {
+    private static double distanceKm(double lat1, double lon1, double lat2, double lon2) {
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
         double a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.pow(Math.sin(dLon / 2), 2);
