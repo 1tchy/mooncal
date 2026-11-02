@@ -27,6 +27,8 @@ public class TideCalculation extends Calculation {
     private static final char TIDE_SYMBOL = '≈';
     // Farther away, the tides of a station can be hours off.
     public static final double MAX_STATION_DISTANCE_KM = 50;
+    // Nearer, the distance says less than the rounding of the location to 0.1° (~11 km).
+    static final double MIN_SHOWN_DISTANCE_KM = Math.min(1.5 * TideStations.KM_PER_DEGREE / RequestForm.LOCATION_PRECISION, MAX_STATION_DISTANCE_KM);
     // The constants of today's tide gauges say little about the tides of centuries away.
     static final int FIRST_YEAR = 1900;
     static final int LAST_YEAR = 2100;
@@ -50,10 +52,14 @@ public class TideCalculation extends Calculation {
         Optional<TideStation> chosen = Optional.ofNullable(requestForm.getTideStation()).flatMap(tideStations::byId);
         if (chosen.isPresent()) {
             // without its distance, as the location is only sent when other entries need it
-            calculate(requestForm, chosen.get(), messagesApi.get(requestForm.getLang(), "phases.tide.chosenStation", chosen.get().label()), eventCollection);
+            calculate(requestForm, chosen.get(), messagesApi.get(requestForm.getLang(), "phases.tide.stationWithoutDistance", chosen.get().label()), eventCollection);
         } else if (requestForm.hasLocation()) {
-            tideStations.nearestWithin(requestForm.getLat(), requestForm.getLon(), MAX_STATION_DISTANCE_KM).ifPresent(nearest ->
-                    calculate(requestForm, nearest.station(), messagesApi.get(requestForm.getLang(), "phases.tide.station", nearest.station().label(), Math.round(nearest.km())), eventCollection));
+            tideStations.nearestWithin(requestForm.getLat(), requestForm.getLon(), MAX_STATION_DISTANCE_KM).ifPresent(nearest -> {
+                String stationText = nearest.km() < MIN_SHOWN_DISTANCE_KM
+                        ? messagesApi.get(requestForm.getLang(), "phases.tide.stationWithoutDistance", nearest.station().label())
+                        : messagesApi.get(requestForm.getLang(), "phases.tide.station", nearest.station().label(), Math.round(nearest.km()));
+                calculate(requestForm, nearest.station(), stationText, eventCollection);
+            });
         }
     }
 

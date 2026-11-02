@@ -45,7 +45,7 @@ phases.tide.low=Ebbe
 phases.tide.highAt=Hochwasser um {0}
 phases.tide.lowAt=Niedrigwasser um {0}
 phases.tide.station=Gezeiten der Station {0}, {1} km vom Standort entfernt
-phases.tide.chosenStation=Gezeiten der Station {0}
+phases.tide.stationWithoutDistance=Gezeiten der Station {0}
 phases.tide.disclaimer=Astronomische Vorhersage ohne Einfluss von Wetter und Wind, nicht für die Navigation.
 
 events.lunareclipse.total=Totale Mondfinsternis

@@ -21,6 +21,7 @@ public class TideStations {
 
     static final String RESOURCE = "/logics/calculation/tides/tide-stations.json.gz";
     private static final double EARTH_RADIUS_KM = 6371;
+    public static final double KM_PER_DEGREE = 2 * Math.PI * EARTH_RADIUS_KM / 360;
     private final List<TideStation> stations;
 
     public record StationDistance(TideStation station, double km) {

@@ -21,7 +21,7 @@ public class RequestForm implements Constraints.Validatable<ValidationError> {
      * Coordinates are rounded to 0.1° (~11 km): precise enough for moon- and sunrise/-set to the minute,
      * coarse enough not to reveal the user's address.
      */
-    private static final double LOCATION_PRECISION = 10;
+    public static final double LOCATION_PRECISION = 10;
 
     private Map<MoonPhaseType, Boolean> phases = new HashMap<>();
     private EventStyle style;

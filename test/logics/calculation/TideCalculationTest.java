@@ -91,6 +91,16 @@ class TideCalculationTest {
     }
 
     @Test
+    void distanceOnlyWhenTheRoundedLocationCanTellIt() {
+        // the location is rounded to 0.1°, about 11 km: Hamburg is 15.5 km from Cranz, Amsterdam 24.4 km from IJmuiden
+        LocalDate day = LocalDate.of(2026, 1, 1);
+        TideStation cranz = STATIONS.nearestWithin(53.6, 10.0, 50).orElseThrow().station();
+        // the messages are their last argument: the label without, the km with the distance
+        assertThat(calculate(day, day, BERLIN, 53.6, 10.0).getFirst().getDescription(), containsString("\n" + cranz.label() + "\n"));
+        assertThat(calculate(day, day, BERLIN, 52.4, 4.9).getFirst().getDescription(), containsString("\n24\n"));
+    }
+
+    @Test
     void chosenStationFarFromTheLocation() {
         // chosen in the hint, as none is within the limit: the location stays as it is, e.g. for the sunrise
         TideStation chosen = STATIONS.nearest(47.4, 8.5, 3).get(2).station();

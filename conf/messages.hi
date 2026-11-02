@@ -45,7 +45,7 @@ phases.tide.low=भाटा
 phases.tide.highAt=उच्च ज्वार {0} बजे
 phases.tide.lowAt=निम्न ज्वार {0} बजे
 phases.tide.station=स्टेशन {0} का ज्वार-भाटा, स्थान से {1} किमी दूर
-phases.tide.chosenStation=स्टेशन {0} का ज्वार-भाटा
+phases.tide.stationWithoutDistance=स्टेशन {0} का ज्वार-भाटा
 phases.tide.disclaimer=मौसम और हवा के प्रभाव के बिना खगोलीय पूर्वानुमान, नौवहन के लिए नहीं।
 
 events.lunareclipse.total=पूर्ण चंद्र ग्रहण
