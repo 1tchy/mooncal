@@ -34,6 +34,8 @@ libraryDependencies ++= Seq(
 	"com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test,
 	//see latest version under: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
 	"org.hamcrest" % "hamcrest" % "3.0" % Test,
+	//see latest version under: https://mvnrepository.com/artifact/com.tngtech.archunit/archunit
+	"com.tngtech.archunit" % "archunit" % "1.5.1" % Test,
 )
 
 Assets / unmanagedResourceDirectories += baseDirectory.value / "ui/dist/ui/browser"
