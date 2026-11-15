@@ -1,9 +1,11 @@
 import io.fluentlenium.core.domain.FluentWebElement;
 import io.fluentlenium.core.filter.AttributeFilter;
 import logics.Randomizer;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import play.test.Helpers;
@@ -32,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("JUnitMixedFramework")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) // one server and one Firefox for all tests: starting them is what takes the time
 class IntegrationTest extends WithBrowser {
     @Override
     protected TestBrowser provideBrowser(int port) {
@@ -47,14 +50,18 @@ class IntegrationTest extends WithBrowser {
         ), port);
     }
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         startServer();
         createBrowser();
+    }
+
+    @BeforeEach
+    void reseed() {
         Randomizer.reseed();
     }
 
-    @AfterEach
+    @AfterAll
     void tearDown() {
         quitBrowser();
         stopServer();

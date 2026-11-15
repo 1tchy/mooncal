@@ -46,11 +46,12 @@ class ApplicationJsonTest extends WithApplication {
     @Test
     void largeCalendarIsStreamedInSmallChunks() throws Exception {
         // the descriptions of tide events end with a long attribution: neither a JSON tree nor the whole JSON is held at once
+        // (ten years are about 7 MB of JSON, several times the chunk limit asserted below)
         ZoneId zone = ZoneId.of("Europe/Berlin");
         RequestForm requestForm = new RequestForm();
         requestForm.setPhases(Map.of(MoonPhaseType.DAILY, true, MoonPhaseType.SUN, true, MoonPhaseType.TIDE, true));
         requestForm.setFrom(LocalDate.of(2000, 1, 1).atStartOfDay(zone));
-        requestForm.setTo(LocalDate.of(2099, 12, 31).atTime(23, 59).atZone(zone));
+        requestForm.setTo(LocalDate.of(2009, 12, 31).atTime(23, 59).atZone(zone));
         requestForm.setLang(Lang.forCode("de"));
         requestForm.setLat(53.9);
         requestForm.setLon(8.7);
