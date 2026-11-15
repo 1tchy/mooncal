@@ -28,7 +28,7 @@ class CalendarMapperMultiDayTest {
         EventInstance event = new EventInstance(start, end,
                 "Root Day", "Root", "desc", ZoneOffset.UTC, "garden-biodynamic-root");
 
-        String ics = mapper().map(List.of(event), 0, Lang.forCode("en"));
+        String ics = Ics.text(mapper().map(List.of(event), 0, Lang.forCode("en")));
 
         // Multi-day events must have DTSTART and DTEND
         assertTrue(ics.contains("DTSTART;VALUE=DATE:20260105"), "Expected DTSTART 20260105 in:\n" + ics);
@@ -45,7 +45,7 @@ class CalendarMapperMultiDayTest {
         EventInstance root = new EventInstance(start, end,
                 "Root Day", "Root", "desc", ZoneOffset.UTC, "garden-biodynamic-root");
 
-        String ics = mapper().map(List.of(root), 0, Lang.forCode("en"));
+        String ics = Ics.text(mapper().map(List.of(root), 0, Lang.forCode("en")));
 
         assertTrue(ics.contains("DTSTART;VALUE=DATE:20260807"), "root should start Aug 7 (Aug 6 trimmed) in:\n" + ics);
         // End 00:20 < 06:00 trims Aug 9 too; last covered day Aug 8 -> exclusive DTEND Aug 9.
@@ -80,7 +80,7 @@ class CalendarMapperMultiDayTest {
         EventInstance root = new EventInstance(start, end,
                 "Root Day", "Root", "guidance", ZoneOffset.UTC, "garden-biodynamic-root");
 
-        String ics = unfold(echoMapper().map(List.of(root), 0, Lang.forCode("de")));
+        String ics = unfold(Ics.text(echoMapper().map(List.of(root), 0, Lang.forCode("de"))));
 
         // German locale formats the date as DD.MM.YYYY and the time as HH:mm; both edges shown as a range.
         assertTrue(ics.contains("garden.ics.period"), "expected the range key in:\n" + ics);
@@ -97,7 +97,7 @@ class CalendarMapperMultiDayTest {
         EventInstance leaf = new EventInstance(start, end,
                 "Leaf Day", "Leaf", "guidance", ZoneOffset.UTC, "garden-biodynamic-leaf");
 
-        String ics = unfold(echoMapper().map(List.of(leaf), 0, Lang.forCode("de")));
+        String ics = unfold(Ics.text(echoMapper().map(List.of(leaf), 0, Lang.forCode("de"))));
 
         assertTrue(ics.contains("garden.ics.starttime"), "expected the start-only key in:\n" + ics);
         assertTrue(ics.contains("11.08.2026") && ics.contains("01:16"), "start time missing in:\n" + ics);
@@ -112,7 +112,7 @@ class CalendarMapperMultiDayTest {
         EventInstance leaf = new EventInstance(start, end,
                 "Leaf Day", "Leaf", "guidance", ZoneOffset.UTC, "garden-biodynamic-leaf");
 
-        String ics = unfold(echoMapper().map(List.of(leaf), 0, Lang.forCode("de")));
+        String ics = unfold(Ics.text(echoMapper().map(List.of(leaf), 0, Lang.forCode("de"))));
 
         assertTrue(ics.contains("garden.ics.endtime"), "expected the end-only key in:\n" + ics);
         assertTrue(ics.contains("13.08.2026") && ics.contains("14:30"), "end time missing in:\n" + ics);
@@ -125,7 +125,7 @@ class CalendarMapperMultiDayTest {
         EventInstance event = new EventInstance(start,
                 "Full Moon", "Full Moon", null, ZoneOffset.UTC, "fullmoon");
 
-        String ics = mapper().map(List.of(event), 0, Lang.forCode("en"));
+        String ics = Ics.text(mapper().map(List.of(event), 0, Lang.forCode("en")));
 
         assertFalse(ics.contains("DTEND"), "Expected NO DTEND for single-day event in:\n" + ics);
         assertTrue(ics.contains("DTSTART;VALUE=DATE:20260310"), "Expected DTSTART 20260310 in:\n" + ics);
@@ -138,7 +138,7 @@ class CalendarMapperMultiDayTest {
         EventInstance event = new EventInstance(start, end,
                 "Root Day", "Root", "desc", ZoneOffset.UTC, "garden-biodynamic-root");
 
-        String ics = mapper().map(List.of(event), 0, Lang.forCode("en"));
+        String ics = Ics.text(mapper().map(List.of(event), 0, Lang.forCode("en")));
 
         assertTrue(ics.contains("UID:mooncal-20260105Z-garden-biodynamic-root"),
                 "Expected UID based on start date in:\n" + ics);

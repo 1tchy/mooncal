@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import play.api.libs.json.*;
 import play.api.mvc.Call;
+import play.http.HttpEntity;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.test.WithApplication;
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.route;
 
@@ -187,6 +189,15 @@ class ApplicationTest extends WithApplication {
     }
 
     @Test
+    void testICalendarResponseIsStreamed() {
+        final Call query = routes.Application.queryAsICalendar();
+        final Result result = paramQuery(query.method(), query.url() + "?", "de", true, false, false, false, EventStyle.WITH_DESCRIPTION, false, false, false, "from=2015-12-01T00:00:00CET", "to=2015-12-31T00:00:00CET");
+        assertEquals(200, result.status());
+        assertEquals("text/calendar", result.contentType().orElseThrow());
+        assertInstanceOf(HttpEntity.Chunked.class, result.body());
+    }
+
+    @Test
     void testTruncatedDailyICalendarQueryIsRejected() {
         Result result = route(app, new Http.RequestBuilder().method("GET").uri("/mooncal.ics?created=20077059936&lang=en&phases%5Bfull%5D=false&phases%5Bnew%5D=false&phases%5Bquarter%5D=false&phases%5Bdaily%5D=true&style=withDescription&events%5Blunareclipse]"));
         assertEquals(400, result.status());
@@ -195,13 +206,17 @@ class ApplicationTest extends WithApplication {
     private String queryAsICalendar(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
         final Call query = routes.Application.queryAsICalendar();
         final Result result = paramQuery(query.method(), query.url() + "?", lang, fullPhases, newPhases, quarterQuases, dailyPhases, EventStyle.WITH_DESCRIPTION, lunarEclipses, solarEclipses, moonLandings, extraParams);
-        return contentAsString(result);
+        return body(result);
     }
 
     private Seq<JsValue> query(String lang, boolean fullPhases, boolean newPhases, boolean quarterQuases, boolean dailyPhases, EventStyle style, boolean lunarEclipses, boolean solarEclipses, boolean moonLandings, String... extraParams) {
         final Result result = paramQuery("GET", routes.Application.query().url() + "?", lang, fullPhases, newPhases, quarterQuases, dailyPhases, style, lunarEclipses, solarEclipses, moonLandings, extraParams);
-        // the JSON is streamed
-        return ((JsArray) Json.parse(contentAsString(result, app.injector().instanceOf(Materializer.class)))).value();
+        return ((JsArray) Json.parse(body(result))).value();
+    }
+
+    /** The body of a streamed response. */
+    private String body(Result result) {
+        return contentAsString(result, app.injector().instanceOf(Materializer.class));
     }
 
     @SuppressWarnings("StringConcatenationInLoop") //it's just in the tests

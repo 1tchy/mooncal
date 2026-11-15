@@ -21,7 +21,7 @@ class CalendarMapperDisclaimerTest {
         CalendarMapper mapper = new CalendarMapper(messages);
         EventInstance garden = new EventInstance(ZonedDateTime.now(ZoneOffset.UTC),
                 "t", "t", "d", ZoneOffset.UTC, "garden-biodynamic-fruit");
-        String ics = mapper.map(List.of(garden), 0, Lang.forCode("en"));
+        String ics = Ics.text(mapper.map(List.of(garden), 0, Lang.forCode("en")));
         assertTrue(ics.contains("X-WR-CALDESC"), "Expected X-WR-CALDESC in ICS for garden event");
         assertTrue(ics.contains("DISCLAIMER_TEXT"), "Expected disclaimer text in ICS for garden event");
     }
@@ -31,7 +31,7 @@ class CalendarMapperDisclaimerTest {
         CalendarMapper mapper = new CalendarMapper(messages);
         EventInstance full = new EventInstance(ZonedDateTime.now(ZoneOffset.UTC),
                 "t", "t", "d", ZoneOffset.UTC, "fullmoon");
-        String ics = mapper.map(List.of(full), 0, Lang.forCode("en"));
+        String ics = Ics.text(mapper.map(List.of(full), 0, Lang.forCode("en")));
         assertFalse(ics.contains("X-WR-CALDESC"), "Expected NO X-WR-CALDESC in ICS for non-garden event");
     }
 }

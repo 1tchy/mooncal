@@ -1,7 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.ObjectWriter;
-import logics.calculation.TotalCalculation;
+import logics.calculation.CoalescingCalculation;
 import logics.calendar.CalendarMapper;
 import logics.calendar.PDFMapper;
 import models.BetterTranslationForm;
@@ -35,6 +35,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused") //used by routes
@@ -42,7 +43,7 @@ public class Application extends Controller {
 
     // a chunk of the JSON is some 10 to 100 KB
     private static final int EVENTS_PER_JSON_CHUNK = 100;
-    private final TotalCalculation calculation;
+    private final CoalescingCalculation calculation;
     private final CalendarMapper calendarMapper;
     private final PDFMapper pdfMapper;
     private final Environment environment;
@@ -50,18 +51,16 @@ public class Application extends Controller {
     private final Assets assets;
     private final Action<AnyContent> indexHtml;
     private final MessagesApi messagesApi;
-    private final CalculationExecutionContext calculationExecutionContext;
     private final Logger.ALogger logger = Logger.of(getClass());
 
     @Inject
-    public Application(TotalCalculation calculation, CalendarMapper calendarMapper, PDFMapper pdfMapper, Environment environment, FormFactory formFactory, Assets assets, MessagesApi messagesApi, CalculationExecutionContext calculationExecutionContext) {
+    public Application(CoalescingCalculation calculation, CalendarMapper calendarMapper, PDFMapper pdfMapper, Environment environment, FormFactory formFactory, Assets assets, MessagesApi messagesApi) {
         this.calculation = calculation;
         this.calendarMapper = calendarMapper;
         this.pdfMapper = pdfMapper;
         this.environment = environment;
         this.formFactory = formFactory;
         this.messagesApi = messagesApi;
-        this.calculationExecutionContext = calculationExecutionContext;
         this.assets = assets;
         this.indexHtml = assets.at("/public", "index.html", false);
     }
@@ -99,7 +98,7 @@ public class Application extends Controller {
         return handleQueryRequest(badForm -> badRequest(badForm.errorsAsJson()), (result, goodForm) -> {
             logger.info("Responding iCalender file for query: " + goodForm.getForLog() + " to " + request.remoteAddress());
             final long updateFrequency = goodForm.getFrom().until(goodForm.getTo(), ChronoUnit.DAYS) / 20;
-            return ok(calendarMapper.map(result, updateFrequency, goodForm.getLang())).as("text/calendar");
+            return ok().chunked(calendarMapper.map(result, updateFrequency, goodForm.getLang())).as("text/calendar");
         }, request);
     }
 
@@ -111,20 +110,22 @@ public class Application extends Controller {
     }
 
     private CompletionStage<Result> handleQueryRequest(Function<Form<RequestForm>, Result> badRequest, BiFunction<Collection<EventInstance>, RequestForm, Result> goodRequest, Http.Request request) {
-        return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, request, CompletableFuture.supplyAsync(() -> {
-            //noinspection CodeBlock2Expr
-            return goodRequest.apply(calculation.calculate(requestForm), requestForm);
-        }, calculationExecutionContext)), request);
+        // the result is mapped on the thread that completes the calculation, which is one of the calculation pool
+        return handleQueryForm(badRequest, requestForm -> handleETag(requestForm, request,
+                () -> calculation.calculate(requestForm).thenApply(result -> goodRequest.apply(result, requestForm))), request);
     }
 
-    private CompletionStage<Result> handleETag(RequestForm requestForm, Http.Request request, CompletionStage<Result> requestResult) {
+    /**
+     * @param requestResult started only when the client's copy is out of date: a calculation is not even queued for a NOT_MODIFIED
+     */
+    private CompletionStage<Result> handleETag(RequestForm requestForm, Http.Request request, Supplier<CompletionStage<Result>> requestResult) {
         final String calculatedETag = requestForm.calculateETag();
         final boolean isNotModified = request.header(IF_NONE_MATCH).map(currentETag -> currentETag.equals(calculatedETag)).orElse(false);
         logger.debug("Request: " + request.uri() + (isNotModified ? " NOT_MODIFIED" : ""));
         if (isNotModified && environment.isProd()) {
             return CompletableFuture.completedFuture(status(NOT_MODIFIED));
         }
-        return requestResult.thenApply(result -> result
+        return requestResult.get().thenApply(result -> result
                 .withHeader(CACHE_CONTROL, "max-age=21600") //=6h
                 .withHeader(ETAG, calculatedETag)
         );

@@ -5,12 +5,16 @@ import logics.Randomizer;
 import logics.calculation.MoonPhasesCalculation;
 import logics.calculation.TideCalculation;
 import models.EventInstance;
-import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.data.FoldingWriter;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.model.property.immutable.ImmutableCalScale;
 import net.fortuna.ical4j.model.property.immutable.ImmutableVersion;
+import net.fortuna.ical4j.util.Strings;
+import org.apache.pekko.NotUsed;
+import org.apache.pekko.stream.javadsl.Source;
+import org.apache.pekko.util.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -19,6 +23,7 @@ import play.i18n.MessagesApi;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.net.URI;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
@@ -36,7 +41,10 @@ public class CalendarMapper {
     // At noon of each day: 12 or more hours from UTC, the noons of two days are on the same day in UTC when summer time begins.
     private static final Set<String> DAY_EVENT_TYPE_IDS = Set.of(MoonPhasesCalculation.DAILY_EVENT_TYPE_ID, MoonPhasesCalculation.SUN_EVENT_TYPE_ID, TideCalculation.TIDE_EVENT_TYPE_ID);
 
-    private final CalendarOutputter calendarOutputter = new CalendarOutputter();
+    // Streamed a few events at a time, as the client reads them: a large calendar is never held at once as ical4j objects or text.
+    private static final int EVENTS_PER_CHUNK = 100;
+    private static final String END_OF_CALENDAR = "END:VCALENDAR" + Strings.LINE_SEPARATOR;
+
     private final MessagesApi messagesApi;
 
     @Inject
@@ -47,19 +55,33 @@ public class CalendarMapper {
     /**
      * @param events          to map
      * @param updateFrequency How often this calendar should be updated (in days)
-     * @return the ical-file
+     * @return the ical-file, streamed in chunks of a few events each
      */
-    public String map(Collection<EventInstance> events, long updateFrequency, Lang language) {
+    public Source<ByteString, NotUsed> map(Collection<EventInstance> events, long updateFrequency, Lang language) {
         final Calendar calendar = createCalendar(updateFrequency);
         boolean hasGarden = events.stream().anyMatch(EventInstance::isGardenEvent);
         if (hasGarden) {
             calendar.add(new XProperty("X-WR-CALDESC", messagesApi.get(language, "garden.disclaimer")));
         }
         Url thankUrl = new Url(URI.create("https://mooncal.ch/" + getThankUrl(language) + "?c=ics"));
-        for (EventInstance event : events) {
-            addEvent(calendar, event, thankUrl, language);
+        final String emptyCalendar = calendar.toString();
+        if (!emptyCalendar.endsWith(END_OF_CALENDAR)) {
+            throw new IllegalStateException("Unexpected end of an empty calendar: " + emptyCalendar);
         }
-        return getICalendarString(calendar);
+        final String head = emptyCalendar.substring(0, emptyCalendar.length() - END_OF_CALENDAR.length());
+        return Source.single(head)
+                .concat(Source.from(events)
+                        .grouped(EVENTS_PER_CHUNK)
+                        .map(chunk -> {
+                            final StringBuilder text = new StringBuilder();
+                            for (EventInstance event : chunk) {
+                                text.append(toVEvent(event, thankUrl, language));
+                            }
+                            return text.toString();
+                        }))
+                .concat(Source.single(END_OF_CALENDAR))
+                .map(CalendarMapper::fold)
+                .map(ByteString::fromString);
     }
 
     @NotNull
@@ -74,7 +96,7 @@ public class CalendarMapper {
         return calendar;
     }
 
-    private void addEvent(Calendar calendar, EventInstance event, Url thankUrl, Lang language) {
+    private VEvent toVEvent(EventInstance event, Url thankUrl, Lang language) {
         final VEvent calEvent = event.isMultiDay()
                 ? new VEvent(event.getDisplayStartLocalDate(), event.getDisplayEndLocalDate().plusDays(1), event.getTitle())
                 : new VEvent(event.getDateTime().toLocalDate(), event.getTitle());
@@ -84,7 +106,7 @@ public class CalendarMapper {
         }
         calEvent.add(calculateUid(event));
         calEvent.add(thankUrl);
-        calendar.add(calEvent);
+        return calEvent;
     }
 
     /**
@@ -156,13 +178,16 @@ public class CalendarMapper {
         return event.getDateTime().withZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.BASIC_ISO_DATE);
     }
 
-    private String getICalendarString(Calendar calendar) {
-        try {
-            final StringWriter stringWriter = new StringWriter();
-            calendarOutputter.output(calendar, stringWriter);
-            return stringWriter.toString();
+    /**
+     * Folds long lines as ical4j's outputter would, chunk by chunk: every chunk starts at the beginning of a line.
+     */
+    private static String fold(String lines) {
+        final StringWriter folded = new StringWriter(lines.length() + lines.length() / 32);
+        try (FoldingWriter writer = new FoldingWriter(folded)) {
+            writer.write(lines);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
+        return folded.toString();
     }
 }

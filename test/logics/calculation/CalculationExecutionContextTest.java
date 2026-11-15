@@ -1,4 +1,4 @@
-package controllers;
+package logics.calculation;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,8 +47,12 @@ class CalculationExecutionContextTest extends WithApplication {
             }, executor));
         }
         Thread.sleep(500); // give queued tasks a chance to start if the pool were larger
+        assertEquals(poolSize, executor.running());
+        assertEquals(4, executor.waiting());
         release.countDown();
         CompletableFuture.allOf(tasks.toArray(CompletableFuture[]::new)).get(10, TimeUnit.SECONDS);
         assertEquals(poolSize, maxRunning.get());
+        assertEquals(0, executor.running());
+        assertEquals(0, executor.waiting());
     }
 }
