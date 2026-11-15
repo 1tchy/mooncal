@@ -206,6 +206,7 @@ export const ZONE_LOCATIONS: { [zone: string]: ZoneLocation } = {
   "America/Catamarca": {lat: -28.5, lon: -65.8, city: "Catamarca"},
   "America/Cayenne": {lat: 4.9, lon: -52.3, city: "Cayenne"},
   "America/Cordoba": {lat: -31.4, lon: -64.2, city: "Cordoba"},
+  "America/Coyhaique": {lat: -45.6, lon: -72.1, city: "Coyhaique"},
   "America/Fortaleza": {lat: -3.7, lon: -38.5, city: "Fortaleza"},
   "America/Jujuy": {lat: -24.2, lon: -65.3, city: "Jujuy"},
   "America/Maceio": {lat: -9.7, lon: -35.7, city: "Maceio"},
